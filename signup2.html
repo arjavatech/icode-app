@@ -26,6 +26,7 @@
 
         .hide {
             display: none;
+            color: red;
         }
     </style>
 </head>
@@ -65,10 +66,10 @@
                     <span class="text-danger" id="errorAddress"></span>
                 </div>
                 <div class="material-textfield mt-4">
-                    <input id="phone" placeholder=" " type="tel" >
+                    <input id="phone" placeholder=" " type="tel">
                     <label class="phoneNumber">Phone Number</label>
                     <br>
-                    <span id="error-msg" class="hide"></span>
+                    <span id="error-msg" class="hide text-danger"></span>
                 </div>
                 <div class="material-textfield mt-4">
                     <input id="centreName" placeholder=" " type="text" onblur="validateCentreName()">

@@ -1,3 +1,5 @@
+
+
 const input = document.querySelector("#phone");
 const errorMsg = document.querySelector("#error-msg");
 
@@ -99,6 +101,21 @@ function validateAddress() {
 //     }
 // }
 
+function validatePhoneNumber() {
+    const countryCode = iti.getSelectedCountryData().dialCode;
+    const phoneNumber = input.value;
+    const errorPhoneNumber = document.getElementById('error-msg');
+
+    if (!iti.isValidNumber()) {
+        const errorCode = iti.getValidationError();
+        const msg = errorMap[errorCode] || "Invalid number";
+        errorPhoneNumber.textContent = msg;
+        return false;
+    }
+
+    errorPhoneNumber.textContent = '';
+    return true;
+}
 
 function validateCentreName() {
     const centreName = document.getElementById('centreName').value;
@@ -139,7 +156,6 @@ function validateForm() {
 
     if (isFirstNameValid && isLastNameValid && isAddressValid && isPhoneNumberValid && isCentreNameValid && isEmailValid) {
         document.querySelector('.progress-bar').style.width = '100%';
-        alert('Form is valid. Proceeding to payment.');
     } else {
         alert('Please fix the errors in the form');
     }

@@ -68,12 +68,13 @@ body{
     margin-left: 140px;
     
   }
-  /* #phone{
+  #phone{
     padding: 1rem 5.7rem !important;
   }
-  .phoneNumber{
-margin-left: 170px;
-  } */
+  /* .phoneNumber{ */
+/* margin-left: 170px; */
+/* z-index: -10; */
+  /* } */
 
   input {
     font-size: 1rem;
@@ -295,3 +296,4 @@ margin-left: 170px;
 input[type="file"]{
     padding: 1rem 1.7rem;
 }
+
