@@ -162,9 +162,16 @@ body{
     {
         width: 300px;
     }
+    input[type="file"]{
+        width:250px !important;
+    }
 }
-
-@media (max-width:767px) {
+@media (max-width:885px) {
+    label{
+font-size: 10px;
+    }
+}
+@media (max-width:766px) {
    .login-img-sty{
     width: 600px;
    }
@@ -177,6 +184,12 @@ body{
    textarea{
     padding: 1rem 6.5rem;
    }
+   label{
+    font-size: 15px;
+   }
+   input[type="file"]{
+    width:380px !important;
+}
 }
 
 @media (max-width:586px) {
@@ -188,6 +201,14 @@ body{
 @media (max-width:480px) {
     .progress{
         margin-left: 30px   ;
+    }
+}
+@media (max-width:499px) {
+    input[type="file"]{
+        padding: 1rem 0rem !important;
+    }
+    input[type="file"]::file-selector-button {
+        margin-left: 100px;
     }
 }
 @media (max-width:402px) {
@@ -217,6 +238,33 @@ body{
     }
     textarea{
         padding: 1rem 1.2rem;
+    }
+    input[type="file"]{
+       width: 200px !important;
+    }
+    input[type="file"]::file-selector-button {
+        margin-left: 10px;
+    }
+    label{
+        font-size: 10px;
+    }
+    
+}
+@media (max-width:306px) {
+    .login-img-sty{
+        margin-left: 1px !important;
+    }
+    .content-sty{
+        font-size: 10px;
+    }
+    .head-sty{
+        font-size: 13px;
+    }
+    .container{
+        margin-left: 2px !important;
+    }
+    .btn-sty {
+        padding: 5px 5px;
     }
 }
   /* @media (max-width:2000px) {
@@ -286,14 +334,15 @@ body{
   input[type="file"]::file-selector-button {
     background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
+    padding: 5px 5px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 10px;
 }
 
 
 input[type="file"]{
-    padding: 1rem 1.7rem;
+    padding: 1rem 1.1rem;
 }
 
