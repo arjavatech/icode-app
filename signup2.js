@@ -156,6 +156,9 @@ function validateForm() {
 
     if (isFirstNameValid && isLastNameValid && isAddressValid && isPhoneNumberValid && isCentreNameValid && isEmailValid) {
         document.querySelector('.progress-bar').style.width = '100%';
+        setTimeout(() => {
+            window.location.href = "table.html"; 
+          }, 1000);
     } else {
         alert('Please fix the errors in the form');
     }
