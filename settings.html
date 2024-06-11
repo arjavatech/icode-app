@@ -28,6 +28,47 @@
         padding-right: 40px;
         border-radius: 10px;
     }
+    @media (max-width:512px) {
+        .box-sty{
+            width:400px ;
+        }
+        .person-sty{
+            margin-left: 130px;
+        }
+        .label-sty{
+            margin-left: 100px;
+        }
+    }
+    @media (max-width:499px) {
+        .input-sty{
+            padding: 1rem 5.1rem;
+        }
+    }
+    @media (max-width:493px) {
+        .box-sty{
+            width: 300px !important;
+        }
+        .person-sty{
+            margin-left: 80px;
+        }
+        .label-sty{
+            margin-left: 60px;
+        }
+    }
+    @media (max-width:309px) {
+        .box-sty{
+            width: 250px !important;
+        }
+        .person-sty{
+            margin-left: 50px;
+        }
+        .label-sty{
+            margin-left: 20px;
+        }
+        .input-sty{
+            padding: 1rem 2.1rem;
+        }
+    }
 </style>
 <body>
     <nav class="navbar navbar-inverse appbar text-white">
@@ -55,7 +96,7 @@
 
     <div class="container box-sty p-5">
         <h2 class="text-center mb-5">Settings</h2>
-        <img src="https://www.w3schools.com/w3css/img_avatar.png" class="rounded-circle person-sty d-flex justify-content-center">
+        <img src="https://www.w3schools.com/w3css/img_avatar.png" class="rounded-circle person-sty">
         <form action="signup" method="POST" class="p-5 text-center">
             <div class="material-textfield mb-3">
                 <input id="username" placeholder=" " type="text" class="input-sty">
