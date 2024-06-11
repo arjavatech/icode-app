@@ -67,7 +67,69 @@
         border-radius: 10px;
     }
     #phoneNumber{
-        padding: 1rem 6.5rem !important;
+        padding: 1rem 5.5rem !important;
+    }
+    button.close {
+        margin-left: 360px;
+    }
+    @media (max-width:499px) {
+        #phoneNumber{
+                padding: 1rem 1.2rem !important;
+        }
+        button.close {
+        margin-left: 260px;
+    }
+    }
+    @media (max-width:571px) {
+        .Add{
+            margin-left: 380px;
+        }
+    }
+    @media (max-width:483px) {
+        th{
+            font-size: 10px !important;
+        }
+        td{
+            font-size: 10px !important;
+        }
+        .Add{
+            margin-left: 300px;
+        }
+    }
+    @media (max-width:397px) {
+        button.close {
+        margin-left: 150px;
+    }
+    .Add{
+            margin-left: 200px;
+        }
+    }
+    @media (max-width:408px) {
+        label{
+            margin-left: 100px;
+        }
+    }
+    @media (max-width:365px) {
+        label{ 
+        margin-left: 100px !important;
+        }
+    }
+    @media (max-width:292px) {
+        label{
+            margin-left: 60px !important;
+        }   
+        th{
+            font-size: 8px !important;
+        }
+        .Add{
+            margin-left: 50px;
+        }
+        td{
+            font-size: 8px !important;
+        }
+        button.close {
+            margin-left: 50px !important;
+        }
     }
 </style>
 
@@ -118,37 +180,39 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title text-center">Employee Details</h4>
-                        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
                     </div>
                     <div class="modal-body">
                         <form action="signup" method="POST" class="p-5 text-center">
                             <div class="material-textfield mb-3">
-                                <input id="instructor" placeholder=" " type="text" onblur="validateInstructerPin()">
-                                <label>Instructor Pin</label>
+                                <input id="instructor" placeholder=" " type="text" onblur="validateInstructerPin()" class="input-sty">
+                                <label class="label-sty">Instructor Pin</label>
                                 <br>
                                 <span class="text-danger" id="showMsg"></span>
                             </div>
                             <div class="material-textfield mb-3">
-                                <input type="text" id="fName" name="fName" placeholder=" " required onblur="validFName()">
-                                <label>First Name</label><br>
+                                <input type="text" id="fName" name="fName" placeholder=" " required onblur="validFName()" class="input-sty">
+                                <label class="label-sty">First Name</label><br>
                                 <span class="text-danger" id="showMsg1"></span>
                             </div>
                             <div class="material-textfield mb-3">
-                                <input type="text" id="lName" name="lName" placeholder=" " onblur="validLName()">
-                                <label>Last Name</label><br>
+                                <input type="text" id="lName" name="lName" placeholder=" " onblur="validLName()" class="input-sty">
+                                <label class="label-sty">Last Name</label><br>
                                 <span class="text-danger" id="showMsg2"></span>
                             </div>
 
                             <div class="material-textfield mb-3">
-                                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" ">
+                                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" " class="input-sty">
                                 <!-- <label>Phone-number</label> -->
                                 <br>
                                 <span class="text-danger" id="showMsg3"></span>
                             </div>
 
                             <div class="material-textfield mb-3">
-                                <input type="text" id="lName" name="lName" placeholder=" " onblur="validLName()">
-                                <label>Last Name</label><br>
+                                <input type="text" id="lName" name="lName" placeholder=" " onblur="validLName()" class="input-sty">
+                                <label class="label-sty">Last Name</label><br>
                                 <span class="text-danger" id="showMsg2"></span>
                             </div>
                             <!-- <div class="input-group">
@@ -180,9 +244,9 @@
                             </button>
                         </form>
                     </div>
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

@@ -310,19 +310,30 @@
     .active-sty{
         background-color: transparent;
     }
-    .navbar-inverse .navbar-toggle:hover{
-        border-color: #a82fae;
+    /* .navbar-inverse .navbar-toggle:hover{
+        border-color:#D6FFE7;
         background-color: white;
-    }
+    } */
     .navbar-inverse .navbar-toggle{
-        background-color: #a82fae !important;
+        background-color:black  !important;
       border-color: white;
     }
 }
 @media (max-width:767px) {
     .navbar-inverse .navbar-toggle{
-        float: right;
+        margin-left: 600px;
     }
+}
+@media (max-width:643px) {
+    .navbar-inverse .navbar-toggle{
+        margin-left: 400px;
+    }
+}
+@media (max-width:443px) {
+    .navbar-inverse .navbar-toggle{
+        margin-left: 200px;
+    }
+    
 }
 /* .fa{
     color:#a82fae;

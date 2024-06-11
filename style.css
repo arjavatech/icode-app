@@ -52,7 +52,7 @@ body{
     /* margin-left: 130px; */
   }
   
-  label {
+  .label-sty {
     position: absolute;
     font-size: 1rem;
     left: 0;
@@ -76,7 +76,7 @@ body{
 /* z-index: -10; */
   /* } */
 
-  input {
+  .input-sty {
     font-size: 1rem;
     outline: none;
     border: 1px solid gray;
@@ -85,15 +85,15 @@ body{
     color: #038236;
     transition: 0.1s ease-out;
   }
-  input:focus {
+  .input-sty:focus {
     border-color: #038236;  
   }
-  input:focus + label {
+  .input-sty:focus + .label-sty {
     color: #038236;
     top: 0;
     transform: translateY(-50%) scale(.9);
   }
-  input:not(:placeholder-shown) + label {
+  .input-sty:not(:placeholder-shown) + .label-sty {
     top: 0;
     transform: translateY(-50%) scale(.9);
   }
@@ -110,12 +110,12 @@ body{
   textarea:focus {
     border-color: #038236;  
   }
-  textarea:focus + label {
+  textarea:focus + .label-sty {
     color: #038236;
     top: 0;
     transform: translateY(-50%) scale(.9);
   }
-  textarea:not(:placeholder-shown) + label {
+  textarea:not(:placeholder-shown) + .label-sty {
     top: 0;
     transform: translateY(-50%) scale(.9);
   }
@@ -148,7 +148,7 @@ body{
 }
 
 @media (max-width:995px) {
-    input{
+    .input-sty{
         padding: 1rem 1.7rem;
     }
     textarea{
@@ -162,12 +162,12 @@ body{
     {
         width: 300px;
     }
-    input[type="file"]{
+    .input-sty[type="file"]{
         width:250px !important;
     }
 }
 @media (max-width:885px) {
-    label{
+    .label-sty{
 font-size: 10px;
     }
 }
@@ -178,16 +178,16 @@ font-size: 10px;
    .progress{
     margin-left: 130px;
    }
-   input{
+   .input-sty{
     padding: 1rem 6.5rem;
    }
    textarea{
     padding: 1rem 6.5rem;
    }
-   label{
+   .label-sty{
     font-size: 15px;
    }
-   input[type="file"]{
+   .input-sty[type="file"]{
     width:380px !important;
 }
 }
@@ -204,10 +204,10 @@ font-size: 10px;
     }
 }
 @media (max-width:499px) {
-    input[type="file"]{
+    .input-sty[type="file"]{
         padding: 1rem 0rem !important;
     }
-    input[type="file"]::file-selector-button {
+    .input-sty[type="file"]::file-selector-button {
         margin-left: 100px;
     }
 }
@@ -218,7 +218,7 @@ font-size: 10px;
     .col-sty{
         height: 500px;
     }
-    input{
+    .input-sty{
         margin-left: 10px !important;
     }
 }
@@ -227,25 +227,25 @@ font-size: 10px;
     .container{
         margin-left: 5px !important;
     }
-    label{
+    .label-sty{
         margin-left: 25px !important;
     }
 }
 
 @media (max-width:499px) {
-    input{
+    .input-sty{
         padding: 1rem 1.2rem;
     }
     textarea{
         padding: 1rem 1.2rem;
     }
-    input[type="file"]{
+    .input-sty[type="file"]{
        width: 200px !important;
     }
-    input[type="file"]::file-selector-button {
+    .input-sty[type="file"]::file-selector-button {
         margin-left: 10px;
     }
-    label{
+    .label-sty{
         font-size: 10px;
     }
     
@@ -268,7 +268,7 @@ font-size: 10px;
     }
 }
   /* @media (max-width:2000px) {
-    input{
+    .input-sty{
         padding: 1rem 2.7rem;
     }
     textarea{
@@ -312,7 +312,7 @@ font-size: 10px;
         width: 200px;
         height: 200px;
     }
-    input{
+    .input-sty{
         padding: 1rem 0.2rem;
     }
     textarea{
@@ -331,7 +331,7 @@ font-size: 10px;
   } */
 
 
-  input[type="file"]::file-selector-button {
+  .input-sty[type="file"]::file-selector-button {
     background-color: #4CAF50;
     color: white;
     padding: 5px 5px;
@@ -342,7 +342,7 @@ font-size: 10px;
 }
 
 
-input[type="file"]{
+.input-sty[type="file"]{
     padding: 1rem 1.1rem;
 }
 
