@@ -9,28 +9,60 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/libphonenumber-js@1.9.43/bundle/libphonenumber-js.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    
     <!-- <link rel="stylesheet" href="contact.css"> -->
+    <script defer src="contact.js"></script>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <style>
-    .settings-btn-sty{
+    .settings-btn-sty {
         padding-left: 40px;
         padding-right: 40px;
         border-radius: 10px;
     }
+
+    #phoneNumber {
+        padding: 1rem 5.6rem !important;
+    }
+
+    label {
+        margin-left: 33% !important;
+    }
+
+    @media (max-width: 499px) {
+        input {
+        padding: 1rem 2.2rem;
+    }
+        textarea {
+            padding: 1rem 3rem;
+            margin-left: 8px;
+        }
+
+        .iti__selected-flag {
+            padding: 0 6px 0 13px;
+        }
+
+        #phoneNumber {
+            padding: 1rem .2rem 1rem 3.8rem!important
+        }
+        .textfond {
+            font-size: 12px;
+        }
+    }
 </style>
+
 <body>
     <!-- header  -->
     <nav class="navbar navbar-inverse appbar text-white">
@@ -83,24 +115,48 @@
         </div>
     </div> -->
     <form action="signup" method="POST" class="p-5 text-center">
-    <div class="container box-sty p-3">
-        <!-- <div class="row login-bg-style"></div> -->
-        <h2 class="text-center">Contact Us</h2>
-        <div class="material-textfield mb-3">
-            <input id="phonenumber" placeholder=" " type="tel" class="m-3">
-            <!-- <label class="phoneNumber">Phone Number</label> -->
+        <div class="container box-sty p-3">
+            <!-- <div class="row login-bg-style"></div> -->
+            <h2 class="text-center">Contact Us</h2>
+            <div class="material-textfield mb-4">
+                <input id="cname" placeholder=" " type="text" required onblur="validCName()">
+                <label class="cname">Name <span class="text-danger">*</span></label>
+                <br>
+                <span id="error-name" class="text-danger"></span>
+            </div>
+            <div class="material-textfield mb-4">
+                <input id="cemail" placeholder=" " type="email" required onblur="validCEmail()">
+                <label class="cemail">Company Email <span class="text-danger">*</span></label>
+                <br>
+                <span id="error-email" class="text-danger"></span>
+
+            </div>
+            <div class="material-textfield mb-4">
+                <textarea name="question" id="question" placeholder=" " required onblur="validCQueries()"></textarea>
+                <label class="queries">Message/Queries <span class="text-danger">*</span></label>
+                <br>
+                <span id="error-textarea" class="text-danger"></span>
+            </div>
+            <div class="material-textfield mb-4">
+                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" ">
+                <!-- <label>Phone-number</label> -->
+                <br>
+                <span class="text-danger" id="error-phone"></span>
+            </div>
+            
+            <div class="d-flex justify-content-center align-items-baseline textfond">
+                <!-- <textarea name="addtext" id="addtext" placeholder=" " required onblur="validCAddtext()"></textarea>
+            <label class="addtext">Write to us <span class="text-danger">*</span></label>
             <br>
-            <span id="error-msg" class="hide text-danger"></span>
+            <span id="error-addtext" class="text-danger"></span> -->
+                <h5 class="me-2"><b>Additional Text :</b></h5>
+                <p class="ms-1"><a href="mailto:punchcardwithus@gmail.com" target="_blank">punchcardwithus@gmail.com</a>
+                </p>
+            </div>
+
+            <button type="button" class="settings-btn-sty bg-dark text-white fs-2 mt-2">Submit</button>
         </div>
-        <div class="material-textfield mb-3">
-            <input id="question" placeholder=" " type="text" class="m-3">
-            <label class="phoneNumber">Questions/Concerns</label>
-            <br>
-            <span id="error" class="hide text-danger"></span>
-        </div>
-        <button type="button" class="settings-btn-sty bg-dark text-white fs-2">Submit</button>
-    </div>
-    <!-- <form id="form">
+        <!-- <form id="form">
             <div class="input-group">
                 <label for="phone">Phone (optional)</label>
                 <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" maxlength="15">
@@ -116,10 +172,11 @@
         <!-- <p class="text-center link-sty">New register <a href="signUp.html"
                 style="text-decoration: none; color: blueviolet;">Sign Up</a></p> -->
 
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
     </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
 </body>
 
 </html>
