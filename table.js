@@ -4,8 +4,8 @@ function addRowAndValue() {
     const isValidFName = validFName();
     const isValidLName = validLName();
     const isValidPhoneNumber = validatePhoneNumber();
-    const isvalidInstructerPin = validateInstructerPin();
-    if(isValidFName && isValidLName && isValidPhoneNumber && isvalidInstructerPin){
+    // const isvalidInstructerPin = validateInstructerPin();
+    if(isValidFName && isValidLName && isValidPhoneNumber){
     if (currentRow) {
         updateRow();
         currentRow = null;
@@ -92,6 +92,7 @@ function validFName() {
 
 const input = document.querySelector("#phoneNumber");
 const errorMsg = document.querySelector("#showMsg3");
+const employePin = document.getElementById("instructor");
 
 const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
 
@@ -124,6 +125,8 @@ input.addEventListener('keyup', () => {
             showError(msg);
         }
     }
+    employePin.value = (input.value).substring((input.value).length - 4);
+    console.log((input.value).substring((input.value).length - 4));
 });
 
 // Reset error messages when changing the country dial code
@@ -148,6 +151,7 @@ function validLName() {
     const countryCode = iti.getSelectedCountryData().dialCode;
     const phoneNumber = input.value;
     const errorPhoneNumber = document.getElementById('showMsg3');
+    
 
     if (!iti.isValidNumber()) {
         const errorCode = iti.getValidationError();
@@ -160,17 +164,18 @@ function validLName() {
     return true;
 }
 
-function validateInstructerPin(){
-    const instructerPin = document.getElementById('instructor').value;
-    const errorInstructerPin = document.getElementById('showMsg');
-    if (instructerPin.trim() === '') {
-        errorInstructerPin.textContent = 'Instructer pin is required';
-        return false;
-    }
-    else if(isAlpha.test(instructerPin)){
-        errorInstructerPin.textContent = 'Only use digits, don\'t use letters';
-      return false;
-    }
-    errorInstructerPin.textContent = '';
-    return true;
-}
+
+// function validateInstructerPin(){
+//     const instructerPin = document.getElementById('instructor').value;
+//     const errorInstructerPin = document.getElementById('showMsg');
+//     if (instructerPin.trim() === '') {
+//         errorInstructerPin.textContent = 'Instructer pin is required';
+//         return false;
+//     }
+//     else if(isAlpha.test(instructerPin)){
+//         errorInstructerPin.textContent = 'Only use digits, don\'t use letters';
+//       return false;
+//     }
+//     errorInstructerPin.textContent = '';
+//     return true;
+// }

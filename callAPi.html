@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login CRUD API</title>
+  <style>
+    /* Add some basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    #demo {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Login CRUD API Example</h1>
+
+  <!-- Fetch Data Section -->
+  <h2>Fetch User Data</h2>
+  <label for="usernameFetch">Username:</label>
+  <input type="text" id="usernameFetch" name="usernameFetch">
+  <button onclick="getApiData()">Fetch Data</button>
+  
+
+  <div id="demo">API response will be displayed here.</div>
+
+  <!-- Create / Update Data Section -->
+  <h2>Create / Update User Data</h2>
+  <form id="userForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username"><br><br>
+    <label for="cid">CID:</label>
+    <input type="text" id="cid" name="cid"><br><br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password"><br><br>
+    <button type="button" onclick="createApiData()">Create Data</button>
+    <button type="button" onclick="updateApiData()">Update Data</button>
+
+    <h2>User Details</h2>
+  <p><strong>Username:</strong> <span id="name"></span></p>
+  <p><strong>CID:</strong> <span id="cid"></span></p>
+  <p><strong>Password:</strong> <span id="password"></span></p>
+  </form>
+
+  <!-- Delete Data Section -->
+  <h2>Delete User Data</h2>
+  <label for="usernameDelete">Username:</label>
+  <input type="text" id="usernameDelete" name="usernameDelete">
+  <button onclick="deleteApiData()">Delete Data</button>
+  <script defer src="callApi.js"></script>
+  </body>
+  </html>

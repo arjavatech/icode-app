@@ -146,6 +146,15 @@ function validateEmail() {
     return true;
 }
 
+// API link 
+//Signup second page link
+const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/customer';
+//UUID => cid
+const cid = localStorage.getItem('uuid');
+// const cid = '68f9bafc-2390-11ef-82b6-02d83582ee22';
+//signup first page link
+const firstSignupPageapiUrlBase = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company`;
+
 function validateForm() {
     const isFirstNameValid = validateFirstName();
     const isLastNameValid = validateLastName();
@@ -156,10 +165,107 @@ function validateForm() {
 
     if (isFirstNameValid && isLastNameValid && isAddressValid && isPhoneNumberValid && isCentreNameValid && isEmailValid) {
         document.querySelector('.progress-bar').style.width = '100%';
-        setTimeout(() => {
-            window.location.href = "table.html"; 
-          }, 1000);
+
+
+        // localStorage.setItem('firstName', firstName);
+        // localStorage.setItem('lastName', lastName);
+        // localStorage.setItem('address', address);
+        // localStorage.setItem('phone', phone);   
+        // localStorage.setItem('email', email);
+
+        craeteFirstPageSignupAPiData()
+        createApiData()
+
+        // setTimeout(() => {
+        //     window.location.href = "table.html"; 
+        //   }, 1000);
     } else {
         alert('Please fix the errors in the form');
     }
 }
+
+//First signup page api call
+//Company details
+function craeteFirstPageSignupAPiData(){
+    const firstSignupPageapiUrl = `${firstSignupPageapiUrlBase}/create`;
+    const cname = localStorage.getItem('companyName');
+    const clogo = localStorage.getItem('companyLogo');
+    const caddress = localStorage.getItem('companyAddress');
+    const username = localStorage.getItem('username');
+    const password = localStorage.getItem('password');
+
+    const userData = {
+        cname:cname,
+        cid: cid, // Example value
+        clogo: clogo,
+        caddress: caddress,
+        username: username,
+        password: password,
+    };
+
+    fetch(firstSignupPageapiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+// Push the Data in data base
+function createApiData() {
+    const myUUID1 = uuid.v4();
+// document.getElementById('uuid').innerText = myUUID;
+    const apiUrl = `${apiUrlBase}/create`;
+    const firstName = document.getElementById("firstName").value;
+    const lastName = document.getElementById("lastName").value;
+    const address = document.getElementById("address").value;
+    const phone = document.getElementById("phone").value;
+    const email = document.getElementById("email").value;
+    const centreName = document.getElementById("centreName").value;
+
+    const userData = {
+        customerid: myUUID1, // Example value
+        cid: cid, // Example value
+        fname: firstName,
+        lname: lastName,
+        address: address,
+        phonenumber: phone,
+        centername: centreName,
+        email: email,
+        isactive: true // Assuming this field is required and should be set to 1
+    };
+
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// console.log(cid);

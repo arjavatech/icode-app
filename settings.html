@@ -7,71 +7,184 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <!-- Font awesome icon  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    
-        
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
+        <!-- Phone number  -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css" />
     <title>Settings</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="settings.css">
     <link rel="stylesheet" href="styles.css">
+    <script defer src="settings.js"></script>
 </head>
+
 <style>
-    .settings-btn-sty{
-        padding-left: 40px;
-        padding-right: 40px;
+    .settings-btn-sty {
+        padding-left: 60px;
+        padding-right: 60px;
         border-radius: 10px;
+        background-color: #23ae5b;
+        border: none;
     }
+
+    .input-sty{
+        font-size: 17px;
+    }
+
+    .error {
+        color: red;
+    }
+
+    .hide {
+        display: none;
+        color: red;
+    }
+
     @media (max-width:512px) {
-        .box-sty{
-            width:400px ;
+        .box-sty {
+            width: 400px;
         }
-        .person-sty{
+
+        .person-sty {
             margin-left: 130px;
         }
-        .label-sty{
+
+        .label-sty {
             margin-left: 100px;
         }
     }
+
     @media (max-width:499px) {
-        .input-sty{
+        .input-sty {
             padding: 1rem 5.1rem;
         }
     }
+
     @media (max-width:493px) {
-        .box-sty{
+        .box-sty {
             width: 300px !important;
         }
-        .person-sty{
+
+        .person-sty {
             margin-left: 80px;
         }
-        .label-sty{
+
+        .label-sty {
             margin-left: 60px;
         }
     }
+
     @media (max-width:309px) {
-        .box-sty{
+        .box-sty {
             width: 250px !important;
         }
-        .person-sty{
+
+        .person-sty {
             margin-left: 50px;
         }
-        .label-sty{
+
+        .label-sty {
             margin-left: 20px;
         }
-        .input-sty{
+
+        .input-sty {
             padding: 1rem 2.1rem;
         }
     }
+
+    .input-sty {
+        padding: 1.9rem 7.9rem;
+    }
+
+    .label-sty {
+        font-size: 17px;
+    }
+
+    .input-sty[type="file"] {
+        margin-left: 40px;
+        /* margin-top: 16px; */
+        padding: 1.5rem 3.5rem;
+    }
+
+    #phoneNumber {
+        /* margin-left: 40px; */
+        /* margin-top: 16px; */
+        padding: 1.5rem 7.5rem;
+    }
+
+    @media (max-width:997px) {
+        /* .input-sty[type="file"] {
+            padding: 1rem 0.2rem;
+        } */
+    }
+
+    @media (max-width:767px) {
+        .input-sty[type="file"] {
+            max-width: 260px !important;
+            margin-left: 28px;
+        }
+    }
+
+    @media (max-width:695px) {
+        .input-sty[type="file"] {
+            margin-left: 10px;
+        }
+    }
+
+    @media (max-width:650px) {
+        .input-sty[type="file"] {
+            max-width: 180px !important;
+            margin-left: 40px;
+        }
+
+        .input-sty {
+            padding: 1.8rem 3.6rem;
+        }
+
+        .label-sty {
+            font-size: 10px;
+        }
+    }
+
+    @media (max-width:575px) {
+        .input-sty[type="file"] {
+            /* max-width: 180px !important; */
+            margin-left: 140px;
+        }
+    }
+
+    @media (max-width:513px) {
+        .input-sty[type="file"] {
+            width: 250px !important;
+            margin-left: 20px;
+        }
+    }
+
+    @media (max-width:494px) {
+        .input-sty[type="file"] {
+            width: 200px !important;
+            margin-left: 10px;
+        }
+
+        .input-sty {
+            padding: 1rem 3.8rem;
+        }
+
+        .label-sty {
+            font-size: 8px;
+        }
+    }
+
+    .box-sty {
+        max-width: 800px;
+    }
 </style>
+
 <body>
-    <nav class="navbar navbar-inverse appbar text-white">
+    <!-- <nav class="navbar navbar-inverse appbar text-white">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -83,59 +196,136 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <!-- <li><a href="loginPage.html"> Home</a></li> -->
                     <li><a href="table.html"> Details</a></li>
                     <li><a href="contact.html">Contact</a></li>
                     <li><a href="report.html">Report</a></li>
-                    <li><a href="settings.html" class="active-sty"><i class="fa-solid fa-gear fa-1x settings-icon"></i></a>
-                    </li>
+                    <li><a href="settings.html" class="active-sty"><i
+                                class="fa-solid fa-gear fa-1x settings-icon"></i></a></li>
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav> -->
+    
+    <nav class="navbar navbar-expand-lg navbar-light full-nav-style">
+        <div class="container-fluid">
+          <!-- <a class="navbar-brand" href="#">Navbar scroll</a> -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <li class="nav-item">
+                <a class="nav-link text-white navlinks-style m-4" aria-current="page" href="#">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white navlinks-style m-4" href="table.html">Employee Management</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white navlinks-style m-4" href="report.html">Report</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white navlinks-style m-4 active-nav-link p-4" href="#">Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white navlinks-style m-4" href="contact.html">Contact Us</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <button class="btn logout-button-style text-white" type="submit">Logout</button>
+            </form>
+          </div>
+        </div>
+      </nav>
 
+      <h1 class="text-center mb-5">Profile</h1>
     <div class="container box-sty p-5">
-        <h2 class="text-center mb-5">Settings</h2>
-        <img src="https://www.w3schools.com/w3css/img_avatar.png" class="rounded-circle person-sty">
-        <form action="signup" method="POST" class="p-5 text-center">
-            <div class="material-textfield mb-3">
-                <input id="username" placeholder=" " type="text" class="input-sty">
-                <label class="label-sty">Name</label>
-                <br>
-                <span class="text-danger" id="nameErrorMsg"></span>
+        <form id="settingsForm" class="p-5 text-center">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="material-textfield mb-4">
+                        <input id="companyName" placeholder=" " type="text" class="input-sty" disabled>
+                        <label class="label-sty">Company Name</label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="material-textfield mb-4">
+                        <input id="username" placeholder=" " type="text" class="input-sty" disabled>
+                        <label class="label-sty">Username</label>
+                    </div>
+                </div>
             </div>
-            <div class="material-textfield mb-3">
-                <input id="password" placeholder=" " type="password" class="input-sty">
-                <label class="label-sty">password</label>
-                <br>
-                <span class="text-danger" id="passwordErrorMsg"></span>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="material-textfield mb-4">
+                        <input id="companyLogo" placeholder=" " type="file" class="input-sty">
+                        <label class="label-sty">Company Logo</label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="material-textfield mb-4">
+                        <input id="companyAddress" placeholder=" " type="text" class="input-sty">
+                        <label class="label-sty">Company Address</label>
+                    </div>
+                </div>
             </div>
-            <div class="material-textfield mb-3">
-                <input id="Address" placeholder=" " type="text" class="input-sty">
-                <label class="label-sty">Address</label>
-                <br>
-                <span class="text-danger" id="addressErrorMsg"></span>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="material-textfield mb-4">
+                        <input id="password" placeholder=" " type="password" class="input-sty">
+                        <label class="label-sty">Password</label>
+                        <br>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="material-textfield mb-3">
+                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" " class="input-sty">
+                        <!-- <label class="label-sty">Phone-number</label> -->
+                        <br>
+                        <span id="errorPhoneNumber" class="error hide"></span>
+                    </div>
+                </div>
             </div>
-            <!-- <div class="input-group">
-                <label for="username">Name</label>
-                <input type="text" id="username" name="username" required  value="">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="material-textfield mb-4">
+                        <input id="fName" placeholder=" " type="text" class="input-sty">
+                        <label class="label-sty">First name</label>
+                        <br>
+                        <span id="errorFName" class="error hide"></span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="material-textfield mb-4">
+                        <input id="lName" placeholder=" " type="text" class="input-sty">
+                        <label class="label-sty">Last name</label>
+                        <br>
+                        <span id="errorLName" class="error hide"></span>
+                    </div>
+                </div>
             </div>
-            <div class="input-group">
-                <label for="confirm-password">Password :</label>
-                <input type="password" id="password" name="name" required value="">
-            </div>
-            <div class="input-group">
-                <label for="confirm-password">Address :</label>
-                <input type="text" id="Address" name="confirm-password" required>
-            </div> -->
-            <!-- <button type="submit" class="btn button-sty text-white font-weight-bold">Save</button> -->
-            <button type="button" class="settings-btn-sty bg-dark text-white fs-2">Save</button>
-        </form>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="material-textfield mb-4">
+                        <input id="address" placeholder=" " type="text" class="input-sty">
+                        <label class="label-sty">Address</label>
 
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="material-textfield mb-4">
+                        <input id="email" placeholder=" " type="email" class="input-sty">
+                        <label class="label-sty">Email</label>
+                        <br>
+                        <span id="errorEmail" class="error hide"></span>    
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="settings-btn-sty text-white fs-2"
+                >Save</button>
+        </form>
     </div>
-    <script>
-        // document.getElementById("username").value ="jdnj";
-    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
 </body>
 
 </html>
