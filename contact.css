@@ -1,18 +1,21 @@
-/* body {
-    background-color: #f8f9fa;
-    font-family: Arial, sans-serif;
-} */
-
-.card {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+.bg-green {
+    background-color: #0A8080;
 }
-
-.card-header {
-    /* background-color: #007bff; */
-    background: linear-gradient(90deg, #2e50a5, #a82fae, #e69d30, #e56352);
+.navbar-dark .navbar-nav .nav-link {
+    color: #fff;
+}
+.rounded-pill-active {
+    border-radius: 50rem;
+    background-color: #fff;
+    color: #0A8080 !important;
+}
+.btn-green {
     color: white;
-    border-radius: 10px 10px 0 0;
+    background-color: #0A8080;
+    padding: 5px 30px;
 }
-
+.btn-outline-green{
+    color: #0A8080;
+    border: solid 1px #0A8080;
+    padding: 5px 21px;
+}

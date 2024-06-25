@@ -1,4 +1,3 @@
-
 // Validation
 var isAlpha = /^[a-zA-Z\s]+$/;
 
@@ -54,6 +53,7 @@ function validCQueries() {
     }
     // Check if current length exceeds the maximum length
     else if (currentLength >= maxLength) {
+        alert("sdfsd")
         errorcQuestion.textContent = 'Maximum character limit reached.';
         cQuestion.value = cQuestion.value.substring(0, maxLength);
         return false;
@@ -80,8 +80,10 @@ function validCQueries() {
 // }
 
 
+
 const input = document.querySelector("#phoneNumber");
-const errorMsg = document.querySelector("#error-phone");
+const errorMsg = document.querySelector("#showMsg3");
+const employePin = document.getElementById("instructor");
 
 const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
 
@@ -114,6 +116,7 @@ input.addEventListener('keyup', () => {
             showError(msg);
         }
     }
+
 });
 
 // Reset error messages when changing the country dial code
