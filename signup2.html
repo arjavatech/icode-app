@@ -12,7 +12,7 @@
         <!-- Phone  -->
     <script src="https://cdn.jsdelivr.net/npm/libphonenumber-js@1.9.43/bundle/libphonenumber-js.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="old_style.css">
     <script defer src="signup2.js"></script>
     <title>Signup Page</title>
     <style>
@@ -72,12 +72,12 @@
                     <br>
                     <span id="error-msg" class="hide text-danger"></span>
                 </div>
-                <div class="material-textfield mt-4">
+                <!-- <div class="material-textfield mt-4">
                     <input id="centreName" placeholder=" " type="text" onblur="validateCentreName()" class="input-sty">
                     <label class="label-sty">Centre Name</label>
                     <br>
                     <span class="text-danger" id="errorCentreName"></span>
-                </div>
+                </div> -->
                 <div class="material-textfield mt-4">
                     <input id="email" placeholder=" " type="email" onblur="validateEmail()" class="input-sty">
                     <label class="label-sty">Email</label>
@@ -89,6 +89,7 @@
             </div>
         </div>
     </div>
+    <!-- <button onclick="getCustmData()">fetch data</button> -->
     <!-- UUID library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
     <!-- Phone link  -->

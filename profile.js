@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", function() {
+
+document.addEventListener("DOMContentLoaded", function () {
     const companyName = localStorage.getItem('companyName');
     const companyAddress = localStorage.getItem('companyAddress');
     const username = localStorage.getItem('username');
@@ -8,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const address = localStorage.getItem('address');
     const phone = localStorage.getItem('phone');
     const email = localStorage.getItem('email');
+    console.log(firstName);
 
     if (companyName) document.getElementById('companyName').value = companyName;
     if (companyAddress) document.getElementById('companyAddress').value = companyAddress;
@@ -19,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (address) document.getElementById('address').value = address;
     if (email) document.getElementById('email').value = email;
 
-    document.getElementById('settingsForm').addEventListener('submit', function(event) {
+    document.getElementById('settingsForm').addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent the form from submitting
 
         // Validation
@@ -57,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.setItem('phone', document.getElementById('phoneNumber').value);
             localStorage.setItem('email', document.getElementById('email').value);
 
+            updateApiData();
             alert('Settings saved successfully!');
         }
     });
@@ -157,3 +160,90 @@ function clearError(input) {
         error.remove();
     }
 }
+
+const customerAPIUrlBase = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/customer`;
+const companyAPIUrlBase = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company`;
+
+function updateApiData() {
+    const username = document.getElementById('username').value;
+    const companyName = document.getElementById('companyName').value;
+    const fname = document.getElementById('fName').value;
+    const lname = document.getElementById('lName').value;
+    const customerAddress = document.getElementById('address').value;
+    const customerPhone = document.getElementById('phoneNumber').value;
+    const customerEmail = document.getElementById('email').value;
+    const cid = localStorage.getItem('companyID');
+    const customerId1 = localStorage.getItem('customId');
+    const companyAddress = document.getElementById("companyAddress").value;
+    const companyLogo = document.getElementById("companyAddress").value;
+    const password = document.getElementById("password").value;
+
+    if (!cid || !customerId1) {
+        console.error("UUID or CustomerID is missing in localStorage");
+        return;
+    }
+
+    const customerApiUrl = `${customerAPIUrlBase}/update/${customerId1}`;
+    const companyApiUrl = `${companyAPIUrlBase}/update/${cid}`;
+
+    console.log(cid);
+    console.log(customerId1);
+    const customerData = {
+        CustomerID: customerId1,
+        CID: cid,
+        FName: fname,
+        LName: lname,
+        Address: customerAddress,
+        PhoneNumber: customerPhone,
+        Email: customerEmail,
+        IsActive: true
+    };
+
+    const companyData = {
+        CID: cid,
+        UserName: username,
+        CName: companyName,
+        CAddress: companyAddress,
+        CLogo: companyLogo,
+        Password: password,
+        // IsActive: true
+    };
+    console.log(companyData);
+
+    Promise.all([
+        fetch(customerApiUrl, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(customerData)
+        }),
+        fetch(companyApiUrl, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(companyData)
+        })
+    ])
+        .then(responses => {
+            return Promise.all(responses.map(response => {
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status}`);
+                }
+                return response.json();
+            }));
+        })
+        .then(data => {
+            console.log("Update Data - Response:", data);
+            // outPut.textContent = 'Data updated successfully!';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // outPut.textContent = 'Error updating data.';
+        });
+}
+
+// 4889996e-0224-4265-a449-9169c6184825
+
+// { CID: 'e57c8b8e-9570-4840-a7d0-7626cc63a340', UserName: 'best', CName: 'nrhbfhjb', CAddress: 'sdc', CLogo: 'sdc', … }

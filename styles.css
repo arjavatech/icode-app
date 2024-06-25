@@ -11,7 +11,8 @@
         align-items: center; */
         /* padding: 10px 10px; */
         /* background: linear-gradient(90deg, #2e50a5, #a82fae, #e69d30, #e56352); */
-        background-color: #D6FFE7;
+        /* background-color: #D6FFE7; */
+        background-color: #0A8080;
         /* color: white;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         position: relative; */
@@ -344,3 +345,94 @@
 /* textarea{
     width: 400px !important;
 } */
+
+.material-textfield {
+    position: relative;  
+    /* margin-left: 130px; */
+  }
+  
+  .label-sty {
+    position: absolute;
+    font-size: 1rem;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    color: gray;
+    padding: 0 0.3rem;
+    margin: 0 0.5rem;
+    transition: .1s ease-out;
+    transform-origin: left top;
+    pointer-events: none;
+    margin-left: 140px;
+    
+  }
+  #phone{
+    padding: 1rem 5.7rem !important;
+  }
+  /* .phoneNumber{ */
+/* margin-left: 170px; */
+/* z-index: -10; */
+  /* } */
+
+  .input-sty {
+    font-size: 1rem;
+    outline: none;
+    border: 1px solid gray;
+    border-radius: 10px;  
+    padding: 1rem 5.7rem;
+    color: #0A8080;
+    transition: 0.1s ease-out;
+  }
+  .input-sty:focus {
+    border-color: #0A8080;  
+  }
+  .input-sty:focus + .label-sty {
+    color: #0A8080;
+    top: 0;
+    transform: translateY(-50%) scale(.9);
+  }
+  .input-sty:not(:placeholder-shown) + .label-sty {
+    top: 0;
+    transform: translateY(-50%) scale(.9);
+  }
+
+  textarea {
+    font-size: 1rem;
+    outline: none;
+    border: 1px solid gray;
+    border-radius: 10px;  
+    padding: 1rem 5.7rem;
+    color: gray;
+    transition: 0.1s ease-out;
+  }
+  textarea:focus {
+    border-color: #038236;  
+  }
+  textarea:focus + .label-sty {
+    color: #038236;
+    top: 0;
+    transform: translateY(-50%) scale(.9);
+  }
+  textarea:not(:placeholder-shown) + .label-sty {
+    top: 0;
+    transform: translateY(-50%) scale(.9);
+  }
+
+  .span-sty{
+   margin-left: 230px;
+    color: #038236;
+    text-decoration:none ;
+  }
+
+  .span-colo{
+    text-decoration: none;
+    color: #038236;
+  }
+
+  .progress{
+    /* margin-left: 100px; */
+    width: 300px;
+    height: 0.2rem;
+    margin-left: 140px;
+  }

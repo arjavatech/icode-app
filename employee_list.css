@@ -19,3 +19,9 @@
     border: solid 1px #0A8080;
     padding: 5px 21px;
 }
+.success-msg {
+    display: none;
+}
+.error-msg {
+    display: none;
+}
