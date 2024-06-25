@@ -321,7 +321,7 @@ async function craeteFirstPageSignupAPiData() {
         createApiData();
 
             setTimeout(() => {
-                window.location.href = "login.html"; 
+                window.location.href = "index.html"; 
             }, 1000);        
       }
       else{
