@@ -8,6 +8,8 @@ function viewCurrentDateReport() {
     tableBody3.innerHTML = '';
     const date = new Date().toJSON().slice(0, 10);
 
+    console.log(date);
+
     heading.innerHTML = `Current Check-in ${date}`;
     const apiUrl = `${apiUrlBase}/${date}`;
     fetch(apiUrl)
@@ -19,41 +21,98 @@ function viewCurrentDateReport() {
         })
         .then(data => {
             try {
-                data.forEach(element => {
-                    const newRow = document.createElement('tr');
-                    if (element.CheckOutTime == null) {
-                        newRow.innerHTML = `
+        data.forEach(element => {
+            // Create a new table row
+            const newRow = document.createElement('tr');
+          
+            // Check if CheckOutTime is null
+            if (element.CheckOutTime == null) {
+              const datetimeId = `datetime-${element.CheckInTime}-${element.Pin}`;
+              const checkOutId = `check_out-${element.CheckInTime}-${element.Pin}`;       
+              newRow.innerHTML = `
                 <td class="Name">${element.Name}</td>
                 <td class="Pin">${element.Pin}</td>
                 <td class="Type">${element.Type}</td>
                 <td class="CheckInTime">${element.CheckInTime}</td>
                 <td>
-            <div class="text-center">
-                <input type="datetime-local" id="datetime" name="datetime" class="datetime-input">
-                <div class="calendar-icon" onclick="openDateTimePicker();"></div>
-            </div>
-        </td>
-        <td class="text-center">
-        <button type="button" class="btn btn-green float-end" id="check_out">Check-out</button>
-        </td>
-            `;
-                        tableBody3.appendChild(newRow);
-                    }
-                    else {
-                        const newRow = document.createElement('tr');
-                        newRow.innerHTML = `
-                        <td colspan="6" class="text-center">No Records Found</td>
-                    `;
-                        tableBody3.innerHTML = '';
-                        tableBody3.appendChild(newRow);
-                    }
+                  <div class="text-center">
+                    <input type="datetime-local" id="${datetimeId}" name="datetime" class="datetime-input" step="1">
+                    <div class="calendar-icon" onclick="openDateTimePicker();"></div>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-green" id="${checkOutId}" disabled>Check-out</button>
+                </td>
+              `;
 
-                });
+              tableBody3.appendChild(newRow);
+
+              // Get references to the input and button for this row (using the unique IDs)
+              const datetimeInput = document.getElementById(datetimeId);
+              const checkOutButton = document.getElementById(checkOutId);
+            
+              
+          
+              // Set initial disabled state
+              checkOutButton.disabled = true;
+          
+              // Add event listener for this specific input
+              datetimeInput.addEventListener('change', function() {
+                if (this.value) {
+                  checkOutButton.disabled = false;
+                } else {
+                  checkOutButton.disabled = true;
+                }
+              });
+
+              checkOutButton.addEventListener('click', function(){
+                
+                const date1 = new Date(datetimeInput.value);
+                const date2 = new Date(element.CheckInTime);
+
+                // Calculate the difference in milliseconds
+                const diffInMs = date1 - date2;
+
+                // Convert the difference from milliseconds to total minutes
+                const diffInMinutes = Math.floor(diffInMs / 1000 / 60);
+
+                // Calculate the total hours and remaining minutes
+                const totalHours = Math.floor(diffInMinutes / 60);
+                const minutes = diffInMinutes % 60;
+
+                // Format the hours and minutes
+                const formattedHours = String(totalHours).padStart(2, '0');
+                const formattedMinutes = String(minutes).padStart(2, '0');
+
+                updateDailyReportAPiData(element.EmpID, element.CID, date, element.Type, element.CheckInSnap, element.CheckInTime, element.CheckOutSnap, datetimeInput.value, `${formattedHours}:${formattedMinutes}`)
+                datetimeInput.value = '';
+                checkOutButton.disabled = true;
+              });
+          
+              
+            }
+          });
+
+                if( tableBody3.innerHTML == '')
+                    {
+
+                            const newRow = document.createElement('tr');
+                            newRow.innerHTML = `
+                            <td colspan="6" class="text-center">No Records Found</td>
+                        `;
+                            tableBody3.innerHTML = '';
+                            tableBody3.appendChild(newRow);
+
+                    }
 
             }
             catch {
-                // alert("No Data Found");
-                // console.log(apiUrl);
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                <td colspan="6" class="text-center">No Records Found</td>
+            `;
+                tableBody3.innerHTML = '';
+                tableBody3.appendChild(newRow);
 
             }
         })
@@ -80,12 +139,12 @@ function viewDatewiseReport(dateValue) {
                 return response.json();
             })
             .then(data => {
-
                 try {
                     data.forEach(element => {
                         const newRow = document.createElement('tr');
-                        if (element.CheckOutTime == null) {
-                            newRow.innerHTML = `
+                        if(element.CheckOutTime != null)
+                            {
+                        newRow.innerHTML = `
                     <td class="Name">${element.Name}</td>
                     <td class="Pin">${element.Pin}</td>
                     <td class="Type">${element.Type}</td>
@@ -93,9 +152,9 @@ function viewDatewiseReport(dateValue) {
                     <td class="CheckOutTime">${element.CheckOutTime}</td>
                     <td class="TimeWorked">${element.TimeWorked}</td>
                 `;
-                            tableBody.appendChild(newRow);
-                        }
+                        tableBody.appendChild(newRow);
 
+                            }
                     });
 
                 }
@@ -127,11 +186,13 @@ function viewDatewiseReport(dateValue) {
 
 //Report page(Range wise)
 function viewDateRangewiseReport(startValue, endvalue) {
+    const apiBase = "https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyReport/getDateRangeReport"
     const tableBody2 = document.getElementById("tBody2");
     tableBody2.innerHTML = '';
+    const cid = localStorage.getItem('companyID');
 
     if (endvalue != "test") {
-        const apiUrl = `${apiUrlBase}/${endvalue}`;
+        const apiUrl = `${apiBase}/${cid}/${startValue}/${endvalue}`;
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -144,6 +205,7 @@ function viewDateRangewiseReport(startValue, endvalue) {
                 try {
                     data.forEach(element => {
                         const newRow = document.createElement('tr');
+                        if (element.CheckOutTime != null) {
                         newRow.innerHTML = `
                 <td class="Name">${element.Name}</td>
                 <td class="Pin">${element.Pin}</td>
@@ -153,12 +215,11 @@ function viewDateRangewiseReport(startValue, endvalue) {
                 <td class="TimeWorked">${element.TimeWorked}</td>
             `;
                         tableBody2.appendChild(newRow);
-
+                        }
                     });
 
                 }
                 catch {
-                    // alert("No Data Found");
                 }
             })
             .catch(error => {
@@ -180,7 +241,7 @@ function viewDateRangewiseReport(startValue, endvalue) {
 // Call fetchData when the page is fully loaded
 document.addEventListener('DOMContentLoaded', viewCurrentDateReport());
 document.addEventListener('DOMContentLoaded', viewDatewiseReport("test"));
-document.addEventListener('DOMContentLoaded', viewDateRangewiseReport("test","test"));
+document.addEventListener('DOMContentLoaded', viewDateRangewiseReport("test", "test"));
 
 document.getElementById('dailyReportDate').addEventListener('change', function () {
     const dateValue = this.value;
@@ -239,3 +300,50 @@ document.getElementById('dateFrom').addEventListener('change', function () {
 // data.currentCheckins.forEach(person => {
 //     currentCheckinTbody.appendChild(createRow(person));
 // });
+
+async function updateDailyReportAPiData(emp_id, cid, date, type, checkin_snap, checkin_time,checkout_snap, checkout_time , time_worked) {
+  
+    const userData = {
+      CID: cid,
+        EmpID: emp_id,
+        Date: date,
+        TypeID: type,
+        CheckInSnap: checkin_snap,
+        CheckInTime: checkin_time,
+        CheckOutSnap: checkout_snap,
+        CheckOutTime: checkout_time,
+        TimeWorked: time_worked
+    }
+
+    var apiBaseUrl = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/update/${emp_id}/${cid}/${checkin_time}`;
+
+    try {
+      const response = await fetch(apiBaseUrl, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+  
+      else{
+      const data = await response.json();
+  
+      if (!data.error) {
+            setTimeout(() => {
+                window.location.href = "report.html"; 
+            }, 1000);        
+      }
+      else{
+        alert(data.error);
+      }
+    }
+    //   console.log(data);
+    } catch (error) {
+    //   console.error('Error:', error);
+    }
+  }
