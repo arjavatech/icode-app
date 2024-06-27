@@ -25,3 +25,8 @@
 .error-msg {
     display: none;
 }
+
+.showTheResponse{
+    background-color: #0A8080;
+color: white;
+}

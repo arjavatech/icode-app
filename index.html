@@ -83,11 +83,11 @@ else{
         // console.log('Fetched data:', data); // Log the fetched data
 
         const user = data["UserName"] === username &&  decryptPassword === password;
-        // console.log(data["Password"]);
-        // console.log(decrypt(data["Password"],key1));
-        // console.log(data["UserName"] === username);
-        // console.log(decryptPassword === password);
-
+        console.log(data["Password"]);
+        console.log(decrypt(data["Password"],key1));
+        console.log(data["UserName"] === username);
+        console.log(decryptPassword === password);
+console.log(password);
         // console.log('Found user:', data.userName); // Log the found user
 
         return user ? true : false;
