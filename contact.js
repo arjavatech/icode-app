@@ -122,18 +122,88 @@ input.addEventListener('keyup', () => {
 // Reset error messages when changing the country dial code
 input.addEventListener('countrychange', reset);
 
-  function validatePhoneNumber() {
-    const countryCode = iti.getSelectedCountryData().dialCode;
-    const phoneNumber = input.value;
-    const errorPhoneNumber = document.getElementById('error-phone');
+//   function validatePhoneNumber() {
+//     const countryCode = iti.getSelectedCountryData().dialCode;
+//     const phoneNumber = input.value;
+//     const errorPhoneNumber = document.getElementById('error-phone');
 
-    if (!iti.isValidNumber()) {
-        const errorCode = iti.getValidationError();
-        const msg = errorMap[errorCode] || "Invalid number";
-        errorPhoneNumber.textContent = msg;
-        return false;
+//     if (!iti.isValidNumber()) {
+//         const errorCode = iti.getValidationError();
+//         const msg = errorMap[errorCode] || "Invalid number";
+//         errorPhoneNumber.textContent = msg;
+//         return false;
+//     }
+//     return true;
+// }
+
+// Function to validate the entire form
+function validateForm() {
+    const isNameValid = validCName();
+    // const isPhoneNumberValid = validatePhoneNumber();
+    const isEmailValid = validCEmail();
+    const isValidMessage = validCQueries();
+  
+    if (isNameValid && isEmailValid && isValidMessage) {
+        callContactUsCreateAPiData()
+        alert('Your contact information is sent to our support team.');
+    } else {
+        alert('Please fix the errors in the form');
     }
+  }
 
-    errorPhoneNumber.textContent = '';
-    return true;
-}
+  async function callContactUsCreateAPiData() {
+    const apiLink = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/contact-us/create`;
+
+    const requestID = uuid.v4();
+    const cid = localStorage.getItem('companyID');
+    const name =  document.getElementById("cname").value;
+    const requestorEmail = document.getElementById("cemail").value;
+    const concernsQuestions = document.getElementById("question").value;
+    const phoneNumber = document.getElementById("phoneNumber").value;
+    const status = "pending";
+
+    const userData = {
+        RequestID :  requestID,
+        CID : cid,
+        Name :  name,
+        RequestorEmail : requestorEmail,
+        ConcernsQuestions : concernsQuestions,
+        PhoneNumber : phoneNumber,
+        Status : status
+    };
+    
+    console.log(userData);
+
+    try {
+      const response = await fetch(apiLink, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+  
+      else{
+      const data = await response.json();
+  
+      if (!data.error) {
+        document.getElementById("cname").value = "";
+        document.getElementById("cemail").value = "";
+        document.getElementById("question").value = "";
+        document.getElementById("phoneNumber").value = "";
+
+      }
+      else{
+        alert(data.error);
+
+      }
+    }
+    //   console.log(data);
+    } catch (error) {
+    //   console.error('Error:', error);
+    }
+  }

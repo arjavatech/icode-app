@@ -14,12 +14,25 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css" />
     <link rel="stylesheet" href="contact.css">
     <link rel="stylesheet" href="form_style.css">
     <script defer src="contact.js"></script>
     <style>
+        .box-sty {
+        /* width: 60%; */
+        /* border-color: none !important; */
+        max-width: 500px;
+        /* margin: 50px auto; */
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+    }
+    .modal-content{
+        border: none !important;
+    }
        /* label {
         top: 41%;
         margin-left: 50px;
@@ -27,7 +40,6 @@
        /* input:focus + label {
             margin-left: 10%;
        } */
-    
     </style>
 </head>
 
@@ -50,10 +62,10 @@
                             <a class="nav-link" href="employee_list.html">Employee Management</a>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link" href="#">Report</a>
+                            <a class="nav-link" href="report.html">Report</a>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link" href="#">Profile</a>
+                            <a class="nav-link" href="profile.html">Profile</a>
                         </li>
                         <li class="nav-item me-4">
                             <a class="nav-link rounded-pill-active px-4" href="contact.html">Contact Us</a>
@@ -69,14 +81,13 @@
         </nav>
     </header>
     <section>
-        <div class="container mt-5">
+        <div class="container  box-sty mt-5">
             <h3 class="modal-title fw-bold text-center" id="myModalLabel">Contact Us</h3>
            
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
                         <form id="contact_form" class="p-2 text-center">
-
                             <div class="material-textfield mb-3">
                                 <input id="cname" placeholder=" " type="text" required onblur="validCName()">
                                 <label class="cname">Name <span class="text-danger">*</span></label>
@@ -97,7 +108,7 @@
                             <span id="error-textarea" class="text-danger"></span>
                             </div>
                             <div class="material-textfield mb-3">
-                                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" ">
+                                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" " onblur="validatePhoneNumber">
                                 <!-- <label>Phone-number</label> -->
                                 <br>
                                 <span class="text-danger" id="showMsg3"></span>
@@ -109,7 +120,7 @@
                                 </p>
                             </div>
                             
-                            <button type="button" id="savebtn" class="settings-btn-sty btn btn-green">
+                            <button type="button" id="savebtn" class="settings-btn-sty btn btn-green" onclick="validateForm()">
                                 Submit
                             </button>
 
