@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="old_style.css">
     <script defer src="signup.js"></script>
     <title>Signup Page</title>
     <style>
@@ -35,32 +35,32 @@
                     <div class="progress-bar" role="progressbar"></div>
                 </div>
                 <div class="material-textfield mt-4">
-                    <input id="companyName" placeholder=" " type="text" onblur="validateCompanyName()">
-                    <label>Company Name</label>
+                    <input id="companyName" placeholder=" " type="text" onblur="validateCompanyName()" class="input-sty">
+                    <label class="label-sty">Company Name</label>
                     <br>
                     <span class="text-danger" id="errorCompanyName"></span>
                 </div>
                 <div class="material-textfield mt-4">
-                    <input id="companyLogo" placeholder=" " type="file" onblur="validateCompanyLogo()">
-                    <label>Upload Company Logo</label>
+                    <input id="companyLogo" placeholder=" " type="file" onblur="validateCompanyLogo()" class="input-sty">
+                    <label class="label-sty">Upload Company Logo</label>
                     <br>
                     <span class="text-danger" id="errorCompanyLogo"></span>
                 </div>
                 <div class="material-textfield mt-4">
-                    <input id="companyAddress" placeholder=" " onblur="validateCompanyAddress()"></input>
-                    <label>Company Address</label>
+                    <input id="companyAddress" placeholder=" " onblur="validateCompanyAddress()" class="input-sty"></input>
+                    <label class="label-sty">Company Address</label>
                     <br>
                     <span class="text-danger" id="errorCompanyAddress"></span>
                 </div>
                 <div class="material-textfield mt-4">
-                    <input id="username" placeholder=" " type="text" onblur="validateUsername()">
-                    <label>Username</label>
+                    <input id="username" placeholder=" " type="text" onblur="validateUsername()" class="input-sty">
+                    <label class="label-sty">Username</label>
                     <br>
                     <span class="text-danger" id="errorUsername"></span>
                 </div>
                 <div class="material-textfield mt-4">
-                    <input id="password" placeholder=" " type="password" onblur="validatePassword()">
-                    <label>Password</label>
+                    <input id="password" placeholder=" " type="password" onblur="validatePassword()" class="input-sty">
+                    <label class="label-sty">Password</label>
                     <br>
                     <span class="text-danger" id="errorPassword"></span>
                 </div>
@@ -68,6 +68,7 @@
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
 </body>
 
 </html>

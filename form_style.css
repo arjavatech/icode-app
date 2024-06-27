@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
   .material-textfield {
     position: relative; 
@@ -66,4 +67,74 @@
     label { 
       margin-left: 28%;
     }
+=======
+
+  .material-textfield {
+    position: relative; 
+  }
+  textarea {
+    font-size: 1rem;
+    outline: none;
+    border: 1px solid gray;
+    border-radius: 10px;  
+    padding: 1rem 3.6rem;
+    color: gray;
+    transition: 0.1s ease-out;
+  }
+  textarea:focus {
+    border-color: #0A8080;  
+  }
+  textarea:focus + label {
+    color: #0A8080;
+    top: 0;
+    transform: translateY(-50%) scale(.9);
+  }
+  textarea:not(:placeholder-shown) + label {
+    top: 0;
+    transform: translateY(-50%) scale(.9);
+  }
+  input {
+    font-size: 1rem;
+    outline: none;
+    border: 1px solid gray;
+    border-radius: 10px;  
+    padding: .5rem 3rem !important;
+    color: #0A8080;
+    transition: 0.1s ease-out;
+  }
+  input:focus {
+    border-color: #0A8080;  
+  }
+  input:focus + label {
+    color: #0A8080;
+    top: 0;
+    transform: translateY(-50%) scale(.9);
+    margin-left: 30%;
+  }
+  input:not(:placeholder-shown) + label {
+    top: 0;
+    transform: translateY(-50%) scale(.9);
+    margin-left: 30%;
+  }
+  label {
+    position: absolute;
+    font-size: 1rem;
+    left: 0;
+    top: 44%;
+    transform: translateY(-50%);
+    background-color: white;
+    color: gray;
+    padding: 0 0.3rem;
+    margin: 0 0.5rem;
+    transition: .1s ease-out;
+    transform-origin: left top;
+    pointer-events: none;
+    margin-left: 35%;
+    
+  }
+  @media only screen and (max-width: 600px) { 
+    label { 
+      margin-left: 28%;
+    }
+>>>>>>> 0d64c08a60e226fe98c21931c3a78f759d7d9527
   }

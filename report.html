@@ -4,276 +4,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>Report</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="style.css">
-    <title>Check-in Check-out Table</title>
-    <style>
-        .center-table {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        table {
-            width: 80%;
-            border-collapse: collapse;
-            background-color: #fff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            text-align: center;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        .form-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 100px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input[type="date"] {
-            padding: 8px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            outline: none;
-        }
-
-        input[type="date"]:focus {
-            border-color: #4CAF50;
-        }
-
-        .datetime-input {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .calendar-icon {
-            width: 14px;
-            height: 14px;
-            background-image: url('calendar-icon.png');
-            background-size: cover;
-            cursor: pointer;
-        }
-
-        .checkout-btn {
-            padding: 8px 12px;
-            /* background: linear-gradient(90deg, #2e50a5, #a82fae, #e69d30, #e56352); */
-            background-color: #D6FFE7;
-            color: black;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            border: 1px solid black;
-        }
-
-        .checkout-btn:hover {
-            background-color: #218838;
-        }
-
-        #download {
-            padding: 8px 12px;
-            background: linear-gradient(90deg, #2e50a5, #a82fae, #e69d30, #e56352);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 30px;
-            margin-left: 48%;
-            margin-bottom: 30px;
-        }
-
-        @media (max-width: 901px) {
-            input {
-                width: 100px !important;
-            }
-        }
-
-        @media (max-width: 383px) {
-            th {
-                font-size: 10px;
-                padding: 3px;
-            }
-
-            td {
-                font-size: 8px;
-            }
-
-            .form-container {
-                gap: 20px;
-            }
-        }
-        .settings-btn-sty{
-        padding-left: 40px;
-        padding-right: 40px;
-        border-radius: 10px;
-        margin-left: 650px;
-    }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css" />
+    <link rel="stylesheet" href="report.css">
+    <script defer src="report.js"></script>
+  
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse appbar text-white">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-green">
+            <div class="container">
+                <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand logo" href="#"></a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- <li><a href="loginPage.html"> Home</a></li> -->
-                    <li><a href="table.html"> Details</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="report.html" class="active-sty">Report</a></li>
-                    <li><a href="settings.html"><i class="fa-solid fa-gear fa-1x settings-icon"></i></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item me-4">
+                            <a class="nav-link" href="#">Dashboard</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link" href="employee_list.html">Employee Management</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link rounded-pill-active px-4" href="report.html">Report</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link" href="profile.html">Profile</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link" href="contact.html">Contact Us</a>
+                        </li>
 
-    <h2 class="text-center" id="current-checkin-date"></h2><br>
-
-    <table class="center-table" id="current-checkin-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>ID</th>
-                <th>Check-in Time</th>
-                <th>Check-out Time</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody id="current-checkin-tbody">
-            <!-- Rows will be inserted here by JavaScript -->
-        </tbody>
-    </table>
-
-    <h2 class="text-center" id="pending-checkout-date"></h2><br>
-    <table class="center-table" id="pending-checkout-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>ID</th>
-                <th>Check-in Time</th>
-                <th>Check-out Time</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody id="pending-checkout-tbody">
-            <!-- Rows will be inserted here by JavaScript -->
-        </tbody>
-    </table>
-
-    <h2 class="text-center">Report</h2>
-    <div class="form-container">
-        <div class="form-group">
-            <label for="dateFrom">Date - From</label><br>
-            <input type="date" id="dateFrom" class="date-style">
-        </div>
-        <div class="form-group">
-            <label for="dateTo">Date - To</label><br>
-            <input type="date" id="dateTo" class="date-style">
-        </div>
-    </div>
-
-    <button type="button" class="settings-btn-sty bg-dark text-white fs-5 mb-3">Download</button>
-    <script>
-        const data = {
-            currentCheckinDate: "Current Check-in [24-05-2024]",
-            pendingCheckoutDate: "Pending Check-out [23-05-2024]",
-            currentCheckins: [
-                { name: "John Doe", id: "2345", checkinTime: "2024-05-24 11:10:23" },
-                { name: "Doe", id: "2315", checkinTime: "2024-05-24 12:10:23" },
-                { name: "Alex", id: "2340", checkinTime: "2024-05-24 14:10:23" },
-                { name: "Martin", id: "2390", checkinTime: "2024-05-24 16:10:23" }
-            ],
-            pendingCheckouts: [
-                { name: "Martin", id: "2390", checkinTime: "2024-05-23 16:10:23" }
-            ]
-        };
-
-        document.getElementById("current-checkin-date").textContent = data.currentCheckinDate;
-        document.getElementById("pending-checkout-date").textContent = data.pendingCheckoutDate;
-
-        const currentCheckinTbody = document.getElementById("current-checkin-tbody");
-        const pendingCheckoutTbody = document.getElementById("pending-checkout-tbody");
-
-        function createRow(person) {
-            const tr = document.createElement("tr");
-
-            tr.innerHTML = `
-                <td>${person.name}</td>
-                <td>${person.id}</td>
-                <td>${person.checkinTime}</td>
-                <td>
-                    <div class="text-center">
-                        <input type="datetime-local" id="datetime" name="datetime" class="datetime-input">
-                        <div class="calendar-icon" onclick="openDateTimePicker();"></div>
+                    </ul>
+                    <div>
+                        <a href="#" class="btn btn-outline-light">Logout</a>
                     </div>
-                </td>
-                <td><button type="button" class="checkout-btn" id="check_out">Check-out</button></td>
-            `;
 
-            return tr;
-        }
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section>
+        <div class="container mt-5">
+            
+            <div class="emp-list">
+               
+                <h2 class="text-center fw-bold mb-5">Daily Report - <input id="dailyReportDate" type="date" style="font-size: large; font-weight: lighter;"> </h2>
 
-        data.currentCheckins.forEach(person => {
-            currentCheckinTbody.appendChild(createRow(person));
-        });
+                <div class="emp-table table-responsive">
+                    <table class="table table-bordered table-hover text-center">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Check-in Time</th>
+                                <th>Check-out Time</th>
+                                <th>Time worked</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tBody">
+                            <!-- <td class="fName">dfgdf</td>
+                            <td class="lName">fgd</td>
+                            <td class="instructor">2343</td>
+                            <td class="phoneNumber">674534232</td>
+                            <td>
+                                <button class="btn icon-button btn-green" onclick="editRow(this)" data-bs-toggle="modal"
+                                    data-bs-target="#myModal"> Edit </button>
+                                <button class="btn icon-button btn-outline-green" onclick="deleteRow(this)"> Delete
+                                </button>
+                            </td> -->
+                        </tbody>
+                    </table>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title fw-bold" id="myModalLabel">Employee Details</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="emp_form" class="p-2 text-center">
 
-        data.pendingCheckouts.forEach(person => {
-            pendingCheckoutTbody.appendChild(createRow(person));
-        });
+                                        <div class="material-textfield mb-3">
+                                            <input type="text" id="fName" name="fName" placeholder=" " required
+                                                onblur="validFName()">
+                                            <label>First Name</label><br>
+                                            <span class="text-danger" id="showMsg1"></span>
+                                        </div>
+                                        <div class="material-textfield mb-3">
+                                            <input type="text" id="lName" name="lName" placeholder=" "
+                                                onblur="validLName()">
+                                            <label>Last Name</label><br>
+                                            <span class="text-danger" id="showMsg2"></span>
+                                        </div>
 
-        function openDateTimePicker() {
-            document.getElementById('datetime').click();
-        }
-    </script>
+                                        <div class="material-textfield mb-3">
+                                            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" " onkeyup="validPhoneno()">
+                                            <!-- <label>Phone-number</label> -->
+                                            <br>
+                                            <span class="text-danger" id="showMsg3"></span>
+                                        </div>
+
+                                        <div class="material-textfield mb-3">
+                                            <input id="instructor" placeholder=" " type="text"
+                                                onblur="validateInstructerPin()" disabled>
+                                            <label>Instructor Pin</label>
+                                            <br>
+                                            <span class="text-danger" id="showMsg"></span>
+                                        </div>
+                                        <button type="button" id="savebtn" class="settings-btn-sty btn btn-green"
+                                            onclick="addEmpdetails(event)" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
+                                            Save
+                                        </button>
+
+                                    </form>
+                                </div>
+                                <!-- <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                   
+                                    </button>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
 </body>
 
 </html>
