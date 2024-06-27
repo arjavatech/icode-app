@@ -6,9 +6,17 @@ function viewCurrentDateReport() {
     const tableBody3 = document.getElementById("current-checkin-tbody");
     const heading = document.getElementById("current-checkin-date");
     tableBody3.innerHTML = '';
-    const date = new Date().toJSON().slice(0, 10);
+    // Get the current date
+    const now = new Date();
 
-    console.log(date);
+    // Get the date components
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(now.getDate()).padStart(2, '0');
+
+    // Format as yyyy-mm-dd
+    const date = `${year}-${month}-${day}`;
+
 
     heading.innerHTML = `Current Check-in ${date}`;
     const apiUrl = `${apiUrlBase}/${date}`;
