@@ -35,3 +35,18 @@
     color: gray !important;
     border-radius: 10px;
 }
+
+.breadcrumb-item.active {
+    color: #0A8080;
+}
+.dropdown-item:focus, .dropdown-item:hover {
+    color: #0A8080;
+    background-color: #e9ecef;
+}
+.bootstrap-select.show-tick .dropdown-menu .selected span.check-mark,.filter-option-inner-inner {
+    color: #0A8080;
+}
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn):hover {
+    border: 1px solid gray;
+    border-radius: 10px
+  }

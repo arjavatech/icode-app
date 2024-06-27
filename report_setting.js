@@ -14,7 +14,7 @@ function dataRemove(e) {
 
 function addEmpdetails() {
     const isValidRdays = validReportdays();
-    const isValidEmail = validCEmail();
+    const isValidEmail = validREmail();
 
     if (isValidRdays && isValidEmail) {
         const empupdateid = document.getElementById("savebtn").value;
@@ -250,34 +250,36 @@ function deleteEmpdetails(emId) {
 var isEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 function validREmail() {
-    const cemail = document.getElementById('cemail').value;
-    const errorcEmail = document.getElementById('error-email');
+    const remail = document.getElementById('remail').value;
+    const errorrEmail = document.getElementById('error-email');
 
-    if (cemail.trim() === '') {
-        errorcEmail.textContent = 'Email is required';
+    if (remail.trim() === '') {
+        errorrEmail.textContent = 'Email is required';
         return false;
     }
-    else if (!isEmail.test(cemail)) {
-        errorcEmail.textContent = 'Email pattern is Invalid';
+    else if (!isEmail.test(remail)) {
+        errorrEmail.textContent = 'Email pattern is Invalid';
         return false;
     } else {
-        errorcEmail.textContent = '';
+        errorrEmail.textContent = '';
         return true;
     }
-    
+
 }
 
-    function validReportdays(){
-        const select = document.getElementById('frequencySelect');
-        const errorMsg = document.getElementById('selectError');
-    
-        if (select.selectedOptions.length === 0) {
-            errorMsg.textContent = 'Please select at least one option.';
-            return false;
-        } else {
-            errorMsg.textContent = '';
-            return true;
-        }
-    
+const select = document.getElementById('frequencySelect');
+const errorMsg = document.getElementById('selectError');
+
+function validReportDays() {
+    if (select.selectedOptions.length === 0) {
+        errorMsg.textContent = 'Please select at least one option.';
+        return false;
+    } else {
+        errorMsg.textContent = '';
+        return true;
     }
-    
+}
+
+// select.addEventListener('blur', validReportDays);
+select.addEventListener('change', validReportDays);
+
