@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const address = localStorage.getItem('address');
     const phone = localStorage.getItem('phone');
     const email = localStorage.getItem('email');
-    console.log(firstName);
+    console.log(companyName);
 
     if (companyName) document.getElementById('companyName').value = companyName;
     if (companyAddress) document.getElementById('companyAddress').value = companyAddress;

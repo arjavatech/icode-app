@@ -74,21 +74,14 @@ else{
         const decryptPassword = await decrypt(data["Password"],key1)
         const companyID = data["CID"];
         localStorage.setItem('companyID',companyID);
-        // localStorage.setItem('companyName', companyName);
-      localStorage.setItem('companyLogo', data["CLogo"]);
-      localStorage.setItem('companyAddress', data["CAddress"]);
-      localStorage.setItem('username', data["UserName"]);
-      localStorage.setItem('password', data["Password"]);
+        localStorage.setItem('companyName', data["CName"]);
+        localStorage.setItem('companyLogo', data["CLogo"]);
+        localStorage.setItem('companyAddress', data["CAddress"]);
+        localStorage.setItem('username', data["UserName"]);
+        localStorage.setItem('password', data["Password"]);
         getCustmData(companyID);
-        // console.log('Fetched data:', data); // Log the fetched data
 
         const user = data["UserName"] === username &&  decryptPassword === password;
-        console.log(data["Password"]);
-        console.log(decrypt(data["Password"],key1));
-        console.log(data["UserName"] === username);
-        console.log(decryptPassword === password);
-console.log(password);
-        // console.log('Found user:', data.userName); // Log the found user
 
         return user ? true : false;
 }
