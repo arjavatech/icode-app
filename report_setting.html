@@ -65,7 +65,7 @@
         <div class="container mt-2">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#" class="text-dark  text-decoration-none">Report Summary</a></li>
+                  <li class="breadcrumb-item"><a href="report.html" class="text-dark  text-decoration-none">Report Summary</a></li>
                   <li class="breadcrumb-item active" aria-current="page">Report Settings</li>
                 </ol>
             </nav>
@@ -127,7 +127,7 @@
                                             <span id="error-email" class="text-danger"></span>
                                         </div>
                                         <div class="material-textfield mb-3">
-                                            <select id="frequencySelect" class="selectpicker" multiple aria-label="size 3 select example">
+                                            <select id="frequencySelect" class="selectpicker" multiple aria-label="size 3 select example" onchange="validReportDays()">
                                                 <option value="Daily">Daily</option>
                                                 <option value="Weekly">Weekly</option>
                                                 <option value="Biweekly">Biweekly</option>

@@ -1,5 +1,5 @@
 
-const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/employee';
+const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company-report-type';
 
 
 // Remove Data
@@ -10,47 +10,60 @@ function dataRemove(e) {
     document.getElementById("savebtn").value = "";
 }
 
-// Create Data
+// Create Data and Update Data
 
-function addEmpdetails() {
-    const isValidRdays = validReportdays();
+function addreportdetails() {
+    const isValidRdays = validReportDays();
     const isValidEmail = validREmail();
 
     if (isValidRdays && isValidEmail) {
-        const empupdateid = document.getElementById("savebtn").value;
-        const empfname = document.getElementById("remail").value;
-        const emplname = document.getElementById("frequencySelect").value;
-        const empactive = true;
-        // const empid = "68f9bafc-2390-11ef-82b6-02d83582ee24";
-        const empid = 'eid_' + Math.random().toString(36).substr(2, 12);
-        const empcid = "68f9bafc-2390-11ef-82b6-02d83582ee21";
+        const reportUpdateid = document.getElementById("savebtn").value;
+        const reportEmail = document.getElementById("remail").value;
+        const reportSelect = document.getElementById("frequencySelect");
+        const selectedValues = Array.from(reportSelect.selectedOptions).map(option => option.value);
+        let DailyReportActive = false;
+        let WeeklyReportActive = false;
+        let BiWeeklyReportActive = false;
+        let MonthlyReportActive = false;
+        let BiMonthlyReportActive = false;
+        const company_id = localStorage.getItem('companyID');
 
-        if (empupdateid == "") {
+
+        selectedValues.forEach(element => {
+            if (element == 'Daily') {
+                DailyReportActive = true;
+            } else if (element == 'Weekly') {
+                WeeklyReportActive = true;
+            } else if (element == 'Biweekly') {
+                BiWeeklyReportActive = true;
+            } else if (element == 'Monthly') {
+                MonthlyReportActive = true;
+            } else if (element == 'Bimonthly') {
+                BiMonthlyReportActive = true;
+            }
+        });
+
+        if (reportUpdateid == "") {
             const apiUrl = `${apiUrlBase}/create`;
 
-            // console.log(uEmpid);
-            // return false;
+            const reportObject = {
+                CompanyReporterEmail: reportEmail,
+                CID: company_id,
+                IsDailyReportActive: DailyReportActive,
+                IsWeeklyReportActive: WeeklyReportActive,
+                IsBiWeeklyReportActive: BiWeeklyReportActive,
+                IsMonthlyReportActive: MonthlyReportActive,
+                IsBiMonthlyReportActive: BiMonthlyReportActive
 
-
-            // let outPut = document.getElementById("resmsg");
-
-            const employeeObject = {
-                EmpID: empid,
-                CID: empcid,
-                FName: empfname,
-                LName: emplname,
-                IsActive: empactive,
-                PhoneNumber: empphoneno,
-                Pin: empinst
             };
-            console.log(employeeObject);
+            console.log(reportObject);
 
             fetch(apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(employeeObject)
+                body: JSON.stringify(reportObject)
             })
                 .then(response => {
                     if (!response.ok) {
@@ -59,21 +72,20 @@ function addEmpdetails() {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
                     if (data.error) {
                         document.querySelector(".e-msg").textContent = data.error;
                         $(".error-msg").show();
                         setTimeout(function () {
                             $(".error-msg").hide();
-                            window.location.href = "employee_list.html";
-                        }, 3000);
+                            window.location.href = "report_setting.html";
+                        }, 1000);
                     } else {
                         document.querySelector(".s-msg").textContent = data.message;
                         $(".success-msg").show();
                         setTimeout(function () {
                             $(".success-msg").hide();
-                            window.location.href = "employee_list.html";
-                        }, 3000);
+                            window.location.href = "report_setting.html";
+                        }, 1000);
                     }
 
                 })
@@ -82,25 +94,26 @@ function addEmpdetails() {
                     // outPut.textContent = 'Error creating data.';
                 });
         } else {
-            const apiUrl = `${apiUrlBase}/update/${empupdateid}`;
+            const apiUrl = `${apiUrlBase}/update/${reportUpdateid}/${company_id}`;
 
-            const updateEmployeeObject = {
-                EmpID: empid,
-                CID: empcid,
-                FName: empfname,
-                LName: emplname,
-                IsActive: empactive,
-                PhoneNumber: empphoneno,
-                Pin: empinst
+            const updateReportObject = {
+                CompanyReporterEmail: reportEmail,
+                CID: company_id,
+                IsDailyReportActive: DailyReportActive,
+                IsWeeklyReportActive: WeeklyReportActive,
+                IsBiWeeklyReportActive: BiWeeklyReportActive,
+                IsMonthlyReportActive: MonthlyReportActive,
+                IsBiMonthlyReportActive: BiMonthlyReportActive
             };
-            console.log(updateEmployeeObject);
+            console.log(updateReportObject);
+            // return false;
 
             fetch(apiUrl, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(updateEmployeeObject)
+                body: JSON.stringify(updateReportObject)
             })
                 .then(response => {
                     if (!response.ok) {
@@ -115,15 +128,15 @@ function addEmpdetails() {
                         $(".error-msg").show();
                         setTimeout(function () {
                             $(".error-msg").hide();
-                            window.location.href = "employee_list.html";
-                        }, 3000);
+                            window.location.href = "report_setting.html";
+                        }, 1000);
                     } else {
                         document.querySelector(".s-msg").textContent = data.message;
                         $(".success-msg").show();
                         setTimeout(function () {
                             $(".success-msg").hide();
-                            window.location.href = "employee_list.html";
-                        }, 3000);
+                            window.location.href = "report_setting.html";
+                        }, 1000);
                     }
 
                 })
@@ -142,45 +155,10 @@ function addEmpdetails() {
 
 // View Data
 
-// function viewEmpdetails() {
-//     const tableBody = document.getElementById("tBody");
-//     const apiUrl = `${apiUrlBase}/getall/68f9bafc-2390-11ef-82b6-02d83582ee21`;
-
-//     fetch(apiUrl)
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error(`Error: ${response.status}`);
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             console.log(data);
-//             data.forEach(element => {
-//                 const newRow = document.createElement('tr');
-//                 newRow.innerHTML = `
-//                 <td class="fName">${element.FName}</td>
-//                 <td class="lName">${element.LName}</td>
-//                 <td>
-//                 <button class="btn icon-button btn-green" onclick="editEmpdetails('${element.EmpID}')" data-bs-toggle="modal" data-bs-target="#myModal"> Edit </button>
-//                 <button class="btn icon-button btn-outline-green" onclick="deleteEmpdetails('${element.EmpID}')"> Delete </button>
-//                 </td>
-//             `;
-//                 tableBody.appendChild(newRow);
-//             });
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-
-// }
-
-// Call fetchData when the page is fully loaded
-// document.addEventListener('DOMContentLoaded', viewEmpdetails);
-
-// Edit Data
-
-function editEmpdetails(emId) {
-    const apiUrl = `${apiUrlBase}/get/` + emId;
+function viewReportdetails() {
+    const tableBody = document.getElementById("tBody");
+    const company_id = localStorage.getItem('companyID');
+    const apiUrl = `${apiUrlBase}/getAllReportEmail/${company_id}`;
 
     fetch(apiUrl)
         .then(response => {
@@ -190,15 +168,76 @@ function editEmpdetails(emId) {
             return response.json();
         })
         .then(data => {
-            console.log(data);
-            data.forEach(formvalue => {
-                document.getElementById("instructor").value = formvalue.Pin;
-                document.getElementById("fName").value = formvalue.FName;
-                document.getElementById("lName").value = formvalue.LName;
-                document.getElementById("phoneNumber").value = formvalue.PhoneNumber;
-                document.getElementById("savebtn").value = formvalue.EmpID;
-            });
+            
+            data.forEach(element => {
+                const ReportActive = [];
+                if (element.IsDailyReportActive == 1) {
+                    ReportActive.push('Daily');
+                }   
+                if (element.IsWeeklyReportActive == 1) {
+                    ReportActive.push('Weekly');
+                } 
+                if (element.IsBiWeeklyReportActive == 1) {
+                    ReportActive.push('Biweekly');
+                }
+                if (element.IsMonthlyReportActive == 1) {
+                    ReportActive.push('Monthly');
+                } 
+                if (element.IsBiMonthlyReportActive == 1) {
+                    ReportActive.push('Bimonthly');
+                }
+                
+              // Convert the array to a comma-separated string
+                const Frequency = ReportActive.join(', ');
+                const newRow = document.createElement('tr');
 
+                newRow.innerHTML = `
+                <td class="ReporterEmail">${element.CompanyReporterEmail}</td>
+                <td class="ReportActive">${Frequency}</td>
+                <td>
+                <button class="btn icon-button btn-green" onclick="editEmpdetails('${element.CompanyReporterEmail}')" data-bs-toggle="modal" data-bs-target="#myModal"> Edit </button>
+                <button class="btn icon-button btn-outline-green" onclick="deleteEmpdetails('${element.CompanyReporterEmail}')"> Delete </button>
+                </td>
+            `;
+                tableBody.appendChild(newRow);
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+}
+
+// Call fetchData when the page is fully loaded
+document.addEventListener('DOMContentLoaded', viewReportdetails);
+
+// Edit Data
+
+function editEmpdetails(companyEmail) {
+    const company_id = localStorage.getItem('companyID');
+    const apiUrl = `${apiUrlBase}/get/${companyEmail}/${company_id}`;
+    const freqselect = document.getElementById('frequencySelect');
+    const freqselectedValues = [];
+    
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            if (data.IsDailyReportActive) freqselectedValues.push('Daily');
+            if (data.IsWeeklyReportActive) freqselectedValues.push('Weekly');
+            if (data.IsBiWeeklyReportActive) freqselectedValues.push('Biweekly');
+            if (data.IsMonthlyReportActive) freqselectedValues.push('Monthly');
+            if (data.IsBiMonthlyReportActive) freqselectedValues.push('Bimonthly');
+
+            // Set the selected values
+            $(freqselect).selectpicker('val', freqselectedValues);
+            document.getElementById("remail").value = data.CompanyReporterEmail;
+            document.getElementById("savebtn").value = data.CompanyReporterEmail;
         })
         .catch(error => {
             console.error('Error:', error);
@@ -207,9 +246,9 @@ function editEmpdetails(emId) {
 
 // Delete Data
 
-function deleteEmpdetails(emId) {
-
-    const apiUrl = `${apiUrlBase}/delete/${emId}`;
+function deleteEmpdetails(companyEmail) {
+    const company_id = localStorage.getItem('companyID');
+    const apiUrl = `${apiUrlBase}/delete/${companyEmail}/${company_id}`;
 
     fetch(apiUrl, {
         method: 'DELETE'
@@ -221,21 +260,20 @@ function deleteEmpdetails(emId) {
             return response.json();
         })
         .then(data => {
-            console.log(data);
             if (data.error) {
                 document.querySelector(".e-msg").textContent = data.error;
                 $(".error-msg").show();
                 setTimeout(function () {
                     $(".error-msg").hide();
-                    window.location.href = "employee_list.html";
-                }, 3000);
+                    window.location.href = "report_setting.html";
+                }, 1000);
             } else {
                 document.querySelector(".s-msg").textContent = data.message;
                 $(".success-msg").show();
                 setTimeout(function () {
                     $(".success-msg").hide();
-                    window.location.href = "employee_list.html";
-                }, 3000);
+                    window.location.href = "report_setting.html";
+                }, 1000);
             }
         })
         .catch(error => {
@@ -267,10 +305,11 @@ function validREmail() {
 
 }
 
-const select = document.getElementById('frequencySelect');
-const errorMsg = document.getElementById('selectError');
 
 function validReportDays() {
+    const select = document.getElementById('frequencySelect');
+    const errorMsg = document.getElementById('selectError');
+
     if (select.selectedOptions.length === 0) {
         errorMsg.textContent = 'Please select at least one option.';
         return false;
@@ -279,7 +318,4 @@ function validReportDays() {
         return true;
     }
 }
-
-// select.addEventListener('blur', validReportDays);
-select.addEventListener('change', validReportDays);
 
