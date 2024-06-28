@@ -343,7 +343,7 @@ async function updateDailyReportAPiData(emp_id, cid, date, type, checkin_snap, c
   
       if (!data.error) {
             setTimeout(() => {
-                window.location.href = "report.html"; 
+                window.location.href = "report_summary.html"; 
             }, 1000);        
       }
       else{

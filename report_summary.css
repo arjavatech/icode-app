@@ -30,3 +30,7 @@
     background-color: #0A8080;
 color: white;
 }
+
+.breadcrumb-item.active {
+    color: #0A8080;
+}

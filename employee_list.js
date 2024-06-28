@@ -17,7 +17,7 @@ function dataRemove(e) {
 function addEmpdetails() {
     const isValidFName = validFName();
     const isValidLName = validLName();
-    const isValidPhoneNumber = validatePhoneNumber();
+    const isValidPhoneNumber = validPhoneno();
     // const isvalidInstructerPin = validateInstructerPin();
 
     if (isValidFName && isValidLName && isValidPhoneNumber) {
@@ -73,14 +73,14 @@ function addEmpdetails() {
                         setTimeout(function () {
                             $(".error-msg").hide();
                             window.location.href = "employee_list.html";
-                        }, 3000);
+                        }, 1000);
                     } else {
                         document.querySelector(".s-msg").textContent = data.message;
                         $(".success-msg").show();
                         setTimeout(function () {
                             $(".success-msg").hide();
                             window.location.href = "employee_list.html";
-                        }, 3000);
+                        }, 1000);
                     }
 
                 })
@@ -123,14 +123,14 @@ function addEmpdetails() {
                         setTimeout(function () {
                             $(".error-msg").hide();
                             window.location.href = "employee_list.html";
-                        }, 3000);
+                        }, 1000);
                     } else {
                         document.querySelector(".s-msg").textContent = data.message;
                         $(".success-msg").show();
                         setTimeout(function () {
                             $(".success-msg").hide();
                             window.location.href = "employee_list.html";
-                        }, 3000);
+                        }, 1000);
                     }
 
                 })
@@ -239,14 +239,14 @@ function deleteEmpdetails(emId) {
                 setTimeout(function () {
                     $(".error-msg").hide();
                     window.location.href = "employee_list.html";
-                }, 3000);
+                }, 1000);
             } else {
                 document.querySelector(".s-msg").textContent = data.message;
                 $(".success-msg").show();
                 setTimeout(function () {
                     $(".success-msg").hide();
                     window.location.href = "employee_list.html";
-                }, 3000);
+                }, 1000);
             }
         })
         .catch(error => {
@@ -275,49 +275,6 @@ function validFName() {
     return true;
 }
 
-
-const input = document.querySelector("#phoneNumber");
-const errorMsg = document.querySelector("#showMsg3");
-const employePin = document.getElementById("instructor");
-
-const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
-
-const iti = window.intlTelInput(input, {
-    initialCountry: "us",
-    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.13/build/js/utils.js"
-});
-
-const reset = () => {
-    input.classList.remove("error");
-    errorMsg.innerHTML = "";
-    errorMsg.classList.add("hide");
-};
-
-const showError = (msg) => {
-    input.classList.add("error");
-    errorMsg.innerHTML = msg;
-    errorMsg.classList.remove("hide");
-};
-
-input.addEventListener('keyup', () => {
-    reset();
-    if (!input.value.trim()) {
-        showError("Required");
-    } else {
-        const isValid = iti.isValidNumber();
-        if (!isValid) {
-            const errorCode = iti.getValidationError();
-            const msg = errorMap[errorCode] || "Invalid number";
-            showError(msg);
-        }
-    }
-    employePin.value = (input.value).substring((input.value).length - 4);
-    // console.log((input.value).substring((input.value).length - 4));
-});
-
-// Reset error messages when changing the country dial code
-input.addEventListener('countrychange', reset);
-
 function validLName() {
     const lname = document.getElementById('lName').value;
     const errorLName = document.getElementById('showMsg2');
@@ -333,21 +290,28 @@ function validLName() {
     return true;
 }
 
-function validatePhoneNumber() {
-    const countryCode = iti.getSelectedCountryData().dialCode;
+function validPhoneno() {
+    const input = document.querySelector("#phoneNumber");
+    const phoneError = document.querySelector("#showMsg3");
+    const employePin = document.getElementById("instructor");
     const phoneNumber = input.value;
-    const errorPhoneNumber = document.getElementById('showMsg3');
 
+    employePin.value = (input.value).substring((input.value).length - 4);
 
-    if (!iti.isValidNumber()) {
-        const errorCode = iti.getValidationError();
-        const msg = errorMap[errorCode] || "Invalid number";
-        errorPhoneNumber.textContent = msg;
+    const phoneRegex = /^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/;
+
+    if (phoneNumber === "") {
+        phoneError.textContent = 'Enter phone number.';
         return false;
+    } else if (!phoneRegex.test(phoneNumber)) {
+        phoneError.textContent = 'Invalid phone number.';
+        return false;
+    } else {
+        phoneError.textContent = '';
+        return true;
     }
 
-    errorPhoneNumber.textContent = '';
-    return true;
+
 }
 
 
@@ -365,4 +329,3 @@ function validateInstructerPin() {
     errorInstructerPin.textContent = '';
     return true;
 }
-
