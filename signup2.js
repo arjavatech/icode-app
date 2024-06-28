@@ -287,7 +287,6 @@ async function craeteFirstPageSignupAPiData() {
     const caddress = localStorage.getItem('companyAddress');
     const username = localStorage.getItem('username');
   
-    console.log(cid);
     // Call the asynchronous checkPassword function to get the encrypted password
     const passwordEncrypted = await checkPassword();
   
@@ -385,7 +384,6 @@ async function checkPassword() {
     try {
         // Encrypt the password
         const encryptedPassword = await encrypt(password, key);
-        console.log('Encrypted Password:', encryptedPassword);
 
         // Decrypt the password
         // const decryptedPassword = await decrypt(encryptedPassword, key);
@@ -402,7 +400,6 @@ async function checkPassword() {
 //CUSTOMER
 // Push the Data in database
 function createApiData() {
-    console.log(cid);
     const customerId = uuid.v4();
     // document.getElementById('uuid').innerText = myUUID;
     const apiUrl = `${apiUrlBase}/create`;

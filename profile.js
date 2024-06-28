@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const address = localStorage.getItem('address');
     const phone = localStorage.getItem('phone');
     const email = localStorage.getItem('email');
-    console.log(companyName);
 
     if (companyName) document.getElementById('companyName').value = companyName;
     if (companyAddress) document.getElementById('companyAddress').value = companyAddress;
@@ -186,8 +185,6 @@ function updateApiData() {
     const customerApiUrl = `${customerAPIUrlBase}/update/${customerId1}`;
     const companyApiUrl = `${companyAPIUrlBase}/update/${cid}`;
 
-    console.log(cid);
-    console.log(customerId1);
     const customerData = {
         CustomerID: customerId1,
         CID: cid,
@@ -208,7 +205,6 @@ function updateApiData() {
         Password: password,
         // IsActive: true
     };
-    console.log(companyData);
 
     Promise.all([
         fetch(customerApiUrl, {
@@ -235,8 +231,6 @@ function updateApiData() {
             }));
         })
         .then(data => {
-            console.log("Update Data - Response:", data);
-            // outPut.textContent = 'Data updated successfully!';
         })
         .catch(error => {
             console.error('Error:', error);

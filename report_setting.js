@@ -56,7 +56,6 @@ function addreportdetails() {
                 IsBiMonthlyReportActive: BiMonthlyReportActive
 
             };
-            console.log(reportObject);
 
             fetch(apiUrl, {
                 method: 'POST',
@@ -105,7 +104,6 @@ function addreportdetails() {
                 IsMonthlyReportActive: MonthlyReportActive,
                 IsBiMonthlyReportActive: BiMonthlyReportActive
             };
-            console.log(updateReportObject);
             // return false;
 
             fetch(apiUrl, {
@@ -122,7 +120,6 @@ function addreportdetails() {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
                     if (data.error) {
                         document.querySelector(".e-msg").textContent = data.error;
                         $(".error-msg").show();
@@ -227,7 +224,6 @@ function editEmpdetails(companyEmail) {
             return response.json();
         })
         .then(data => {
-            console.log(data);
             if (data.IsDailyReportActive) freqselectedValues.push('Daily');
             if (data.IsWeeklyReportActive) freqselectedValues.push('Weekly');
             if (data.IsBiWeeklyReportActive) freqselectedValues.push('Biweekly');

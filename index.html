@@ -120,13 +120,10 @@ async function decrypt(encryptedDataWithIV, key) {
     // const username = document.getElementById('usernameFetch').value;
     const apiUrlBase2 = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/customer';
     const apiUrl2 = `${apiUrlBase2}/getUsingCID/${cid1}`;
-  console.log(cid1);
-    // console.log('Username entered:', username);
-    console.log('Fetching data from:', apiUrl2);
   
     fetch(apiUrl2)
       .then(response => {
-        console.log('Response status:', response.status);
+
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
         }

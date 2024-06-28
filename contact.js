@@ -118,8 +118,6 @@ async function callContactUsCreateAPiData() {
         Status: status
     };
 
-    console.log(userData);
-
     try {
         const response = await fetch(apiLink, {
             method: 'POST',

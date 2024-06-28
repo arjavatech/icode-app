@@ -34,8 +34,6 @@ function addEmpdetails() {
 
         if (empupdateid == "") {
             const apiUrl = `${apiUrlBase}/create`;
-
-            // console.log(uEmpid);
             // return false;
 
 
@@ -50,7 +48,6 @@ function addEmpdetails() {
                 PhoneNumber: empphoneno,
                 Pin: empinst
             };
-            console.log(employeeObject);
 
             fetch(apiUrl, {
                 method: 'POST',
@@ -66,7 +63,6 @@ function addEmpdetails() {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
                     if (data.error) {
                         document.querySelector(".e-msg").textContent = data.error;
                         $(".error-msg").show();
@@ -100,7 +96,6 @@ function addEmpdetails() {
                 PhoneNumber: empphoneno,
                 Pin: empinst
             };
-            console.log(updateEmployeeObject);
 
             fetch(apiUrl, {
                 method: 'PUT',
@@ -116,7 +111,6 @@ function addEmpdetails() {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
                     if (data.error) {
                         document.querySelector(".e-msg").textContent = data.error;
                         $(".error-msg").show();
@@ -152,7 +146,6 @@ function addEmpdetails() {
 function viewEmpdetails() {
     const tableBody = document.getElementById("tBody");
     const company_id = localStorage.getItem('companyID');
-    console.log(company_id);
     const apiUrl = `${apiUrlBase}/getall/${company_id}`;
 
     fetch(apiUrl)
@@ -163,7 +156,6 @@ function viewEmpdetails() {
             return response.json();
         })
         .then(data => {
-            console.log(data);
             data.forEach(element => {
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
@@ -201,7 +193,6 @@ function editEmpdetails(emId) {
             return response.json();
         })
         .then(data => {
-            console.log(data);
             data.forEach(formvalue => {
                 document.getElementById("instructor").value = formvalue.Pin;
                 document.getElementById("fName").value = formvalue.FName;
@@ -232,7 +223,6 @@ function deleteEmpdetails(emId) {
             return response.json();
         })
         .then(data => {
-            console.log(data);
             if (data.error) {
                 document.querySelector(".e-msg").textContent = data.error;
                 $(".error-msg").show();
