@@ -40,6 +40,40 @@
        /* input:focus + label {
             margin-left: 10%;
        } */
+        @media (max-width:328px) {
+            input{
+                padding: 0.4rem 0.3rem !important;
+            }
+            textarea{
+                padding: 0.4rem 0.3rem !important;
+            }
+            label{
+                font-size: 0.7rem;
+            }
+            .link-style{
+                font-size: 0.7rem;
+            }
+            .link-text{
+                font-size: 0.7rem;
+            }
+        }
+        @media (max-width:245px) {
+            input{
+                max-width: 80%;
+            }
+            textarea{
+                max-width: 80%;
+            }
+            label{
+                font-size: 0.5rem;
+            }
+            .link-style{
+                font-size: 0.5rem;
+            }
+            .link-text{
+                font-size: 0.5rem;
+            }
+        }
     </style>
 </head>
 
@@ -114,9 +148,9 @@
                                 <span class="text-danger" id="error-phone"></span>
                             </div>
                             <div class="d-flex justify-content-center align-items-baseline textfond">
-                                <h6 class="me-2"><b>Write to us at :</b></h6>
+                                <h6 class="me-2 link-text"><b>Write to us at :</b></h6>
                                 <p class="ms-1"><a href="mailto:punchcardwithus@gmail.com"
-                                        target="_blank">punchcardwithus@gmail.com</a>
+                                        target="_blank" class="link-style">punchcardwithus@gmail.com</a>
                                 </p>
                             </div>
                             

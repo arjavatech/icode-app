@@ -12,14 +12,32 @@
         <!-- Phone  -->
     <script src="https://cdn.jsdelivr.net/npm/libphonenumber-js@1.9.43/bundle/libphonenumber-js.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css" />
-    <link rel="stylesheet" href="old_style.css">
+    <!-- <link rel="stylesheet" href="old_style.css"> -->
+     <link rel="stylesheet" href="form_style.css">
+     <link rel="stylesheet" href="employee_list.css">
     <script defer src="signup2.js"></script>
     <title>Signup Page</title>
     <style>
+         body {
+            overflow-x: hidden;
+        }
+
         .progress-bar {
             background-color: #038236;
-            width: 50%;
+            width: 0%;
             transition: width 0.5s;
+        }
+
+        .col-sty {
+            /* overflow: hidden; */
+            /* height: 800px; */
+            background-color: #0A8080;
+        }
+
+        .progress {
+            max-width: 300px;
+            height: 0.2rem;
+            margin-left: 140px;
         }
         .error {
             border: 1px solid red;
@@ -29,13 +47,44 @@
             display: none;
             color: red;
         }
+        @media (max-width:395px) {
+            .m-5{
+                margin: 0px !important;
+            }
+            .col-sty{
+                height: 60vh !important;
+            }
+            .progress{
+                display: none;
+            }
+        }
+        @media (max-width:330px) {
+            input{
+                padding: 0.4rem 0.2rem !important;
+            }
+            label{
+                font-size: 0.7rem;
+            }
+            .iti__selected-flag {
+            display: none;
+           }
+        }
+        @media (max-width:240px) {
+           input{
+            max-width: 80%;
+           }    
+           .iti input, .iti input[type=text], .iti input[type=tel] {
+            max-width: 20% !important;
+            margin-right: 300px !important;
+           }
+        }
     </style>
 </head>
 
 <body>
     <div class="row">
-        <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6 col-sty">
-            <img src="Image/signupImage.png" alt="" class="m-5 p-5 login-img-sty">
+        <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6 vh-100 col-sty">
+            <img src="Image/signupImage.png" alt="" class="m-5 p-5 img-fluid login-img-sty">
             <h3 class="text-center">Join Us Today</h3>
             <p class="text-center">Create an account to unlock seamless time tracking and boost your team's efficiency.
             </p>
@@ -85,7 +134,7 @@
                     <span class="text-danger" id="errorEmail"></span>
                 </div>
 
-                <button type="button" class="btn-sty" onclick="validateForm()">Pay</button>
+                <button type="button" class="btn btn-green mt-3" onclick="validateForm()">Pay</button>
             </div>
         </div>
     </div>
