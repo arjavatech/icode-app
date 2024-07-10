@@ -278,8 +278,6 @@ async function validateForm() {
 // }
 
 
-  
-
 async function craeteFirstPageSignupAPiData() {
     const firstSignupPageapiUrl = `${firstSignupPageapiUrlBase}/create`;
     const cname = localStorage.getItem('companyName');
