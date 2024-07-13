@@ -5,8 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Device</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        <!-- Bootstrap link  -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+            <!-- Nav bar -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
     <link rel="stylesheet" href="employee_list.css">
 </head>
 
@@ -48,25 +53,29 @@
         </nav>
     </header>
     <div class="container mt-5">
-        <table class="table table-bordered table-hover text-center">
-            <div class="add_form_popup">
-                <!-- Add Employee -->
-                <button type="button" onclick="addData()" class="btn btn-green float-end mb-2" data-bs-toggle="modal"
-                    data-bs-target="#myModal">
-                    + Add
-                </button>
-            </div>
-            <thead>
-                <tr>
-                    <th>Device Id</th>
-                    <th>access key</th>
-                    <th>Device name</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
-            </tbody>
-        </table>
+        <div class="add_form_popup">
+            <!-- Add Employee -->
+            <button type="button" onclick="addData()" class="btn btn-green float-end" data-bs-toggle="modal"
+                data-bs-target="#myModal">
+                + Add
+            </button>
+        </div>
+        <br><br>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Serial Number</th>
+                        <th>access key</th>
+                        <th>Device Id</th>
+                        <th>Device name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
@@ -82,27 +91,47 @@
 
         function addData() {
             const newRow = document.createElement('tr');
+            const serialNumber = tableBody.rows.length + 1; // Get the current number of rows and add 1 for the new serial number
             newRow.innerHTML = `
-        <td class="DId"></td>
-        <td class="AccessKey accesskey"></td>
-        <td class="DName"></td>
-        <td class="Action delButton"></td>
-        <td>
-            <button class="btn icon-button btn-outline-green" onClick="delButton(this)">Delete</button>
-        </td>
+            <td>${serialNumber}</td>
+            <td class="AccessKey accesskey"></td>
+            <td class="DId"></td>
+            <td class="DName"></td>
+            <td class="Action">
+                <button class="btn icon-button btn-outline-green" onClick="delButton(this)">Delete</button>
+                <button class="btn icon-button btn-outline-green" onClick="copyAccessKey(this)">Copy Key</button>
+            </td>
     `;
             tableBody.appendChild(newRow);
             let accesskeyval = Math.random().toString(36).substring(2, 12); // Generate a random 10-character access key
             let accessKeyTag = newRow.querySelector(".accesskey");
+            accessKeyTag.setAttribute("data-key", accesskeyval); // Store the real key value in a data attribute
             accessKeyTag.innerHTML = maskString(accesskeyval, 4);
         }
 
         function delButton(button) {
             const row = button.closest('tr'); // Get the closest <tr> element
             tableBody.removeChild(row); // Remove the row from the table
+            updateSerialNumbers(); // Update serial numbers after deletion
         }
 
-        // document.getElementById("addButton").addEventListener("click", addData);
+        function copyAccessKey(button) {
+            const row = button.closest('tr'); // Get the closest <tr> element
+            const accessKeyTag = row.querySelector(".accesskey");
+            const accessKeyValue = accessKeyTag.getAttribute("data-key"); // Retrieve the real key value
+            navigator.clipboard.writeText(accessKeyValue).then(() => {
+                alert("Access key copied to clipboard!");
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        function updateSerialNumbers() {
+            const rows = tableBody.rows;
+            for (let i = 0; i < rows.length; i++) {
+                rows[i].cells[0].innerText = i + 1; // Update the serial number cell for each row
+            }
+        }
     </script>
 </body>
 
