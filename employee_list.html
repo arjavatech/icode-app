@@ -23,7 +23,13 @@
     <script defer src="logout.js"></script>
   
 </head>
-
+<style>
+    @media (max-width:202px) {
+        .btn-style{
+            font-size: .5rem;
+        }
+    }
+</style>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-green">
@@ -77,16 +83,16 @@
                
                 <h2 class="text-center fw-bold mb-5">Employee Details</h2>
 
-                <div class="emp-table table-responsive">
-                    <div class="add_form_popup">
-                        <!-- Add Employee -->
+                <div class="add_form_popup">
+                    <!-- Add Employee -->
 
-                        <button type="button" onclick="dataRemove()" class="btn btn-green float-end" data-bs-toggle="modal"
-                            data-bs-target="#myModal">
-                            + Add Employee
-                        </button>
-                    </div>
-                    <br><br>
+                    <button type="button" onclick="dataRemove()" class="btn btn-green float-end btn-style" data-bs-toggle="modal"
+                        data-bs-target="#myModal">
+                        + Add Employee
+                    </button>
+                </div>
+                <br><br>
+                <div class="emp-table table-responsive">
                     <table class="table table-bordered table-hover text-center">
                         <thead>
                             <tr>
