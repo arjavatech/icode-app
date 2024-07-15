@@ -168,26 +168,11 @@ async function validateForm() {
     if (isFirstNameValid && isLastNameValid && isAddressValid && isPhoneNumberValid && isEmailValid) {
         document.querySelector('.progress-bar').style.width = '100%';
 
-        // const username = localStorage.getItem('username');
-        // const password = localStorage.getItem('password');
-
-        // const userExists = await checkUserExists(username, password);
-
-        // if (userExists) {
-        //     alert('Username and password already exist');
-        //     return;
-        // }
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const address = document.getElementById('address').value;
-    const phone = document.getElementById('phoneNumber').value;
-    const email = document.getElementById('email').value;
-
-        // localStorage.setItem('firstName', firstName);
-        // localStorage.setItem('lastName', lastName);
-        // localStorage.setItem('address', address);
-        // localStorage.setItem('phone', phone);   
-        // localStorage.setItem('email', email);
+    // const firstName = document.getElementById('firstName').value;
+    // const lastName = document.getElementById('lastName').value;
+    // const address = document.getElementById('address').value;
+    // const phone = document.getElementById('phoneNumber').value;
+    // const email = document.getElementById('email').value;
 
         //COMPANY API CALL
         craeteFirstPageSignupAPiData();
@@ -317,9 +302,9 @@ async function craeteFirstPageSignupAPiData() {
         // Call Customer api
         createApiData();
 
-            setTimeout(() => {
-                window.location.href = "index.html"; 
-            }, 1000);        
+            // setTimeout(() => {
+            //     window.location.href = "index.html"; 
+            // }, 500);        
       }
       else{
         alert(data.error);
@@ -404,7 +389,7 @@ function createApiData() {
     const firstName = document.getElementById("firstName").value;
     const lastName = document.getElementById("lastName").value;
     const address = document.getElementById("address").value;
-    const phone = document.getElementById("phone").value;
+    const phone = document.getElementById("phoneNumber").value;
     const email = document.getElementById("email").value;
     // const centreName = document.getElementById("centreName").value;
 
@@ -435,6 +420,9 @@ function createApiData() {
     })
     .then(data => {
         console.log(data);
+        setTimeout(() => {
+            window.location.href = "index.html"; 
+        }, 100);        
     })
     .catch(error => {
         console.error('Error:', error);
