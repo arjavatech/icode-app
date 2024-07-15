@@ -195,16 +195,16 @@
 
         function saveDevice(button) {
     const row = button.closest('tr');
-    const deviceIDInput = row.querySelector(".DId input");
-    const deviceNameInput = row.querySelector(".DName input");
+    // const deviceIDInput = row.querySelector(".DId input");
+    // const deviceNameInput = row.querySelector(".DName input");
     const accessKeyTag = row.querySelector(".accesskey");
     const accessKeyValue = accessKeyTag.getAttribute("data-key");
     const companyId = localStorage.getItem('companyID');
 
     const newDevice = {
-        DeviceID: deviceIDInput.value,
+        DeviceID: null,
         CID: companyId,
-        DeviceName: deviceNameInput.value,
+        DeviceName: null,
         AccessKey: accessKeyValue,
         AccessKeyGeneratedTime: new Date().toISOString()
     };
@@ -225,8 +225,8 @@
             });
         }
         // Update the row to display the saved values
-        row.querySelector(".DId").innerText = newDevice.DeviceID;
-        row.querySelector(".DName").innerText = newDevice.DeviceName;
+        // row.querySelector(".DId").innerText = newDevice.DeviceID;
+        // row.querySelector(".DName").innerText = newDevice.DeviceName;
         button.remove();
     })
     .catch(error => {
