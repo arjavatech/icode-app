@@ -12,8 +12,15 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="employee_list.css">
+    <script defer src="logout.js"></script>
 </head>
+<style>
+    .ml-10 {
+        margin-right: 10px;
+    }
+</style>
 
 <body>
     <header>
@@ -96,13 +103,12 @@
             const serialNumber = tableBody.rows.length + 1;
             newRow.innerHTML = `
             <td>${serialNumber}</td>
-            <td class="accesskey"></td>
-            <td class="DId"><input type="text" class="form-control" /></td>
-            <td class="DName"><input type="text" class="form-control" /></td>
+            <td class="accesskey"><button class="btn icon-button btn-outline-green ml-10" onClick="copyAccessKey(this)"><i class="fa-solid fa-copy"></i></button></td>
+            <td class="DId"></td>
+            <td class="DName"></td>
             <td class="Action">
                 <button class="btn icon-button btn-outline-green" onClick="delButton(this)">Delete</button>
                 <button class="btn icon-button btn-outline-green" onClick="saveDevice(this)">Save</button>
-                <button class="btn icon-button btn-outline-green" onClick="copyAccessKey(this)">Copy Key</button>
             </td>
             `;
             tableBody.appendChild(newRow);
@@ -155,8 +161,9 @@
 
         function viewDevices() {
             const companyId = localStorage.getItem('companyID');
-            const apiUrl = `${apiUrlBase}/getAll`;
+            const apiUrl = `${apiUrlBase}/getAll/${companyId}`;
 
+            console.log(companyId);
             fetch(apiUrl)
                 .then(response => {
                     if (!response.ok) {
@@ -170,12 +177,12 @@
                         const accessKey = element.AccessKey;
                         newRow.innerHTML = `
                             <td>${tableBody.rows.length + 1}</td>
-                            <td class="accesskey" data-key="${accessKey}">${maskString(accessKey, 4)}</td>
+                            <td class="accesskey" data-key="${accessKey}">${maskString(accessKey, 4)} <span><button class="btn icon-button btn-outline-green" onClick="copyAccessKey(this)"><i class="fa-solid fa-copy"></i></button></span></td>
                             <td class="DId">${element.DeviceID}</td>
                             <td class="DName">${element.DeviceName}</td>
                             <td class="Action">
                                 <button class="btn icon-button btn-outline-green" onClick="delButton(this)">Delete</button>
-                                <button class="btn icon-button btn-outline-green" onClick="copyAccessKey(this)">Copy Key</button>
+
                             </td>
                         `;
                         tableBody.appendChild(newRow);

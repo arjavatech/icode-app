@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
             isValid = false;
         }
 
-        if (!validatePhoneNumber()) {
+        if (!validPhoneno()) {
             isValid = false;
         }
 
@@ -86,35 +86,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // input.addEventListener('countrychange', resetPhoneError);
 
-    function validatePhoneNumber() {
-        const errorPhoneNumber = document.getElementById('errorPhoneNumber');
-        if (!iti.isValidNumber()) {
-            const errorCode = iti.getValidationError();
-            const msg = errorMap[errorCode] || "Invalid number";
-            showPhoneError(msg);
-            return false;
-        }
-        clearPhoneError();
-        return true;
-    }
+    // function validatePhoneNumber() {
+    //     const errorPhoneNumber = document.getElementById('errorPhoneNumber');
+    //     if (!iti.isValidNumber()) {
+    //         const errorCode = iti.getValidationError();
+    //         const msg = errorMap[errorCode] || "Invalid number";
+    //         showPhoneError(msg);
+    //         return false;
+    //     }
+    //     clearPhoneError();
+    //     return true;
+    // }
 
-    function showPhoneError(msg) {
-        const errorPhoneNumber = document.getElementById('errorPhoneNumber');
-        errorPhoneNumber.innerText = msg;
-        errorPhoneNumber.classList.remove("hide");
-        input.classList.add("error");
-    }
+    // function showPhoneError(msg) {
+    //     const errorPhoneNumber = document.getElementById('errorPhoneNumber');
+    //     errorPhoneNumber.innerText = msg;
+    //     errorPhoneNumber.classList.remove("hide");
+    //     input.classList.add("error");
+    // }
 
-    function clearPhoneError() {
-        const errorPhoneNumber = document.getElementById('errorPhoneNumber');
-        errorPhoneNumber.innerText = '';
-        errorPhoneNumber.classList.add("hide");
-        input.classList.remove("error");
-    }
+    // function clearPhoneError() {
+    //     const errorPhoneNumber = document.getElementById('errorPhoneNumber');
+    //     errorPhoneNumber.innerText = '';
+    //     errorPhoneNumber.classList.add("hide");
+    //     input.classList.remove("error");
+    // }
 
-    function resetPhoneError() {
-        clearPhoneError();
-    }
+    // function resetPhoneError() {
+    //     clearPhoneError();
+    // }
 });
 
 function validateField(id, errorMessage, pattern) {
@@ -241,3 +241,42 @@ function updateApiData() {
 // 4889996e-0224-4265-a449-9169c6184825
 
 // { CID: 'e57c8b8e-9570-4840-a7d0-7626cc63a340', UserName: 'best', CName: 'nrhbfhjb', CAddress: 'sdc', CLogo: 'sdc', … }
+function validPhoneno() {
+    const input = document.querySelector("#phoneNumber");
+    const phoneError = document.querySelector("#showMsg3");
+    // const employePin = document.getElementById("instructor");
+    const phoneNumber = input.value;
+
+    // employePin.value = (input.value).substring((input.value).length - 4);
+
+    const phoneRegex = /^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/;
+
+    if (phoneNumber === "") {
+        phoneError.textContent = 'Enter phone number.';
+        return false;
+    } else if (!phoneRegex.test(phoneNumber)) {
+        phoneError.textContent = 'Invalid phone number.';
+        return false;
+    } else {
+        phoneError.textContent = '';
+        return true;
+    }
+
+
+}
+
+function formatPhoneNumber() {
+    const inputField = document.getElementById('phoneNumber');
+    let value = inputField.value;
+    // Remove all non-digit characters
+    value = value.replace(/\D/g, '');
+    // Format the phone number
+    if (value.length > 3 && value.length <= 6) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+    } else if (value.length > 6) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+    } else if (value.length > 3) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+    }
+    inputField.value = value;
+}

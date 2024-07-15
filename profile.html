@@ -132,9 +132,10 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="material-textfield mb-3">
-                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" " class="input-sty">
+                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" " class="input-sty" oninput="formatPhoneNumber()">
                         <br>
-                        <span id="errorPhoneNumber" class="error hide"></span>
+                        <span class="text-danger" id="showMsg3"></span>
+                        <!-- <span id="errorPhoneNumber" class="error hide"></span> -->
                     </div>
                 </div>
             </div>
