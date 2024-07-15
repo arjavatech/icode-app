@@ -63,28 +63,28 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    const input = document.querySelector("#phoneNumber");
-    const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
-    const iti = window.intlTelInput(input, {
-        initialCountry: "us",
-        utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.13/build/js/utils.js"
-    });
+    // const input = document.querySelector("#phoneNumber");
+    // const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+    // const iti = window.intlTelInput(input, {
+    //     initialCountry: "us",
+    //     utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.13/build/js/utils.js"
+    // });
 
-    input.addEventListener('keyup', () => {
-        resetPhoneError();
-        if (!input.value.trim()) {
-            showPhoneError("This field is required");
-        } else {
-            const isValid = iti.isValidNumber();
-            if (!isValid) {
-                const errorCode = iti.getValidationError();
-                const msg = errorMap[errorCode] || "Invalid number";
-                showPhoneError(msg);
-            }
-        }
-    });
+    // input.addEventListener('keyup', () => {
+    //     resetPhoneError();
+    //     if (!input.value.trim()) {
+    //         showPhoneError("This field is required");
+    //     } else {
+    //         const isValid = iti.isValidNumber();
+    //         if (!isValid) {
+    //             const errorCode = iti.getValidationError();
+    //             const msg = errorMap[errorCode] || "Invalid number";
+    //             showPhoneError(msg);
+    //         }
+    //     }
+    // });
 
-    input.addEventListener('countrychange', resetPhoneError);
+    // input.addEventListener('countrychange', resetPhoneError);
 
     function validatePhoneNumber() {
         const errorPhoneNumber = document.getElementById('errorPhoneNumber');

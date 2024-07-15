@@ -79,14 +79,13 @@
             transition: width 0.5s;
         } */
 
-        .input-sty[type="tel"] {
-                appearance: none; 
+#phoneNumber{
+    appearance: none; 
                 border-radius: 0.25rem;
-                /* max-width: 300%; */
-                padding: 10px 170px !important;
+                /* max-width: 300% !important; */
+                padding: 1% 30% !important;
                 border-radius: 10px;
 }
-
         body {
             overflow-x: hidden;
         }
@@ -265,10 +264,11 @@
                     <span class="text-danger" id="errorAddress"></span>
                 </div>
                 <div class="material-textfield mt-4">
-                    <input id="phone" placeholder=" " type="tel" class="input-sty">
-                    <!-- <label class="phoneNumber">Phone Number</label> -->
+                    <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" " oninput="formatPhoneNumber()">
+                    <!-- onkeyup="validPhoneno()"  -->
+                    <label>Phone Number</label>
                     <br>
-                    <span id="error-msg" class="hide text-danger"></span>
+                    <span class="text-danger" id="showMsg3"></span>
                 </div>
                 <!-- <div class="material-textfield mt-4">
                     <input id="centreName" placeholder=" " type="text" onblur="validateCentreName()" class="input-sty">

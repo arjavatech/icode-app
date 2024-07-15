@@ -317,3 +317,28 @@ function validateInstructerPin() {
     errorInstructerPin.textContent = '';
     return true;
 }
+
+
+function formatPhoneNumber() {
+    const inputField = document.getElementById('phoneNumber');
+    let value = inputField.value;
+    // Remove all non-digit characters
+    value = value.replace(/\D/g, '');
+    // Format the phone number
+    if (value.length > 3 && value.length <= 6) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+    } else if (value.length > 6) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+    } else if (value.length > 3) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+    }
+    inputField.value = value;
+
+    const employePin = document.getElementById("instructor");
+    // const phoneNumber = inputField.value;
+
+    if(inputField.value.length > 10){
+    employePin.value = (inputField.value).substring((inputField.value).length - (inputField.value.length == 11 ? 1 : inputField.value.length == 12 ? 2 : inputField.value.length == 13 ? 3 : 4));
+    }
+
+}
