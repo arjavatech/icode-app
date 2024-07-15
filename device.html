@@ -76,6 +76,8 @@
     <script>
         const tableBody = document.getElementById("tableBody");
 
+        const apiUrlBase = "https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/device";
+
         function maskString(input, visibleChars) {
             visibleChars = Math.min(visibleChars, input.length);
             const starsCount = input.length - visibleChars;
@@ -85,7 +87,7 @@
         }
 
         function accessKeyCreate(firstFourDigit, lastFourDigit) {
-            const createUuidForAccessKey = uuid.v4().replace(/-/g, '').substring(0, 6); 
+            const createUuidForAccessKey = uuid.v4().replace(/-/g, '').substring(0, 6);
             return firstFourDigit + createUuidForAccessKey + lastFourDigit;
         }
 
@@ -95,10 +97,11 @@
             newRow.innerHTML = `
             <td>${serialNumber}</td>
             <td class="accesskey"></td>
-            <td class="DId"></td>
-            <td class="DName"></td>
+            <td class="DId"><input type="text" class="form-control" /></td>
+            <td class="DName"><input type="text" class="form-control" /></td>
             <td class="Action">
                 <button class="btn icon-button btn-outline-green" onClick="delButton(this)">Delete</button>
+                <button class="btn icon-button btn-outline-green" onClick="saveDevice(this)">Save</button>
                 <button class="btn icon-button btn-outline-green" onClick="copyAccessKey(this)">Copy Key</button>
             </td>
             `;
@@ -113,8 +116,23 @@
 
         function delButton(button) {
             const row = button.closest('tr');
-            tableBody.removeChild(row);
-            updateSerialNumbers();
+            const accessKeyTag = row.querySelector(".accesskey");
+            const accessKeyValue = accessKeyTag.getAttribute("data-key");
+            const companyId = localStorage.getItem('companyID'); // Retrieve the company ID
+
+            fetch(`${apiUrlBase}/delete/${accessKeyValue}/${companyId}`, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.status}`);
+                    }
+                    tableBody.removeChild(row);
+                    updateSerialNumbers();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
 
         function copyAccessKey(button) {
@@ -134,6 +152,83 @@
                 rows[i].cells[0].innerText = i + 1;
             }
         }
+
+        function viewDevices() {
+            const companyId = localStorage.getItem('companyID');
+            const apiUrl = `${apiUrlBase}/getAll`;
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    data.forEach(element => {
+                        const newRow = document.createElement('tr');
+                        const accessKey = element.AccessKey;
+                        newRow.innerHTML = `
+                            <td>${tableBody.rows.length + 1}</td>
+                            <td class="accesskey" data-key="${accessKey}">${maskString(accessKey, 4)}</td>
+                            <td class="DId">${element.DeviceID}</td>
+                            <td class="DName">${element.DeviceName}</td>
+                            <td class="Action">
+                                <button class="btn icon-button btn-outline-green" onClick="delButton(this)">Delete</button>
+                                <button class="btn icon-button btn-outline-green" onClick="copyAccessKey(this)">Copy Key</button>
+                            </td>
+                        `;
+                        tableBody.appendChild(newRow);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function saveDevice(button) {
+    const row = button.closest('tr');
+    const deviceIDInput = row.querySelector(".DId input");
+    const deviceNameInput = row.querySelector(".DName input");
+    const accessKeyTag = row.querySelector(".accesskey");
+    const accessKeyValue = accessKeyTag.getAttribute("data-key");
+    const companyId = localStorage.getItem('companyID');
+
+    const newDevice = {
+        DeviceID: deviceIDInput.value,
+        CID: companyId,
+        DeviceName: deviceNameInput.value,
+        AccessKey: accessKeyValue,
+        AccessKeyGeneratedTime: new Date().toISOString()
+    };
+
+    console.log('Saving device:', newDevice); // Log the device being saved
+
+    fetch(`${apiUrlBase}/create`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newDevice)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(text => {
+                throw new Error(`Error: ${response.status} - ${text}`);
+            });
+        }
+        // Update the row to display the saved values
+        row.querySelector(".DId").innerText = newDevice.DeviceID;
+        row.querySelector(".DName").innerText = newDevice.DeviceName;
+        button.remove();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+        document.addEventListener('DOMContentLoaded', viewDevices);
     </script>
 </body>
 

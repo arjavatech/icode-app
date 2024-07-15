@@ -35,8 +35,6 @@ function addEmpdetails() {
         if (empupdateid == "") {
             const apiUrl = `${apiUrlBase}/create`;
             // return false;
-
-
             // let outPut = document.getElementById("resmsg");
 
             const employeeObject = {
