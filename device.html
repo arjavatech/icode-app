@@ -15,7 +15,9 @@
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"   />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="employee_list.css">
+    <script defer src="logout.js"></script>
 </head>
 <style>
     .icon-button {
@@ -110,7 +112,11 @@
             const serialNumber = tableBody.rows.length + 1;
             newRow.innerHTML = `
             <td>${serialNumber}</td>
+<<<<<<< HEAD
             <td class="accesskey"><button class="btn icon-button btn-outline-green ml-10" onClick="viewDevices(this)"><i class="fa-solid fa-copy"></i></button></td>
+=======
+            <td class="accesskey"><button class="btn icon-button btn-outline-green ml-10" onClick="copyAccessKey(this)"><i class="fa-solid fa-copy"></i></button></td>
+>>>>>>> bed60af1cf7e54aa3ff4fcdd5accf91d63075ef6
             <td class="DId"></td>
             <td class="DName"></td>
             <td class="Action">
@@ -201,6 +207,7 @@
         }
 
         function saveDevice(button) {
+<<<<<<< HEAD
             const row = button.closest('tr');
             // const deviceIDInput = row.querySelector(".DId input");
             // const deviceNameInput = row.querySelector(".DName input");
@@ -240,6 +247,47 @@
                     console.error('Error:', error);
                 });
         }
+=======
+    const row = button.closest('tr');
+    // const deviceIDInput = row.querySelector(".DId input");
+    // const deviceNameInput = row.querySelector(".DName input");
+    const accessKeyTag = row.querySelector(".accesskey");
+    const accessKeyValue = accessKeyTag.getAttribute("data-key");
+    const companyId = localStorage.getItem('companyID');
+
+    const newDevice = {
+        DeviceID: null,
+        CID: companyId,
+        DeviceName: null,
+        AccessKey: accessKeyValue,
+        AccessKeyGeneratedTime: new Date().toISOString()
+    };
+
+    console.log('Saving device:', newDevice); // Log the device being saved
+
+    fetch(`${apiUrlBase}/create`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newDevice)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(text => {
+                throw new Error(`Error: ${response.status} - ${text}`);
+            });
+        }
+        // Update the row to display the saved values
+        // row.querySelector(".DId").innerText = newDevice.DeviceID;
+        // row.querySelector(".DName").innerText = newDevice.DeviceName;
+        button.remove();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+>>>>>>> bed60af1cf7e54aa3ff4fcdd5accf91d63075ef6
 
 
         document.addEventListener('DOMContentLoaded', viewDevices);
