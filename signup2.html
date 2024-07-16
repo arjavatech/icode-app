@@ -68,11 +68,7 @@
         .progress-bar {
             background-color: #038236;
             transition: width 0.5s;
-<<<<<<< HEAD
             width: 50%;
-=======
-            width:50%;
->>>>>>> bed60af1cf7e54aa3ff4fcdd5accf91d63075ef6
         }
 
         @media (max-width: 768px) {
@@ -218,28 +214,10 @@
         <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6 d-flex justify-content-center align-items-center">
             <div class="container container-sty m-5 p-5 text-center">
                 <h2 class="text-center m-3">Signup</h2>
-<<<<<<< HEAD
                 <div class="progress-container">
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
                             aria-valuemax="100"></div>
-=======
-                <!-- <div class="text-center"> -->
-                    <!-- <div class="progress">
-                        <div class="progress-bar" role="progressbar"></div>
-                    </div> -->
-                    <!-- <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                            <span class="sr-only">50% Complete</span>
-                        </div>
-                    </div> -->
-                    <div class="progress-container">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
->
-                            </div>
-                        </div>
->>>>>>> bed60af1cf7e54aa3ff4fcdd5accf91d63075ef6
                     </div>
                 </div>
                 <div class="material-textfield mt-4">
@@ -262,13 +240,8 @@
                 </div>
 
                 <div class="material-textfield mt-4">
-<<<<<<< HEAD
                     <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" " oninput="formatPhoneNumber()"
                         class="input-sty">
-=======
-                    <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" " oninput="formatPhoneNumber()" class="input-sty">
-                    <!-- onkeyup="validPhoneno()"  -->
->>>>>>> bed60af1cf7e54aa3ff4fcdd5accf91d63075ef6
                     <label>Phone Number</label>
                     <br>
                     <span class="text-danger" id="showMsg3"></span>
@@ -279,14 +252,8 @@
                     <br>
                     <span class="text-danger" id="errorEmail"></span>
                 </div>
-<<<<<<< HEAD
                 <button type="button" class="btn btn-green mt-3" onclick="validateForm()"
                     id="checkout-button">Pay</button>
-=======
-
-                <button type="button" class="btn btn-green mt-3"   id="checkout-button" onclick="validateForm()">Pay</button>
-                <!-- onclick="createCheckoutSession()"  -->
->>>>>>> bed60af1cf7e54aa3ff4fcdd5accf91d63075ef6
             </div>
         </div>
     </div>
@@ -294,10 +261,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
     <!-- Phone link  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
-<<<<<<< HEAD
-=======
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
->>>>>>> bed60af1cf7e54aa3ff4fcdd5accf91d63075ef6
     <script>
         async function createCheckoutSession() {
             try {
@@ -315,13 +278,8 @@
                 }
 
                 const session = await response.json();
-<<<<<<< HEAD
                 console.log('Checkout session:', session);
                 const stripe = Stripe('pk_test_51OB8JlIPoM7JHRT2DlaE8KmPRFkgeSXkqf4eQZxEahu0Lbno3vHzCTH5J4rDAfw53PjdWlLteNJNzPVdahkzTb8100DA6sqAp4');
-=======
-                console.log('Checkout session:', session);  // Debugging log
-                const stripe = Stripe('pk_test_51OB8JlIPoM7JHRT2DlaE8KmPRFkgeSXkqf4eQZxEahu0Lbno3vHzCTH5J4rDAfw53PjdWlLteNJNzPVdahkzTb8100DA6sqAp4'); // Replace with your Stripe publishable key
->>>>>>> bed60af1cf7e54aa3ff4fcdd5accf91d63075ef6
                 await stripe.redirectToCheckout({ sessionId: session.id });
             } catch (error) {
                 console.error('Error creating checkout session:', error);
