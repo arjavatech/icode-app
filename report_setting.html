@@ -16,20 +16,83 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" integrity="sha512-mR/b5Y7FRsKqrYZou7uysnOdCIJib/7r5QeJMFvLNHNhtye3xJp1TdJVPLtetkukFn227nKpXD9OjUc09lx97Q==" crossorigin="anonymous"
-  referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="report_setting.css">
-    <link rel="stylesheet" href="form_style.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css"
+        integrity="sha512-mR/b5Y7FRsKqrYZou7uysnOdCIJib/7r5QeJMFvLNHNhtye3xJp1TdJVPLtetkukFn227nKpXD9OjUc09lx97Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="employee_list.css">
+    <style>
+        @media(max-width:766px) {
+            .icon-button {
+                margin-bottom: 4%;
+            }
+        }
+
+        .btn-outline-light:hover {
+            background-color: #0A8080;
+            color: white;
+        }
+
+        .btn:hover {
+            color: white;
+            box-shadow: none;
+        }
+
+        .material-textfield {
+            position: relative;
+            margin-bottom: 1.5rem;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .material-textfield input,
+        .material-textfield textarea {
+            width: 100%;
+            padding: 0.5rem;
+            padding-top: 1rem;
+            font-size: 1rem;
+            border: 1px solid #0A8080 !important;
+            border-radius: 10px !important;
+            box-sizing: border-box;
+        }
+
+        .material-textfield label {
+            position: absolute;
+            top: 9px;
+            left: 0.75rem;
+            transition: all 0.3s ease;
+            background: white;
+            padding: 0 0.25rem;
+            color: #0A8080;
+            pointer-events: none;
+        }
+
+        .material-textfield input:focus+label,
+        .material-textfield input:not(:placeholder-shown)+label,
+        .material-textfield textarea:focus+label,
+        .material-textfield textarea:not(:placeholder-shown)+label {
+            top: -0.75rem;
+            left: 0.75rem;
+            font-size: 0.75rem;
+            color: #0A8080;
+        }
+
+        .material-textfield input:focus,
+        .material-textfield textarea:focus {
+            outline: none;
+            border-color: #0A8080;
+            box-shadow: 0 0 0px;
+        }
+    </style>
     <script defer src="report_setting.js"></script>
     <script defer src="logout.js"></script>
-
 </head>
 
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-green">
             <div class="container">
-                <!-- <a class="navbar-brand" href="#">Navbar</a> -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +107,7 @@
                             <a class="nav-link" href="employee_list.html">Employee Management</a>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link rounded-pill-active px-4" href="report_setting.html">Report</a>
+                            <a class="nav-link rounded-pill-active px-3" href="report_setting.html">Report</a>
                         </li>
                         <li class="nav-item me-4">
                             <a class="nav-link" href="profile.html">Profile</a>
@@ -52,12 +115,10 @@
                         <li class="nav-item me-4">
                             <a class="nav-link" href="contact.html">Contact Us</a>
                         </li>
-
                     </ul>
                     <div>
-                        <a href="#" class="btn btn-outline-light" id="logout">Logout</a>
+                        <a href="index.html" class="btn btn-outline-light" id="logout">Logout</a>
                     </div>
-
                 </div>
             </div>
         </nav>
@@ -65,9 +126,10 @@
     <section>
         <div class="container mt-2">
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="report_summary.html" class="text-dark  text-decoration-none">Report Summary</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Report Settings</li>
+                <ol class="breadcrumb" style="font-size: 17px;font-weight: 600;">
+                    <li class="breadcrumb-item"><a href="report_summary.html"
+                            class="text-dark text-decoration-none">Report Summary</a></li>
+                    <li class="breadcrumb-item active" aria-current="page" style="color: #0A8080;">Report Settings</li>
                 </ol>
             </nav>
         </div>
@@ -83,19 +145,15 @@
                 </div>
             </div>
             <div class="emp-list">
-
                 <h2 class="text-center fw-bold mb-5">Report Settings</h2>
-
+                <div class="add_form_popup">
+                    <button type="button" onclick="dataRemove()" class="btn btn-green float-end btn-style"
+                        data-bs-toggle="modal" data-bs-target="#myModal" style="margin-bottom: -50px !important;">
+                        + Add Employee
+                    </button>
+                </div>
+                <br><br>
                 <div class="emp-table table-responsive">
-                    <div class="add_form_popup">
-                        <!-- Add Employee -->
-
-                        <button type="button" onclick="dataRemove()" class="btn btn-green float-end"
-                            data-bs-toggle="modal" data-bs-target="#myModal">
-                            + Add Member
-                        </button>
-                    </div>
-                    <br><br>
                     <table class="table table-bordered table-hover text-center">
                         <thead>
                             <tr>
@@ -105,7 +163,7 @@
                             </tr>
                         </thead>
                         <tbody id="tBody">
-
+                            <!-- Table rows will be dynamically inserted here -->
                         </tbody>
                     </table>
                     <!-- Modal -->
@@ -128,13 +186,15 @@
                                             <span id="error-email" class="text-danger"></span>
                                         </div>
                                         <div class="material-textfield mb-3">
-                                            <select id="frequencySelect" class="selectpicker" multiple aria-label="size 3 select example" onchange="validReportDays()">
+                                            <select id="frequencySelect" class="selectpicker" multiple
+                                                aria-label="size 3 select example" onchange="validReportDays()">
                                                 <option value="Daily">Daily</option>
                                                 <option value="Weekly">Weekly</option>
                                                 <option value="Biweekly">Biweekly</option>
                                                 <option value="Monthly">Monthly</option>
                                                 <option value="Bimonthly">Bimonthly</option>
                                             </select>
+                                            <label class="cfrequency"></label>
                                             <br>
                                             <span id="selectError" class="error text-danger"></span>
                                         </div>
@@ -143,7 +203,6 @@
                                             data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
                                             Save
                                         </button>
-
                                     </form>
                                 </div>
                             </div>
@@ -154,7 +213,9 @@
         </div>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js" integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"
+        integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>

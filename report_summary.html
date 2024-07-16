@@ -22,10 +22,16 @@
     <script defer src="logout.js"></script>
 
 </head>
+<style>
+      .btn-outline-light:hover{
+        background-color: #0A8080;
+        color: white;
+    }
+</style>
 
 <body>
     <header>
-        
+
         <nav class="navbar navbar-expand-lg navbar-dark bg-green">
             <div class="container">
                 <!-- <a class="navbar-brand" href="#">Navbar</a> -->
@@ -54,7 +60,8 @@
 
                     </ul>
                     <div>
-                        <a href="#" class="btn btn-outline-light" id="logout">Logout</a>
+                        <a href="index.html" class="btn btn-outline-light" id="logout">Logout</a>
+
                     </div>
 
                 </div>
@@ -64,9 +71,10 @@
     <section>
         <div class="container mt-2">
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item active" aria-current="page">Report Summary</li>
-                  <li class="breadcrumb-item"><a href="report_setting.html" class="text-dark  text-decoration-none">Report Settings</a></li>
+                <ol class="breadcrumb" style="font-size: 17px;font-weight: 600;">
+                    <li class="breadcrumb-item active" style="color: #0A8080;">Report Summary</a></li>
+                    <li class="breadcrumb-item" aria-current="page"><a href="report_setting.html"
+                            class="text-dark  text-decoration-none">Report Settings</a></li>
                 </ol>
             </nav>
         </div>
@@ -87,7 +95,7 @@
                     <tbody id="current-checkin-tbody">
                         <!-- Rows will be inserted here by JavaScript -->
                     </tbody>
-                    
+
                 </table>
             </div>
 
@@ -204,21 +212,21 @@
                 </div>
             </div>
             <div class="emp-table table-responsive m-3">
-            <table class="table table-bordered table-hover text-center">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>ID</th>
-                        <th>Type</th>
-                        <th>Check-in Time</th>
-                        <th>Check-out Time</th>
-                        <th>Time worked</th>
-                    </tr>
-                </thead>
-                <tbody id="tBody2">
-                </tbody>
-            </table>
-        </div>
+                <table class="table table-bordered table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>ID</th>
+                            <th>Type</th>
+                            <th>Check-in Time</th>
+                            <th>Check-out Time</th>
+                            <th>Time worked</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tBody2">
+                    </tbody>
+                </table>
+            </div>
             <!-- <div class="text-center m-3">
                 <button type="button" class="btn btn-green">Download</button>
             </div> -->

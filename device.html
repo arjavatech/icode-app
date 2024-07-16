@@ -11,9 +11,22 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"   />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
     <link rel="stylesheet" href="employee_list.css">
 </head>
+<style>
+    .icon-button {
+        margin-bottom: 2%;
+    }
+
+    .btn-outline-light:hover {
+        background-color: #0A8080;
+        color: white;
+    }
+</style>
 
 <body>
     <header>
@@ -27,7 +40,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item me-4">
-                            <a class="nav-link rounded-pill-active px-4" href="device.html">Device</a>
+                            <a class="nav-link rounded-pill-active px-3" href="device.html">Device</a>
                         </li>
                         <li class="nav-item me-4">
                             <a class="nav-link" href="employee_list.html">Employee Management</a>
@@ -39,11 +52,12 @@
                             <a class="nav-link" href="profile.html">Profile</a>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link" href="contact.html">Contact Us</a>
+                            <a class="nav-link" href="contact.html" id="color">Contact Us</a>
                         </li>
                     </ul>
                     <div>
-                        <a href="#" class="btn btn-outline-light" id="logout">Logout</a>
+                        <a href="index.html" class="btn btn-outline-light" id="logout">Logout</a>
+
                     </div>
                 </div>
             </div>
@@ -76,6 +90,8 @@
     <script>
         const tableBody = document.getElementById("tableBody");
 
+        const apiUrlBase = "https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/device";
+
         function maskString(input, visibleChars) {
             visibleChars = Math.min(visibleChars, input.length);
             const starsCount = input.length - visibleChars;
@@ -85,7 +101,7 @@
         }
 
         function accessKeyCreate(firstFourDigit, lastFourDigit) {
-            const createUuidForAccessKey = uuid.v4().replace(/-/g, '').substring(0, 6); 
+            const createUuidForAccessKey = uuid.v4().replace(/-/g, '').substring(0, 6);
             return firstFourDigit + createUuidForAccessKey + lastFourDigit;
         }
 
@@ -94,12 +110,12 @@
             const serialNumber = tableBody.rows.length + 1;
             newRow.innerHTML = `
             <td>${serialNumber}</td>
-            <td class="accesskey"></td>
+            <td class="accesskey"><button class="btn icon-button btn-outline-green ml-10" onClick="viewDevices(this)"><i class="fa-solid fa-copy"></i></button></td>
             <td class="DId"></td>
             <td class="DName"></td>
             <td class="Action">
                 <button class="btn icon-button btn-outline-green" onClick="delButton(this)">Delete</button>
-                <button class="btn icon-button btn-outline-green" onClick="copyAccessKey(this)">Copy Key</button>
+                <button class="btn icon-button btn-outline-green" onClick="saveDevice(this)">Save</button>
             </td>
             `;
             tableBody.appendChild(newRow);
@@ -113,8 +129,23 @@
 
         function delButton(button) {
             const row = button.closest('tr');
-            tableBody.removeChild(row);
-            updateSerialNumbers();
+            const accessKeyTag = row.querySelector(".accesskey");
+            const accessKeyValue = accessKeyTag.getAttribute("data-key");
+            const companyId = localStorage.getItem('companyID'); // Retrieve the company ID
+
+            fetch(`${apiUrlBase}/delete/${accessKeyValue}/${companyId}`, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.status}`);
+                    }
+                    tableBody.removeChild(row);
+                    updateSerialNumbers();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
 
         function copyAccessKey(button) {
@@ -134,6 +165,84 @@
                 rows[i].cells[0].innerText = i + 1;
             }
         }
+
+        function viewDevices() {
+            const companyId = localStorage.getItem('companyID');
+            const apiUrl = `${apiUrlBase}/getAll/${companyId}`;
+
+            console.log(companyId);
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    data.forEach(element => {
+                        const newRow = document.createElement('tr');
+                        const accessKey = element.AccessKey;
+                        newRow.innerHTML = `
+                            <td>${tableBody.rows.length + 1}</td>
+                            <td class="accesskey" data-key="${accessKey}">${maskString(accessKey, 4)} <span><button class="btn icon-button btn-outline-green" onClick="copyAccessKey(this)"><i class="fa-solid fa-copy"></i></button></span></td>
+                            <td class="DId">${element.DeviceID}</td>
+                            <td class="DName">${element.DeviceName}</td>
+                            <td class="Action">
+                                <button class="btn icon-button btn-outline-green" onClick="delButton(this)">Delete</button>
+
+                            </td>
+                        `;
+                        tableBody.appendChild(newRow);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function saveDevice(button) {
+            const row = button.closest('tr');
+            // const deviceIDInput = row.querySelector(".DId input");
+            // const deviceNameInput = row.querySelector(".DName input");
+            const accessKeyTag = row.querySelector(".accesskey");
+            const accessKeyValue = accessKeyTag.getAttribute("data-key");
+            const companyId = localStorage.getItem('companyID');
+
+            const newDevice = {
+                DeviceID: null,
+                CID: companyId,
+                DeviceName: null,
+                AccessKey: accessKeyValue,
+                AccessKeyGeneratedTime: new Date().toISOString()
+            };
+
+            console.log('Saving device:', newDevice); // Log the device being saved
+
+            fetch(`${apiUrlBase}/create`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newDevice)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => {
+                            throw new Error(`Error: ${response.status} - ${text}`);
+                        });
+                    }
+                    // Update the row to display the saved values
+                    // row.querySelector(".DId").innerText = newDevice.DeviceID;
+                    // row.querySelector(".DName").innerText = newDevice.DeviceName;
+                    button.remove();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+
+        document.addEventListener('DOMContentLoaded', viewDevices);
     </script>
 </body>
 

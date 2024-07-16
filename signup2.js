@@ -1,43 +1,43 @@
 
 
-const input = document.querySelector("#phone");
-const errorMsg = document.querySelector("#error-msg");
+// const input = document.querySelector("#phone");
+// const errorMsg = document.querySelector("#error-msg");
 
-const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+// const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
 
-const iti = window.intlTelInput(input, {
-    initialCountry: "us",
-    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.13/build/js/utils.js"
-});
+// const iti = window.intlTelInput(input, {
+//     initialCountry: "us",
+//     utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.13/build/js/utils.js"
+// });
 
-const reset = () => {
-    input.classList.remove("error");
-    errorMsg.innerHTML = "";
-    errorMsg.classList.add("hide");
-};
+// const reset = () => {
+//     input.classList.remove("error");
+//     errorMsg.innerHTML = "";
+//     errorMsg.classList.add("hide");
+// };
 
-const showError = (msg) => {
-    input.classList.add("error");
-    errorMsg.innerHTML = msg;
-    errorMsg.classList.remove("hide");
-};
+// const showError = (msg) => {
+//     input.classList.add("error");
+//     errorMsg.innerHTML = msg;
+//     errorMsg.classList.remove("hide");
+// };
 
-input.addEventListener('keyup', () => {
-    reset();
-    if (!input.value.trim()) {
-        showError("Required");
-    } else {
-        const isValid = iti.isValidNumber();
-        if (!isValid) {
-            const errorCode = iti.getValidationError();
-            const msg = errorMap[errorCode] || "Invalid number";
-            showError(msg);
-        }
-    }
-});
+// input.addEventListener('keyup', () => {
+//     reset();
+//     if (!input.value.trim()) {
+//         showError("Required");
+//     } else {
+//         const isValid = iti.isValidNumber();
+//         if (!isValid) {
+//             const errorCode = iti.getValidationError();
+//             const msg = errorMap[errorCode] || "Invalid number";
+//             showError(msg);
+//         }
+//     }
+// });
 
-// Reset error messages when changing the country dial code
-input.addEventListener('countrychange', reset);
+// // Reset error messages when changing the country dial code
+// input.addEventListener('countrychange', reset);
 
 
 const isAlpha = /^[a-zA-Z\s]+$/; // Allow letters and spaces
@@ -161,33 +161,18 @@ async function validateForm() {
     const isFirstNameValid = validateFirstName();
     const isLastNameValid = validateLastName();
     const isAddressValid = validateAddress();
-    const isPhoneNumberValid = validatePhoneNumber();
+    const isPhoneNumberValid = validPhoneno();
     // const isCentreNameValid = validateCentreName();
     const isEmailValid = validateEmail();
 
     if (isFirstNameValid && isLastNameValid && isAddressValid && isPhoneNumberValid && isEmailValid) {
         document.querySelector('.progress-bar').style.width = '100%';
 
-        // const username = localStorage.getItem('username');
-        // const password = localStorage.getItem('password');
-
-        // const userExists = await checkUserExists(username, password);
-
-        // if (userExists) {
-        //     alert('Username and password already exist');
-        //     return;
-        // }
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const address = document.getElementById('address').value;
-    const phone = document.getElementById('phone').value;
-    const email = document.getElementById('email').value;
-
-        // localStorage.setItem('firstName', firstName);
-        // localStorage.setItem('lastName', lastName);
-        // localStorage.setItem('address', address);
-        // localStorage.setItem('phone', phone);   
-        // localStorage.setItem('email', email);
+    // const firstName = document.getElementById('firstName').value;
+    // const lastName = document.getElementById('lastName').value;
+    // const address = document.getElementById('address').value;
+    // const phone = document.getElementById('phoneNumber').value;
+    // const email = document.getElementById('email').value;
 
         //COMPANY API CALL
         craeteFirstPageSignupAPiData();
@@ -317,9 +302,9 @@ async function craeteFirstPageSignupAPiData() {
         // Call Customer api
         createApiData();
 
-            setTimeout(() => {
-                window.location.href = "index.html"; 
-            }, 1000);        
+            // setTimeout(() => {
+            //     window.location.href = "index.html"; 
+            // }, 500);        
       }
       else{
         alert(data.error);
@@ -404,7 +389,7 @@ function createApiData() {
     const firstName = document.getElementById("firstName").value;
     const lastName = document.getElementById("lastName").value;
     const address = document.getElementById("address").value;
-    const phone = document.getElementById("phone").value;
+    const phone = document.getElementById("phoneNumber").value;
     const email = document.getElementById("email").value;
     // const centreName = document.getElementById("centreName").value;
 
@@ -435,8 +420,52 @@ function createApiData() {
     })
     .then(data => {
         console.log(data);
+        setTimeout(() => {
+            window.location.href = "index.html"; 
+        }, 100);        
     })
     .catch(error => {
         console.error('Error:', error);
     });
+}
+
+
+function validPhoneno() {
+    const input = document.querySelector("#phoneNumber");
+    const phoneError = document.querySelector("#showMsg3");
+    // const employePin = document.getElementById("instructor");
+    const phoneNumber = input.value;
+
+    // employePin.value = (input.value).substring((input.value).length - 4);
+
+    const phoneRegex = /^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/;
+
+    if (phoneNumber === "") {
+        phoneError.textContent = 'Enter phone number.';
+        return false;
+    } else if (!phoneRegex.test(phoneNumber)) {
+        phoneError.textContent = 'Invalid phone number.';
+        return false;
+    } else {
+        phoneError.textContent = '';
+        return true;
+    }
+
+
+}
+
+function formatPhoneNumber() {
+    const inputField = document.getElementById('phoneNumber');
+    let value = inputField.value;
+    // Remove all non-digit characters
+    value = value.replace(/\D/g, '');
+    // Format the phone number
+    if (value.length > 3 && value.length <= 6) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+    } else if (value.length > 6) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+    } else if (value.length > 3) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+    }
+    inputField.value = value;
 }

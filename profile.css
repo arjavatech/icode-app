@@ -1,34 +1,37 @@
-/* .img-sty{
-    width: 300px;
-    height: 300px;
+.bg-green {
+    background-color: #0A8080;
 }
 
-.circle-sty{
-    background-color: gray;
-    width: 320px;
-    height: 320px;
-    position: absolute;
-    z-index: -10;
-}
-#login-container{
-    background-color: white;
-    padding-left: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    margin-top: 10%;
+.navbar-dark .navbar-nav .nav-link {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
 }
 
-.input-sty{
-    width: 200px; */
-    /* background-color: rgb(177, 172, 172); */
-    /* border-color: transparent;
-    border-bottom: 1px solid black;
-} */
+.rounded-pill-active {
+    border-radius: 40rem;
+    background-color: #fff;
+    color: #0A8080 !important;
+}
 
 
-.person-sty{
-    max-width: 100px;
-    margin-left: 180px;
-    border-radius: 50px;
+
+
+.success-msg {
+    display: none;
+}
+
+.error-msg {
+    display: none;
+}
+
+
+@media (max-width:991px) {
+    .rounded-pill-active {
+        border-radius: 10px;
+        background-color: #fff;
+        width: 220px;
+        color: #0A8080 !important;
+        margin-top: 2%;
+    }
 }

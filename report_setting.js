@@ -185,7 +185,7 @@ function viewReportdetails() {
                 }
                 
               // Convert the array to a comma-separated string
-                const Frequency = ReportActive.join(', ');
+                const Frequency = ReportActive.join(',');
                 const newRow = document.createElement('tr');
 
                 newRow.innerHTML = `

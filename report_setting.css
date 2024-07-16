@@ -50,3 +50,15 @@
     border: 1px solid gray;
     border-radius: 10px
   }
+
+
+  
+  @media (max-width:991px) {
+    .rounded-pill-active {
+        border-radius: 10px;
+        background-color: #fff;
+        width: 140px;
+        color: #0A8080 !important;
+    }
+    
+}
