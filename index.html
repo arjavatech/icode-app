@@ -1,5 +1,5 @@
-  <!DOCTYPE html>
-  <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="employee_list.css">
     <title>Login Page</title>
     <style>
+        .span-content{
+            font-weight: bold;
+        }
         .material-textfield {
             position: relative;
             margin-bottom: 1.5rem;
@@ -25,6 +28,7 @@
             border-radius: 10px;
             border: 1px solid #0A8080;
             transition: border-color 0.3s, box-shadow 0.3s;
+            font-family: "Times New Roman", Times, serif;
         }
 
         .material-textfield label {
@@ -65,9 +69,12 @@
         .span-colo {
             color: #0A8080;
             text-decoration: none;
+            /* font-family: 'Abel'; */
+            font-weight: bold;
         }
 
         .col-sty {
+            height: 100vh;
             background-color: #0A8080;
         }
 
@@ -81,8 +88,8 @@
         }
 
         .btn-green:hover {
-            background-color: #174f4f;
-            color: white;
+            background-color: #174f4f !important;
+            color: white !important;
         }
 
         .login-img-sty {
@@ -189,8 +196,8 @@
                     </div>
                 </div>
                 <button type="button" class="btn btn-green mt-3" id="loginBtn">Submit</button>
-                <h5 class="m-3 text-center span-content">Are you <span class="p-2"><a href="singup.html"
-                            class="span-colo">Signup</a></span></h5>
+                <h5 class="m-3 text-center span-content fs-4">Are you <span class="p-2" ><a href="singup.html"
+                            class="span-colo fs-4">Signup</a></span></h5>
             </div>
         </div>
     </div>

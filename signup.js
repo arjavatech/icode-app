@@ -84,24 +84,23 @@ function validateForm() {
       document.querySelector('.progress-bar').style.width = '50%';
 
       // Store the values in localStorage
-      const companyName = document.getElementById('companyName').value;
-      const companyLogo = document.getElementById('companyLogo').value;
-      const companyAddress = document.getElementById('companyAddress').value;
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
+      // const companyName = document.getElementById('companyName').value;
+      // const companyLogo = document.getElementById('companyLogo').value;
+      // const companyAddress = document.getElementById('companyAddress').value;
+      // const username = document.getElementById('username').value;
+      // const password = document.getElementById('password').value;
 
-      localStorage.setItem('companyName', companyName);
-      localStorage.setItem('companyLogo', companyLogo);
-      localStorage.setItem('companyAddress', companyAddress);
-      localStorage.setItem('username', username);
-      localStorage.setItem('password', password);
+      // localStorage.setItem('companyName', companyName);
+      // localStorage.setItem('companyLogo', companyLogo);
+      // localStorage.setItem('companyAddress', companyAddress);
+      // localStorage.setItem('username', username);
+      // localStorage.setItem('password', password);
       // localStorage.setItem('uuid',myUUID.toString());
       // localStorage.setItem('customerId',customerId.toString());
 
       // Simulate a delay for the progress bar
-      setTimeout(() => {
           window.location.href = "signup2.html";  
-      }, 100);
+    
   } else {
       alert('Please fix the errors in the form');
   }

@@ -20,16 +20,18 @@
     <link rel="stylesheet" href="form.css">
     <script defer src="contact.js"></script>
     <script defer src="logout.js"></script>
+    <link rel="stylesheet" href="employee_list.css">
 </head>
 <style>
     .btn-green {
-            background-color: #0A8080;
-            border: none;
-            color: white;
-            width: 100%;
-            padding: 0.8rem;
-            font-size: 1.2rem;
-        }
+        background-color: #0A8080;
+        border: none;
+        color: white;
+        width: 100%;
+        padding: 0.8rem;
+        font-size: 1.2rem;
+    }
+
     .btn-outline-light:hover {
         background-color: #0A8080;
         color: white;
@@ -98,7 +100,11 @@
                             </div>
                             <div class="material-textfield mb-3 form-group">
                                 <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control"
+<<<<<<< HEAD
                                     placeholder=" " onblur="formatPhoneNumber()">
+=======
+                                    placeholder=" " oninput="formatPhoneNumber()" required>
+>>>>>>> 7d95d53 (Fixed email and input file)
                                 <label>Phone Number <span class="text-danger">*</span></label>
                                 <span class="text-danger" id="error-phone"></span>
                             </div>

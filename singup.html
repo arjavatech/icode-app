@@ -11,6 +11,7 @@
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
     <script defer src="signup.js"></script>
+    <link rel="stylesheet" href="employee_list.css">
     <title>Signup Page</title>
     <style>
         body {
@@ -18,8 +19,9 @@
         }
 
         .col-sty {
+            height: 100vh;
             background-color: #0A8080;
-            height: auto;
+            /* height: auto; */
             /* Adjusted height for full viewport height */
             display: flex;
             flex-direction: column;
@@ -105,7 +107,7 @@
         .material-textfield input:focus {
             outline: none;
             border-color: #0A8080;
-            box-shadow: 0 0 5px #0A8080;
+            box-shadow: 0 0 5px rgba(3, 130, 54, 0.5);
         }
 
         .btn-green {
@@ -124,6 +126,7 @@
 
         @media (max-width: 991px) {
             .col-sty {
+            height: 100vh;
                 height: auto;
                 padding: 20px;
             }
@@ -153,6 +156,7 @@
 
         @media (max-width: 576px) {
             .col-sty {
+            height: 100vh;
                 height: auto;
                 padding: 10px;
             }
@@ -225,7 +229,7 @@
                     <span class="text-danger" id="errorCompanyName"></span>
                 </div>
                 <div class="material-textfield mt-4">
-                    <input id="companyLogo" placeholder=" " type="file" onblur="validateCompanyLogo()"
+                    <input id="companyLogo" placeholder=" " type="file" onblur="validateCompanyLogo()" accept="image/png,image/jpeg,image/jpg"
                         class="input-sty">
                     <label class="label-sty">Upload Company Logo</label>
                     <br>

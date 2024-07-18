@@ -2,6 +2,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const companyName = localStorage.getItem('companyName');
     const companyAddress = localStorage.getItem('companyAddress');
+    const companyLogo = localStorage.getItem('companyLogo');
     const username = localStorage.getItem('username');
     const password = localStorage.getItem('password');
     const firstName = localStorage.getItem('firstName');
@@ -9,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const address = localStorage.getItem('address');
     const phone = localStorage.getItem('phone');
     const email = localStorage.getItem('email');
+    console.log(companyLogo);
 
     if (companyName) document.getElementById('companyName').value = companyName;
     if (companyAddress) document.getElementById('companyAddress').value = companyAddress;
@@ -19,6 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (lastName) document.getElementById('lName').value = lastName;
     if (address) document.getElementById('address').value = address;
     if (email) document.getElementById('email').value = email;
+    if(companyLogo)document.getElementById('companyLogo').value = companyLogo;
+
 
     document.getElementById('settingsForm').addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent the form from submitting
@@ -280,3 +284,29 @@ function formatPhoneNumber() {
     }
     inputField.value = value;
 }
+
+
+ // Function to handle file input change event
+ function handleFileSelect(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('companyLogo').value = input.files[0].name;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// // Function to handle form submission
+// document.getElementById('settingsForm').addEventListener('submit', function (e) {
+//     e.preventDefault();
+//     // Add your form submission logic here
+// });
+
+// Function to handle password update
+// function updatePassword() {
+//     var password = document.getElementById('password').value;
+//     // Add your password update logic here
+// }
+
+

@@ -15,9 +15,7 @@
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"   />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="employee_list.css">
-    <script defer src="logout.js"></script>
 </head>
 <style>
     .icon-button {
@@ -112,7 +110,11 @@
             const serialNumber = tableBody.rows.length + 1;
             newRow.innerHTML = `
             <td>${serialNumber}</td>
+<<<<<<< HEAD
             <td class="accesskey"><button class="btn icon-button btn-outline-green ml-10" onClick="viewDevices(this)"><i class="fa-solid fa-copy"></i></button></td>
+=======
+            <td class="accesskey"><button class="btn icon-button ml-10" onClick="viewDevices(this)"><i class="fa-solid fa-copy"></i></button></td>
+>>>>>>> 7d95d53 (Fixed email and input file)
             <td class="DId"></td>
             <td class="DName"></td>
             <td class="Action">
@@ -186,7 +188,7 @@
                         const accessKey = element.AccessKey;
                         newRow.innerHTML = `
                             <td>${tableBody.rows.length + 1}</td>
-                            <td class="accesskey" data-key="${accessKey}">${maskString(accessKey, 4)} <span><button class="btn icon-button btn-outline-green" onClick="copyAccessKey(this)"><i class="fa-solid fa-copy"></i></button></span></td>
+                            <td class="accesskey" data-key="${accessKey}">${maskString(accessKey, 4)} <span><button class="btn icon-button" onClick="copyAccessKey(this)"><i class="fa-solid fa-copy"></i></button></span></td>
                             <td class="DId">${element.DeviceID}</td>
                             <td class="DName">${element.DeviceName}</td>
                             <td class="Action">
@@ -233,9 +235,8 @@
                             throw new Error(`Error: ${response.status} - ${text}`);
                         });
                     }
-                    // Update the row to display the saved values
-                    // row.querySelector(".DId").innerText = newDevice.DeviceID;
-                    // row.querySelector(".DName").innerText = newDevice.DeviceName;
+                    // Show the copy icon button after saving
+                    accessKeyTag.innerHTML = `${maskString(accessKeyValue, 4)} <span><button class="btn icon-button" onClick="copyAccessKey(this)"><i class="fa-solid fa-copy"></i></button></span>`;
                     button.remove();
                 })
                 .catch(error => {

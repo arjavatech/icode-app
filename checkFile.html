@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Blob Image</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #0A8080;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #174f4f;
+        }
+
+        img {
+            margin-top: 20px;
+            max-width: 300px;
+            max-height: 300px;
+            display: none; /* Initially hidden */
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="showImageButton">Show Image</button>
+    <img id="imageDisplay" alt="Blob Image" />
+
+    <script>
+        const blobData = new Blob([/* Your binary data here */], { type: 'image/png' }); // Example blob data
+        const imageDisplay = document.getElementById('imageDisplay');
+        const showImageButton = document.getElementById('showImageButton');
+
+        showImageButton.addEventListener('click', () => {
+            const url = URL.createObjectURL(blobData);
+            imageDisplay.src = url;
+            imageDisplay.style.display = 'block'; // Show the image
+        });
+    </script>
+
+</body>
+</html>

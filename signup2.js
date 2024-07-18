@@ -174,8 +174,10 @@ async function validateForm() {
     // const phone = document.getElementById('phoneNumber').value;
     // const email = document.getElementById('email').value;
 
-        //COMPANY API CALL
-        craeteFirstPageSignupAPiData();
+    
+        //CALL PAYMENT PROCESS 
+        createCheckoutSession();
+
     } else {
         alert('Please fix the errors in the form');
     }
@@ -468,4 +470,30 @@ function formatPhoneNumber() {
         value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
     }
     inputField.value = value;
+}
+
+
+async function createCheckoutSession() {
+    try {
+        const response = await fetch('http://localhost:3000/create-checkout-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        });
+
+        if (!response.ok) {
+            const errorDetails = await response.json();
+            throw new Error(errorDetails.error);
+        }
+
+        const session = await response.json();
+        console.log('Checkout session:', session);
+        const stripe = Stripe('pk_test_51OB8JlIPoM7JHRT2DlaE8KmPRFkgeSXkqf4eQZxEahu0Lbno3vHzCTH5J4rDAfw53PjdWlLteNJNzPVdahkzTb8100DA6sqAp4');
+        await stripe.redirectToCheckout({ sessionId: session.id });
+    } catch (error) {
+        console.error('Error creating checkout session:', error);
+        alert('Failed to create checkout session: ' + error.message);
+    }
 }

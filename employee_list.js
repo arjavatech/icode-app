@@ -35,6 +35,8 @@ function addEmpdetails() {
         if (empupdateid == "") {
             const apiUrl = `${apiUrlBase}/create`;
             // return false;
+
+
             // let outPut = document.getElementById("resmsg");
 
             const employeeObject = {
@@ -333,12 +335,4 @@ function formatPhoneNumber() {
         value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
     }
     inputField.value = value;
-
-    const employePin = document.getElementById("instructor");
-    // const phoneNumber = inputField.value;
-
-    if(inputField.value.length > 10){
-    employePin.value = (inputField.value).substring((inputField.value).length - (inputField.value.length == 11 ? 1 : inputField.value.length == 12 ? 2 : inputField.value.length == 13 ? 3 : 4));
-    }
-
 }
