@@ -13,9 +13,43 @@
     <link rel="stylesheet" href="employee_list.css">
     <title>Login Page</title>
     <style>
-        .span-content{
+        /* Loading  */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overlay .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0A8080;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .span-content {
             font-weight: bold;
         }
+
         .material-textfield {
             position: relative;
             margin-bottom: 1.5rem;
@@ -176,7 +210,7 @@
 <body>
     <div class="row" style="height: auto;">
         <div
-            class="col-sm-12 col-xl-6 col-md-6 col-lg-6 col-sty d-flex flex-column justify-content-center align-items-center" >
+            class="col-sm-12 col-xl-6 col-md-6 col-lg-6 col-sty d-flex flex-column justify-content-center align-items-center">
             <img src="Image/loginImage.png" alt="" class="m-5 p-5 img-fluid login-img-sty">
             <h3 class="text-center">Optimize Your Workforce Efficiency</h3>
             <p class="text-center">Streamlined time tracking and management for a productive workplace.</p>
@@ -191,14 +225,19 @@
                 <div class="material-textfield mt-4">
                     <input id="password" placeholder=" " type="password" class="input-sty form-control">
                     <label class="label-sty">Password</label>
+                    <div class="overlay" id="overlay">
+                        <div class="spinner"></div>
+                    </div>
                     <div class="forget-password mt-2">
                         <span><a href="forget_password.html" class="span-sty">Forget password</a></span>
                     </div>
                 </div>
                 <button type="button" class="btn btn-green mt-3" id="loginBtn">Submit</button>
-                <h5 class="m-3 text-center span-content fs-4">Are you <span class="p-2" ><a href="singup.html"
+                <div id="errorMsg"></div>
+                <h5 class="m-3 text-center span-content fs-4">Are you <span class="p-2"><a href="singup.html"
                             class="span-colo fs-4">Signup</a></span></h5>
             </div>
+
         </div>
     </div>
 
@@ -206,17 +245,24 @@
         document.getElementById('loginBtn').addEventListener('click', () => {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-
             loginCheck(username, password)
                 .then(isAuthenticated => {
+                    console.log("helo");
                     if (isAuthenticated) {
-                        alert('Login successful');
-                        window.location.href = "employee_list.html";
+                        console.log("hello");
+                        document.getElementById('overlay').style.display = 'flex';
+                        console.log("in");
+                        setTimeout(function () {
+                            window.location.href = 'employee_list.html';
+                        }, 3000);
                     } else {
-                        alert('Invalid username or password');
+                        console.log("else");
+                        document.getElementById('errorMsg').innerHTML = "Invalid username or password";
+                        document.getElementById('errorMsg').style = "color:red";
                     }
                 })
                 .catch(error => {
+                    console.log("igk");
                     console.error('Error during authentication:', error);
                     alert('An error occurred during authentication');
                 });

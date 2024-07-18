@@ -5,8 +5,8 @@ const { LocalStorage } = require('node-localstorage');
 const localStorage = new LocalStorage('./scratch');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
-const crypto = require('crypto'); // Add crypto module
-const fetch = require('node-fetch'); // Add fetch module
+const crypto = require('crypto');
+const fetch = require('node-fetch');
 
 const app = express();
 
@@ -18,6 +18,7 @@ app.use(express.json());
 app.post('/create-checkout-session', async (req, res) => {
   try {
     console.log('Creating checkout session');
+    console.log('api called');
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -42,6 +43,7 @@ app.post('/create-checkout-session', async (req, res) => {
     console.error('Error creating checkout session:', error.message);
     res.status(500).json({ error: error.message });
   }
+  // await createFirstPageSignupAPiData();
 });
 
 // Webhook for Checkout Session Completion
@@ -52,6 +54,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
 
   try {
     event = stripe.webhooks.constructEvent(req.body, sig, 'whsec_your_webhook_secret'); // Replace with your webhook secret
+    console.log('Webhook event constructed:', event);
   } catch (err) {
     console.error(`Webhook Error: ${err.message}`);
     return res.status(400).send(`Webhook Error: ${err.message}`);
@@ -60,10 +63,16 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
   // Handle the event
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
-    console.log('Payment was successful!', session);
-    // Call your JS function or perform any action here
-    // For example, update your database or notify your frontend
-    await createFirstPageSignupAPiData();
+    console.log('Payment was successful! Session:', session);
+
+    try {
+      await createFirstPageSignupAPiData();
+      console.log('API call after payment success was successful');
+    } catch (error) {
+      console.error('Error in API call after payment success:', error);
+    }
+  } else {
+    console.log(`Unhandled event type: ${event.type}`);
   }
 
   res.json({ received: true });
@@ -75,12 +84,9 @@ app.listen(3000, () => {
 });
 
 // API link 
-// Signup second page link
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/customer';
-// UUID => cid
 const cid = uuidv4(); // Use uuidv4 to generate a UUID
 
-// Signup first page link
 const firstSignupPageapiUrlBase = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company`;
 
 async function createFirstPageSignupAPiData() {
@@ -90,7 +96,6 @@ async function createFirstPageSignupAPiData() {
   const caddress = localStorage.getItem('companyAddress');
   const username = localStorage.getItem('username');
 
-  // Call the asynchronous checkPassword function to get the encrypted password
   const passwordEncrypted = await checkPassword();
 
   const userData = {
@@ -101,6 +106,7 @@ async function createFirstPageSignupAPiData() {
     UserName: username,
     Password: passwordEncrypted,
   };
+  console.log(userData);
 
   console.log('Sending user data to first signup page API:', userData);
 
@@ -121,13 +127,9 @@ async function createFirstPageSignupAPiData() {
       console.log('Response from first signup page API:', data);
 
       if (!data.error) {
-        // Call Customer api
         await createApiData();
       } else {
         console.error('API Error:', data.error);
-        setTimeout(() => {
-          window.location.href = "signup.html";
-        }, 100);
       }
     }
   } catch (error) {
@@ -135,28 +137,23 @@ async function createFirstPageSignupAPiData() {
   }
 }
 
-// Create encrypt data
 async function encrypt(data, key) {
-  const iv = crypto.randomBytes(12); // Generate random IV
+  const iv = crypto.randomBytes(12);
   const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
   let encrypted = cipher.update(data, 'utf8', 'hex');
   encrypted += cipher.final('hex');
   const tag = cipher.getAuthTag().toString('hex');
 
-  // Combine IV, encrypted data, and tag
   const encryptedDataWithIV = `${iv.toString('hex')}:${encrypted}:${tag}`;
   return encryptedDataWithIV;
 }
 
-// Generate a random key for encryption/decryption (should be stored securely)
-const key = crypto.randomBytes(32); // 32 bytes for AES-256
+const key = crypto.randomBytes(32);
 localStorage.setItem('key', key.toString('hex'));
 
-// Create encrypt data in password
 async function checkPassword() {
   const password = localStorage.getItem('password');
   try {
-    // Encrypt the password
     const encryptedPassword = await encrypt(password, key);
     return encryptedPassword;
   } catch (error) {
@@ -164,8 +161,6 @@ async function checkPassword() {
   }
 }
 
-// CUSTOMER
-// Push the Data in database
 async function createApiData() {
   const customerId = uuidv4();
   const apiUrl = `${apiUrlBase}/create`;
@@ -204,9 +199,6 @@ async function createApiData() {
     }
 
     console.log('Response from customer API:', data);
-    setTimeout(() => {
-      window.location.href = "index.html";
-    }, 100);
   } catch (error) {
     console.error('Error in createApiData:', error);
   }

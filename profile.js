@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (lastName) document.getElementById('lName').value = lastName;
     if (address) document.getElementById('address').value = address;
     if (email) document.getElementById('email').value = email;
-    if(companyLogo)document.getElementById('companyLogo').value = companyLogo;
+    if (companyLogo) document.getElementById('companyLogo').value = companyLogo;
 
 
     document.getElementById('settingsForm').addEventListener('submit', function (event) {
@@ -63,7 +63,12 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.setItem('email', document.getElementById('email').value);
 
             updateApiData();
-            alert('Settings saved successfully!');
+            document.getElementById('successMsg').innerHTML = 'success fully saved your changes';
+                document.getElementById('successMsg').style = "color:green";
+            document.getElementById('overlay').style.display = 'flex';
+            setTimeout(function () {
+                window.location.href = "profile.html";
+            }, 3000);
         }
     });
 
@@ -286,8 +291,8 @@ function formatPhoneNumber() {
 }
 
 
- // Function to handle file input change event
- function handleFileSelect(input) {
+// Function to handle file input change event
+function handleFileSelect(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
