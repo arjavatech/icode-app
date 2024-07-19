@@ -19,6 +19,8 @@ function viewCurrentDateReport() {
     // Get the current date
     const now = new Date();
 
+
+
     // Get the date components
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
@@ -181,7 +183,7 @@ function viewDatewiseReport(dateValue) {
                     <td class="Pin">${element.Pin}</td>
                     <td class="CheckInTime">${(convertToAmPm((element.CheckInTime).substring(11)))}</td>
                     <td class="CheckOutTime">${(convertToAmPm((element.CheckOutTime).substring(11)))}</td>
-                    <td class="TimeWorked">${convertToHHMM(element.TimeWorked.toString())}</td>
+                    <td class="TimeWorked">${element.TimeWorked}</td>
                 `;
                         tableBody.appendChild(newRow);
 
@@ -222,34 +224,57 @@ function viewDateRangewiseReport(startValue, endvalue) {
     tableBody2.innerHTML = '';
     const cid = localStorage.getItem('companyID');
 
+    var dateRange = {};
 
+    selectedValue = localStorage.getItem('reportType');
 
-    if (endvalue != "test") {
-        const apiUrl = `${apiBase}/${cid}/${startValue}/${endvalue}`;
+    if(selectedValue == "Weekly")
+    {
+    
+    dateRange = getLastWeekDateRange();
+    }
+    else if(selectedValue == "Monthly")
+    {
+      dateRange = getLastMonthStartAndEndDates()
+    }
+    else if(selectedValue == "BiMonthly")
+    {
+      dateRange = getLastTwoMonthStartAndEndDates();
+    }
+
+        const apiUrl = `${apiBase}/${cid}/${dateRange.startRange}/${dateRange.endRange}`;
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then(data => {
-
+            }).then(data => {
                 try {
+                    if(data.isEmpty)
+                    {
+                        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+    <td colspan="6" class="text-center">No Records Found</td>
+`;
+        tableBody2.innerHTML = '';
+        tableBody2.appendChild(newRow);
+                    }
+                    else
+                    {
                     data.forEach(element => {
+                      console.log(data);
                         const newRow = document.createElement('tr');
                         if (element.CheckOutTime != null) {
                         newRow.innerHTML = `
                 <td class="Name">${element.Name}</td>
                 <td class="Pin">${element.Pin}</td>
-                <td class="Type">${element.Type}</td>
-                <td class="CheckInTime">${element.CheckInTime}</td>
-                <td class="CheckOutTime">${element.CheckOutTime}</td>
                 <td class="TimeWorked">${element.TimeWorked}</td>
             `;
                         tableBody2.appendChild(newRow);
                         }
                     });
+                }
 
                 }
                 catch {
@@ -258,81 +283,25 @@ function viewDateRangewiseReport(startValue, endvalue) {
             .catch(error => {
                 console.error('Error:', error);
             });
-    }
-
-    else {
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-    <td colspan="6" class="text-center">No Date choosen</td>
-`;
-        tableBody2.innerHTML = '';
-        tableBody2.appendChild(newRow);
-
-    }
 
 }
 // Call fetchData when the page is fully loaded
 document.addEventListener('DOMContentLoaded', viewCurrentDateReport());
 document.addEventListener('DOMContentLoaded', viewDatewiseReport("test"));
-document.addEventListener('DOMContentLoaded', viewDateRangewiseReport("test", "test"));
 
 document.getElementById('dailyReportDate').addEventListener('change', function () {
-    const dateValue = this.value;
-    document.addEventListener('DOMContentLoaded', viewDatewiseReport(dateValue));
+  const dateValue = this.value;
+  document.addEventListener('DOMContentLoaded', viewDatewiseReport(dateValue));
 });
 
-// Report page(Range wise)
-document.getElementById('dateFrom').addEventListener('change', function () {
-    const dateFromValue = this.value;
-    document.getElementById('dateTo').addEventListener('change', function () {
-        const dateTo = this.value
-        document.addEventListener('DOMContentLoaded', viewDateRangewiseReport(dateFromValue, dateTo));
-    });
+document.addEventListener('DOMContentLoaded', function(){
+    selectedValue = localStorage.getItem('reportType');
+    document.getElementById("report-type-heading").textContent = selectedValue + " Report";
+    viewDateRangewiseReport();
 });
 
-//Current check in datas
 
 
-// const data = {
-//     currentCheckinDate: `Current Check-in ${day}-${month}-${year}`,
-//     // pendingCheckoutDate: "Pending Check-out [23-05-2024]",
-//     currentCheckins: [
-//         { name: "John Doe", id: "2345", type: "Belt", checkinTime: "2024-05-24 11:10:23" },
-//         { name: "Doe", id: "2315", type: "Belt", checkinTime: "2024-05-24 12:10:23" },
-//         { name: "Alex", id: "2340", type: "Belt", checkinTime: "2024-05-24 14:10:23" },
-//         { name: "Martin", id: "2390", type: "Belt", checkinTime: "2024-05-24 16:10:23" }
-//     ]
-//     // pendingCheckouts: [
-//     //     { name: "Martin", id: "2390", checkinTime: "2024-05-23 16:10:23" }
-//     // ]
-// };
-
-// document.getElementById("current-checkin-date").textContent = data.currentCheckinDate;
-// const currentCheckinTbody = document.getElementById("current-checkin-tbody");
-
-// function createRow(person) {
-//     const tr = document.createElement("tr");
-
-//     tr.innerHTML = `
-//         <td>${person.name}</td>
-//         <td>${person.id}</td>
-//         <td>${person.type}</td>
-//         <td>${person.checkinTime}</td>
-//         <td>
-//             <div class="text-center">
-//                 <input type="datetime-local" id="datetime" name="datetime" class="datetime-input">
-//                 <div class="calendar-icon" onclick="openDateTimePicker();"></div>
-//             </div>
-//         </td>
-//         <td><button type="button" class="btn btn-green float-end" id="check_out">Check-out</button></td>
-//     `;
-
-//     return tr;
-// }
-
-// data.currentCheckins.forEach(person => {
-//     currentCheckinTbody.appendChild(createRow(person));
-// });
 
 async function updateDailyReportAPiData(emp_id, cid, date, type, checkin_snap, checkin_time,checkout_snap, checkout_time , time_worked) {
   
@@ -401,15 +370,76 @@ async function updateDailyReportAPiData(emp_id, cid, date, type, checkin_snap, c
     return `${hours}:${minutes}:${seconds} ${amPm}`;
 }
 
-function convertToHHMM(timeStr) {
+// Weekly Report Date Calculation.
 
-    let [hours, minutes] = timeStr.split('.').map(Number);
+function getLastWeekDateRange() {
+    // Today's date
+    let today = new Date();
+  
+    // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+    let dayOfWeek = today.getDay();
+  
+    // Calculate the difference to the previous Monday (dayOfWeek - 1)
+    // If today is Monday, dayOfWeek - 1 is 0, so we go back 7 days (last Monday)
+    let daysSinceLastMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+  
+    // Calculate last Monday's date
+    let lastMonday = new Date(today);
+    lastMonday.setDate(today.getDate() - daysSinceLastMonday - 7);
+  
+    // Calculate last Sunday's date
+    let lastSunday = new Date(lastMonday);
+    lastSunday.setDate(lastMonday.getDate() + 6);
+  
+    // Format dates to yyyy-mm-dd
+    let formatDate = (date) => date.toISOString().split('T')[0];
+  
+    let lastMondayStr = formatDate(lastMonday);
+    let lastSundayStr = formatDate(lastSunday);
+  
+    return {
+      startRange: lastMondayStr,
+      endRange: lastSundayStr
+    };
+  }
 
-    // Format hours and minutes as two digits
-    hours = hours.toString().padStart(2, '0');
-    minutes = minutes.toString().padStart(2, '0');
 
-    // Combine into the final formatted string
-    return `${hours}:${minutes}`;
+  function getLastTwoMonthStartAndEndDates() {
+    // Get today's date
+    const today = new Date();
     
+    // Calculate the start date (first day of the month two months ago)
+    const startDate = new Date(today.getFullYear(), today.getMonth() - 2, 1);
+    
+    // Calculate the end date (last day of the previous month)
+    const endDate = new Date(today.getFullYear(), today.getMonth(), 0);
+
+    return {
+      startRange: formatDate(startDate),
+      endRange : formatDate(endDate)
+    };
+}
+
+function getLastMonthStartAndEndDates() {
+  // Set today's date for testing
+  const today = new Date();
+  
+  // Calculate the start date of the last full month
+  const startDateLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+  
+  // Calculate the end date of the last full month
+  const endDateLastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+  
+ return {
+  startRange: formatDate(startDateLastMonth),
+  endRange : formatDate(endDateLastMonth)
+  };
+}
+
+// Function to format date as "yyyy-MM-dd"
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
