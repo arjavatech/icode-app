@@ -743,6 +743,7 @@ async function craeteFirstPageSignupAPiData() {
       CAddress: caddress,
       UserName: username,
       Password: passwordEncrypted,
+      ReportType: "Weekly"
     };
     console.log(userData);
   

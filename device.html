@@ -48,7 +48,7 @@
                         <li class="nav-item dropdown me-4">
                             <a class="nav-link dropdown-toggle" href="#service" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                Services
+                                Report
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="report_summary.html" id="dropDown">Report Summary</a>
@@ -97,6 +97,7 @@
     </div>
 
     <script>
+        
         const tableBody = document.getElementById("tableBody");
 
         const apiUrlBase = "https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/device";
@@ -119,11 +120,7 @@
             const serialNumber = tableBody.rows.length + 1;
             newRow.innerHTML = `
             <td>${serialNumber}</td>
-<<<<<<< HEAD
-            <td class="accesskey"><button class="btn icon-button btn-outline-green ml-10" onClick="viewDevices(this)"><i class="fa-solid fa-copy"></i></button></td>
-=======
             <td class="accesskey"><button class="btn icon-button ml-10" onClick="viewDevices(this)"><i class="fa-solid fa-copy"></i></button></td>
->>>>>>> 7d95d53 (Fixed email and input file)
             <td class="DId"></td>
             <td class="DName"></td>
             <td class="Action">

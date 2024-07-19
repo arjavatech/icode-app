@@ -14,6 +14,12 @@
     background-color: #0A8080;
     padding: 5px 30px;
 }
+
+.btn-grey {
+    color: black;
+    background-color: #dadada;
+    padding: 5px 30px;
+}
 .btn-outline-green{
     color: #0A8080;
     border: solid 1px #0A8080;
@@ -33,4 +39,17 @@ color: white;
 
 .breadcrumb-item.active {
     color: #0A8080;
+}
+
+
+.bg-white {
+    background-color: #fff;
+}
+.navbar-dark .navbar-nav2 .nav-link {
+    color: #0A8080;
+}
+.rounded-pill-sec-active {
+    border-radius: 50rem;
+    color: #fff;
+    background-color: #0A8080 !important;
 }

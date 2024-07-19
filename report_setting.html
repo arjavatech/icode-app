@@ -96,6 +96,24 @@
 
         /* New Table Styles (Arun Code Merge) */
 
+        .Edit-button {
+            border: 1px solid #0A8080;
+            background-color: #0A8080;
+            color: white;
+            width: 100px;
+            font-size: 18px;
+            border-radius: 4px;
+        }
+
+        .Edit-button:hover {
+            border: 1px solid #0A8080;
+            background-color: #0A8080;
+            color: white;
+            width: 100px;
+            font-size: 18px;
+            border-radius: 4px;
+        }
+
         .custom-table-container {
             border: 2px solid #cdcdcd;
             border-radius: 15px;
@@ -416,10 +434,10 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Biweekly</td>
+                                <td><p id="reportViewType"></p></td>
                                 <td>
-                                    <button class="btn btn-primary btn-sm">Edit</button>
-
+                                    <button class="btn Edit-button btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#myModal2">Edit</button>
                                 </td>
                             </tr>
 
@@ -430,97 +448,73 @@
         </div>
     </section>
 
-    <!-- <section>
-        <div class="container mt-2">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb" style="font-size: 17px;font-weight: 600;">
-                    <li class="breadcrumb-item"><a href="report_summary.html"
-                            class="text-dark text-decoration-none">Report Summary</a></li>
-                    <li class="breadcrumb-item active" aria-current="page" style="color: #0A8080;">Report Settings</li>
-                </ol>
-            </nav>
-        </div>
-        <div class="container mt-5">
-            <div id="resmsg">
-                <div class="success-msg alert alert-success">
-                    <a href="#" data-dismiss="alert"></a>
-                    <strong>Success!</strong> <span class="s-msg"></span>
-                </div>
-                <div class="error-msg alert alert-danger">
-                    <a href="#" data-dismiss="alert"></a>
-                    <strong>Oops!</strong> <span class="e-msg"></span>
-                </div>
-            </div>
-            <div class="emp-list">
-                <h2 class="text-center fw-bold mb-5">Report Settings</h2>
-                <div class="add_form_popup">
-                    <button type="button" onclick="dataRemove()" class="btn btn-green float-end btn-style"
-                        data-bs-toggle="modal" data-bs-target="#myModal" style="margin-bottom: -50px !important;">
-                        + Add Employee
-                    </button>
-                </div>
-                <br><br>
-                <div class="emp-table table-responsive">
-                    <table class="table table-bordered table-hover text-center">
-                        <thead>
-                            <tr>
-                                <th>Email</th>
-                                <th>Frequency</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tBody">
-                             </tbody>
-                    </table>
-                    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold" id="myModalLabel">Report Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="emp_form" class="p-2 text-center">
-                        <div class="material-textfield mb-3">
-                            <input id="remail" placeholder=" " type="email" required onblur="validREmail()">
-                            <label class="cemail">Email</label>
-                            <br>
-                            <span id="error-email" class="text-danger"></span>
-                        </div>
-                        <div class="material-textfield mb-3">
-                            <select id="frequencySelect" class="selectpicker" multiple
-                                aria-label="size 3 select example" onchange="validReportDays()">
-                                <option value="Daily">Daily</option>
-                                <option value="Weekly">Weekly</option>
-                                <option value="Biweekly">Biweekly</option>
-                                <option value="Monthly">Monthly</option>
-                                <option value="Bimonthly">Bimonthly</option>
-                            </select>
-                            <label class="cfrequency"></label>
-                            <br>
-                            <span id="selectError" class="error text-danger"></span>
-                        </div>
-                        <button type="button" id="savebtn" class="settings-btn-sty btn btn-green"
-                            onclick="addreportdetails(event)" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                            data-bs-dismiss="modal">
-                            Save
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </section>
-    -->
+        <!-- Edit Modal -->
 
+        <div class="modal fade" id="myModal2" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold" id="myModalLabel">Report Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="emp_form" class="p-2 text-center">
+                            <div class="dropdown">
+                                <button class="showOption">Select Options</button>
+                                <div class="dropdown-content">
+                                    <label class="custom-radio">Weekly
+                                        <input type="radio" name="options">
+                                        <span class="radio-mark"></span>
+                                    </label>
+                                    <label class="custom-radio">Biweekly
+                                        <input type="radio" name="options">
+                                        <span class="radio-mark"></span>
+                                    </label>
+                                    <label class="custom-radio">Monthly
+                                        <input type="radio" name="options">
+                                        <span class="radio-mark"></span>
+                                    </label>
+                                    <label class="custom-radio">Bimonthly
+                                        <input type="radio" name="options">
+                                        <span class="radio-mark"></span>
+                                    </label>
+                                    
+                                </div>
+                            </div><br><br>
+                            <button type="button" id="savebtn" class="settings-btn-sty btn btn-green"
+                                onclick="addreportdetails(event)" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                data-bs-dismiss="modal">
+                                Save
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"
         integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                const checkboxes = document.querySelectorAll('input[type="checkbox"][name="options"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', (e) => {
+                        const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"][name="options"]:checked');
+                        if (checkedCheckboxes.length > 2) {
+                            e.target.checked = false;
+                            // alert('You can select a maximum of 2 options.');
+                            document.querySelector('.alert_message').innerHTML="You select Maximum two option"
+                        }
+                        else{
+                            document.querySelector('.alert_message').innerHTML=""
+                        }
+                    });
+                });
+            });
+    
+        </script>
 </body>
 
 </html>

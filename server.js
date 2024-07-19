@@ -105,6 +105,7 @@ async function createFirstPageSignupAPiData() {
     CAddress: caddress,
     UserName: username,
     Password: passwordEncrypted,
+    ReportType: "Weekly"
   };
   console.log(userData);
 

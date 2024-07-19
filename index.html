@@ -285,7 +285,7 @@
                     localStorage.setItem('companyAddress', data["CAddress"]);
                     localStorage.setItem('username', data["UserName"]);
                     localStorage.setItem('password', data["Password"]);
-                    getCustmData(companyID);
+                    localStorage.setItem('reportType', data["ReportType"]);
 
                     const user = data["UserName"] === username && decryptPassword === password;
 
@@ -333,6 +333,7 @@
                     localStorage.setItem('address', data["Address"]);
                     localStorage.setItem('phone', data["PhoneNumber"]);
                     localStorage.setItem('email', data["Email"]);
+                    
                 })
                 .catch(error => {
                     console.error('Error:', error);

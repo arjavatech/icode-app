@@ -1,6 +1,10 @@
 
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company-report-type';
 
+document.addEventListener("DOMContentLoaded", function () {
+    selectedValue = localStorage.getItem('reportType');
+document.getElementById("reportViewType").textContent = selectedValue;
+});
 
 // Remove Data
 

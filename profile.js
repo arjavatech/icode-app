@@ -212,6 +212,7 @@ function updateApiData() {
         CAddress: companyAddress,
         CLogo: companyLogo,
         Password: password,
+        ReportType: "Weekly"
         // IsActive: true
     };
 

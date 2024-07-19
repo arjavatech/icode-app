@@ -1,6 +1,16 @@
 
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/getdatebasedata';
 
+document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".nav-button");
+
+    buttons.forEach(button => {
+        button.addEventListener("click", function () {
+            buttons.forEach(btn => btn.classList.remove("active"));
+            this.classList.add("active");
+        });
+    });
+});
 
 function viewCurrentDateReport() {
     const tableBody3 = document.getElementById("current-checkin-tbody");
@@ -15,8 +25,7 @@ function viewCurrentDateReport() {
     const day = String(now.getDate()).padStart(2, '0');
 
     // Format as yyyy-mm-dd
-    const date = `${year}-${month}-${day}`;
-
+    var date = `${year}-${month}-${day}`;
 
     heading.innerHTML = `Current Check-in ${date}`;
     const apiUrl = `${apiUrlBase}/${date}`;
@@ -40,8 +49,7 @@ function viewCurrentDateReport() {
               newRow.innerHTML = `
                 <td class="Name">${element.Name}</td>
                 <td class="Pin">${element.Pin}</td>
-                <td class="Type">${element.Type}</td>
-                <td class="CheckInTime">${element.CheckInTime}</td>
+                <td class="CheckInTime">${(convertToAmPm((element.CheckInTime).substring(11)))}</td>
                 <td>
                   <div class="text-center">
                     <input type="datetime-local" id="${datetimeId}" name="datetime" class="datetime-input" step="1">
@@ -99,6 +107,22 @@ function viewCurrentDateReport() {
           
               
             }
+            else{
+                const datetimeId = `datetime-${element.CheckInTime}-${element.Pin}`;
+                const checkOutId = `check_out-${element.CheckInTime}-${element.Pin}`;       
+                newRow.innerHTML = `
+                  <td class="Name">${element.Name}</td>
+                  <td class="Pin">${element.Pin}</td>
+                  <td class="CheckInTime">${(convertToAmPm((element.CheckInTime).substring(11)))}</td>
+                  <td class="CheckOutTime">${(convertToAmPm((element.CheckOutTime).substring(11)))}</td>
+                  <td class="text-center">
+                    <button type="button" class="btn btn-grey" id="${checkOutId}" disabled>Check-out</button>
+                  </td>
+                `;
+  
+                tableBody3.appendChild(newRow);
+  
+              }
           });
 
                 if( tableBody3.innerHTML == '')
@@ -155,10 +179,9 @@ function viewDatewiseReport(dateValue) {
                         newRow.innerHTML = `
                     <td class="Name">${element.Name}</td>
                     <td class="Pin">${element.Pin}</td>
-                    <td class="Type">${element.Type}</td>
-                    <td class="CheckInTime">${element.CheckInTime}</td>
-                    <td class="CheckOutTime">${element.CheckOutTime}</td>
-                    <td class="TimeWorked">${element.TimeWorked}</td>
+                    <td class="CheckInTime">${(convertToAmPm((element.CheckInTime).substring(11)))}</td>
+                    <td class="CheckOutTime">${(convertToAmPm((element.CheckOutTime).substring(11)))}</td>
+                    <td class="TimeWorked">${convertToHHMM(element.TimeWorked.toString())}</td>
                 `;
                         tableBody.appendChild(newRow);
 
@@ -198,6 +221,8 @@ function viewDateRangewiseReport(startValue, endvalue) {
     const tableBody2 = document.getElementById("tBody2");
     tableBody2.innerHTML = '';
     const cid = localStorage.getItem('companyID');
+
+
 
     if (endvalue != "test") {
         const apiUrl = `${apiBase}/${cid}/${startValue}/${endvalue}`;
@@ -355,3 +380,36 @@ async function updateDailyReportAPiData(emp_id, cid, date, type, checkin_snap, c
     //   console.error('Error:', error);
     }
   }
+
+
+  function convertToAmPm(timeStr) {
+    // Split the input string into components
+    let [hours, minutes, seconds] = timeStr.split(':').map(Number);
+
+    // Determine AM or PM
+    let amPm = hours >= 12 ? 'PM' : 'AM';
+
+    // Convert hours to 12-hour format
+    hours = hours % 12 || 12; // Convert 0 to 12 for midnight
+
+    // Format hours, minutes, and seconds as two digits
+    hours = hours.toString().padStart(2, '0');
+    minutes = minutes.toString().padStart(2, '0');
+    seconds = seconds.toString().padStart(2, '0');
+
+    // Combine into the final formatted string
+    return `${hours}:${minutes}:${seconds} ${amPm}`;
+}
+
+function convertToHHMM(timeStr) {
+
+    let [hours, minutes] = timeStr.split('.').map(Number);
+
+    // Format hours and minutes as two digits
+    hours = hours.toString().padStart(2, '0');
+    minutes = minutes.toString().padStart(2, '0');
+
+    // Combine into the final formatted string
+    return `${hours}:${minutes}`;
+    
+}
