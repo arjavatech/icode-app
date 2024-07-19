@@ -637,7 +637,8 @@ async function validateForm() {
         // localStorage.setItem('email', email);
 
         //COMPANY API CALL
-        craeteFirstPageSignupAPiData();
+        // craeteFirstPageSignupAPiData();
+        await createCheckoutSession();
     } else {
         alert('Please fix the errors in the form');
     }
