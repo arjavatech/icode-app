@@ -39,6 +39,7 @@ body{
 }
 
 
+
 @media (max-width:991px) {
     .rounded-pill-active {
         border-radius: 10px;
@@ -47,4 +48,9 @@ body{
         color: #0A8080 !important;
         margin-top: 2%;
     }
+}
+
+
+#dropDown {
+    color: #0A8080;
 }

@@ -28,6 +28,13 @@
             }
         }
 
+
+        #dropdown-item {
+            font-size: 15px;
+            color: #005dab;
+            padding-left: 0px;
+        }
+
         .btn-outline-light:hover {
             background-color: #0A8080;
             color: white;
@@ -179,10 +186,7 @@
             max-width: 500px;
         }
 
-        .dropdown-menu {
-            width: 100%;
-            padding: 0;
-        }
+
 
         .dropdown-item input[type="radio"] {
             margin-right: 10px;
@@ -212,7 +216,8 @@
             .btn-primary {
                 margin-bottom: 3%;
             }
-            .btn-secondary{
+
+            .btn-secondary {
                 margin-left: 0px;
             }
         }
@@ -221,24 +226,29 @@
             .btn-primary {
                 margin-bottom: 3%;
             }
-            .btn-secondary{
+
+            .btn-secondary {
                 margin-left: 0px;
             }
-            #add_member{
+
+            #add_member {
                 margin-left: 65%;
             }
         }
 
-        @media(max-width:764px){
+        @media(max-width:764px) {
             .btn-primary {
                 margin-bottom: 3%;
             }
-            .btn-secondary{
+
+            .btn-secondary {
                 margin-left: 0px;
             }
-            #add_member{
+
+            #add_member {
                 margin-left: 65%;
             }
+
         }
 
     </style>
@@ -263,15 +273,26 @@
                         <li class="nav-item me-4">
                             <a class="nav-link" href="employee_list.html">Employee Management</a>
                         </li>
-                        <li class="nav-item me-4">
-                            <a class="nav-link rounded-pill-active px-3" href="report_setting.html">Report</a>
+                        <li class="nav-item dropdown me-4">
+                            <a class="nav-link dropdown-toggle rounded-pill-active px-3" href="#service"
+                                id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Report
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="report_summary.html" id="dropDown">Report Summary</a>
+                                </li>
+                                <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report
+                                        Settings</a></li>
+                            </ul>
                         </li>
+
                         <li class="nav-item me-4">
                             <a class="nav-link" href="profile.html">Profile</a>
                         </li>
                         <li class="nav-item me-4">
                             <a class="nav-link" href="contact.html">Contact Us</a>
                         </li>
+
                     </ul>
                     <div>
                         <a href="index.html" class="btn btn-outline-light" id="logout">Logout</a>
@@ -452,53 +473,50 @@
                              </tbody>
                     </table>
                     <!-- Modal -->
-                    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title fw-bold" id="myModalLabel">Report Details</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="emp_form" class="p-2 text-center">
-                                        <div class="material-textfield mb-3">
-                                            <input id="remail" placeholder=" " type="email" required
-                                                onblur="validREmail()">
-                                            <label class="cemail">Email</label>
-                                            <br>
-                                            <span id="error-email" class="text-danger"></span>
-                                        </div>
-                                        <div class="material-textfield mb-3">
-                                            <select id="frequencySelect" class="selectpicker" multiple
-                                                aria-label="size 3 select example" onchange="validReportDays()">
-                                                <option value="Daily">Daily</option>
-                                                <option value="Weekly">Weekly</option>
-                                                <option value="Biweekly">Biweekly</option>
-                                                <option value="Monthly">Monthly</option>
-                                                <option value="Bimonthly">Bimonthly</option>
-                                            </select>
-                                            <label class="cfrequency"></label>
-                                            <br>
-                                            <span id="selectError" class="error text-danger"></span>
-                                        </div>
-                                        <button type="button" id="savebtn" class="settings-btn-sty btn btn-green"
-                                            onclick="addreportdetails(event)" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
-                                            Save
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="myModalLabel">Report Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="emp_form" class="p-2 text-center">
+                        <div class="material-textfield mb-3">
+                            <input id="remail" placeholder=" " type="email" required onblur="validREmail()">
+                            <label class="cemail">Email</label>
+                            <br>
+                            <span id="error-email" class="text-danger"></span>
                         </div>
-                    </div>
+                        <div class="material-textfield mb-3">
+                            <select id="frequencySelect" class="selectpicker" multiple
+                                aria-label="size 3 select example" onchange="validReportDays()">
+                                <option value="Daily">Daily</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Biweekly">Biweekly</option>
+                                <option value="Monthly">Monthly</option>
+                                <option value="Bimonthly">Bimonthly</option>
+                            </select>
+                            <label class="cfrequency"></label>
+                            <br>
+                            <span id="selectError" class="error text-danger"></span>
+                        </div>
+                        <button type="button" id="savebtn" class="settings-btn-sty btn btn-green"
+                            onclick="addreportdetails(event)" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                            data-bs-dismiss="modal">
+                            Save
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
+    </div>
+    </div>
+    </div>
     </section>
-     -->
-    
+    -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"
         integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw=="
