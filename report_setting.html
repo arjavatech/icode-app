@@ -66,7 +66,7 @@
 
         .material-textfield label {
             position: absolute;
-            top: 9px;
+            top: 33px;
             left: 0.75rem;
             transition: all 0.3s ease;
             background: white;
@@ -79,7 +79,7 @@
         .material-textfield input:not(:placeholder-shown)+label,
         .material-textfield textarea:focus+label,
         .material-textfield textarea:not(:placeholder-shown)+label {
-            top: -0.75rem;
+            top: 10px;
             left: 0.75rem;
             font-size: 0.75rem;
             color: #0A8080;
@@ -96,26 +96,8 @@
 
         /* New Table Styles (Arun Code Merge) */
 
-        .Edit-button {
-            border: 1px solid #0A8080;
-            background-color: #0A8080;
-            color: white;
-            width: 100px;
-            font-size: 18px;
-            border-radius: 4px;
-        }
-
-        .Edit-button:hover {
-            border: 1px solid #0A8080;
-            background-color: #0A8080;
-            color: white;
-            width: 100px;
-            font-size: 18px;
-            border-radius: 4px;
-        }
-
         .custom-table-container {
-            border: 2px solid #cdcdcd;
+            border: 1px solid #cdcdcd;
             border-radius: 15px;
             overflow: hidden;
             padding: 0;
@@ -174,7 +156,7 @@
             border-radius: 4px;
         }
 
-        .btn-primary {
+        .Edit-button {
             border: 1px solid #0A8080;
             background-color: #0A8080;
             color: white;
@@ -183,7 +165,7 @@
             border-radius: 4px;
         }
 
-        .btn-primary:hover {
+        .Edit-button:hover {
             border: 1px solid #0A8080;
             background-color: #0A8080;
             color: white;
@@ -219,7 +201,7 @@
         }
 
         #remail {
-            width: 250px;
+            width: 110%;
         }
 
         #add_member {
@@ -230,18 +212,14 @@
             width: 150px;
         }
 
-        @media(max-width:400px) {
-            .btn-primary {
-                margin-bottom: 3%;
-            }
-
-            .btn-secondary {
-                margin-left: 0px;
+        @media (max-width:400px) {
+            #add_member {
+                margin-left: 100px;
             }
         }
 
         @media (max-width:550px) {
-            .btn-primary {
+            .Edit-button {
                 margin-bottom: 3%;
             }
 
@@ -250,12 +228,12 @@
             }
 
             #add_member {
-                margin-left: 65%;
+                margin-left: 45%;
             }
         }
 
         @media(max-width:764px) {
-            .btn-primary {
+            .Edit-button {
                 margin-bottom: 3%;
             }
 
@@ -263,12 +241,136 @@
                 margin-left: 0px;
             }
 
-            #add_member {
-                margin-left: 65%;
-            }
+
 
         }
 
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            padding: 12px 16px;
+            z-index: 1;
+        }
+
+        .dropdown-content label {
+            display: block;
+        }
+
+        .dropdown-content .custom-radio {
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .dropdown-content .custom-radio input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .dropdown-content .radio-mark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+            border: 1px solid #b3b3b3;
+        }
+
+        .dropdown-content .custom-radio:hover input~.radio-mark {
+            background-color: #ccc;
+        }
+
+        .dropdown-content .custom-radio input:checked~.radio-mark {
+            background-color: #0A8080;
+            border: none;
+        }
+
+        .dropdown-content .radio-mark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .dropdown-content .custom-radio input:checked~.radio-mark:after {
+            display: block;
+        }
+
+        .dropdown-content .custom-radio .radio-mark:after {
+            top: 3px;
+            left: 8px;
+            width: 5px;
+            height: 13px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+
+        }
+
+        .custom-radio {
+            margin-bottom: 10%;
+            padding-left: 30px;
+            padding-top: 3px;
+            color: #0A8080;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .showOption {
+            border: 1px solid #0A8080;
+            border-radius: 10px;
+            /* text-align: left; */
+            /* padding-left: 26px; */
+            padding-top: 13px;
+            padding-bottom: 13px;
+            /* width: 250px; */
+            width: 200%;
+            /* margin-left: 10%; */
+            /* margin-left: 25px;
+            margin-top: -100px !important; */
+            color: #0A8080;
+            background-color: white;
+        }
+
+        .dropdown-content {
+            margin-left: 45px;
+
+        }
+        @media (max-width:290px) {
+            #add_member{
+                margin-left: 10% !important;
+                width: 50%;
+                font-size: 10px;
+            }
+        }
+        table{
+           overflow-x: auto !important;
+        }
+        .dropdown{
+            margin-right: 20% !important;
+        }
+        @media (max-with:455px) {
+            .showOption{
+                width:0% !important;
+            }
+        }
+        @media (max-width:210px) {
+            #remail {
+                width:150%;
+            }
+        }
     </style>
     <script defer src="report_setting.js"></script>
     <script defer src="logout.js"></script>
@@ -320,7 +422,6 @@
         </nav>
     </header>
     <section>
-
         <div class="container mt-5">
             <div class="emp-list">
                 <h3 class="text-center fw-bold mb-3">Report Settings</h3>
@@ -332,7 +433,7 @@
                     </button>
                 </div>
                 <br><br>
-                <div class="emp-table table-responsive">
+                <div class="emp-table table-responsive" style="overflow-x: auto">
                     <div class="custom-table-container">
                         <table class="table custom-table">
                             <thead>
@@ -361,42 +462,35 @@
                                         <input id="remail" class="email-input" placeholder=" " type="email" required
                                             style="margin-top: 20px;" onblur="validREmail()">
                                         <label class="cemail">Email</label>
-                                        <br>
+                                        <br>    
                                         <span id="error-email" class="text-danger"></span>
                                     </div>
-                                    <div class="material-textfield mb-3">
-                                        <div class="dropdown">
-                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Select Frequency
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <li class="dropdown-item"><input type="radio" id="daily"
-                                                        name="frequency" value="Daily" onchange="validReportDays()">
-                                                    <label for="daily">Daily</label>
-                                                </li>
-                                                <li class="dropdown-item"><input type="radio" id="weekly"
-                                                        name="frequency" value="Weekly" onchange="validReportDays()">
-                                                    <label for="weekly">Weekly</label>
-                                                </li>
-                                                <li class="dropdown-item"><input type="radio" id="biweekly"
-                                                        name="frequency" value="Biweekly" onchange="validReportDays()">
-                                                    <label for="biweekly">Biweekly</label>
-                                                </li>
-                                                <li class="dropdown-item"><input type="radio" id="monthly"
-                                                        name="frequency" value="Monthly" onchange="validReportDays()">
-                                                    <label for="monthly">Monthly</label>
-                                                </li>
-                                                <li class="dropdown-item"><input type="radio" id="bimonthly"
-                                                        name="frequency" value="Bimonthly" onchange="validReportDays()">
-                                                    <label for="bimonthly">Bimonthly</label>
-                                                </li>
-                                            </ul>
+                                    <div class="dropdown">
+                                        <button type="button" class="showOption">Select Options</button>
+                                        <div class="dropdown-content">
+                                            <label class="custom-radio">Daily
+                                                <input type="checkbox" name="options" id="option1">
+                                                <span class="radio-mark"></span>
+                                            </label>
+                                            <label class="custom-radio">Weekly
+                                                <input type="checkbox" name="options" id="option2">
+                                                <span class="radio-mark"></span>
+                                            </label>
+                                            <label class="custom-radio">Biweekly
+                                                <input type="checkbox" name="options" id="option3">
+                                                <span class="radio-mark"></span>
+                                            </label>
+                                            <label class="custom-radio">Monthly
+                                                <input type="checkbox" name="options" id="option4">
+                                                <span class="radio-mark"></span>
+                                            </label>
+                                            <label class="custom-radio">Bimonthly
+                                                <input type="checkbox" name="options" id="option5">
+                                                <span class="radio-mark"></span>
+                                            </label>
+                                            <p class="alert_message"></p>
                                         </div>
-                                        <label class="cfrequency"></label>
-                                        <br>
-                                        <span id="selectError" class="error text-danger"></span>
-                                    </div>
+                                    </div><br>
                                     <button type="button" id="savebtn" class="settings-btn-sty btn btn-green mt-3"
                                         onclick="addreportdetails(event)" data-bs-toggle="modal"
                                         data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
@@ -407,6 +501,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -426,10 +521,10 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><p id="reportViewType"></p></td>
+                                <td>Biweekly</td>
                                 <td>
                                     <button class="btn Edit-button btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#myModal2">Edit</button>
+                                        data-bs-target="#myModal2">Edit</button>
                                 </td>
                             </tr>
 
@@ -440,73 +535,81 @@
         </div>
     </section>
 
-        <!-- Edit Modal -->
 
-        <div class="modal fade" id="myModal2" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title fw-bold" id="myModalLabel">Report Details</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="emp_form" class="p-2 text-center">
-                            <div class="dropdown">
-                                <button class="showOption">Select Options</button>
-                                <div class="dropdown-content">
-                                    <label class="custom-radio">Weekly
-                                        <input type="radio" name="options">
-                                        <span class="radio-mark"></span>
-                                    </label>
-                                    <label class="custom-radio">Biweekly
-                                        <input type="radio" name="options">
-                                        <span class="radio-mark"></span>
-                                    </label>
-                                    <label class="custom-radio">Monthly
-                                        <input type="radio" name="options">
-                                        <span class="radio-mark"></span>
-                                    </label>
-                                    <label class="custom-radio">Bimonthly
-                                        <input type="radio" name="options">
-                                        <span class="radio-mark"></span>
-                                    </label>
-                                    
-                                </div>
-                            </div><br><br>
-                            <button type="button" id="savebtn" class="settings-btn-sty btn btn-green"
-                                onclick="addreportdetails(event)" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                                data-bs-dismiss="modal">
-                                Save
-                            </button>
-                        </form>
-                    </div>
+    <!-- Edit Modal -->
+
+    <div class="modal fade" id="myModal2" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="myModalLabel">Report Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="emp_form" class="p-2 text-center">
+                        <div class="dropdown">
+                            <button class="showOption">Select Options</button>
+                            <div class="dropdown-content">
+                                <label class="custom-radio">Daily
+                                    <input type="radio" name="options">
+                                    <span class="radio-mark"></span>
+                                </label>
+                                <label class="custom-radio">Weekly
+                                    <input type="radio" name="options">
+                                    <span class="radio-mark"></span>
+                                </label>
+                                <label class="custom-radio">Biweekly
+                                    <input type="radio" name="options">
+                                    <span class="radio-mark"></span>
+                                </label>
+                                <label class="custom-radio">Monthly
+                                    <input type="radio" name="options">
+                                    <span class="radio-mark"></span>
+                                </label>
+                                <label class="custom-radio">Bimonthly
+                                    <input type="radio" name="options">
+                                    <span class="radio-mark"></span>
+                                </label>
+                                
+                            </div>
+                        </div><br><br>
+                        <button type="button" id="savebtn" class="settings-btn-sty btn btn-green"
+                            onclick="addreportdetails(event)" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                            data-bs-dismiss="modal">
+                            Save
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
-     
+    </div>
+
+    </section>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"
         integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', (event) => {
-                const checkboxes = document.querySelectorAll('input[type="checkbox"][name="options"]');
-                checkboxes.forEach(checkbox => {
-                    checkbox.addEventListener('change', (e) => {
-                        const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"][name="options"]:checked');
-                        if (checkedCheckboxes.length > 2) {
-                            e.target.checked = false;
-                            // alert('You can select a maximum of 2 options.');
-                            document.querySelector('.alert_message').innerHTML="You select Maximum two option"
-                        }
-                        else{
-                            document.querySelector('.alert_message').innerHTML=""
-                        }
-                    });
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"][name="options"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"][name="options"]:checked');
+                    if (checkedCheckboxes.length > 2) {
+                        e.target.checked = false;
+                        // alert('You can select a maximum of 2 options.');
+                        document.querySelector('.alert_message').innerHTML="You select Maximum two option"
+                    }
+                    else{
+                        document.querySelector('.alert_message').innerHTML=""
+                    }
                 });
             });
-    
-        </script>
+        });
+
+    </script>
 </body>
 
 </html>
