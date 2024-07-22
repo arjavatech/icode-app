@@ -1,25 +1,26 @@
 
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/getdatebasedata';
 
-document.addEventListener("DOMContentLoaded", function () {
-    const buttons = document.querySelectorAll(".nav-button");
+// document.addEventListener("DOMContentLoaded", function () {
+//     const buttons = document.querySelectorAll(".nav-button");
 
-    buttons.forEach(button => {
-        button.addEventListener("click", function () {
-            buttons.forEach(btn => btn.classList.remove("active"));
-            this.classList.add("active");
-        });
-    });
-});
+//     buttons.forEach(button => {
+//         button.addEventListener("click", function () {
+//             buttons.forEach(btn => btn.classList.remove("active"));
+//             this.classList.add("active");
+//         });
+//     });
+// });
 
 function viewCurrentDateReport() {
+  selectedValue = localStorage.getItem('reportType');
+    document.getElementById("reportName").textContent = selectedValue + " Report";
+
     const tableBody3 = document.getElementById("current-checkin-tbody");
-    const heading = document.getElementById("current-checkin-date");
+    const heading = document.getElementById("current-checkin-header");
     tableBody3.innerHTML = '';
     // Get the current date
     const now = new Date();
-
-
 
     // Get the date components
     const year = now.getFullYear();
@@ -29,7 +30,7 @@ function viewCurrentDateReport() {
     // Format as yyyy-mm-dd
     var date = `${year}-${month}-${day}`;
 
-    heading.innerHTML = `Current Check-in ${date}`;
+    heading.innerHTML = date;
     const apiUrl = `${apiUrlBase}/${date}`;
     fetch(apiUrl)
         .then(response => {
@@ -41,9 +42,11 @@ function viewCurrentDateReport() {
         .then(data => {
             try {
         data.forEach(element => {
+          console.log(element)
             // Create a new table row
             const newRow = document.createElement('tr');
-          
+           console.log(element.CheckInTime)
+           
             // Check if CheckOutTime is null
             if (element.CheckOutTime == null) {
               const datetimeId = `datetime-${element.CheckInTime}-${element.Pin}`;
@@ -131,17 +134,17 @@ function viewCurrentDateReport() {
               }
           });
 
-                if( tableBody3.innerHTML == '')
-                    {
+          if( tableBody3.innerHTML == '')
+              {
 
-                            const newRow = document.createElement('tr');
-                            newRow.innerHTML = `
-                            <td colspan="6" class="text-center">No Records Found</td>
-                        `;
-                            tableBody3.innerHTML = '';
-                            tableBody3.appendChild(newRow);
+                      const newRow = document.createElement('tr');
+                      newRow.innerHTML = `
+                      <td colspan="6" class="text-center">No Records Found</td>
+                  `;
+                      tableBody3.innerHTML = '';
+                      tableBody3.appendChild(newRow);
 
-                    }
+              }
 
             }
             catch {
@@ -221,81 +224,6 @@ function viewDatewiseReport(dateValue) {
 
 }
 
-// //Report page(Range wise)
-// function viewDateRangewiseReport(startValue, endvalue) {
-//     const apiBase = "https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyReport/getDateRangeReport"
-//     const tableBody2 = document.getElementById("tBody2");
-//     tableBody2.innerHTML = '';
-//     const cid = localStorage.getItem('companyID');
-
-//     var dateRange = {};
-
-//     selectedValue = localStorage.getItem('reportType');
-
-//     if(selectedValue == "Weekly")
-//     {
-    
-//     dateRange = getLastWeekDateRange();
-//     }
-//     else if(selectedValue == "Monthly")
-//     {
-//       dateRange = getLastMonthStartAndEndDates()
-//     }
-//     else if(selectedValue == "BiMonthly")
-//     {
-//       dateRange = getLastTwoMonthStartAndEndDates();
-//     }
-
-//         const apiUrl = `${apiBase}/${cid}/${dateRange.startRange}/${dateRange.endRange}`;
-// // Fetch data from API and render table
-//         fetch(apiUrl)
-//             .then(response => {
-//                 if (!response.ok) {
-//                     throw new Error(`Error: ${response.status}`);
-//                 }
-//                 return response.json();
-//             })
-//             .then(data => {
-//                 try {
-//                     const tableBody2 = document.querySelector('#tableBody2'); // Assuming tableBody2 is defined somewhere in your code
-
-//             // Calculate total time worked for each employee
-//             const totalTimeWorked = calculateTotalTimeWorked(data);
-
-//             // Check if data is an empty array
-//             if (Array.isArray(data) && data.length === 0) {
-//                 const newRow = document.createElement('tr');
-//                 newRow.innerHTML = `
-//                     <td colspan="6" class="text-center">No Records Found</td>
-//                 `;
-//                 tableBody2.innerHTML = ''; // Clear existing rows
-//                 tableBody2.appendChild(newRow);
-//             } else {
-//                 // Process each employee and create rows
-//                 Object.entries(totalTimeWorked).forEach(([name, Employeedata]) => {
-//                   console.log(name);
-//                   console.log(Employeedata.Pin);
-//                   console.log(Employeedata.totalHoursWorked);
-
-//                     const newRow = document.createElement('tr');
-//                     newRow.innerHTML = `
-//                         <td class="Name">${name}</td>
-//                         <td class="Pin">${(Employeedata.Pin)}</td>
-//                         <td class="TimeWorked">${(Employeedata.totalHoursWorked)}</td>
-//                     `;
-//                     tableBody2.appendChild(newRow);
-//                 });
-//             }
-//         } catch (error) {
-//             console.error('Error processing data:', error);
-//         }
-//     })
-//     .catch(error => {
-//         console.error('Fetch error:', error);
-//     });
-
-// }
-
 function viewDateRangewiseReport(startValue, endValue) {
   const apiBase = "https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyReport/getDateRangeReport";
   const tableBody2 = document.getElementById("tBody2");
@@ -372,18 +300,20 @@ function viewDateRangewiseReport(startValue, endValue) {
 
 // Call fetchData when the page is fully loaded
 document.addEventListener('DOMContentLoaded', viewCurrentDateReport());
-document.addEventListener('DOMContentLoaded', viewDatewiseReport("test"));
 
-document.getElementById('dailyReportDate').addEventListener('change', function () {
-  const dateValue = this.value;
-  document.addEventListener('DOMContentLoaded', viewDatewiseReport(dateValue));
-});
 
-document.addEventListener('DOMContentLoaded', function(){
-    selectedValue = localStorage.getItem('reportType');
-    document.getElementById("report-type-heading").textContent = selectedValue + " Report";
-    viewDateRangewiseReport();
-});
+// document.addEventListener('DOMContentLoaded', viewDatewiseReport("test"));
+
+// document.getElementById('dailyReportDate').addEventListener('change', function () {
+//   const dateValue = this.value;
+//   document.addEventListener('DOMContentLoaded', viewDatewiseReport(dateValue));
+// });
+
+// document.addEventListener('DOMContentLoaded', function(){
+//     selectedValue = localStorage.getItem('reportType');
+//     document.getElementById("report-type-heading").textContent = selectedValue + " Report";
+//     viewDateRangewiseReport();
+// });
 
 
 

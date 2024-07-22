@@ -16,8 +16,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css" />
     <link rel="stylesheet" href="report_summary.css">
     <link rel="stylesheet" href="employee_list.css">
-    <script defer src="report_summary.js"></script>
+    <script defer src="salaried_report.js"></script>
     <script defer src="logout.js"></script>
+    
     <style>
         .nav-tap {
             background-color: #0A8080;
@@ -29,7 +30,7 @@
             text-align: center;
             font-weight: bold;
         }
-
+    
         .nav-bar-style {
             color: #0A8080;
             font-weight: bold;
@@ -38,7 +39,7 @@
             text-align: center;
             font-size: 14px;
         }
-
+    
         @media (max-width: 1024px) {
             .nav-tap {
                 font-size: 14px;
@@ -47,7 +48,7 @@
                 font-weight: bold;
             }
         }
-
+    
         @media (max-width: 768px) {
             .nav-tap {
                 font-size: 14px;
@@ -55,13 +56,16 @@
                 border-radius: 15px;
                 font-weight: bold;
             }
-
+    
             .nav-bar-style{
                 font-size: 14px;
                 /* margin-right: 20px; */
             }
+            #reportName{
+                margin-left: 75%;
+            }
         }
-
+    
         @media (max-width: 576px) {
             .nav-tap {
                 font-size: 8px;
@@ -69,8 +73,9 @@
                 border-radius: 13px;
                 font-weight: bold;
             }
+            
         }
-
+    
         .custom-table-container {
             border: 1px solid #cdcdcd;
             background-color: white;
@@ -88,22 +93,26 @@
                 padding: 0 20px;
             }
             .nav-tap{
-                width: 240px;
+                width: 180px;
                 font-size: 14px;
                 font-weight: bold;
-                /* margin-right: 20px; */
             }
             .nav-bar-style{
-                width: 360px;
+                width: 240px;
                 font-size: 14px;
-                /* margin-right: 20px; */
+                /* margin-right: 220px; */
             }
+            #reportName{
+                margin-left: 40%;
+            }
+            
+            
         }
         @media (max-width: 1024px) {
             .custom-table-container {
                 max-width: 100%;
             }
-
+    
             #add-entry {
                 border: 1px solid #0A8080;
                 color: #0A8080;
@@ -111,41 +120,43 @@
                 background-color: white;
                 border-radius: 6px;
             }
+    
+            
         }
-
+    
         @media (max-width: 768px) {
             .custom-table-container {
                 max-width: 100%;
                 overflow-x: auto;
             }
-
+    
             .custom-table th,
             .custom-table td {
                 padding: 5px;
                 font-size: 12px;
             }
         }
-
+    
         .custom-table {
             margin: 0;
             text-align: center;
         }
-
+    
         .custom-table th,
         .custom-table td {
             text-align: center;
             padding: 10px;
         }
-
+    
         .custom-table thead tr {
             border-bottom: 1px solid #cdcdcd;
         }
-
+    
         .custom-table th {
             padding-top: 16px;
             border-bottom: 1px solid #cdcdcd;
         }
-
+    
         .btn-secondary {
             border: 1px solid #0A8080;
             background-color: white;
@@ -155,7 +166,7 @@
             border-radius: 4px;
             margin-left: 20px;
         }
-
+    
         .btn-secondary:hover {
             border: 1px solid #0A8080;
             background-color: white;
@@ -164,7 +175,7 @@
             font-size: 18px;
             border-radius: 4px;
         }
-
+    
         .Edit-button {
             border: 1px solid #0A8080;
             background-color: #0A8080;
@@ -173,7 +184,7 @@
             font-size: 18px;
             border-radius: 4px;
         }
-
+    
         .Edit-button:hover {
             border: 1px solid #0A8080;
             background-color: #0A8080;
@@ -182,7 +193,7 @@
             font-size: 18px;
             border-radius: 4px;
         }
-
+    
         .add-btn-container {
             position: absolute;
             top: -40px;
@@ -190,27 +201,27 @@
             right: 10px;
             /* Adjust based on your needs */
         }
-
+    
         .btn-outline-light:hover {
             background-color: #0A8080;
             color: white;
         }
-
+    
         body {
             background-color: #f6f6f6;
         }
-
+    
         td {
             font-size: 13px;
         }
-
+    
         .Date {
             margin-left: 10%;
             margin-bottom: 1%;
             font-weight: 600;
             font-size: 18px;
         }
-
+    
         #add-entry {
             border: 1px solid #0A8080;
             color: #0A8080;
@@ -218,7 +229,7 @@
             border-radius: 6px;
             margin-left: -130%;
         }
-
+    
         @media (max-width: 1024px) {
             .Date {
                 font-size: 16px;
@@ -226,7 +237,7 @@
                 margin-bottom: 2%;
             }
         }
-
+    
         @media (max-width: 768px) {
             .Date {
                 font-size: 16px;
@@ -234,7 +245,7 @@
                 margin-bottom: 5%;
             }
         }
-
+    
         @media (max-width: 576px) {
             .Date {
                 font-size: 14px;
@@ -242,20 +253,20 @@
                 margin-bottom: 10%;
             }
         }
-
+    
         @media (max-width: 576px) {
             .nav-tap {
                 width: 50%;
                 font-size: 13px;
                 font-weight: bold;
             }
-
+    
             .nav-bar-style {
                 padding: 0px;
                 width: 50%;
                 font-size: 13px;
             }
-
+    
             #add-entry {
                 margin-left: 0%;
             }
@@ -311,15 +322,14 @@
     <section>
         <div class="container-fluid" style="background-color: white;">
             <div class="row">
-                
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-1 d-none d-lg-block"></div>
                         <div class="col-lg-5 col-md-12">
                             <div class="row">
                                 <div class="col-md-4 col-sm-12 nav-link">
-                                    <a href="#" style="text-decoration: none;">
-                                        <span class="nav-tap">Current Day Report</span>
+                                    <a href="report_summary.html"  style="text-decoration: none;">
+                                        <span class="nav-bar-style" >Current Day Report</span>
                                     </a>
                                 </div>
                                 <div class="col-md-4 col-sm-12 nav-link">
@@ -328,8 +338,8 @@
                                     </a>
                                 </div>
                                 <div class="col-md-4 col-sm-12 nav-link">
-                                    <a href="salaried_report.html" style="text-decoration: none;">
-                                        <span class="nav-bar-style" id="reportName"></span>
+                                    <a href="#" style="text-decoration: none;">
+                                        <span class="nav-tap" id="reportName"></span>
                                     </a>
                                 </div>
                             </div>
@@ -341,21 +351,20 @@
         </div>
         <div class="container mt-5">
             <h2 class="text-center fw-bold mb-1" id="current-checkin-date">Report Summary</h2><br>
-            <h5 class="text-center fw-bold">Current Day Report</h5>
-            <h5 class="Date" id="Date">Date: <span id="current-checkin-header"></span> <span style="float:right;"><button class="btn" id="add-entry">Add Entry</button></span></h5>
+            <h5 class="text-center fw-bold" id="report-type-heading"></h5>
+            <h5 class="Date mt-3" id="Date">Start Date: <span id="start-date-header"></span> </h5>
+            <h5 class="Date" id="Date">End Date: <span id="end-date-header"></span> </h5>
             <div class="emp-table table-responsive">
                 <div class="custom-table-container">
                     <table class="table custom-table">
                         <thead>
                             <tr>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Name</th>
+                                <th style="border-bottom: 1px solid #cdcdcd;">Employee Name</th>
                                 <th style="border-bottom: 1px solid #cdcdcd;">Employee ID</th>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Check-in Time</th>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Check-out Time</th>
-                                <th style="border-bottom: 1px solid #cdcdcd;"></th>
+                                <th style="border-bottom: 1px solid #cdcdcd;">Total Worked Hours</th>
                             </tr>
                         </thead>
-                        <tbody id="current-checkin-tbody">
+                        <tbody id="tbody">
                             
                         </tbody>
                     </table>
