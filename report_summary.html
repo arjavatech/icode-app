@@ -19,6 +19,50 @@
     <script defer src="report_summary.js"></script>
     <script defer src="logout.js"></script>
     <style>
+
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.form-label {
+    font-size: 1rem;
+    font-weight: normal;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    border-radius: 10px;
+    padding: 0.75rem;
+    font-size: 1rem;
+}
+
+.btn-close {
+    font-size: 1.25rem;
+}
+
+.btn-primary {
+    background-color: #208080;
+    border-color: #208080;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+}
+
+.btn-primary:hover {
+    background-color: #186060;
+    border-color: #186060;
+}
+
         .nav-tap {
             background-color: #0A8080;
             padding: 12px;
@@ -362,11 +406,136 @@
                 </div>
             </div>
         </div>
-    </section>
 
+        <!-- Add Entry Modal -->
+    <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addEntryModalLabel">Add entry</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="entryForm">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Employee Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="employeeId" name="employeeId" placeholder="Employee ID"  required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="type" name="type" placeholder="Type"  required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control datetime" id="checkinTime" name="checkinTime" placeholder="Check-in Time" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control datetime" id="checkoutTime" name="checkoutTime" placeholder="Check-out Time"  required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </section>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Flatpickr
+            flatpickr(".datetime", {
+                enableTime: true,
+                enableTime: true,
+                enableSeconds: true,
+                time_24hr: true,
+                dateFormat: "Y-m-d h:i:S",
+                minuteIncrement: 1,
+                allowInput: true
+            });
+
+            // Show modal on button click
+            document.getElementById('add-entry').addEventListener('click', function () {
+                var modal = new bootstrap.Modal(document.getElementById('addEntryModal'));
+                modal.show();
+            });
+
+            // Handle form submission
+            var form = document.getElementById('entryForm');
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                var name = document.getElementById('name').value;
+                var type = document.getElementById('type').value;
+                var employeeId = document.getElementById('employeeId').value;
+                var checkinTime = document.getElementById('checkinTime').value;
+                var checkoutTime = document.getElementById('checkoutTime').value;
+
+                const cid = localStorage.getItem('companyID');
+
+                const date1 = new Date(checkoutTime);
+                const date2 = new Date(checkinTime);
+
+                // Calculate the difference in milliseconds
+                const diffInMs = date1 - date2;
+
+                // Convert the difference from milliseconds to total minutes
+                const diffInMinutes = Math.floor(diffInMs / 1000 / 60);
+
+                // Calculate the total hours and remaining minutes
+                const totalHours = Math.floor(diffInMinutes / 60);
+                const minutes = diffInMinutes % 60;
+
+                // Format the hours and minutes
+                const formattedHours = String(totalHours).padStart(2, '0');
+                const formattedMinutes = String(minutes).padStart(2, '0');
+
+                const timeWorkedHours = formattedHours + ":" +formattedMinutes;
+
+                // Data object to be sent
+                var data = {
+                    CID: cid,
+                    EmpID: employeeId,
+                    Date: checkinTime.substring(0,10),
+                    TypeID: type,
+                    CheckInSnap: null,
+                    CheckInTime: checkinTime,
+                    CheckOutSnap: null,
+                    CheckOutTime: checkoutTime,
+                    TimeWorked: timeWorkedHours
+
+                };
+
+                // Send PUT request
+                fetch('https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    // Close the modal
+                    var modal = bootstrap.Modal.getInstance(document.getElementById('addEntryModal'));
+                    modal.hide();
+                    // Optionally, you can refresh data or provide a success message
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
+    
 </body>
 
 </html>
+

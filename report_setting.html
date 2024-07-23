@@ -22,6 +22,61 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="employee_list.css">
     <style>
+        .nav-tap {
+            background-color: #0A8080;
+            padding: 12px;
+            border-radius: 20px;
+            color: white;
+            font-size: 14px;
+            display: block;
+            text-align: center;
+            font-weight: bold;
+        }
+    
+        .nav-bar-style {
+            color: #0A8080;
+            font-weight: bold;
+            padding: 12px;
+            display: block;
+            text-align: center;
+            font-size: 14px;
+        }
+    
+        @media (max-width: 1024px) {
+            .nav-tap {
+                font-size: 14px;
+                padding: 11px;
+                border-radius: 18px;
+                font-weight: bold;
+            }
+        }
+    
+        @media (max-width: 768px) {
+            .nav-tap {
+                font-size: 14px;
+                padding: 10px;
+                border-radius: 15px;
+                font-weight: bold;
+            }
+    
+            .nav-bar-style{
+                font-size: 14px;
+                /* margin-right: 20px; */
+            }
+            #reportName{
+                margin-left: 75%;
+            }
+        }
+    
+        @media (max-width: 576px) {
+            .nav-tap {
+                font-size: 8px;
+                padding: 8px;
+                border-radius: 13px;
+                font-weight: bold;
+            }
+            
+        }
         @media(max-width:766px) {
             .icon-button {
                 margin-bottom: 4%;
@@ -401,8 +456,7 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="report_summary.html" id="dropDown">Report Summary</a>
                                 </li>
-                                <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report
-                                        Settings</a></li>
+                                <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report Settings</a></li>
                             </ul>
                         </li>
 
