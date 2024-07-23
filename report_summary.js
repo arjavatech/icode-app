@@ -539,3 +539,91 @@ function getDateTimeFromTimePicker(timeValue) {
 
   return combinedDateTime;
 }
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Initialize Flatpickr
+  flatpickr(".datetime", {
+      enableTime: true,
+      enableTime: true,
+      enableSeconds: true,
+      time_24hr: true,
+      dateFormat: "Y-m-d h:i:S",
+      minuteIncrement: 1,
+      allowInput: true
+  });
+
+  // Show modal on button click
+  document.getElementById('add-entry').addEventListener('click', function () {
+      var modal = new bootstrap.Modal(document.getElementById('addEntryModal'));
+      modal.show();
+  });
+
+  // Handle form submission
+  var form = document.getElementById('entryForm');
+  form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var name = document.getElementById('name').value;
+      var type = document.getElementById('type').value;
+      var employeeId = document.getElementById('employeeId').value;
+      var checkinTime = document.getElementById('checkinTime').value;
+      var checkoutTime = document.getElementById('checkoutTime').value;
+
+      const cid = localStorage.getItem('companyID');
+
+      const date1 = new Date(checkoutTime);
+      const date2 = new Date(checkinTime);
+
+      // Calculate the difference in milliseconds
+      const diffInMs = date1 - date2;
+
+      // Convert the difference from milliseconds to total minutes
+      const diffInMinutes = Math.floor(diffInMs / 1000 / 60);
+
+      // Calculate the total hours and remaining minutes
+      const totalHours = Math.floor(diffInMinutes / 60);
+      const minutes = diffInMinutes % 60;
+
+      // Format the hours and minutes
+      const formattedHours = String(totalHours).padStart(2, '0');
+      const formattedMinutes = String(minutes).padStart(2, '0');
+
+      const timeWorkedHours = formattedHours + ":" +formattedMinutes;
+
+      // Data object to be sent
+      var data = {
+          CID: cid,
+          EmpID: employeeId,
+          Date: checkinTime.substring(0,10),
+          TypeID: type,
+          CheckInSnap: null,
+          CheckInTime: checkinTime,
+          CheckOutSnap: null,
+          CheckOutTime: checkoutTime,
+          TimeWorked: timeWorkedHours
+
+      };
+
+      // Send PUT request
+      fetch('https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/create', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log('Success:', data);
+          // Close the modal
+          var modal = bootstrap.Modal.getInstance(document.getElementById('addEntryModal'));
+          modal.hide();
+          viewCurrentDateReport();
+          // Optionally, you can refresh data or provide a success message
+      })
+      .catch((error) => {
+          console.error('Error:', error);
+      });
+  });
+});
