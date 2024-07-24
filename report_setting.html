@@ -22,72 +22,10 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="employee_list.css">
     <style>
-        .nav-tap {
-            background-color: #0A8080;
-            padding: 12px;
-            border-radius: 20px;
-            color: white;
-            font-size: 14px;
-            display: block;
-            text-align: center;
-            font-weight: bold;
-        }
-    
-        .nav-bar-style {
-            color: #0A8080;
-            font-weight: bold;
-            padding: 12px;
-            display: block;
-            text-align: center;
-            font-size: 14px;
-        }
-    
-        @media (max-width: 1024px) {
-            .nav-tap {
-                font-size: 14px;
-                padding: 11px;
-                border-radius: 18px;
-                font-weight: bold;
-            }
-        }
-    
-        @media (max-width: 768px) {
-            .nav-tap {
-                font-size: 14px;
-                padding: 10px;
-                border-radius: 15px;
-                font-weight: bold;
-            }
-    
-            .nav-bar-style{
-                font-size: 14px;
-                /* margin-right: 20px; */
-            }
-            #reportName{
-                margin-left: 75%;
-            }
-        }
-    
-        @media (max-width: 576px) {
-            .nav-tap {
-                font-size: 8px;
-                padding: 8px;
-                border-radius: 13px;
-                font-weight: bold;
-            }
-            
-        }
         @media(max-width:766px) {
             .icon-button {
                 margin-bottom: 4%;
             }
-        }
-
-
-        #dropdown-item {
-            font-size: 15px;
-            color: #005dab;
-            padding-left: 0px;
         }
 
         .btn-outline-light:hover {
@@ -121,7 +59,7 @@
 
         .material-textfield label {
             position: absolute;
-            top: 33px;
+            top: 9px;
             left: 0.75rem;
             transition: all 0.3s ease;
             background: white;
@@ -134,7 +72,7 @@
         .material-textfield input:not(:placeholder-shown)+label,
         .material-textfield textarea:focus+label,
         .material-textfield textarea:not(:placeholder-shown)+label {
-            top: 10px;
+            top: -0.75rem;
             left: 0.75rem;
             font-size: 0.75rem;
             color: #0A8080;
@@ -145,286 +83,6 @@
             outline: none;
             border-color: #0A8080;
             box-shadow: 0 0 0px;
-        }
-
-
-
-        /* New Table Styles (Arun Code Merge) */
-
-        .custom-table-container {
-            border: 1px solid #cdcdcd;
-            border-radius: 15px;
-            overflow: hidden;
-            padding: 0;
-            margin: 0 auto;
-            max-width: 800px;
-            font-weight: 600;
-            position: relative;
-        }
-
-        .report-view {
-            border: 2px solid #cdcdcd;
-            border-radius: 15px;
-            overflow: hidden;
-            padding: 0;
-            margin: 0 auto;
-            max-width: 500px;
-            font-weight: 600;
-            position: relative;
-        }
-
-        .custom-table {
-            margin: 0;
-            text-align: center;
-        }
-
-        .custom-table th,
-        .custom-table td {
-            text-align: center;
-        }
-
-        .custom-table thead tr {
-            border-bottom: 1px solid #cdcdcd;
-        }
-
-        .custom-table th {
-            padding-top: 16px;
-            border-bottom: 1px solid #cdcdcd;
-        }
-
-        .btn-secondary {
-            border: 1px solid #0A8080;
-            background-color: white;
-            color: #0A8080;
-            width: 100px;
-            font-size: 18px;
-            border-radius: 4px;
-            margin-left: 20px;
-        }
-
-        .btn-secondary:hover {
-            border: 1px solid #0A8080;
-            background-color: white;
-            color: #0A8080;
-            width: 100px;
-            font-size: 18px;
-            border-radius: 4px;
-        }
-
-        .Edit-button {
-            border: 1px solid #0A8080;
-            background-color: #0A8080;
-            color: white;
-            width: 100px;
-            font-size: 18px;
-            border-radius: 4px;
-        }
-
-        .Edit-button:hover {
-            border: 1px solid #0A8080;
-            background-color: #0A8080;
-            color: white;
-            width: 100px;
-            font-size: 18px;
-            border-radius: 4px;
-        }
-
-        .add-btn-container {
-            position: absolute;
-            top: -40px;
-            /* Adjust based on your needs */
-            right: 10px;
-            /* Adjust based on your needs */
-        }
-
-        .modal-dialog {
-            max-width: 500px;
-        }
-
-
-
-        .dropdown-item input[type="radio"] {
-            margin-right: 10px;
-        }
-
-        .dropdown-toggle::after {
-            margin-left: 10px;
-        }
-
-        .modal-dialog {
-            max-width: 500px;
-        }
-
-        #remail {
-            width: 110%;
-        }
-
-        #add_member {
-            margin-bottom: -50px !important;
-            margin-left: 68%;
-            border: 1px solid #0A8080;
-            color: #0A8080;
-            width: 150px;
-        }
-
-        @media (max-width:400px) {
-            #add_member {
-                margin-left: 100px;
-            }
-        }
-
-        @media (max-width:550px) {
-            .Edit-button {
-                margin-bottom: 3%;
-            }
-
-            .btn-secondary {
-                margin-left: 0px;
-            }
-
-            #add_member {
-                margin-left: 45%;
-            }
-        }
-
-        @media(max-width:764px) {
-            .Edit-button {
-                margin-bottom: 3%;
-            }
-
-            .btn-secondary {
-                margin-left: 0px;
-            }
-
-
-
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            padding: 12px 16px;
-            z-index: 1;
-        }
-
-        .dropdown-content label {
-            display: block;
-        }
-
-        .dropdown-content .custom-radio {
-            position: relative;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .dropdown-content .custom-radio input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .dropdown-content .radio-mark {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 20px;
-            width: 20px;
-            background-color: #fff;
-            border-radius: 50%;
-            border: 1px solid #b3b3b3;
-        }
-
-        .dropdown-content .custom-radio:hover input~.radio-mark {
-            background-color: #ccc;
-        }
-
-        .dropdown-content .custom-radio input:checked~.radio-mark {
-            background-color: #0A8080;
-            border: none;
-        }
-
-        .dropdown-content .radio-mark:after {
-            content: "";
-            position: absolute;
-            display: none;
-        }
-
-        .dropdown-content .custom-radio input:checked~.radio-mark:after {
-            display: block;
-        }
-
-        .dropdown-content .custom-radio .radio-mark:after {
-            top: 3px;
-            left: 8px;
-            width: 5px;
-            height: 13px;
-            border: solid white;
-            border-width: 0 3px 3px 0;
-            transform: rotate(45deg);
-
-        }
-
-        .custom-radio {
-            margin-bottom: 10%;
-            padding-left: 30px;
-            padding-top: 3px;
-            color: #0A8080;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .showOption {
-            border: 1px solid #0A8080;
-            border-radius: 10px;
-            /* text-align: left; */
-            /* padding-left: 26px; */
-            padding-top: 13px;
-            padding-bottom: 13px;
-            /* width: 250px; */
-            width: 200%;
-            /* margin-left: 10%; */
-            /* margin-left: 25px;
-            margin-top: -100px !important; */
-            color: #0A8080;
-            background-color: white;
-        }
-
-        .dropdown-content {
-            margin-left: 45px;
-
-        }
-        @media (max-width:290px) {
-            #add_member{
-                margin-left: 10% !important;
-                width: 50%;
-                font-size: 10px;
-            }
-        }
-        table{
-           overflow-x: auto !important;
-        }
-        .dropdown{
-            margin-right: 20% !important;
-        }
-        @media (max-with:455px) {
-            .showOption{
-                width:0% !important;
-            }
-        }
-        @media (max-width:210px) {
-            #remail {
-                width:150%;
-            }
         }
     </style>
     <script defer src="report_setting.js"></script>
@@ -459,14 +117,12 @@
                                 <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report Settings</a></li>
                             </ul>
                         </li>
-
                         <li class="nav-item me-4">
                             <a class="nav-link" href="profile.html">Profile</a>
                         </li>
                         <li class="nav-item me-4">
                             <a class="nav-link" href="contact.html">Contact Us</a>
                         </li>
-
                     </ul>
                     <div>
                         <a href="index.html" class="btn btn-outline-light" id="logout">Logout</a>
@@ -476,194 +132,130 @@
         </nav>
     </header>
     <section>
-        <div class="container mt-5">
-            <div class="emp-list">
-                <h3 class="text-center fw-bold mb-3">Report Settings</h3>
 
+        <div class="container mt-5">
+
+            <div class="emp-list">
+                <h3 class="text-center fw-bold mb-5">Report Settings</h3>
                 <div class="add_form_popup">
-                    <button type="button" onclick="dataRemove()" class="btn btn-style" data-bs-toggle="modal"
-                        data-bs-target="#myModal" id="add_member">
-                        Add Member
+                    <button type="button" onclick="dataRemove()" class="btn btn-green float-end btn-style"
+                        data-bs-toggle="modal" data-bs-target="#myModal" style="margin-bottom: -50px !important;">
+                        + Add Employee
                     </button>
                 </div>
                 <br><br>
-                <div class="emp-table table-responsive" style="overflow-x: auto">
-                    <div class="custom-table-container">
-                        <table class="table custom-table">
-                            <thead>
-                                <tr>
-                                    <th style="border-bottom: 1px solid #cdcdcd;">Edit</th>
-                                    <th style="border-bottom: 1px solid #cdcdcd;">Frequency</th>
-                                    <th style="border-bottom: 1px solid #cdcdcd;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tBody"> </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title fw-bold" id="myModalLabel">Report Details</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="emp_form" class="p-2 text-center">
-                                    <div class="material-textfield mb-3">
-                                        <input id="remail" class="email-input" placeholder=" " type="email" required
-                                            style="margin-top: 20px;" onblur="validREmail()">
-                                        <label class="cemail">Email</label>
-                                        <br>    
-                                        <span id="error-email" class="text-danger"></span>
-                                    </div>
-                                    <div class="dropdown">
-                                        <button type="button" class="showOption">Select Options</button>
-                                        <div class="dropdown-content">
-                                            <label class="custom-radio">Daily
-                                                <input type="checkbox" name="options" id="option1">
-                                                <span class="radio-mark"></span>
-                                            </label>
-                                            <label class="custom-radio">Weekly
-                                                <input type="checkbox" name="options" id="option2">
-                                                <span class="radio-mark"></span>
-                                            </label>
-                                            <label class="custom-radio">Biweekly
-                                                <input type="checkbox" name="options" id="option3">
-                                                <span class="radio-mark"></span>
-                                            </label>
-                                            <label class="custom-radio">Monthly
-                                                <input type="checkbox" name="options" id="option4">
-                                                <span class="radio-mark"></span>
-                                            </label>
-                                            <label class="custom-radio">Bimonthly
-                                                <input type="checkbox" name="options" id="option5">
-                                                <span class="radio-mark"></span>
-                                            </label>
-                                            <p class="alert_message"></p>
+                <div class="emp-table table-responsive">
+                    <table class="table table-bordered table-hover text-center">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Frequency</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tBody">
+                            <!-- Table rows will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title fw-bold" id="myModalLabel">Report Details</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="emp_form" class="p-2 text-center">
+                                        <div class="material-textfield mb-3">
+                                            <input id="remail" placeholder=" " type="email" required
+                                                onblur="validREmail()">
+                                            <label class="cemail">Email</label>
+                                            <br>
+                                            <span id="error-email" class="text-danger"></span>
                                         </div>
-                                    </div><br>
-                                    <button type="button" id="savebtn" class="settings-btn-sty btn btn-green mt-3"
-                                        onclick="addreportdetails(event)" data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
-                                        Save
-                                    </button>
-                                </form>
+                                        <div class="material-textfield mb-3">
+                                            <select id="frequencySelect" class="selectpicker" multiple
+                                                aria-label="size 3 select example" onchange="validReportDays()">
+                                                <option value="Daily">Daily</option>
+                                                <option value="Weekly">Weekly</option>
+                                                <option value="Biweekly">Biweekly</option>
+                                                <option value="Monthly">Monthly</option>
+                                                <option value="Bimonthly">Bimonthly</option>
+                                            </select>
+                                            <label class="cfrequency"></label>
+                                            <br>
+                                            <span id="selectError" class="error text-danger"></span>
+                                        </div>
+                                        <button type="button" id="savebtn" class="settings-btn-sty btn btn-green"
+                                            onclick="addreportdetails(event)" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
+                                            Save
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <div class="emp-list">
-            <h3 class="text-center fw-bold mt-5 mb-5">Report View Settings</h3>
-
-            <div class="emp-table table-responsive mb-5">
-                <div class="report-view">
-                    <table class="table custom-table">
+                <h3 class="text-center fw-bold mb-5">Report view Settings</h3>
+                <div class="emp-table table-responsive">
+                    <table class="table table-bordered table-hover text-center">
                         <thead>
                             <tr>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Frequency</th>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Action</th>
+                                <th>Frequency</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>Biweekly</td>
-                                <td>
-                                    <button class="btn Edit-button btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#myModal2">Edit</button>
-                                </td>
-                            </tr>
-
+                        <tbody id="tBody2">
+                            <!-- Table rows will be dynamically inserted here -->
                         </tbody>
                     </table>
-                </div>
-            </div>
-        </div>
-    </section>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal2" tabindex="-1" aria-labelledby="myModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title fw-bold" id="myModalLabel">Report Details</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="emp_form" class="p-2 text-center">
 
-
-    <!-- Edit Modal -->
-
-    <div class="modal fade" id="myModal2" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold" id="myModalLabel">Report Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="emp_form" class="p-2 text-center">
-                        <div class="dropdown">
-                            <button class="showOption">Select Options</button>
-                            <div class="dropdown-content">
-                                <label class="custom-radio">Daily
-                                    <input type="radio" name="options">
-                                    <span class="radio-mark"></span>
-                                </label>
-                                <label class="custom-radio">Weekly
-                                    <input type="radio" name="options">
-                                    <span class="radio-mark"></span>
-                                </label>
-                                <label class="custom-radio">Biweekly
-                                    <input type="radio" name="options">
-                                    <span class="radio-mark"></span>
-                                </label>
-                                <label class="custom-radio">Monthly
-                                    <input type="radio" name="options">
-                                    <span class="radio-mark"></span>
-                                </label>
-                                <label class="custom-radio">Bimonthly
-                                    <input type="radio" name="options">
-                                    <span class="radio-mark"></span>
-                                </label>
-                                
+                                        <div class="material-textfield mb-3">
+                                            <select id="frequencySelect2" class="selectpicker" multiple
+                                                aria-label="size 3 select example" onchange="validReportDays2()">
+                                                <option value="Weekly">Weekly</option>
+                                                <option value="Biweekly">Biweekly</option>
+                                                <option value="Monthly">Monthly</option>
+                                                <option value="Bimonthly">Bimonthly</option>
+                                            </select>
+                                            <label class="cfrequency"></label>
+                                            <br>
+                                            <span id="selectError2" class="error text-danger"></span>
+                                        </div>
+                                        <button type="button" id="savebtn2" class="settings-btn-sty btn btn-green"
+                                            onclick="updateReportdetails(event)" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
+                                            Update
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
-                        </div><br><br>
-                        <button type="button" id="savebtn" class="settings-btn-sty btn btn-green"
-                            onclick="addreportdetails(event)" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                            data-bs-dismiss="modal">
-                            Save
-                        </button>
-                    </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
     </section>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"
         integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"][name="options"]');
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', (e) => {
-                    const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"][name="options"]:checked');
-                    if (checkedCheckboxes.length > 2) {
-                        e.target.checked = false;
-                        // alert('You can select a maximum of 2 options.');
-                        document.querySelector('.alert_message').innerHTML="You select Maximum two option"
-                    }
-                    else{
-                        document.querySelector('.alert_message').innerHTML=""
-                    }
-                });
-            });
-        });
-
-    </script>
 </body>
 
 </html>

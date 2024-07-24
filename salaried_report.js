@@ -30,10 +30,10 @@ function viewDateRangewiseReport() {
       case "Monthly":
           dateRange = getLastMonthStartAndEndDates();
           break;
-      case "BiMonthly":
+      case "Bimonthly":
           dateRange = getLastTwoMonthStartAndEndDates();
           break;
-      case "BiWeekly":
+      case "Biweekly":
         dateRange = getLastTwoWeeksDateRange();
         break;
       default:

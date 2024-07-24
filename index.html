@@ -247,22 +247,18 @@
             const password = document.getElementById('password').value;
             loginCheck(username, password)
                 .then(isAuthenticated => {
-                    console.log("helo");
                     if (isAuthenticated) {
-                        console.log("hello");
                         document.getElementById('overlay').style.display = 'flex';
                         console.log("in");
                         setTimeout(function () {
                             window.location.href = 'employee_list.html';
                         }, 3000);
                     } else {
-                        console.log("else");
                         document.getElementById('errorMsg').innerHTML = "Invalid username or password";
                         document.getElementById('errorMsg').style = "color:red";
                     }
                 })
                 .catch(error => {
-                    console.log("igk");
                     console.error('Error during authentication:', error);
                     alert('An error occurred during authentication');
                 });
