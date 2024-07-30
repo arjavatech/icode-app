@@ -163,20 +163,33 @@ function getLastWeekDateRange() {
 }
 
   function getLastTwoMonthStartAndEndDates() {
-    // Get today's date
-    const today = new Date();
+      const today = new Date();
     
-    // Calculate the start date (first day of the month two months ago)
-    const startDate = new Date(today.getFullYear(), today.getMonth() - 2, 1);
+      // Calculate the middle of the month based on the number of days
+      const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+      const midMonthDay = Math.ceil(daysInMonth / 2);
     
-    // Calculate the end date (last day of the previous month)
-    const endDate = new Date(today.getFullYear(), today.getMonth(), 0);
-
-    return {
-      startRange: formatDate(startDate),
-      endRange : formatDate(endDate)
-    };
-}
+      let startDate, endDate;
+    
+      if (today.getDate() >= midMonthDay) {
+        // Second half of the month, so return the first half
+        startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        endDate = new Date(today.getFullYear(), today.getMonth(), midMonthDay - 1);
+      } else {
+        // First half of the month, so return the second half of the previous month
+        const previousMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        const daysInPrevMonth = new Date(previousMonth.getFullYear(), previousMonth.getMonth() + 1, 0).getDate();
+        startDate = new Date(previousMonth.getFullYear(), previousMonth.getMonth(), Math.ceil(daysInPrevMonth / 2));
+        endDate = new Date(previousMonth.getFullYear(), previousMonth.getMonth() + 1, 0);
+      }
+    
+      const padToTwoDigits = (num) => num.toString().padStart(2, '0');
+    
+      return {
+        startRange: `${startDate.getFullYear()}-${padToTwoDigits(startDate.getMonth() + 1)}-${padToTwoDigits(startDate.getDate())}`,
+        endRange: `${endDate.getFullYear()}-${padToTwoDigits(endDate.getMonth() + 1)}-${padToTwoDigits(endDate.getDate())}`
+      };
+    }
 
 function getLastMonthStartAndEndDates() {
   // Set today's date for testing
