@@ -24,76 +24,6 @@
 </head>
 
 <style>
-    /* @media (min-width: 990px) {
-            .container {
-                padding: 0 20px;
-            }
-            .nav-tap{
-                width: 240px;
-                font-size: 14px;
-                font-weight: bold;
-            }
-            .nav-bar-style{
-                width: 360px;
-                font-size: 14px;
-            }
-        } */
-    /* .nav-tap {
-            background-color: #0A8080;
-            padding: 12px;
-            border-radius: 20px;
-            color: white;
-            font-size: 14px;
-            display: block;
-            text-align: center;
-            font-weight: bold;
-        } */
-
-
-        /* .nav-bar-style {
-            color: #0A8080;
-            font-weight: bold;
-            padding: 12px;
-            display: block;
-            text-align: center;
-            font-size: 14px;
-        } */
-
-    /* @media (max-width: 1024px) {
-        .nav-tap {
-            font-size: 14px;
-            padding: 11px;
-            border-radius: 18px;
-            font-weight: bold;
-        }
-    } */
-
-    /* @media (max-width: 768px) {
-        .nav-tap {
-            font-size: 14px;
-            padding: 10px;
-            border-radius: 15px;
-            font-weight: bold;
-        } */
-
-        /* .nav-bar-style{
-            font-size: 14px;
-        } */
-        /* #current{
-            margin-left: +80%;
-        } */
-    
-
-    /* @media (max-width: 576px) {
-        .nav-tap {
-            font-size: 8px;
-            padding: 8px;
-            border-radius: 13px;
-            font-weight: bold;
-        }
-        
-    } */
-
     .custom-table-container {
         display: none;
         border: 1px solid #cdcdcd;
@@ -107,25 +37,7 @@
         position: relative;
         margin-top: 1%;
     }
-    /* @media (min-width: 990px) {
-        .container {
-            padding: 0 20px;
-        }
-        .nav-tap{
-            width: 180px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        .nav-bar-style{
-            width: 240px;
-            font-size: 14px;
-        }
-        #current{
-            margin-left: -70%;
-        }
-        
-        
-    } */
+
     @media (max-width: 1024px) {
         .custom-table-container {
             max-width: 100%;
@@ -139,7 +51,7 @@
             border-radius: 6px;
         }
 
-        
+
     }
 
     @media (max-width: 768px) {
@@ -316,7 +228,8 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="report_summary.html" id="dropDown">Report Summary</a>
                                 </li>
-                                <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report Settings</a></li>
+                                <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report
+                                        Settings</a></li>
                             </ul>
                         </li>
 
@@ -343,14 +256,15 @@
                 <div class="col-lg-5 col-md-12">
                     <div class="row">
                         <div class="col-md-4 col-sm-12 nav-link">
-                            <a href="report_summary.html" style="text-decoration: none;">
-                                <span class="nav-bar-style">Current Day Report</span>
-                            </a>
+
+                            <span class="nav-bar-style"> <a href="report_summary.html"
+                                    style="text-decoration: none;color: #0A8080;">Current Day Report</a></span>
+                            <!-- </a> -->
                         </div>
                         <div class="col-md-4 col-sm-12 nav-link">
-                            <a href="#" style="text-decoration: none;">
-                                <span class="nav-tap">Day wise Report</span>
-                            </a>
+                           
+                                <span class="nav-tap"> <a href="#" style="text-decoration: none;color:white">Day wise Report</a></span>
+                         
                         </div>
                         <div class="col-md-4 col-sm-12 nav-link">
                             <a href="salaried_report.html" style="text-decoration: none;">
@@ -366,7 +280,8 @@
             <h2 class="text-center fw-bold mb-1" id="current-checkin-date">Report Summary</h2><br>
             <h5 class="text-center fw-bold">Current Day Report</h5>
             <div class="d-flex justify-content-center mt-5">
-                <input type="date" class="date pt-1 pb-1" id="dailyReportDate" style="width: 200px;padding-left: 10px;border-radius: 5px;border-color: #cdcdcd;">
+                <input type="date" class="date pt-1 pb-1" id="dailyReportDate"
+                    style="width: 200px;padding-left: 10px;border-radius: 5px;border-color: #cdcdcd;">
             </div>
             <div class="emp-table table-responsive mt-5">
                 <p id="noDateSelect" style="text-align: center;">Please select a date to show report.</p>
@@ -382,7 +297,7 @@
                             </tr>
                         </thead>
                         <tbody id="tbody">
-                            
+
                         </tbody>
                     </table>
                 </div>

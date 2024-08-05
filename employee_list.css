@@ -21,9 +21,9 @@
 }
 
 .btn-outline-green {
-    color: #0A8080;
-    border: solid 1px #0A8080;
-    padding: 5px 21px;
+    color: #0A8080 !important;
+    border: solid 1px #0A8080 !important;
+    padding: 5px 21px !important;
 }
 
 .success-msg {
