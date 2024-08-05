@@ -1,7 +1,59 @@
+const cid = localStorage.getItem('companyID');
+const customerId1 = localStorage.getItem('customId');
+// let image = document.getElementById("img-sty")
+async function loadImage() {
+    const url = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company/get/${cid}`;
 
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Error creating account: ${response.statusText}`);
+        }
+
+        const responseData = await response.json();
+        let readerFile = new FileReader();
+        const comLo = responseData.CLogo;
+        let image = document.getElementById("logo-img");
+        document.getElementById("imageId").src = comLo;
+        console.log(comLo);
+
+        // if (comLo) {
+        //     const logoImg = document.getElementById('logo-img');
+        //     // logoImg.src = "C:\fakepath\Screenshot 2024-07-12 at 9.53.31 PM.png"; 
+        //     logoImg.src = comLo; // Set the logo image source
+        //     logoImg.onload = function() {
+        //         console.log('Logo image loaded successfully');
+        //     };
+        //     logoImg.onerror = function() {
+        //         console.error('Error loading logo image');
+        //     };
+        // } else {
+        //     console.error('No logo URL found in response data');
+        // }
+
+        readerFile.onload = function(comLo) {
+            image.src = comLo; // Set the image source to the file's data URL
+            image.onload = function() {
+                console.log('Logo image loaded successfully');
+            };
+            image.onerror = function() {
+                console.error('Error loading logo image');
+            };
+        };
+        readerFile.readAsDataURL(comLo);
+
+    } catch (error) {
+        console.error('Error in createAccount function:', error.message);
+    }
+}
+
+
+  
 document.addEventListener("DOMContentLoaded", function () {
+    loadImage();
     const companyName = localStorage.getItem('companyName');
     const companyAddress = localStorage.getItem('companyAddress');
+    const companyLogo = localStorage.getItem('companyLogo');
     const username = localStorage.getItem('username');
     const password = localStorage.getItem('password');
     const firstName = localStorage.getItem('firstName');
@@ -9,6 +61,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const address = localStorage.getItem('address');
     const phone = localStorage.getItem('phone');
     const email = localStorage.getItem('email');
+    // Retrieve the company logo from local storage
+// const companyLogo = localStorage.getItem('companyLogo');
+
 
     if (companyName) document.getElementById('companyName').value = companyName;
     if (companyAddress) document.getElementById('companyAddress').value = companyAddress;
@@ -19,6 +74,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (lastName) document.getElementById('lName').value = lastName;
     if (address) document.getElementById('address').value = address;
     if (email) document.getElementById('email').value = email;
+    // if (companyLogo) document.getElementById('companyLogo').value = companyLogo;
+
 
     document.getElementById('settingsForm').addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent the form from submitting
@@ -59,7 +116,12 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.setItem('email', document.getElementById('email').value);
 
             updateApiData();
-            alert('Settings saved successfully!');
+            document.getElementById('successMsg').innerHTML = 'success fully saved your changes';
+                document.getElementById('successMsg').style = "color:green";
+            document.getElementById('overlay').style.display = 'flex';
+            setTimeout(function () {
+                window.location.href = "profile.html";
+            }, 3000);
         }
     });
 
@@ -171,8 +233,6 @@ function updateApiData() {
     const customerAddress = document.getElementById('address').value;
     const customerPhone = document.getElementById('phoneNumber').value;
     const customerEmail = document.getElementById('email').value;
-    const cid = localStorage.getItem('companyID');
-    const customerId1 = localStorage.getItem('customId');
     const companyAddress = document.getElementById("companyAddress").value;
     const companyLogo = document.getElementById("companyAddress").value;
     const password = document.getElementById("password").value;
@@ -203,6 +263,7 @@ function updateApiData() {
         CAddress: companyAddress,
         CLogo: companyLogo,
         Password: password,
+        ReportType: "Weekly"
         // IsActive: true
     };
 
@@ -280,3 +341,53 @@ function formatPhoneNumber() {
     }
     inputField.value = value;
 }
+
+
+// Function to handle file input change event
+function handleFileSelect(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('companyLogo').value = input.files[0].name;
+            // document.getElementById('companyLogo').value = `<img src = "${input.files[0]}.name" alt="image">`;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// // Function to handle form submission
+// document.getElementById('settingsForm').addEventListener('submit', function (e) {
+//     e.preventDefault();
+//     // Add your form submission logic here
+// });
+
+// Function to handle password update
+// function updatePassword() {
+//     var password = document.getElementById('password').value;
+//     // Add your password update logic here
+// }
+
+function loadFile(event) {
+    const logoImg = document.getElementById('logo-img');
+    const file = event.target.files[0];
+
+    if (file) {
+        console.log(event.target.files[0]);
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            logoImg.src = e.target.result; // Set the image source to the file's data URL
+            logoImg.onload = function() {
+                console.log('Logo image loaded successfully');
+            };
+            logoImg.onerror = function() {
+                console.error('Error loading logo image');
+            };
+        };
+
+        reader.readAsDataURL(file); // Read the file as a data URL
+    }
+}
+
+
+

@@ -1,6 +1,11 @@
 
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company-report-type';
 
+document.addEventListener("DOMContentLoaded", function () {
+    selectedValue = localStorage.getItem('reportType');
+    document.getElementById("reportViewType").textContent = selectedValue;
+
+});
 
 // Remove Data
 
@@ -54,7 +59,6 @@ function addreportdetails() {
                 IsBiWeeklyReportActive: BiWeeklyReportActive,
                 IsMonthlyReportActive: MonthlyReportActive,
                 IsBiMonthlyReportActive: BiMonthlyReportActive
-
             };
 
             fetch(apiUrl, {
@@ -72,14 +76,12 @@ function addreportdetails() {
                 })
                 .then(data => {
                     if (data.error) {
-                        document.querySelector(".e-msg").textContent = data.error;
                         $(".error-msg").show();
                         setTimeout(function () {
                             $(".error-msg").hide();
                             window.location.href = "report_setting.html";
                         }, 1000);
                     } else {
-                        document.querySelector(".s-msg").textContent = data.message;
                         $(".success-msg").show();
                         setTimeout(function () {
                             $(".success-msg").hide();
@@ -121,14 +123,12 @@ function addreportdetails() {
                 })
                 .then(data => {
                     if (data.error) {
-                        document.querySelector(".e-msg").textContent = data.error;
                         $(".error-msg").show();
                         setTimeout(function () {
                             $(".error-msg").hide();
                             window.location.href = "report_setting.html";
                         }, 1000);
                     } else {
-                        document.querySelector(".s-msg").textContent = data.message;
                         $(".success-msg").show();
                         setTimeout(function () {
                             $(".success-msg").hide();
@@ -146,6 +146,7 @@ function addreportdetails() {
     }
     else {
         alert('Please fix the errors in the form');
+        document.getElementById('selectError').textContent = null;
     }
 }
 
@@ -205,8 +206,28 @@ function viewReportdetails() {
 
 }
 
+function viewSecondReportdetails() {
+    var reportType = localStorage.getItem('reportType');
+    const tableBody = document.getElementById("tBody2");
+    const company_id = localStorage.getItem('companyID');
+    const apiUrl = `${apiUrlBase}/getAllReportEmail/${company_id}`;
+
+    const newRow = document.createElement('tr');
+
+                newRow.innerHTML = `
+                <td class="ReportActive">${reportType}</td>
+                <td>
+                <button class="btn icon-button btn-green" onclick="editReportdetails('${reportType}')" data-bs-toggle="modal" data-bs-target="#myModal2"> Edit </button>
+                </td>
+            `;
+                tableBody.appendChild(newRow);
+
+}
+
 // Call fetchData when the page is fully loaded
 document.addEventListener('DOMContentLoaded', viewReportdetails);
+document.addEventListener('DOMContentLoaded', viewSecondReportdetails);
+
 
 // Edit Data
 
@@ -240,6 +261,19 @@ function editEmpdetails(companyEmail) {
         });
 }
 
+
+function editReportdetails(reportType) {
+    const company_id = localStorage.getItem('companyID');
+    const apiUrl = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/admin-report-type/update/${company_id}`;
+    const freqselect = document.getElementById('frequencySelect2');
+    const freqselectedValues = [];
+    
+    freqselectedValues.push(reportType);
+
+    $(freqselect).selectpicker('val', freqselectedValues);
+
+}
+
 // Delete Data
 
 function deleteEmpdetails(companyEmail) {
@@ -257,7 +291,6 @@ function deleteEmpdetails(companyEmail) {
         })
         .then(data => {
             if (data.error) {
-                document.querySelector(".e-msg").textContent = data.error;
                 $(".error-msg").show();
                 setTimeout(function () {
                     $(".error-msg").hide();
@@ -309,9 +342,93 @@ function validReportDays() {
     if (select.selectedOptions.length === 0) {
         errorMsg.textContent = 'Please select at least one option.';
         return false;
-    } else {
+    } else if (select.selectedOptions.length > 2) {
+        errorMsg.textContent = 'Please select only two option.';
+        return false;
+    } 
+    else {
         errorMsg.textContent = '';
         return true;
     }
 }
 
+
+function validReportDays2() {
+    const select = document.getElementById('frequencySelect2');
+    const errorMsg = document.getElementById('selectError2');
+
+    if (select.selectedOptions.length === 0) {
+        errorMsg.textContent = 'Please select at least one option.';
+        return false;
+    } else if (select.selectedOptions.length > 1) {
+        errorMsg.textContent = 'Please select only one option.';
+        return false;
+    } 
+    else {
+        errorMsg.textContent = '';
+        return true;
+    }
+}
+
+function updateReportdetails() {
+    const isValidRdays = validReportDays2();
+
+    if (isValidRdays) {
+        const reportUpdateid = document.getElementById("savebtn2").value;
+        const reportSelect = document.getElementById("frequencySelect2");
+        const selectedValues = Array.from(reportSelect.selectedOptions).map(option => option.value);
+        const company_id = localStorage.getItem('companyID');
+
+        
+        const apiUrl = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/admin-report-type/update/${company_id}`;
+    
+
+            const reportObject = {
+                CID: company_id,
+                ReportType: selectedValues[0]
+            };
+
+            fetch(apiUrl, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(reportObject)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        $(".error-msg").show();
+                        setTimeout(function () {
+                            $(".error-msg").hide();
+                            window.location.href = "report_setting.html";
+                        }, 1000);
+                    } else {
+                        localStorage.setItem("reportType", selectedValues[0]);
+                        console.log(selectedValues[0]);
+                        $(".success-msg").show();
+                        setTimeout(function () {
+                            $(".success-msg").hide();
+                            window.location.href = "report_setting.html";
+                        }, 1000);
+                    }
+
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // outPut.textContent = 'Error creating data.';
+                });
+        
+
+    }
+    else {
+        
+        alert('Please fix the errors in the form');
+        document.getElementById('selectError2').textContent = null;
+    }
+}

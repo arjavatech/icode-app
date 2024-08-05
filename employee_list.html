@@ -18,8 +18,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="employee_list.css">
     <script defer src="employee_list.js"></script>
+    <link rel="stylesheet" href="report_summary.css">
     <script defer src="logout.js"></script>
     <style>
+        @media (max-width:190px) {
+            .emp-table{
+                margin-top: 100px;
+            }
+        }
         @media (max-width:202px) {
             .btn-style {
                 font-size: .5rem;
@@ -104,6 +110,10 @@
         .text-danger {
             color: red;
         }
+
+        #dropDown{
+            color: #0A8080;
+        }
     </style>
 </head>
 
@@ -122,18 +132,27 @@
                             <a class="nav-link" href="device.html">Device</a>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link rounded-pill-active px-3" href="employee_list.html">Employee
-                                Management</a>
+                            <a class="nav-link rounded-pill-active px-3" href="employee_list.html">Employee Management</a>
                         </li>
-                        <li class="nav-item me-4">
-                            <a class="nav-link" href="report_setting.html">Report</a>
+                        <li class="nav-item dropdown me-4">
+                            <a class="nav-link dropdown-toggle " href="#service" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Report
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="report_summary.html" id="dropDown">Report Summary</a>
+                                </li>
+                                <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report Settings</a></li>
+                            </ul>
                         </li>
+                    
                         <li class="nav-item me-4">
                             <a class="nav-link" href="profile.html">Profile</a>
                         </li>
                         <li class="nav-item me-4">
                             <a class="nav-link" href="contact.html">Contact Us</a>
                         </li>
+                        
                     </ul>
                     <div>
                         <a href="index.html" class="btn btn-outline-light" id="logout">Logout</a>
@@ -142,6 +161,7 @@
             </div>
         </nav>
     </header>
+    
     <section>
         <div class="container mt-5">
             <div id="resmsg">
@@ -165,14 +185,15 @@
                 </div>
                 <br><br>
                 <div class="emp-table table-responsive">
-                    <table class="table table-bordered table-hover text-center">
+                    <div class="custom-table-container">
+                        <table class="table custom-table">
                         <thead>
                             <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Employee Pin</th>
-                                <th>Employee Phone</th>
-                                <th>Action</th>
+                                <th style="border-bottom: 1px solid #cdcdcd;">First Name</th>
+                                <th style="border-bottom: 1px solid #cdcdcd;">Last Name</th>
+                                <th style="border-bottom: 1px solid #cdcdcd;">Employee Pin</th>
+                                <th style="border-bottom: 1px solid #cdcdcd;">Employee Phone</th>
+                                <th style="border-bottom: 1px solid #cdcdcd;">Action</th>
                             </tr>
                         </thead>
                         <tbody id="tBody">
@@ -205,7 +226,7 @@
                                         </div>
                                         <div class="material-textfield mb-3">
                                             <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" "
-                                                onkeyup="validPhoneno()">
+                                                oninput="formatPhoneNumber()">
                                             <label>Phone Number</label><br>
                                             <span class="text-danger" id="showMsg3"></span>
                                         </div>
@@ -228,6 +249,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

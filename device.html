@@ -16,17 +16,97 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"   />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
     <link rel="stylesheet" href="employee_list.css">
-</head>
-<style>
-    .icon-button {
-        margin-bottom: 2%;
-    }
+    <style>
+        .btn-outline-light:hover {
+            background-color: #0A8080;
+            color: white;
+        }
 
-    .btn-outline-light:hover {
-        background-color: #0A8080;
-        color: white;
-    }
-</style>
+        .modal-header {
+            background-color: #0A8080;
+            color: white;
+        }
+
+        .btn-teal {
+            background-color: #0A8080;
+            color: white;
+        }
+
+        .btn-teal:hover {
+            background-color: #095f5f;
+            color: white;
+        }
+
+        /* Loading  */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overlay .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0A8080;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        #deviceCheck {
+            display: none;
+        }
+
+        .icon-button {
+            margin-bottom: 2%;
+            color: #0A8080;
+        }
+
+        .btn-outline-light:hover {
+            background-color: #0A8080;
+            color: white;
+        }
+
+        #table {
+            display: none;
+        }
+
+        #addButton {
+            border: 1px solid #0A8080;
+            color: #0A8080;
+            background-color: white;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+
+        #para {
+            margin-top: 15%;
+        }
+
+        /* Progress indicator styles */
+        .progress-indicator {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+    </style>
+</head>
 
 <body>
     <header>
@@ -45,39 +125,44 @@
                         <li class="nav-item me-4">
                             <a class="nav-link" href="employee_list.html">Employee Management</a>
                         </li>
-                        <li class="nav-item me-4">
-                            <a class="nav-link" href="report_setting.html">Report</a>
+                        <li class="nav-item dropdown me-4">
+                            <a class="nav-link dropdown-toggle" href="#service" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Report
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="report_summary.html" id="dropDown">Report Summary</a>
+                                </li>
+                                <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report
+                                        Settings</a></li>
+                            </ul>
                         </li>
+
                         <li class="nav-item me-4">
                             <a class="nav-link" href="profile.html">Profile</a>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link" href="contact.html" id="color">Contact Us</a>
+                            <a class="nav-link" href="contact.html">Contact Us</a>
                         </li>
                     </ul>
                     <div>
                         <a href="index.html" class="btn btn-outline-light" id="logout">Logout</a>
-
                     </div>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container mt-5">
-        <div class="add_form_popup">
-            <button type="button" onclick="addData()" class="btn btn-green float-end">
-                + Add
-            </button>
-        </div>
+    <div class="container mt-5" id="table">
         <br><br>
         <div class="table-responsive">
             <table class="table table-bordered table-hover text-center">
                 <thead>
                     <tr>
-                        <th>Serial Number</th>
+                        <th>Time zone</th>
                         <th>Access Key</th>
                         <th>Device Id</th>
                         <th>Device Name</th>
+                        <th>Active</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -86,11 +171,67 @@
             </table>
         </div>
     </div>
+    <!-- <div class="text-center mt-5 button" id="deviceCheck">
+        <p id="para">No device Added</p><button id="addButton" onclick="addData()">Add device</button>
+    </div> -->
+
+    <!-- Progress indicator -->
+    <!-- <div class="progress-indicator" id="progressIndicator">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div> -->
+
+    <div class="overlay" id="overlay">
+        <div class="spinner"></div>
+    </div>
+
+
+    <!-- Modal for editing device -->
+    <div class="modal fade" id="editDeviceModal" tabindex="-1" aria-labelledby="editDeviceModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editDeviceModalLabel">Edit Device</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editDeviceForm">
+                        <div class="mb-3">
+                            <label for="editTimeZone" class="form-label">Time Zone</label>
+                            <input type="text" class="form-control" id="editTimeZone" name="timeZone">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDeviceID" class="form-label">Device ID</label>
+                            <input type="text" class="form-control" id="editDeviceID" name="deviceID">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDeviceName" class="form-label">Device Name</label>
+                            <input type="text" class="form-control" id="editDeviceName" name="deviceName">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-teal" onclick="saveDeviceChanges()">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         const tableBody = document.getElementById("tableBody");
 
         const apiUrlBase = "https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/device";
+
+        function showProgressIndicator() {
+            document.getElementById('overlay').style.display = 'flex';
+        }
+
+        function hideProgressIndicator() {
+            document.getElementById('overlay').style.display = 'none';
+        }
 
         function maskString(input, visibleChars) {
             visibleChars = Math.min(visibleChars, input.length);
@@ -100,53 +241,10 @@
             return stars + visiblePart;
         }
 
-        function accessKeyCreate(firstFourDigit, lastFourDigit) {
-            const createUuidForAccessKey = uuid.v4().replace(/-/g, '').substring(0, 6);
-            return firstFourDigit + createUuidForAccessKey + lastFourDigit;
-        }
-
-        function addData() {
-            const newRow = document.createElement('tr');
-            const serialNumber = tableBody.rows.length + 1;
-            newRow.innerHTML = `
-            <td>${serialNumber}</td>
-            <td class="accesskey"><button class="btn icon-button btn-outline-green ml-10" onClick="viewDevices(this)"><i class="fa-solid fa-copy"></i></button></td>
-            <td class="DId"></td>
-            <td class="DName"></td>
-            <td class="Action">
-                <button class="btn icon-button btn-outline-green" onClick="delButton(this)">Delete</button>
-                <button class="btn icon-button btn-outline-green" onClick="saveDevice(this)">Save</button>
-            </td>
-            `;
-            tableBody.appendChild(newRow);
-            const accesskeyvalFirstDigit = Math.random().toString(36).substring(2, 6);
-            const accesskeyvalLastDigit = Math.random().toString(36).substring(2, 6);
-            const accessKeyTag = newRow.querySelector(".accesskey");
-            const accessKey = accessKeyCreate(accesskeyvalFirstDigit, accesskeyvalLastDigit);
-            accessKeyTag.setAttribute("data-key", accessKey);
-            accessKeyTag.innerHTML = maskString(accessKey, 4);
-        }
-
-        function delButton(button) {
-            const row = button.closest('tr');
-            const accessKeyTag = row.querySelector(".accesskey");
-            const accessKeyValue = accessKeyTag.getAttribute("data-key");
-            const companyId = localStorage.getItem('companyID'); // Retrieve the company ID
-
-            fetch(`${apiUrlBase}/delete/${accessKeyValue}/${companyId}`, {
-                method: 'DELETE'
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Error: ${response.status}`);
-                    }
-                    tableBody.removeChild(row);
-                    updateSerialNumbers();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
+        // function accessKeyCreate(firstFourDigit, lastFourDigit) {
+        //     const createUuidForAccessKey = uuid.v4().replace(/-/g, '').substring(0, 6);
+        //     return firstFourDigit + createUuidForAccessKey + lastFourDigit;
+        // }
 
         function copyAccessKey(button) {
             const row = button.closest('tr');
@@ -159,18 +257,50 @@
             });
         }
 
-        function updateSerialNumbers() {
-            const rows = tableBody.rows;
-            for (let i = 0; i < rows.length; i++) {
-                rows[i].cells[0].innerText = i + 1;
-            }
-        }
+        // function addData() {
+        //     document.getElementById("deviceCheck").style.display = "none";
+        //     document.getElementById('overlay').style.display = 'flex';
+        //     const accesskeyvalFirstDigit = Math.random().toString(36).substring(2, 6);
+        //     const accesskeyvalLastDigit = Math.random().toString(36).substring(2, 6);
+        //     const accessKey = accessKeyCreate(accesskeyvalFirstDigit, accesskeyvalLastDigit);
+
+        //     const newDevice = {
+        //         TimeZone: "Not Registered",
+        //         DeviceID: "Not Registered",
+        //         CID: localStorage.getItem('companyID'),
+        //         DeviceName: "Not Registered",
+        //         AccessKey: accessKey,
+        //         AccessKeyGeneratedTime: new Date().toISOString()
+        //     };
+
+        //     fetch(`${apiUrlBase}/create`, {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify(newDevice)
+        //     })
+        //         .then(response => {
+        //             if (!response.ok) {
+        //                 return response.text().then(text => {
+        //                     throw new Error(`Error: ${response.status} - ${text}`);
+        //                 });
+        //             }
+        //             viewDevices();
+        //         })
+        //         .catch(error => {
+        //             console.error('Error:', error);
+        //         })
+        //         .finally(() => {
+        //             document.getElementById('overlay').style.display = 'none';
+        //         });
+        // }
 
         function viewDevices() {
+            document.getElementById('overlay').style.display = 'flex';
             const companyId = localStorage.getItem('companyID');
             const apiUrl = `${apiUrlBase}/getAll/${companyId}`;
 
-            console.log(companyId);
             fetch(apiUrl)
                 .then(response => {
                     if (!response.ok) {
@@ -179,70 +309,102 @@
                     return response.json();
                 })
                 .then(data => {
-                    data.forEach(element => {
-                        const newRow = document.createElement('tr');
-                        const accessKey = element.AccessKey;
-                        newRow.innerHTML = `
-                            <td>${tableBody.rows.length + 1}</td>
-                            <td class="accesskey" data-key="${accessKey}">${maskString(accessKey, 4)} <span><button class="btn icon-button btn-outline-green" onClick="copyAccessKey(this)"><i class="fa-solid fa-copy"></i></button></span></td>
-                            <td class="DId">${element.DeviceID}</td>
-                            <td class="DName">${element.DeviceName}</td>
-                            <td class="Action">
-                                <button class="btn icon-button btn-outline-green" onClick="delButton(this)">Delete</button>
-
-                            </td>
-                        `;
-                        tableBody.appendChild(newRow);
-                    });
+                    tableBody.innerHTML = '';
+                    if (data.length === 0) {
+                        document.getElementById("table").style.display = "none";
+                        // document.getElementById("deviceCheck").style.display = "block";
+                    } else {
+                        try {
+                            data.forEach(element => {
+                                const newRow = document.createElement('tr');
+                                const accessKey = element.AccessKey;
+                                newRow.innerHTML = `
+                                <td>${element.TimeZone}</td>
+                                <td class="accesskey" data-key="${accessKey}">${maskString(accessKey, 4)} <span><button class="btn icon-button" onClick="copyAccessKey(this)"><i class="fa-solid fa-copy"></i></button></span></td>
+                                <td class="DId">${element.DeviceID}</td>
+                                <td class="DName">${element.DeviceName}</td>
+                                <td class="isActive">Is Active</td> 
+                                <td class="Action">
+                                    <button class="btn icon-button btn-outline-green" onclick="editDevice('${element.TimeZone}', '${element.DeviceID}',  '${element.DeviceName}', '${accessKey}')">Edit</button>
+                                </td>
+                            `;
+                                tableBody.appendChild(newRow);
+                            });
+                            document.getElementById("table").style.display = "block";
+                            // document.getElementById("deviceCheck").style.display = "none";
+                        }
+                        catch {
+                            document.getElementById("table").style.display = "none";
+                            // document.getElementById("deviceCheck").style.display = "block";
+                        }
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);
+                })
+                .finally(() => {
+                    document.getElementById('overlay').style.display = 'none';
                 });
         }
 
-        function saveDevice(button) {
-            const row = button.closest('tr');
-            // const deviceIDInput = row.querySelector(".DId input");
-            // const deviceNameInput = row.querySelector(".DName input");
-            const accessKeyTag = row.querySelector(".accesskey");
-            const accessKeyValue = accessKeyTag.getAttribute("data-key");
-            const companyId = localStorage.getItem('companyID');
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('overlay').style.display = 'flex';
+            viewDevices();
+        });
 
-            const newDevice = {
-                DeviceID: null,
-                CID: companyId,
-                DeviceName: null,
-                AccessKey: accessKeyValue,
-                AccessKeyGeneratedTime: new Date().toISOString()
+        function editDevice(timezone, deviceIDVal, deviceNameVal, accessKey) {
+            console.log(timezone, deviceIDVal, deviceNameVal);
+
+            const timeZone = timezone;
+            const deviceID = deviceIDVal;
+            const deviceName = deviceNameVal;
+
+            localStorage.setItem("accessKey", accessKey);
+
+            document.getElementById('editTimeZone').value = timeZone;
+            document.getElementById('editDeviceID').value = deviceID;
+            document.getElementById('editDeviceName').value = deviceName;
+
+            const editDeviceModal = new bootstrap.Modal(document.getElementById('editDeviceModal'));
+            editDeviceModal.show();
+        }
+
+        function saveDeviceChanges() {
+            const editDeviceForm = document.getElementById('editDeviceForm');
+            const updatedDevice = {
+                TimeZone: editDeviceForm.timeZone.value,
+                DeviceID: editDeviceForm.deviceID.value,
+                DeviceName: editDeviceForm.deviceName.value
             };
 
-            console.log('Saving device:', newDevice); // Log the device being saved
+            const accessKey = localStorage.getItem("accessKey");
+            const companyId = localStorage.getItem('companyID');
 
-            fetch(`${apiUrlBase}/create`, {
-                method: 'POST',
+            fetch(`${apiUrlBase}/update/${accessKey}/${companyId}`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(newDevice)
+                body: JSON.stringify(updatedDevice)
             })
                 .then(response => {
                     if (!response.ok) {
-                        return response.text().then(text => {
-                            throw new Error(`Error: ${response.status} - ${text}`);
-                        });
+                        throw new Error(`Error: ${response.status}`);
                     }
-                    // Update the row to display the saved values
-                    // row.querySelector(".DId").innerText = newDevice.DeviceID;
-                    // row.querySelector(".DName").innerText = newDevice.DeviceName;
-                    button.remove();
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Device updated successfully:', data);
+                    viewDevices();  // Refresh the device list
+                    const editDeviceModal = bootstrap.Modal.getInstance(document.getElementById('editDeviceModal'));
+                    editDeviceModal.hide();
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    console.error('Error updating device:', error);
                 });
         }
 
 
-        document.addEventListener('DOMContentLoaded', viewDevices);
     </script>
 </body>
 

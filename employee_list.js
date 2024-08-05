@@ -319,3 +319,20 @@ function validateInstructerPin() {
     errorInstructerPin.textContent = '';
     return true;
 }
+
+
+function formatPhoneNumber() {
+    const inputField = document.getElementById('phoneNumber');
+    let value = inputField.value;
+    // Remove all non-digit characters
+    value = value.replace(/\D/g, '');
+    // Format the phone number
+    if (value.length > 3 && value.length <= 6) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+    } else if (value.length > 6) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+    } else if (value.length > 3) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+    }
+    inputField.value = value;
+}

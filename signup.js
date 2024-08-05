@@ -85,23 +85,44 @@ function validateForm() {
 
       // Store the values in localStorage
       const companyName = document.getElementById('companyName').value;
-      const companyLogo = document.getElementById('companyLogo').value;
+      // const companyLogo = document.getElementById('companyLogo').value;
       const companyAddress = document.getElementById('companyAddress').value;
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
+      const logoInput = document.getElementById('companyLogo');
 
-      localStorage.setItem('companyName', companyName);
-      localStorage.setItem('companyLogo', companyLogo);
-      localStorage.setItem('companyAddress', companyAddress);
-      localStorage.setItem('username', username);
-      localStorage.setItem('password', password);
+      console.log(logoInput);
+      // Check if a file is selected
+      if (logoInput.files.length > 0) {
+          const file = logoInput.files[0];
+          const reader = new FileReader();
+      
+          // Read the file and convert it to a Data URL
+          reader.onloadend = function() {
+              const companyLogo = reader.result; // This is the base64 URL
+              localStorage.setItem('companyLogo', companyLogo);
+              // Store other fields
+              localStorage.setItem('companyName', companyName);
+              localStorage.setItem('companyAddress', companyAddress);
+              localStorage.setItem('username', username);
+              localStorage.setItem('password', password);
+          };
+      
+          reader.readAsDataURL(file); // Read the file as a Data URL
+      } else {
+          console.log("No file selected.");
+      }
+      // localStorage.setItem('companyName', companyName);
+      // localStorage.setItem('companyLogo', companyLogo);
+      // localStorage.setItem('companyAddress', companyAddress);
+      // localStorage.setItem('username', username);
+      // localStorage.setItem('password', password);
       // localStorage.setItem('uuid',myUUID.toString());
       // localStorage.setItem('customerId',customerId.toString());
 
       // Simulate a delay for the progress bar
-      setTimeout(() => {
           window.location.href = "signup2.html";  
-      }, 100);
+    
   } else {
       alert('Please fix the errors in the form');
   }
