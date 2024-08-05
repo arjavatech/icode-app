@@ -1,4 +1,4 @@
-body{
+body {
     font-family: "Gill Sans", sans-serif;
 }
 
@@ -39,6 +39,10 @@ body{
 }
 
 
+.dropdown-item:focus {
+    background-color: transparent !important;
+}
+
 
 @media (max-width:991px) {
     .rounded-pill-active {
@@ -54,7 +58,8 @@ body{
     .rounded-pill-active {
         width: 100px;
     }
-    .navbar{
+
+    .navbar {
         overflow-x: hidden;
     }
 }

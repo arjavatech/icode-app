@@ -245,6 +245,13 @@
         margin-left: -100%;
         background-color: white;
         border-radius: 6px;
+        /* margin-inline-end: 100px; */
+    }
+}
+
+@media (min-width:1200px) {
+    #add-entry{
+        margin-inline-end: 150px;
     }
 }
 
@@ -351,7 +358,7 @@ td {
     color: #0A8080;
     background-color: white;
     border-radius: 6px;
-    margin-left: -130%;
+    
 }
 
 @media (max-width: 1024px) {

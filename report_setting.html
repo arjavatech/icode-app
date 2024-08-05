@@ -42,9 +42,23 @@
         }
 
         .btn:hover {
-            color: #0A8080;
             box-shadow: none;
         }
+
+        .btn-green:hover {
+            color: white !important;
+            opacity: 0.9;
+        }
+
+        .btn-outline-green {
+            margin-left: 2%;
+        }
+
+        .btn-outline-green:hover {
+            color: #0A8080 !important;
+        }
+
+
 
         .material-textfield {
             position: relative;
@@ -146,16 +160,12 @@
 
             <div class="emp-list">
                 <h3 class="text-center fw-bold mb-5">Report Settings</h3>
-                <div class="add_form_popup">
-                    <!-- <button type="button" onclick="dataRemove()" class="btn btn-green float-end" id="btn-style"
-                        data-bs-toggle="modal" data-bs-target="#myModal" style="margin-bottom: -50px !important;">
-                        + Add Employee
-                    </button> -->
-                 <span style="float:right;"><button class="btn"
-                            onclick="dataRemove()" data-bs-toggle="modal" data-bs-target="#myModal" id="add-entry">Add
-                            Entry</button></span>
 
-                </div>
+                <span style="float:right;"><button class="btn float-end" onclick="dataRemove()" data-bs-toggle="modal"
+                        data-bs-target="#myModal" id="add-entry">Add
+                        Entry</button></span>
+
+
                 <br><br>
                 <div class="emp-table table-responsive">
                     <div class="custom-table-container">
