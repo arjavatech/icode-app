@@ -24,11 +24,12 @@
     <link rel="stylesheet" href="report_summary.css">
     <style>
         @media (max-width:190px) {
-            #btn-style{
+            #btn-style {
                 padding: 10px;
                 font-size: 10px;
             }
         }
+
         @media(max-width:766px) {
             .icon-button {
                 margin-bottom: 4%;
@@ -41,7 +42,7 @@
         }
 
         .btn:hover {
-            color: white;
+            color: #0A8080;
             box-shadow: none;
         }
 
@@ -121,7 +122,8 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="report_summary.html" id="dropDown">Report Summary</a>
                                 </li>
-                                <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report Settings</a></li>
+                                <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report
+                                        Settings</a></li>
                             </ul>
                         </li>
                         <li class="nav-item me-4">
@@ -145,120 +147,124 @@
             <div class="emp-list">
                 <h3 class="text-center fw-bold mb-5">Report Settings</h3>
                 <div class="add_form_popup">
-                    <button type="button" onclick="dataRemove()" class="btn btn-green float-end" id="btn-style"
+                    <!-- <button type="button" onclick="dataRemove()" class="btn btn-green float-end" id="btn-style"
                         data-bs-toggle="modal" data-bs-target="#myModal" style="margin-bottom: -50px !important;">
                         + Add Employee
-                    </button>
+                    </button> -->
+                 <span style="float:right;"><button class="btn"
+                            onclick="dataRemove()" data-bs-toggle="modal" data-bs-target="#myModal" id="add-entry">Add
+                            Entry</button></span>
+
                 </div>
                 <br><br>
                 <div class="emp-table table-responsive">
                     <div class="custom-table-container">
                         <table class="table custom-table">
-                        <thead>
-                            <tr>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Email</th>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Frequency</th>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tBody">
-                            <!-- Table rows will be dynamically inserted here -->
-                        </tbody>
-                    </table>
-                    <!-- Modal -->
-                    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title fw-bold" id="myModalLabel">Report Details</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="emp_form" class="p-2 text-center">
-                                        <div class="material-textfield mb-3">
-                                            <input id="remail" placeholder=" " type="email" required
-                                                onblur="validREmail()">
-                                            <label class="cemail">Email</label>
-                                            <br>
-                                            <span id="error-email" class="text-danger"></span>
-                                        </div>
-                                        <div class="material-textfield mb-3">
-                                            <select id="frequencySelect" class="selectpicker" multiple
-                                                aria-label="size 3 select example" onchange="validReportDays()">
-                                                <option value="Daily">Daily</option>
-                                                <option value="Weekly">Weekly</option>
-                                                <option value="Biweekly">Biweekly</option>
-                                                <option value="Monthly">Monthly</option>
-                                                <option value="Bimonthly">Bimonthly</option>
-                                            </select>
-                                            <label class="cfrequency"></label>
-                                            <br>
-                                            <span id="selectError" class="error text-danger"></span>
-                                        </div>
-                                        <button type="button" id="savebtn" class="settings-btn-sty btn btn-green"
-                                            onclick="addreportdetails(event)" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
-                                            Save
-                                        </button>
-                                    </form>
+                            <thead>
+                                <tr>
+                                    <th style="border-bottom: 1px solid #cdcdcd;">Email</th>
+                                    <th style="border-bottom: 1px solid #cdcdcd;">Frequency</th>
+                                    <th style="border-bottom: 1px solid #cdcdcd;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tBody">
+                                <!-- Table rows will be dynamically inserted here -->
+                            </tbody>
+                        </table>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fw-bold" id="myModalLabel">Report Details</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="emp_form" class="p-2 text-center">
+                                            <div class="material-textfield mb-3">
+                                                <input id="remail" placeholder=" " type="email" required
+                                                    onblur="validREmail()">
+                                                <label class="cemail">Email</label>
+                                                <br>
+                                                <span id="error-email" class="text-danger"></span>
+                                            </div>
+                                            <div class="material-textfield mb-3">
+                                                <select id="frequencySelect" class="selectpicker" multiple
+                                                    aria-label="size 3 select example" onchange="validReportDays()">
+                                                    <option value="Daily">Daily</option>
+                                                    <option value="Weekly">Weekly</option>
+                                                    <option value="Biweekly">Biweekly</option>
+                                                    <option value="Monthly">Monthly</option>
+                                                    <option value="Bimonthly">Bimonthly</option>
+                                                </select>
+                                                <label class="cfrequency"></label>
+                                                <br>
+                                                <span id="selectError" class="error text-danger"></span>
+                                            </div>
+                                            <button type="button" id="savebtn" class="settings-btn-sty btn btn-green"
+                                                onclick="addreportdetails(event)" data-bs-toggle="modal"
+                                                data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
+                                                Save
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                </div>
-                <h3 class="text-center fw-bold mb-5">Report view Settings</h3>
+                <h3 class="text-center fw-bold mb-3 mt-4">Report view Settings</h3>
                 <div class="emp-table table-responsive">
                     <div class="custom-table-container">
                         <table class="table custom-table">
-                        <thead>
-                            <tr>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Frequency</th>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tBody2">
-                            <!-- Table rows will be dynamically inserted here -->
-                        </tbody>
-                    </table>
-                    <!-- Modal -->
-                    <div class="modal fade" id="myModal2" tabindex="-1" aria-labelledby="myModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title fw-bold" id="myModalLabel">Report Details</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="emp_form" class="p-2 text-center">
+                            <thead>
+                                <tr>
+                                    <th style="border-bottom: 1px solid #cdcdcd;">Frequency</th>
+                                    <th style="border-bottom: 1px solid #cdcdcd;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tBody2">
+                                <!-- Table rows will be dynamically inserted here -->
+                            </tbody>
+                        </table>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal2" tabindex="-1" aria-labelledby="myModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fw-bold" id="myModalLabel">Report Details</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="emp_form" class="p-2 text-center">
 
-                                        <div class="material-textfield mb-3">
-                                            <select id="frequencySelect2" class="selectpicker" multiple
-                                                aria-label="size 3 select example" onchange="validReportDays2()">
-                                                <option value="Weekly">Weekly</option>
-                                                <option value="Biweekly">Biweekly</option>
-                                                <option value="Monthly">Monthly</option>
-                                                <option value="Bimonthly">Bimonthly</option>
-                                            </select>
-                                            <label class="cfrequency"></label>
-                                            <br>
-                                            <span id="selectError2" class="error text-danger"></span>
-                                        </div>
-                                        <button type="button" id="savebtn2" class="settings-btn-sty btn btn-green"
-                                            onclick="updateReportdetails(event)" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
-                                            Update
-                                        </button>
-                                    </form>
+                                            <div class="material-textfield mb-3">
+                                                <select id="frequencySelect2" class="selectpicker" multiple
+                                                    aria-label="size 3 select example" onchange="validReportDays2()">
+                                                    <option value="Weekly">Weekly</option>
+                                                    <option value="Biweekly">Biweekly</option>
+                                                    <option value="Monthly">Monthly</option>
+                                                    <option value="Bimonthly">Bimonthly</option>
+                                                </select>
+                                                <label class="cfrequency"></label>
+                                                <br>
+                                                <span id="selectError2" class="error text-danger"></span>
+                                            </div>
+                                            <button type="button" id="savebtn2" class="settings-btn-sty btn btn-green"
+                                                onclick="updateReportdetails(event)" data-bs-toggle="modal"
+                                                data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
+                                                Update
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>

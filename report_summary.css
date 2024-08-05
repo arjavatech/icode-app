@@ -1,14 +1,17 @@
 .bg-green {
     background-color: #0A8080;
 }
+
 .navbar-dark .navbar-nav .nav-link {
     color: #fff;
 }
+
 .rounded-pill-active {
     border-radius: 50rem;
     background-color: #fff;
     color: #0A8080 !important;
 }
+
 .btn-green {
     color: white;
     background-color: #0A8080;
@@ -20,21 +23,24 @@
     background-color: #dadada;
     padding: 5px 30px;
 }
-.btn-outline-green{
+
+.btn-outline-green {
     color: #0A8080;
     border: solid 1px #0A8080;
     padding: 5px 21px;
 }
+
 .success-msg {
     display: none;
 }
+
 .error-msg {
     display: none;
 }
 
-.showTheResponse{
+.showTheResponse {
     background-color: #0A8080;
-color: white;
+    color: white;
 }
 
 .breadcrumb-item.active {
@@ -45,9 +51,11 @@ color: white;
 .bg-white {
     background-color: #fff;
 }
+
 .navbar-dark .navbar-nav2 .nav-link {
     color: #0A8080;
 }
+
 .rounded-pill-sec-active {
     border-radius: 50rem;
     color: #fff;
@@ -62,7 +70,7 @@ color: white;
         font-weight: bold;
     } */
 
-    .nav-tap{
+    .nav-tap {
         display: flex;
         justify-content: center;
     }
@@ -74,9 +82,9 @@ color: white;
     } */
 
     .nav-bar-style {
-display: flex;
-justify-content: center;
-}
+        display: flex;
+        justify-content: center;
+    }
 
     #add-entry {
         margin-left: 0%;
@@ -85,12 +93,12 @@ justify-content: center;
 
 
 @media (max-width:240px) {
-    .table-responsive{
-        overflow-x:visible;
+    .table-responsive {
+        overflow-x: visible;
     }
 
-    .nav-tap{
-        width:100% !important;
+    .nav-tap {
+        width: 100% !important;
     }
 }
 
@@ -100,9 +108,10 @@ justify-content: center;
 @media (max-width:235px) {
     .custom-table-container {
         margin-top: 40px !important;
-        max-width:100% !important;
+        max-width: 100% !important;
     }
 }
+
 .modal-header {
     border-bottom: none;
 }
@@ -146,50 +155,50 @@ justify-content: center;
     border-color: #186060;
 }
 
-        .nav-tap {
-            background-color: #0A8080;
-            padding: 12px;
-            border-radius: 20px;
-            color: white;
-            font-size: 14px;
-            display: block;
-            text-align: center;
-            font-weight: bold;
-        }
+.nav-tap {
+    background-color: #0A8080;
+    padding: 12px;
+    border-radius: 20px;
+    color: white;
+    font-size: 14px;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+}
 
-        .nav-bar-style {
-            color: #0A8080;
-            font-weight: bold;
-            padding: 12px;
-            display: block;
-            text-align: center;
-            font-size: 14px;
-        }
+.nav-bar-style {
+    color: #0A8080;
+    font-weight: bold;
+    padding: 12px;
+    display: block;
+    text-align: center;
+    font-size: 14px;
+}
 
-        @media (max-width: 1024px) {
-            .nav-tap {
-                font-size: 14px;
-                padding: 11px;
-                border-radius: 18px;
-                font-weight: bold;
-            }
-        }
+@media (max-width: 1024px) {
+    .nav-tap {
+        font-size: 14px;
+        padding: 11px;
+        border-radius: 18px;
+        font-weight: bold;
+    }
+}
 
-        @media (max-width: 768px) {
-            .nav-tap {
-                font-size: 14px;
-                padding: 10px;
-                border-radius: 15px;
-                font-weight: bold;
-            }
+@media (max-width: 768px) {
+    .nav-tap {
+        font-size: 14px;
+        padding: 10px;
+        border-radius: 15px;
+        font-weight: bold;
+    }
 
-            .nav-bar-style{
-                font-size: 14px;
-                /* margin-right: 20px; */
-            }
-        }
+    .nav-bar-style {
+        font-size: 14px;
+        /* margin-right: 20px; */
+    }
+}
 
-        /* @media (max-width: 576px) {
+/* @media (max-width: 576px) {
             .nav-tap {
                 font-size: 8px;
                 padding: 8px;
@@ -198,19 +207,20 @@ justify-content: center;
             }
         } */
 
-        .custom-table-container {
-            border: 1px solid #cdcdcd;
-            background-color: white;
-            border-radius: 12px;
-            overflow: hidden;
-            padding: 0;
-            margin: 0 auto;
-            max-width: 1000px;
-            font-weight: 600;
-            position: relative;
-            margin-top: 1%;
-        }
-        /* @media (min-width: 990px) {
+.custom-table-container {
+    border: 1px solid #cdcdcd;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 1000px;
+    font-weight: 600;
+    position: relative;
+    margin-top: 1%;
+}
+
+/* @media (min-width: 990px) {
             .container {
                 padding: 0 20px;
             }
@@ -224,148 +234,146 @@ justify-content: center;
                 font-size: 14px;
             }
         } */
-        @media (max-width: 1024px) {
-            .custom-table-container {
-                max-width: 100%;
-            }
+@media (max-width: 1024px) {
+    .custom-table-container {
+        max-width: 100%;
+    }
 
-            #add-entry {
-                border: 1px solid #0A8080;
-                color: #0A8080;
-                margin-left: -100%;
-                background-color: white;
-                border-radius: 6px;
-            }
-        }
+    #add-entry {
+        border: 1px solid #0A8080;
+        color: #0A8080;
+        margin-left: -100%;
+        background-color: white;
+        border-radius: 6px;
+    }
+}
 
-        @media (max-width: 768px) {
-            .custom-table-container {
-                max-width: 100%;
-                overflow-x: auto;
-            }
+@media (max-width: 768px) {
+    .custom-table-container {
+        max-width: 100%;
+        overflow-x: auto;
+    }
 
-            .custom-table th,
-            .custom-table td {
-                padding: 5px;
-                font-size: 12px;
-            }
-        }
+    .custom-table th,
+    .custom-table td {
+        padding: 5px;
+        font-size: 12px;
+    }
+}
 
-        .custom-table {
-            margin: 0;
-            text-align: center;
-        }
+.custom-table {
+    margin: 0;
+    text-align: center;
+}
 
-        .custom-table th,
-        .custom-table td {
-            text-align: center;
-            padding: 10px;
-        }
+.custom-table th,
+.custom-table td {
+    text-align: center;
+    padding: 10px;
+}
 
-        .custom-table thead tr {
-            border-bottom: 1px solid #cdcdcd;
-        }
+.custom-table thead tr {
+    border-bottom: 1px solid #cdcdcd;
+}
 
-        .custom-table th {
-            padding-top: 16px;
-            border-bottom: 1px solid #cdcdcd;
-        }
+.custom-table th {
+    padding-top: 16px;
+    border-bottom: 1px solid #cdcdcd;
+}
 
-        .btn-secondary {
-            border: 1px solid #0A8080;
-            background-color: white;
-            color: #0A8080;
-            width: 100px;
-            font-size: 18px;
-            border-radius: 4px;
-            margin-left: 20px;
-        }
+.btn-secondary {
+    border: 1px solid #0A8080;
+    background-color: white;
+    color: #0A8080;
+    width: 100px;
+    font-size: 18px;
+    border-radius: 4px;
+    margin-left: 20px;
+}
 
-        .btn-secondary:hover {
-            border: 1px solid #0A8080;
-            background-color: white;
-            color: #0A8080;
-            width: 100px;
-            font-size: 18px;
-            border-radius: 4px;
-        }
+.btn-secondary:hover {
+    border: 1px solid #0A8080;
+    background-color: white;
+    color: #0A8080;
+    width: 100px;
+    font-size: 18px;
+    border-radius: 4px;
+}
 
-        .Edit-button {
-            border: 1px solid #0A8080;
-            background-color: #0A8080;
-            color: white;
-            width: 100px;
-            font-size: 18px;
-            border-radius: 4px;
-        }
+.Edit-button {
+    border: 1px solid #0A8080;
+    background-color: #0A8080;
+    color: white;
+    width: 100px;
+    font-size: 18px;
+    border-radius: 4px;
+}
 
-        .Edit-button:hover {
-            border: 1px solid #0A8080;
-            background-color: #0A8080;
-            color: white;
-            width: 100px;
-            font-size: 18px;
-            border-radius: 4px;
-        }
+.Edit-button:hover {
+    border: 1px solid #0A8080;
+    background-color: #0A8080;
+    color: white;
+    width: 100px;
+    font-size: 18px;
+    border-radius: 4px;
+}
 
-        .add-btn-container {
-            position: absolute;
-            top: -40px;
-            /* Adjust based on your needs */
-            right: 10px;
-            /* Adjust based on your needs */
-        }
+.add-btn-container {
+    position: absolute;
+    top: -40px;
+    /* Adjust based on your needs */
+    right: 10px;
+    /* Adjust based on your needs */
+}
 
-        .btn-outline-light:hover {
-            background-color: #0A8080;
-            color: white;
-        }
+.btn-outline-light:hover {
+    background-color: #0A8080;
+    color: white;
+}
 
-        body {
-            background-color: #f6f6f6;
-        }
+body {
+    background-color: #f6f6f6;
+}
 
-        td {
-            font-size: 13px;
-        }
+td {
+    font-size: 13px;
+}
 
-        .Date {
-            margin-left: 10%;
-            margin-bottom: 1%;
-            font-weight: 600;
-            font-size: 18px;
-        }
+.Date {
+    margin-left: 10%;
+    margin-bottom: 1%;
+    font-weight: 600;
+    font-size: 18px;
+}
 
-        #add-entry {
-            border: 1px solid #0A8080;
-            color: #0A8080;
-            background-color: white;
-            border-radius: 6px;
-            margin-left: -130%;
-        }
+#add-entry {
+    border: 1px solid #0A8080;
+    color: #0A8080;
+    background-color: white;
+    border-radius: 6px;
+    margin-left: -130%;
+}
 
-        @media (max-width: 1024px) {
-            .Date {
-                font-size: 16px;
-                margin-left: 8%;
-                margin-bottom: 2%;
-            }
-        }
+@media (max-width: 1024px) {
+    .Date {
+        font-size: 16px;
+        margin-left: 8%;
+        margin-bottom: 2%;
+    }
+}
 
-        @media (max-width: 768px) {
-            .Date {
-                font-size: 16px;
-                margin-left: 5%;
-                margin-bottom: 5%;
-            }
-        }
+@media (max-width: 768px) {
+    .Date {
+        font-size: 16px;
+        margin-left: 5%;
+        margin-bottom: 5%;
+    }
+}
 
-        @media (max-width: 576px) {
-            .Date {
-                font-size: 14px;
-                margin-left: 2%;
-                margin-bottom: 10%;
-            }
-        }
-
-      
+@media (max-width: 576px) {
+    .Date {
+        font-size: 14px;
+        margin-left: 2%;
+        margin-bottom: 10%;
+    }
+}

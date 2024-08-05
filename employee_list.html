@@ -22,10 +22,11 @@
     <script defer src="logout.js"></script>
     <style>
         @media (max-width:190px) {
-            .emp-table{
+            .emp-table {
                 margin-top: 100px;
             }
         }
+
         @media (max-width:202px) {
             .btn-style {
                 font-size: .5rem;
@@ -92,26 +93,20 @@
         }
 
         /* Button Style */
-        .btn-green {
-            color: white;
-            background-color: #0A8080;
-            padding: 10px 30px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-
         .btn-green:hover {
             opacity: 0.8;
             color: white;
+        }
+
+        .btn-outline-green:hover {
+            color: #0A8080 !important;
         }
 
         .text-danger {
             color: red;
         }
 
-        #dropDown{
+        #dropDown {
             color: #0A8080;
         }
     </style>
@@ -132,7 +127,8 @@
                             <a class="nav-link" href="device.html">Device</a>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link rounded-pill-active px-3" href="employee_list.html">Employee Management</a>
+                            <a class="nav-link rounded-pill-active px-3" href="employee_list.html">Employee
+                                Management</a>
                         </li>
                         <li class="nav-item dropdown me-4">
                             <a class="nav-link dropdown-toggle " href="#service" id="navbarDropdown" role="button"
@@ -142,17 +138,18 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="report_summary.html" id="dropDown">Report Summary</a>
                                 </li>
-                                <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report Settings</a></li>
+                                <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report
+                                        Settings</a></li>
                             </ul>
                         </li>
-                    
+
                         <li class="nav-item me-4">
                             <a class="nav-link" href="profile.html">Profile</a>
                         </li>
                         <li class="nav-item me-4">
                             <a class="nav-link" href="contact.html">Contact Us</a>
                         </li>
-                        
+
                     </ul>
                     <div>
                         <a href="index.html" class="btn btn-outline-light" id="logout">Logout</a>
@@ -161,7 +158,7 @@
             </div>
         </nav>
     </header>
-    
+
     <section>
         <div class="container mt-5">
             <div id="resmsg">
@@ -178,78 +175,77 @@
                 <h2 class="text-center fw-bold mb-5">Employee Details</h2>
                 <div class="add_form_popup">
                     <!-- Add Employee -->
-                    <button type="button" onclick="dataRemove()" class="btn btn-green float-end btn-style"
-                        data-bs-toggle="modal" data-bs-target="#myModal">
-                        + Add Employee
-                    </button>
+                    <span id="current-checkin-header"></span> <span style="float:right;"><button class="btn"
+                            id="add-entry" onclick="dataRemove()" data-bs-toggle="modal" data-bs-target="#myModal">Add
+                            Entry</button></span>
                 </div>
                 <br><br>
                 <div class="emp-table table-responsive">
                     <div class="custom-table-container">
                         <table class="table custom-table">
-                        <thead>
-                            <tr>
-                                <th style="border-bottom: 1px solid #cdcdcd;">First Name</th>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Last Name</th>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Employee Pin</th>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Employee Phone</th>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tBody">
-                            <!-- Table rows will be dynamically inserted here -->
-                        </tbody>
-                    </table>
-                    <!-- Modal -->
-                    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title fw-bold" id="myModalLabel">Employee Details</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="emp_form" class="p-2 text-center">
-                                        <div class="material-textfield mb-3">
-                                            <input type="text" id="fName" name="fName" placeholder=" " required
-                                                onblur="validFName()">
-                                            <label>First Name</label><br>
-                                            <span class="text-danger" id="showMsg1"></span>
-                                        </div>
-                                        <div class="material-textfield mb-3">
-                                            <input type="text" id="lName" name="lName" placeholder=" "
-                                                onblur="validLName()">
-                                            <label>Last Name</label><br>
-                                            <span class="text-danger" id="showMsg2"></span>
-                                        </div>
-                                        <div class="material-textfield mb-3">
-                                            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" "
-                                                oninput="formatPhoneNumber()">
-                                            <label>Phone Number</label><br>
-                                            <span class="text-danger" id="showMsg3"></span>
-                                        </div>
-                                        <div class="material-textfield mb-3">
-                                            <input id="instructor" placeholder=" " type="text"
-                                                onblur="validateInstructerPin()" disabled>
-                                            <label>Instructor Pin</label><br>
-                                            <span class="text-danger" id="showMsg"></span>
-                                        </div>
-                                        <button type="button" id="savebtn" class="settings-btn-sty btn btn-green"
-                                            onclick="addEmpdetails(event)" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
-                                            Save
-                                        </button>
-                                    </form>
-                                </div>
-                                <!-- <div class="modal-footer">
+                            <thead>
+                                <tr>
+                                    <th style="border-bottom: 1px solid #cdcdcd;">First Name</th>
+                                    <th style="border-bottom: 1px solid #cdcdcd;">Last Name</th>
+                                    <th style="border-bottom: 1px solid #cdcdcd;">Employee Pin</th>
+                                    <th style="border-bottom: 1px solid #cdcdcd;">Employee Phone</th>
+                                    <th style="border-bottom: 1px solid #cdcdcd;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tBody">
+                                <!-- Table rows will be dynamically inserted here -->
+                            </tbody>
+                        </table>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fw-bold" id="myModalLabel">Employee Details</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="emp_form" class="p-2 text-center">
+                                            <div class="material-textfield mb-3">
+                                                <input type="text" id="fName" name="fName" placeholder=" " required
+                                                    onblur="validFName()">
+                                                <label>First Name</label><br>
+                                                <span class="text-danger" id="showMsg1"></span>
+                                            </div>
+                                            <div class="material-textfield mb-3">
+                                                <input type="text" id="lName" name="lName" placeholder=" "
+                                                    onblur="validLName()">
+                                                <label>Last Name</label><br>
+                                                <span class="text-danger" id="showMsg2"></span>
+                                            </div>
+                                            <div class="material-textfield mb-3">
+                                                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" "
+                                                    oninput="formatPhoneNumber()">
+                                                <label>Phone Number</label><br>
+                                                <span class="text-danger" id="showMsg3"></span>
+                                            </div>
+                                            <div class="material-textfield mb-3">
+                                                <input id="instructor" placeholder=" " type="text"
+                                                    onblur="validateInstructerPin()" disabled>
+                                                <label>Instructor Pin</label><br>
+                                                <span class="text-danger" id="showMsg"></span>
+                                            </div>
+                                            <button type="button" id="savebtn" class="settings-btn-sty btn btn-green"
+                                                onclick="addEmpdetails(event)" data-bs-toggle="modal"
+                                                data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
+                                                Save
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <!-- <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 </div> -->
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
