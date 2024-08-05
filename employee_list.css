@@ -1,7 +1,3 @@
-body {
-    font-family: "Gill Sans", sans-serif;
-}
-
 .bg-green {
     background-color: #0A8080;
 }
@@ -39,32 +35,12 @@ body {
 }
 
 
-.dropdown-item:focus {
-    background-color: transparent !important;
-}
-
-
 @media (max-width:991px) {
     .rounded-pill-active {
-        border-radius: 10px;
+        border-radius: 10px !important;
         background-color: #fff;
         width: 230px;
         color: #0A8080 !important;
         margin-top: 2%;
     }
-}
-
-@media (max-width:247px) {
-    .rounded-pill-active {
-        width: 100px;
-    }
-
-    .navbar {
-        overflow-x: hidden;
-    }
-}
-
-
-#dropDown {
-    color: #0A8080;
 }
