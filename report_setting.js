@@ -217,7 +217,7 @@ function viewSecondReportdetails() {
                 newRow.innerHTML = `
                 <td class="ReportActive">${reportType}</td>
                 <td>
-                <button class="btn icon-button btn-green" onclick="editReportdetails('${reportType}')" data-bs-toggle="modal" data-bs-target="#myModal2"> Edit </button>
+                <button class="btn icon-button btn-outline-green" onclick="editReportdetails('${reportType}')" data-bs-toggle="modal" data-bs-target="#myModal2"> Edit </button>
                 </td>
             `;
                 tableBody.appendChild(newRow);

@@ -110,7 +110,7 @@
                             </div>
                             <div class="material-textfield mb-3 form-group">
                                 <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control"
-                                    placeholder=" " oninput="formatPhoneNumber()" required>
+                                    placeholder=" " oninput="formatPhoneNumber()" onblur="validatePhoneNumber()" required>
                                 <label>Phone Number <span class="text-danger">*</span></label>
                                 <span class="text-danger" id="error-phone"></span>
                             </div>
