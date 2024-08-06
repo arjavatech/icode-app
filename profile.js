@@ -1,5 +1,10 @@
 const cid = localStorage.getItem('companyID');
+console.log(cid)
+
+
 const customerId1 = localStorage.getItem('customId');
+
+console.log(customerId1)
 // let image = document.getElementById("img-sty")
 async function loadImage() {
     const url = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company/get/${cid}`;
@@ -11,10 +16,13 @@ async function loadImage() {
         }
 
         const responseData = await response.json();
+        console.log(responseData)
+        let CLogo = localStorage.getItem("companyLogo");
+        console.log(CLogo)
         let readerFile = new FileReader();
         const comLo = responseData.CLogo;
         let image = document.getElementById("logo-img");
-        document.getElementById("imageId").src = comLo;
+        // document.getElementById("imageId").src = comLo;
         console.log(comLo);
 
         // if (comLo) {
@@ -31,12 +39,13 @@ async function loadImage() {
         //     console.error('No logo URL found in response data');
         // }
 
-        readerFile.onload = function(comLo) {
+        readerFile.onload = function (comLo) {
             image.src = comLo; // Set the image source to the file's data URL
-            image.onload = function() {
+            image.onload = function () {
+                updateApiData();
                 console.log('Logo image loaded successfully');
             };
-            image.onerror = function() {
+            image.onerror = function () {
                 console.error('Error loading logo image');
             };
         };
@@ -48,7 +57,7 @@ async function loadImage() {
 }
 
 
-  
+
 document.addEventListener("DOMContentLoaded", function () {
     loadImage();
     const companyName = localStorage.getItem('companyName');
@@ -62,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const phone = localStorage.getItem('phone');
     const email = localStorage.getItem('email');
     // Retrieve the company logo from local storage
-// const companyLogo = localStorage.getItem('companyLogo');
+    // const companyLogo = localStorage.getItem('companyLogo');
 
 
     if (companyName) document.getElementById('companyName').value = companyName;
@@ -74,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (lastName) document.getElementById('lName').value = lastName;
     if (address) document.getElementById('address').value = address;
     if (email) document.getElementById('email').value = email;
-    // if (companyLogo) document.getElementById('companyLogo').value = companyLogo;
+    if (companyLogo) document.getElementById('logo-img').value = companyLogo;
 
 
     document.getElementById('settingsForm').addEventListener('submit', function (event) {
@@ -117,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             updateApiData();
             document.getElementById('successMsg').innerHTML = 'success fully saved your changes';
-                document.getElementById('successMsg').style = "color:green";
+            document.getElementById('successMsg').style = "color:green";
             document.getElementById('overlay').style.display = 'flex';
             setTimeout(function () {
                 window.location.href = "profile.html";
@@ -234,9 +243,16 @@ function updateApiData() {
     const customerPhone = document.getElementById('phoneNumber').value;
     const customerEmail = document.getElementById('email').value;
     const companyAddress = document.getElementById("companyAddress").value;
-    const companyLogo = document.getElementById("companyAddress").value;
+    let companyLogo = document.getElementById("logo-img").value;
     const password = document.getElementById("password").value;
 
+    companyLogo=localStorage.getItem("imageFile")
+    
+
+    console.log("ak")
+    
+    console.log(companyLogo);
+    
     if (!cid || !customerId1) {
         console.error("UUID or CustomerID is missing in localStorage");
         return;
@@ -370,17 +386,18 @@ function handleFileSelect(input) {
 function loadFile(event) {
     const logoImg = document.getElementById('logo-img');
     const file = event.target.files[0];
+    localStorage.setItem("imageFile",file);
 
     if (file) {
         console.log(event.target.files[0]);
         const reader = new FileReader();
 
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             logoImg.src = e.target.result; // Set the image source to the file's data URL
-            logoImg.onload = function() {
+            logoImg.onload = function () {
                 console.log('Logo image loaded successfully');
             };
-            logoImg.onerror = function() {
+            logoImg.onerror = function () {
                 console.error('Error loading logo image');
             };
         };

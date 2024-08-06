@@ -234,8 +234,8 @@
                 </div>
                 <button type="button" class="btn btn-green mt-3" id="loginBtn">Submit</button>
                 <div id="errorMsg"></div>
-                <h5 class="m-3 text-center span-content fs-4">Don't have an account?<span class="p-2"><a href="singup.html"
-                            class="span-colo fs-4">Signup</a></span></h5>
+                <h5 class="m-3 text-center span-content fs-4">Don't have an account?<span class="p-2"><a
+                            href="singup.html" class="span-colo fs-4">Signup</a></span></h5>
             </div>
 
         </div>
@@ -243,21 +243,21 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-        // Retrieve the logo from local storage
-        const companyLogo = localStorage.getItem('companyLogo');
+            // Retrieve the logo from local storage
+            const companyLogo = localStorage.getItem('companyLogo');
 
-        // If a logo exists, set it as the source for the image
-        if (companyLogo) {
-            const logoImg = document.getElementById('logo-img');
-            logoImg.src = companyLogo; // Set the logo image source
-            logoImg.onload = function() {
-                console.log('Logo image loaded successfully');
-            };
-            logoImg.onerror = function() {
-                console.error('Error loading logo image');
-            };
-        }
-    });
+            // If a logo exists, set it as the source for the image
+            if (companyLogo) {
+                const logoImg = document.getElementById('logo-img');
+                logoImg.src = companyLogo; // Set the logo image source
+                logoImg.onload = function () {
+                    console.log('Logo image loaded successfully');
+                };
+                logoImg.onerror = function () {
+                    console.error('Error loading logo image');
+                };
+            }
+        });
         document.getElementById('loginBtn').addEventListener('click', () => {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
@@ -265,9 +265,12 @@
                 .then(isAuthenticated => {
                     if (isAuthenticated) {
                         document.getElementById('overlay').style.display = 'flex';
+                        let exm = localStorage.getItem("companyID");
+                        getCustmData(exm);
                         setTimeout(function () {
-                            window.location.href = 'deviceAccesskey.html';
-                        }, 3000);
+                                window.location.href = 'employee_list.html';
+                            }, 3000);
+
                     } else {
                         document.getElementById('errorMsg').innerHTML = "Invalid username or password";
                         document.getElementById('errorMsg').style = "color:red";
@@ -344,7 +347,7 @@
                     localStorage.setItem('address', data["Address"]);
                     localStorage.setItem('phone', data["PhoneNumber"]);
                     localStorage.setItem('email', data["Email"]);
-                    
+
                 })
                 .catch(error => {
                     console.error('Error:', error);
