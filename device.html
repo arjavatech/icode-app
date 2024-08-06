@@ -16,6 +16,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"   />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
     <link rel="stylesheet" href="employee_list.css">
+    <link rel="stylesheet" href="report_summary.css">
     <style>
         .btn-outline-light:hover {
             background-color: #0A8080;
@@ -35,7 +36,7 @@
         .btn-teal:hover {
             background-color: #095f5f;
             color: white;
-        }   
+        }
 
         /* Loading  */
         .overlay {
@@ -105,6 +106,16 @@
             width: 3rem;
             height: 3rem;
         }
+
+
+        .btn-No {
+            color: #0A8080;
+            border: 1px solid #0A8080;
+        }
+        .btn-No:hover{
+            color: #0A8080;
+
+        }
     </style>
 </head>
 
@@ -154,21 +165,23 @@
     </header>
     <div class="container mt-5" id="table">
         <br><br>
-        <div class="table-responsive">
-            <table class="table table-bordered text-center">
-                <thead>
-                    <tr>
-                        <th>Time zone</th>
-                        <th>Access Key</th>
-                        <th>Device Id</th>
-                        <th>Device Name</th>
-                        <th>Active</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                </tbody>
-            </table>
+        <div class="emp-table table-responsive">
+            <div class="custom-table-container">
+                <table class="table custom-table">
+                    <thead>
+                        <tr>
+                            <th style="border-bottom: 1px solid #cdcdcd;">Time zone</th>
+                            <th style="border-bottom: 1px solid #cdcdcd;">Access Key</th>
+                            <th style="border-bottom: 1px solid #cdcdcd;">Device Id</th>
+                            <th style="border-bottom: 1px solid #cdcdcd;">Device Name</th>
+                            <th style="border-bottom: 1px solid #cdcdcd;">Active</th>
+                            <th style="border-bottom: 1px solid #cdcdcd;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <!-- <div class="text-center mt-5 button" id="deviceCheck">
@@ -210,10 +223,15 @@
                             <label for="editDeviceName" class="form-label">Device Name</label>
                             <input type="text" class="form-control" id="editDeviceName" name="deviceName">
                         </div>
+                        <div class="mb-3">
+                            <label for="isActive" class="form-label">Is Active</label>
+                            <!-- <input type="text" class="form-control" id="isActiveThis" name="deviceName"> -->
+                            <div class="yesNoButton" id="isActiveThis"></div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-No" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-teal" onclick="saveDeviceChanges()">Update</button>
                 </div>
             </div>
@@ -222,7 +240,7 @@
 
     <script>
         const tableBody = document.getElementById("tableBody");
-
+        // let isActiveVaraiable;
         const apiUrlBase = "https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/device";
 
         function showProgressIndicator() {
@@ -319,11 +337,11 @@
                                 const newRow = document.createElement('tr');
                                 const accessKey = element.AccessKey;
                                 newRow.innerHTML = `
-                                <td>${element.TimeZone}</td>
+                                <td>IST</td>
                                 <td class="accesskey" data-key="${accessKey}">${maskString(accessKey, 4)} <span><button class="btn icon-button" onClick="copyAccessKey(this)"><i class="fa-solid fa-copy"></i></button></span></td>
                                 <td class="DId">${element.DeviceID}</td>
                                 <td class="DName">${element.DeviceName}</td>
-                                <td class="isActive">Is Active</td> 
+                                <td class="isActive" id="isactiveId"></td> 
                                 <td class="Action">
                                     <button class="btn icon-button btn-outline-green" onclick="editDevice('${element.TimeZone}', '${element.DeviceID}',  '${element.DeviceName}', '${accessKey}')">Edit</button>
                                 </td>
@@ -352,6 +370,11 @@
             viewDevices();
         });
 
+        function clickFun(isacive) {
+            console.log("ho");
+            document.getElementById("isactiveId").innerHTML = isacive ? "Is Active" : "Not Active";
+        }
+
         function editDevice(timezone, deviceIDVal, deviceNameVal, accessKey) {
             console.log(timezone, deviceIDVal, deviceNameVal);
 
@@ -364,6 +387,8 @@
             document.getElementById('editTimeZone').value = timeZone;
             document.getElementById('editDeviceID').value = deviceID;
             document.getElementById('editDeviceName').value = deviceName;
+            document.getElementById('isActiveThis').innerHTML = `<button class="btn btn-teal" onClick="clickFun('yes')">Yes</button>
+            <button class="btn btn-No" onClick="clickFun('no')">No</button>`
 
             const editDeviceModal = new bootstrap.Modal(document.getElementById('editDeviceModal'));
             editDeviceModal.show();
@@ -403,8 +428,6 @@
                     console.error('Error updating device:', error);
                 });
         }
-
-
     </script>
 </body>
 

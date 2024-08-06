@@ -22,34 +22,40 @@ function viewDatewiseReport(dateValue) {
                 return response.json();
             })
             .then(data => {
-                try {
-                    data.forEach(element => {
-                        const newRow = document.createElement('tr');
-                        if(element.CheckOutTime != null)
-                            {
-                        newRow.innerHTML = `
-                    <td class="Name">${element.Name}</td>
-                    <td class="Pin">${element.Pin}</td>
-                    <td class="CheckInTime">${(convertToAmPm((element.CheckInTime).substring(11)))}</td>
-                    <td class="CheckOutTime">${(convertToAmPm((element.CheckOutTime).substring(11)))}</td>
-                    <td class="TimeWorked">${element.TimeWorked}</td>
-                `;
-                        tableBody.appendChild(newRow);
-
-                            }
-                    });
-
-                }
-                catch {
-                    // alert("No Data Found");
-                    const newRow = document.createElement('tr');
-                    newRow.innerHTML = `
-                        <td colspan="6" class="text-center">No Records Found</td>
-                    `;
-                    tableBody.appendChild(newRow);
-
-                }
-            })
+              try {
+                  data.forEach(element => {
+                      const newRow = document.createElement('tr');
+                      if (element.CheckOutTime != null) {
+                          const checkInTimeUTC = new Date(element.CheckInTime);
+                          const checkOutTimeUTC = new Date(element.CheckOutTime);
+          
+                          // Convert to IST
+                          const checkInTimeIST = checkInTimeUTC.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+                          const checkOutTimeIST = checkOutTimeUTC.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+          
+                          // Convert to AM/PM format if needed
+                          const checkInTimeFormatted = convertToAmPm(new Date(checkInTimeIST));
+                          const checkOutTimeFormatted = convertToAmPm(new Date(checkOutTimeIST));
+          
+                          newRow.innerHTML = `
+                              <td class="Name">${element.Name}</td>
+                              <td class="Pin">${element.Pin}</td>
+                              <td class="CheckInTime">${checkInTimeFormatted}</td>
+                              <td class="CheckOutTime">${checkOutTimeFormatted}</td>
+                              <td class="TimeWorked">${element.TimeWorked}</td>
+                          `;
+                          tableBody.appendChild(newRow);
+                      }
+                  });
+              } catch {
+                  // alert("No Data Found");
+                  const newRow = document.createElement('tr');
+                  newRow.innerHTML = `
+                      <td colspan="6" class="text-center">No Records Found</td>
+                  `;
+                  tableBody.appendChild(newRow);
+              }
+          })          
             .catch(error => {
                 console.error('Error:', error);
             });
@@ -71,26 +77,37 @@ document.getElementById('dailyReportDate').addEventListener('change', function (
   document.addEventListener('DOMContentLoaded', viewDatewiseReport(dateValue));
 });
 
-  function convertToAmPm(timeStr) {
-    // Split the input string into components
-    let [hours, minutes, seconds] = timeStr.split(':').map(Number);
+//   function convertToAmPm(timeStr) {
+//     // Split the input string into components
+//     let [hours, minutes, seconds] = timeStr.split(':').map(Number);
 
-    // Determine AM or PM
-    let amPm = hours >= 12 ? 'PM' : 'AM';
+//     // Determine AM or PM
+//     let amPm = hours >= 12 ? 'PM' : 'AM';
 
-    // Convert hours to 12-hour format
-    hours = hours % 12 || 12; // Convert 0 to 12 for midnight
+//     // Convert hours to 12-hour format
+//     hours = hours % 12 || 12; // Convert 0 to 12 for midnight
 
-    // Format hours, minutes, and seconds as two digits
-    hours = hours.toString().padStart(2, '0');
-    minutes = minutes.toString().padStart(2, '0');
-    seconds = seconds.toString().padStart(2, '0');
+//     // Format hours, minutes, and seconds as two digits
+//     hours = hours.toString().padStart(2, '0');
+//     minutes = minutes.toString().padStart(2, '0');
+//     seconds = seconds.toString().padStart(2, '0');
 
-    // Combine into the final formatted string
-    return `${hours}:${minutes}:${seconds} ${amPm}`;
-}
+//     // Combine into the final formatted string
+//     return `${hours}:${minutes}:${seconds} ${amPm}`;
+// }
 
 // Weekly Report Date Calculation.
+
+function convertToAmPm(date) {
+  let hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+  return hours + ':' + minutesStr + ' ' + ampm;
+}
+
 
 function getLastWeekDateRange() {
     // Today's date

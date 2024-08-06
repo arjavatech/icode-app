@@ -34,14 +34,15 @@
     display: none;
 }
 
-.dropdown-item{
+.dropdown-item {
     color: #0A8080 !important;
 }
 
-.dropdown-item:focus{
+.dropdown-item:focus {
     background-color: transparent !important;
     color: #0A8080 !important;
 }
+
 @media (max-width:991px) {
     .rounded-pill-active {
         border-radius: 10px !important;
@@ -50,4 +51,9 @@
         color: #0A8080 !important;
         margin-top: 2%;
     }
+}
+
+.modal-header {
+    background-color: #0A8080;
+    color: white;
 }
