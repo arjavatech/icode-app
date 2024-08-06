@@ -6,58 +6,72 @@ const customerId1 = localStorage.getItem('customId');
 
 console.log(customerId1)
 // let image = document.getElementById("img-sty")
+// async function loadImage() {
+//     const url = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company/get/${cid}`;
+
+//     try {
+//         const response = await fetch(url);
+//         if (!response.ok) {
+//             throw new Error(`Error creating account: ${response.statusText}`);
+//         }
+
+//         const responseData = await response.json();
+//         console.log(responseData);
+//         let readerFile = new FileReader();
+//         const comLo = responseData.CLogo;
+//         let image = document.getElementById("logo-img");
+//         // document.getElementById("imageId").src = comLo;
+//         console.log(comLo);
+
+
+//         readerFile.onload = function (comLo) {
+//             image.src = comLo; // Set the image source to the file's data URL
+//             image.onload = function () {
+//                 updateApiData();
+//                 console.log('Logo image loaded successfully');
+//             };
+//             image.onerror = function () {
+//                 console.error('Error loading logo image');
+//             };
+//         };
+//         readerFile.readAsDataURL(comLo);
+
+//     } catch (error) {
+//         console.error('Error in createAccount function:', error.message);
+//     }
+// }
+
 async function loadImage() {
     const url = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company/get/${cid}`;
 
     try {
         const response = await fetch(url);
         if (!response.ok) {
-            throw new Error(`Error creating account: ${response.statusText}`);
+            throw new Error(`Error fetching data: ${response.statusText}`);
         }
 
         const responseData = await response.json();
-        console.log(responseData)
-        let CLogo = localStorage.getItem("companyLogo");
-        console.log(CLogo)
-        let readerFile = new FileReader();
-        const comLo = responseData.CLogo;
-        let image = document.getElementById("logo-img");
-        // document.getElementById("imageId").src = comLo;
-        console.log(comLo);
+        console.log(responseData);
 
-        // if (comLo) {
-        //     const logoImg = document.getElementById('logo-img');
-        //     // logoImg.src = "C:\fakepath\Screenshot 2024-07-12 at 9.53.31 PM.png"; 
-        //     logoImg.src = comLo; // Set the logo image source
-        //     logoImg.onload = function() {
-        //         console.log('Logo image loaded successfully');
-        //     };
-        //     logoImg.onerror = function() {
-        //         console.error('Error loading logo image');
-        //     };
-        // } else {
-        //     console.error('No logo URL found in response data');
-        // }
+        const comLoDataUrl = responseData.CLogo; // This is a data URL
+        const image = document.getElementById("logo-img");
 
-        readerFile.onload = function (comLo) {
-            image.src = comLo; // Set the image source to the file's data URL
+        if (comLoDataUrl.startsWith('data:image/')) {
+            image.src = comLoDataUrl; // Set the image source to the data URL
             image.onload = function () {
-                updateApiData();
                 console.log('Logo image loaded successfully');
             };
             image.onerror = function () {
                 console.error('Error loading logo image');
             };
-        };
-        readerFile.readAsDataURL(comLo);
+        } else {
+            console.error('Invalid data URL:', comLoDataUrl);
+        }
 
     } catch (error) {
-        console.error('Error in createAccount function:', error.message);
+        console.error('Error in loadImage function:', error.message);
     }
 }
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     loadImage();
     const companyName = localStorage.getItem('companyName');
@@ -246,7 +260,7 @@ function updateApiData() {
     let companyLogo = document.getElementById("logo-img").value;
     const password = document.getElementById("password").value;
 
-    companyLogo=localStorage.getItem("imageFile")
+    companyLogo = localStorage.getItem("imageFile");
     
 
     console.log("ak")
@@ -386,14 +400,13 @@ function handleFileSelect(input) {
 function loadFile(event) {
     const logoImg = document.getElementById('logo-img');
     const file = event.target.files[0];
-    localStorage.setItem("imageFile",file);
-
     if (file) {
-        console.log(event.target.files[0]);
         const reader = new FileReader();
 
         reader.onload = function (e) {
             logoImg.src = e.target.result; // Set the image source to the file's data URL
+            localStorage.setItem("imageFile", e.target.result); // Store the data URL in localStorage
+
             logoImg.onload = function () {
                 console.log('Logo image loaded successfully');
             };
@@ -406,5 +419,17 @@ function loadFile(event) {
     }
 }
 
+function dataURLToBlob(dataURL) {
+    const parts = dataURL.split(',');
+    const mimeType = parts[0].match(/:(.*?);/)[1];
+    const byteString = atob(parts[1]);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
 
+    for (let i = 0; i < byteString.length; i++) {
+        uint8Array[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([uint8Array], { type: mimeType });
+}
 
