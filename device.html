@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Device</title>
-    <!-- Bootstrap link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
@@ -106,6 +105,10 @@
             width: 3rem;
             height: 3rem;
         }
+
+        #noRadio{
+            margin-left: 2%;
+        }
     </style>
 </head>
 
@@ -174,16 +177,6 @@
             </div>
         </div>
     </div>
-    <!-- <div class="text-center mt-5 button" id="deviceCheck">
-            <p id="para">No device Added</p><button id="addButton" onclick="addData()">Add device</button>
-        </div> -->
-
-    <!-- Progress indicator -->
-    <!-- <div class="progress-indicator" id="progressIndicator">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div> -->
 
     <div class="overlay" id="overlay">
         <div class="spinner"></div>
@@ -215,7 +208,6 @@
                         </div>
                         <div class="mb-3">
                             <label for="isActive" class="form-label">Is Active</label>
-                            <!-- <input type="text" class="form-control" id="isActiveThis" name="deviceName"> -->
                             <div class="yesNoButton" id="isActiveThis"></div>
                         </div>
                     </form>
@@ -249,7 +241,6 @@
             return stars + visiblePart;
         }
 
-  
         function copyAccessKey(button) {
             const row = button.closest('tr');
             const accessKeyTag = row.querySelector(".accesskey");
@@ -260,6 +251,8 @@
                 console.error('Failed to copy: ', err);
             });
         }
+
+
         function viewDevices() {
             document.getElementById('overlay').style.display = 'flex';
             const companyId = localStorage.getItem('companyID');
@@ -276,7 +269,6 @@
                     tableBody.innerHTML = '';
                     if (data.length === 0) {
                         document.getElementById("table").style.display = "none";
-                        // document.getElementById("deviceCheck").style.display = "block";
                     } else {
                         try {
                             data.forEach(element => {
@@ -288,10 +280,7 @@
                                     <td class="DId">${element.DeviceID}</td>
                                     <td class="DName">${element.DeviceName}</td>
                                     <td class="isActive" id="isactiveId">
-                                        <div class="yesNoButton" id="yesNo">
-                                            <button class="btn btn-teal" onClick="clickFun(true)">Yes</button>
-                                            <button class="btn btn-secondary" onClick="clickFun(false)">No</button>
-                                        </div>
+                                        Not active
                                     </td>
 
                                     <td class="Action">
@@ -332,8 +321,10 @@
 
             // Set up buttons for "Is Active" status
             document.getElementById('isActiveThis').innerHTML = `
-        <button class="btn btn-teal" onClick="clickFun(true)">Yes</button>
-        <button class="btn btn-secondary" onClick="clickFun(false)">No</button>
+       <div class="yesNoButton" id="yesNo">
+        <input type="radio" name="gender" onclick = "clickFun(true)">Yes
+    <input type="radio" name="gender" id="noRadio" onclick = "clickFun(false)">No
+</div>
     `;
 
             const editDeviceModal = new bootstrap.Modal(document.getElementById('editDeviceModal'));
@@ -347,7 +338,6 @@
 
             if (row) {
                 const isActiveCell = row.querySelector(".isActive");
-                // const actionButtons = row.querySelector(".yesNoButton");
                 let displayYesButton = document.getElementById("yesNo"); // Get the button container
 
                 // Update the cell to reflect the active status
@@ -367,6 +357,8 @@
                 console.error("Row not found for access key:", accessKey);
             }
         }
+
+
 
 
 
