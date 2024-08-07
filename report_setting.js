@@ -92,7 +92,6 @@ function addreportdetails() {
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    // outPut.textContent = 'Error creating data.';
                 });
         } else {
             const apiUrl = `${apiUrlBase}/update/${reportUpdateid}/${company_id}`;
@@ -106,7 +105,6 @@ function addreportdetails() {
                 IsMonthlyReportActive: MonthlyReportActive,
                 IsBiMonthlyReportActive: BiMonthlyReportActive
             };
-            // return false;
 
             fetch(apiUrl, {
                 method: 'PUT',
@@ -139,7 +137,6 @@ function addreportdetails() {
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    // outPut.textContent = 'Error creating data.';
                 });
         }
 
@@ -421,7 +418,6 @@ function updateReportdetails() {
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    // outPut.textContent = 'Error creating data.';
                 });
         
 

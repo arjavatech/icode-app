@@ -106,16 +106,6 @@
             width: 3rem;
             height: 3rem;
         }
-
-
-        .btn-No {
-            color: #0A8080;
-            border: 1px solid #0A8080;
-        }
-        .btn-No:hover{
-            color: #0A8080;
-
-        }
     </style>
 </head>
 
@@ -185,15 +175,15 @@
         </div>
     </div>
     <!-- <div class="text-center mt-5 button" id="deviceCheck">
-        <p id="para">No device Added</p><button id="addButton" onclick="addData()">Add device</button>
-    </div> -->
+            <p id="para">No device Added</p><button id="addButton" onclick="addData()">Add device</button>
+        </div> -->
 
     <!-- Progress indicator -->
     <!-- <div class="progress-indicator" id="progressIndicator">
-        <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div> -->
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div> -->
 
     <div class="overlay" id="overlay">
         <div class="spinner"></div>
@@ -231,7 +221,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-No" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-teal" onclick="saveDeviceChanges()">Update</button>
                 </div>
             </div>
@@ -259,11 +249,7 @@
             return stars + visiblePart;
         }
 
-        // function accessKeyCreate(firstFourDigit, lastFourDigit) {
-        //     const createUuidForAccessKey = uuid.v4().replace(/-/g, '').substring(0, 6);
-        //     return firstFourDigit + createUuidForAccessKey + lastFourDigit;
-        // }
-
+  
         function copyAccessKey(button) {
             const row = button.closest('tr');
             const accessKeyTag = row.querySelector(".accesskey");
@@ -274,46 +260,6 @@
                 console.error('Failed to copy: ', err);
             });
         }
-
-        // function addData() {
-        //     document.getElementById("deviceCheck").style.display = "none";
-        //     document.getElementById('overlay').style.display = 'flex';
-        //     const accesskeyvalFirstDigit = Math.random().toString(36).substring(2, 6);
-        //     const accesskeyvalLastDigit = Math.random().toString(36).substring(2, 6);
-        //     const accessKey = accessKeyCreate(accesskeyvalFirstDigit, accesskeyvalLastDigit);
-
-        //     const newDevice = {
-        //         TimeZone: "Not Registered",
-        //         DeviceID: "Not Registered",
-        //         CID: localStorage.getItem('companyID'),
-        //         DeviceName: "Not Registered",
-        //         AccessKey: accessKey,
-        //         AccessKeyGeneratedTime: new Date().toISOString()
-        //     };
-
-        //     fetch(`${apiUrlBase}/create`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(newDevice)
-        //     })
-        //         .then(response => {
-        //             if (!response.ok) {
-        //                 return response.text().then(text => {
-        //                     throw new Error(`Error: ${response.status} - ${text}`);
-        //                 });
-        //             }
-        //             viewDevices();
-        //         })
-        //         .catch(error => {
-        //             console.error('Error:', error);
-        //         })
-        //         .finally(() => {
-        //             document.getElementById('overlay').style.display = 'none';
-        //         });
-        // }
-
         function viewDevices() {
             document.getElementById('overlay').style.display = 'flex';
             const companyId = localStorage.getItem('companyID');
@@ -337,23 +283,27 @@
                                 const newRow = document.createElement('tr');
                                 const accessKey = element.AccessKey;
                                 newRow.innerHTML = `
-                                <td>IST</td>
-                                <td class="accesskey" data-key="${accessKey}">${maskString(accessKey, 4)} <span><button class="btn icon-button" onClick="copyAccessKey(this)"><i class="fa-solid fa-copy"></i></button></span></td>
-                                <td class="DId">${element.DeviceID}</td>
-                                <td class="DName">${element.DeviceName}</td>
-                                <td class="isActive" id="isactiveId"></td> 
-                                <td class="Action">
-                                    <button class="btn icon-button btn-outline-green" onclick="editDevice('${element.TimeZone}', '${element.DeviceID}',  '${element.DeviceName}', '${accessKey}')">Edit</button>
-                                </td>
-                            `;
+                                    <td>IST</td>
+                                    <td class="accesskey" data-key="${accessKey}">${maskString(accessKey, 4)} <span><button class="btn icon-button" onClick="copyAccessKey(this)"><i class="fa-solid fa-copy"></i></button></span></td>
+                                    <td class="DId">${element.DeviceID}</td>
+                                    <td class="DName">${element.DeviceName}</td>
+                                    <td class="isActive" id="isactiveId">
+                                        <div class="yesNoButton" id="yesNo">
+                                            <button class="btn btn-teal" onClick="clickFun(true)">Yes</button>
+                                            <button class="btn btn-secondary" onClick="clickFun(false)">No</button>
+                                        </div>
+                                    </td>
+
+                                    <td class="Action">
+                                        <button class="btn icon-button btn-outline-green" onclick="editDevice('${element.TimeZone}', '${element.DeviceID}',  '${element.DeviceName}', '${accessKey}')">Edit</button>
+                                    </td>
+                                `;
                                 tableBody.appendChild(newRow);
                             });
                             document.getElementById("table").style.display = "block";
-                            // document.getElementById("deviceCheck").style.display = "none";
                         }
                         catch {
                             document.getElementById("table").style.display = "none";
-                            // document.getElementById("deviceCheck").style.display = "block";
                         }
                     }
                 })
@@ -369,15 +319,7 @@
             document.getElementById('overlay').style.display = 'flex';
             viewDevices();
         });
-
-        function clickFun(isacive) {
-            console.log("ho");
-            document.getElementById("isactiveId").innerHTML = isacive ? "Is Active" : "Not Active";
-        }
-
-        function editDevice(timezone, deviceIDVal, deviceNameVal, accessKey) {
-            console.log(timezone, deviceIDVal, deviceNameVal);
-
+        function editDevice(timezone, deviceIDVal, deviceNameVal, accessKey, isActive) {
             const timeZone = timezone;
             const deviceID = deviceIDVal;
             const deviceName = deviceNameVal;
@@ -387,12 +329,47 @@
             document.getElementById('editTimeZone').value = timeZone;
             document.getElementById('editDeviceID').value = deviceID;
             document.getElementById('editDeviceName').value = deviceName;
-            document.getElementById('isActiveThis').innerHTML = `<button class="btn btn-teal" onClick="clickFun('yes')">Yes</button>
-            <button class="btn btn-No" onClick="clickFun('no')">No</button>`
+
+            // Set up buttons for "Is Active" status
+            document.getElementById('isActiveThis').innerHTML = `
+        <button class="btn btn-teal" onClick="clickFun(true)">Yes</button>
+        <button class="btn btn-secondary" onClick="clickFun(false)">No</button>
+    `;
 
             const editDeviceModal = new bootstrap.Modal(document.getElementById('editDeviceModal'));
             editDeviceModal.show();
         }
+
+        function clickFun(isActive) {
+            const accessKey = localStorage.getItem("accessKey");
+            const rows = Array.from(document.querySelectorAll('#tableBody tr'));
+            const row = rows.find(row => row.querySelector(".accesskey").getAttribute("data-key") === accessKey);
+
+            if (row) {
+                const isActiveCell = row.querySelector(".isActive");
+                // const actionButtons = row.querySelector(".yesNoButton");
+                let displayYesButton = document.getElementById("yesNo"); // Get the button container
+
+                // Update the cell to reflect the active status
+                isActiveCell.innerHTML = isActive ? "Is Active" : "Not Active";
+
+                // Hide the buttons
+                displayYesButton.style.display = "none";
+
+                // Optionally close the modal after updating
+                const editDeviceModal = bootstrap.Modal.getInstance(document.getElementById('editDeviceModal'));
+                if (editDeviceModal) {
+                    editDeviceModal.hide();
+                }
+
+                console.log(`Updated status for ${accessKey}: ${isActive ? "Is Active" : "Not Active"}`);
+            } else {
+                console.error("Row not found for access key:", accessKey);
+            }
+        }
+
+
+
 
         function saveDeviceChanges() {
             const editDeviceForm = document.getElementById('editDeviceForm');

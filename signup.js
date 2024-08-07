@@ -71,9 +71,6 @@ function validatePassword() {
 
 // Function to validate the entire form
 function validateForm() {
-  // const myUUID = uuid.v4();
-  // const customerId = uuid.v4();
-// document.getElementById('uuid').innerText = myUUID;
   const isCompanyNameValid = validateCompanyName();
   const isCompanyLogoValid = validateCompanyLogo();
   const isCompanyAddressValid = validateCompanyAddress();
@@ -112,14 +109,6 @@ function validateForm() {
       } else {
           console.log("No file selected.");
       }
-      // localStorage.setItem('companyName', companyName);
-      // localStorage.setItem('companyLogo', companyLogo);
-      // localStorage.setItem('companyAddress', companyAddress);
-      // localStorage.setItem('username', username);
-      // localStorage.setItem('password', password);
-      // localStorage.setItem('uuid',myUUID.toString());
-      // localStorage.setItem('customerId',customerId.toString());
-
       // Simulate a delay for the progress bar
           window.location.href = "signup2.html";  
     

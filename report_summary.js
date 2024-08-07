@@ -1,16 +1,7 @@
 
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/getdatebasedata';
 
-// document.addEventListener("DOMContentLoaded", function () {
-//     const buttons = document.querySelectorAll(".nav-button");
 
-//     buttons.forEach(button => {
-//         button.addEventListener("click", function () {
-//             buttons.forEach(btn => btn.classList.remove("active"));
-//             this.classList.add("active");
-//         });
-//     });
-// });
 
 function viewCurrentDateReport() {
   selectedValue = localStorage.getItem('reportType');
@@ -199,7 +190,6 @@ function viewDatewiseReport(dateValue) {
 
                 }
                 catch {
-                    // alert("No Data Found");
                     const newRow = document.createElement('tr');
                     newRow.innerHTML = `
                         <td colspan="6" class="text-center">No Records Found</td>
@@ -301,23 +291,6 @@ function viewDateRangewiseReport(startValue, endValue) {
 // Call fetchData when the page is fully loaded
 document.addEventListener('DOMContentLoaded', viewCurrentDateReport());
 
-
-// document.addEventListener('DOMContentLoaded', viewDatewiseReport("test"));
-
-// document.getElementById('dailyReportDate').addEventListener('change', function () {
-//   const dateValue = this.value;
-//   document.addEventListener('DOMContentLoaded', viewDatewiseReport(dateValue));
-// });
-
-// document.addEventListener('DOMContentLoaded', function(){
-//     selectedValue = localStorage.getItem('reportType');
-//     document.getElementById("report-type-heading").textContent = selectedValue + " Report";
-//     viewDateRangewiseReport();
-// });
-
-
-
-
 async function updateDailyReportAPiData(emp_id, cid, date, type, checkin_snap, checkin_time,checkout_snap, checkout_time , time_worked) {
   
     const userData = {
@@ -359,9 +332,7 @@ async function updateDailyReportAPiData(emp_id, cid, date, type, checkin_snap, c
         alert(data.error);
       }
     }
-    //   console.log(data);
     } catch (error) {
-    //   console.error('Error:', error);
     }
   }
 

@@ -1,17 +1,6 @@
 
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/getdatebasedata';
 
-// document.addEventListener("DOMContentLoaded", function () {
-//     const buttons = document.querySelectorAll(".nav-button");
-
-//     buttons.forEach(button => {
-//         button.addEventListener("click", function () {
-//             buttons.forEach(btn => btn.classList.remove("active"));
-//             this.classList.add("active");
-//         });
-//     });
-// });
-
 
 function viewDateRangewiseReport() {
   const apiBase = "https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyReport/getDateRangeReport";

@@ -121,7 +121,7 @@
                 })
                 .then(data => {
                     console.log('Device added successfully:', data);
-                    window.location.href = 'device.html';
+                    window.location.href = 'index.html';
                     // viewDevices(); // Ensure this function is defined
                 })
                 .catch(error => {
@@ -130,6 +130,7 @@
                 .finally(() => {
                     document.getElementById('overlay').style.display = 'none';
                 });
+            
         }
     </script>
 </body>

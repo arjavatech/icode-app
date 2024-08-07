@@ -64,22 +64,10 @@
 
 
 @media (max-width: 576px) {
-    /* .nav-tap {
-        width: 50%;
-        font-size: 13px;
-        font-weight: bold;
-    } */
-
     .nav-tap {
         display: flex;
         justify-content: center;
     }
-
-    /* .nav-bar-style {
-        padding: 0px;
-        width: 50%;
-        font-size: 13px;
-    } */
 
     .nav-bar-style {
         display: flex;
@@ -194,18 +182,9 @@
 
     .nav-bar-style {
         font-size: 14px;
-        /* margin-right: 20px; */
     }
 }
 
-/* @media (max-width: 576px) {
-            .nav-tap {
-                font-size: 8px;
-                padding: 8px;
-                border-radius: 13px;
-                font-weight: bold;
-            }
-        } */
 
 .custom-table-container {
     border: 1px solid #cdcdcd;
@@ -220,20 +199,7 @@
     margin-top: 1%;
 }
 
-/* @media (min-width: 990px) {
-            .container {
-                padding: 0 20px;
-            }
-            .nav-tap{
-                width: 240px;
-                font-size: 14px;
-                font-weight: bold;
-            }
-            .nav-bar-style{
-                width: 360px;
-                font-size: 14px;
-            }
-        } */
+
 @media (max-width: 1024px) {
     .custom-table-container {
         max-width: 100%;
@@ -245,7 +211,6 @@
         margin-left: -100%;
         background-color: white;
         border-radius: 6px;
-        /* margin-inline-end: 100px; */
     }
 }
 
@@ -328,9 +293,7 @@
 .add-btn-container {
     position: absolute;
     top: -40px;
-    /* Adjust based on your needs */
     right: 10px;
-    /* Adjust based on your needs */
 }
 
 .btn-outline-light:hover {

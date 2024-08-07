@@ -8,9 +8,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css" />
@@ -18,9 +20,9 @@
     <link rel="stylesheet" href="employee_list.css">
     <script defer src="salaried_report.js"></script>
     <script defer src="logout.js"></script>
-    
+
     <style>
-       .nav-tap {
+        .nav-tap {
             background-color: #0A8080;
             padding: 12px;
             border-radius: 20px;
@@ -39,6 +41,7 @@
             text-align: center;
             font-size: 14px;
         }
+
         @media (max-width: 1024px) {
             .nav-tap {
                 font-size: 14px;
@@ -47,7 +50,7 @@
                 font-weight: bold;
             }
         }
-    
+
         @media (max-width: 768px) {
             .nav-tap {
                 font-size: 14px;
@@ -55,13 +58,13 @@
                 border-radius: 15px;
                 font-weight: bold;
             }
-    
-            .nav-bar-style{
+
+            .nav-bar-style {
                 font-size: 14px;
             }
-         
+
         }
-    
+
         .custom-table-container {
             border: 1px solid #cdcdcd;
             background-color: white;
@@ -74,31 +77,35 @@
             position: relative;
             margin-top: 1%;
         }
+
         @media (min-width: 990px) {
             .container {
                 padding: 0 20px;
             }
-            .nav-tap{
+
+            .nav-tap {
                 width: 180px;
                 font-size: 14px;
                 font-weight: bold;
             }
-            .nav-bar-style{
+
+            .nav-bar-style {
                 width: 240px;
                 font-size: 14px;
-                /* margin-right: 220px; */
             }
-            #reportName{
+
+            #reportName {
                 margin-left: 40%;
             }
-            
-            
+
+
         }
+
         @media (max-width: 1024px) {
             .custom-table-container {
                 max-width: 100%;
             }
-    
+
             #add-entry {
                 border: 1px solid #0A8080;
                 color: #0A8080;
@@ -106,43 +113,43 @@
                 background-color: white;
                 border-radius: 6px;
             }
-    
-            
+
+
         }
-    
+
         @media (max-width: 768px) {
             .custom-table-container {
                 max-width: 100%;
                 overflow-x: auto;
             }
-    
+
             .custom-table th,
             .custom-table td {
                 padding: 5px;
                 font-size: 12px;
             }
         }
-    
+
         .custom-table {
             margin: 0;
             text-align: center;
         }
-    
+
         .custom-table th,
         .custom-table td {
             text-align: center;
             padding: 10px;
         }
-    
+
         .custom-table thead tr {
             border-bottom: 1px solid #cdcdcd;
         }
-    
+
         .custom-table th {
             padding-top: 16px;
             border-bottom: 1px solid #cdcdcd;
         }
-    
+
         .btn-secondary {
             border: 1px solid #0A8080;
             background-color: white;
@@ -152,7 +159,7 @@
             border-radius: 4px;
             margin-left: 20px;
         }
-    
+
         .btn-secondary:hover {
             border: 1px solid #0A8080;
             background-color: white;
@@ -161,7 +168,7 @@
             font-size: 18px;
             border-radius: 4px;
         }
-    
+
         .Edit-button {
             border: 1px solid #0A8080;
             background-color: #0A8080;
@@ -170,7 +177,7 @@
             font-size: 18px;
             border-radius: 4px;
         }
-    
+
         .Edit-button:hover {
             border: 1px solid #0A8080;
             background-color: #0A8080;
@@ -179,35 +186,33 @@
             font-size: 18px;
             border-radius: 4px;
         }
-    
+
         .add-btn-container {
             position: absolute;
             top: -40px;
-            /* Adjust based on your needs */
             right: 10px;
-            /* Adjust based on your needs */
         }
-    
+
         .btn-outline-light:hover {
             background-color: #0A8080;
             color: white;
         }
-    
+
         body {
             background-color: #f6f6f6;
         }
-    
+
         td {
             font-size: 13px;
         }
-    
+
         .Date {
             margin-left: 10%;
             margin-bottom: 1%;
             font-weight: 600;
             font-size: 18px;
         }
-    
+
         #add-entry {
             border: 1px solid #0A8080;
             color: #0A8080;
@@ -215,7 +220,7 @@
             border-radius: 6px;
             margin-left: -130%;
         }
-    
+
         @media (max-width: 1024px) {
             .Date {
                 font-size: 16px;
@@ -223,7 +228,7 @@
                 margin-bottom: 2%;
             }
         }
-    
+
         @media (max-width: 768px) {
             .Date {
                 font-size: 16px;
@@ -231,7 +236,7 @@
                 margin-bottom: 5%;
             }
         }
-    
+
         @media (max-width: 576px) {
             .Date {
                 font-size: 14px;
@@ -239,26 +244,8 @@
                 margin-bottom: 10%;
             }
         }
-    
-        /* @media (max-width: 576px) {
-            .nav-tap {
-                width: 50%;
-                font-size: 13px;
-                font-weight: bold;
-            }
-    
-            .nav-bar-style {
-                padding: 0px;
-                width: 50%;
-                font-size: 13px;
-            }
-    
-            #add-entry {
-                margin-left: 0%;
-            }
-        } */
     </style>
-    
+
 </head>
 
 <body>
@@ -286,7 +273,8 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="report_summary.html" id="dropDown">Report Summary</a>
                                 </li>
-                                <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report Settings</a></li>
+                                <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report
+                                        Settings</a></li>
                             </ul>
                         </li>
 
@@ -314,8 +302,8 @@
                         <div class="col-lg-5 col-md-12">
                             <div class="row">
                                 <div class="col-md-4 col-sm-12 nav-link">
-                                    <a href="report_summary.html"  style="text-decoration: none;">
-                                        <span class="nav-bar-style" >Current Day Report</span>
+                                    <a href="report_summary.html" style="text-decoration: none;">
+                                        <span class="nav-bar-style">Current Day Report</span>
                                     </a>
                                 </div>
                                 <div class="col-md-4 col-sm-12 nav-link">
@@ -351,17 +339,17 @@
                             </tr>
                         </thead>
                         <tbody id="tbody">
-                            
+
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </section>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
-    
+
 </body>
 
 </html>

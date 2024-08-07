@@ -18,8 +18,6 @@ function addEmpdetails() {
     const isValidFName = validFName();
     const isValidLName = validLName();
     const isValidPhoneNumber = validPhoneno();
-    // const isvalidInstructerPin = validateInstructerPin();
-
     if (isValidFName && isValidLName && isValidPhoneNumber) {
         const empupdateid = document.getElementById("savebtn").value;
         const empfname = document.getElementById("fName").value;
@@ -27,17 +25,11 @@ function addEmpdetails() {
         const empphoneno = document.getElementById("phoneNumber").value;
         const empinst = document.getElementById("instructor").value;
         const empactive = true;
-        // const empid = "68f9bafc-2390-11ef-82b6-02d83582ee24";
         const empid = 'eid_' + Math.random().toString(36).substr(2, 12);
-        // const empcid = "68f9bafc-2390-11ef-82b6-02d83582ee21";
         const empcid = localStorage.getItem('companyID');
 
         if (empupdateid == "") {
             const apiUrl = `${apiUrlBase}/create`;
-            // return false;
-
-
-            // let outPut = document.getElementById("resmsg");
 
             const employeeObject = {
                 EmpID: empid,
@@ -82,7 +74,6 @@ function addEmpdetails() {
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    // outPut.textContent = 'Error creating data.';
                 });
         } else {
             const apiUrl = `${apiUrlBase}/update/${empupdateid}`;
@@ -130,7 +121,6 @@ function addEmpdetails() {
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    // outPut.textContent = 'Error creating data.';
                 });
         }
 
@@ -312,10 +302,6 @@ function validateInstructerPin() {
         errorInstructerPin.textContent = 'Instructer pin is required';
         return false;
     }
-    // else if(isAlpha.test(instructerPin)){
-    //     errorInstructerPin.textContent = 'Only use digits, don\'t use letters';
-    //   return false;
-    // }
     errorInstructerPin.textContent = '';
     return true;
 }
