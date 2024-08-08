@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById('overlay').style.display = 'flex';
     loadImage();
     loadLocalStorageData();
     initializeFormSubmission();
@@ -35,6 +36,8 @@ async function loadImage() {
             console.error('Invalid data URL:', comLoDataUrl);
         }
 
+        document.getElementById('overlay').style.display = 'none';
+
     } catch (error) {
         console.error('Error in loadImage function:', error.message);
     }
@@ -52,6 +55,7 @@ function loadLocalStorageData() {
             document.getElementById(field).value = value;
         }
     });
+    
 }
 
 function initializeFormSubmission() {

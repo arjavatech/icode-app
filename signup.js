@@ -71,6 +71,7 @@ function validatePassword() {
 
 // Function to validate the entire form
 function validateForm() {
+    document.getElementById('overlay').style.display = 'flex';
   const isCompanyNameValid = validateCompanyName();
   const isCompanyLogoValid = validateCompanyLogo();
   const isCompanyAddressValid = validateCompanyAddress();
@@ -79,7 +80,6 @@ function validateForm() {
 
   if (isCompanyNameValid && isCompanyLogoValid && isCompanyAddressValid && isUsernameValid && isPasswordValid) {
       document.querySelector('.progress-bar').style.width = '50%';
-
       // Store the values in localStorage
       const companyName = document.getElementById('companyName').value;
       // const companyLogo = document.getElementById('companyLogo').value;
@@ -110,9 +110,13 @@ function validateForm() {
           console.log("No file selected.");
       }
       // Simulate a delay for the progress bar
+      setTimeout(() => {
           window.location.href = "signup2.html";  
+          document.getElementById('overlay').style.display = 'none';
+        }, 100);
     
   } else {
-      alert('Please fix the errors in the form');
+    //   alert('Please fix the errors in the form');
+      document.getElementById('overlay').style.display = 'none';
   }
 }

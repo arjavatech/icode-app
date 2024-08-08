@@ -24,6 +24,38 @@
 </head>
 
 <style>
+    /* Loading  */
+    .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overlay .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0A8080;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     .custom-table-container {
         display: none;
         border: 1px solid #cdcdcd;
@@ -250,6 +282,9 @@
     </header>
     <section>
 
+        <div class="overlay" id="overlay">
+            <div class="spinner"></div>
+        </div>
         <div class="container-fluid" style="background-color: white;">
             <div class="row">
                 <div class="col-lg-1 d-none d-lg-block"></div>

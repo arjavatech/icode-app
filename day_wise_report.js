@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 
 function viewDatewiseReport(dateValue) {
+  document.getElementById('overlay').style.display = 'flex';
     document.querySelector(".custom-table-container").style.display = "block";
     document.getElementById("noDateSelect").style.display = "none";
     const tableBody = document.getElementById("tbody");
@@ -55,6 +56,7 @@ function viewDatewiseReport(dateValue) {
                   `;
                   tableBody.appendChild(newRow);
               }
+              document.getElementById('overlay').style.display = 'none';
           })          
             .catch(error => {
                 console.error('Error:', error);

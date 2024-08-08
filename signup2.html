@@ -15,6 +15,39 @@
     <script defer src="signup2.js"></script>
     <title>Signup Page</title>
     <style>
+        /* Loading  */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overlay .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0A8080;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
         #phoneNumber {
             appearance: none;
             border-radius: 0.25rem;
@@ -22,7 +55,7 @@
         }
 
         body {
-            overflow-x: hidden;
+            overflow-y: hidden;
         }
 
         .col-sty {
@@ -73,9 +106,11 @@
                 padding: 20px !important;
             }
 
-            .col-sty {
-            height: 100vh;
-                height: auto;
+            .col-sty{
+                height: 100vh;
+            }
+            body{
+                overflow-y: scroll !important;
             }
 
             .input-sty {
@@ -83,9 +118,9 @@
                 font-size: 0.8rem !important;
             }
 
-            .input-sty[type="tel"] {
+            /* .input-sty[type="tel"] {
                 max-width: 100% !important;
-            }
+            } */
 
             label {
                 font-size: 0.9rem !important;
@@ -124,9 +159,9 @@
                 font-size: 0.7rem !important;
             }
 
-            .input-sty[type="tel"] {
+            /* .input-sty[type="tel"] {
                 max-width: 40% !important;
-            }
+            } */
         }
 
         @media (max-width: 240px) {
@@ -196,11 +231,19 @@
             color: white;
         }
 
+        .btn-green:focus{
+            background-color: #0A8080;
+        }
+
     </style>
 </head>
 
 <body>
+    <div class="overlay" id="overlay">
+        <div class="spinner"></div>
+    </div>
     <div class="row">
+        
         <div
             class="col-sm-12 col-xl-6 col-md-6 col-lg-6 col-sty d-flex flex-column justify-content-center align-items-center">
             <img src="Image/signupImage.png" alt="" class="m-5 p-5 img-fluid login-img-sty">
@@ -221,19 +264,19 @@
                     <input id="firstName" placeholder=" " type="text" onblur="validateFirstName()" class="input-sty">
                     <label class="label-sty">First Name</label>
                     <br>
-                    <span class="text-danger" id="errorFirstName"></span>
+                    <span class="text-danger d-flex justify-content-center" id="errorFirstName"></span>
                 </div>
                 <div class="material-textfield mt-4">
                     <input id="lastName" placeholder=" " type="text" onblur="validateLastName()" class="input-sty">
                     <label class="label-sty">Last Name</label>
                     <br>
-                    <span class="text-danger" id="errorLastName"></span>
+                    <span class="text-danger d-flex justify-content-center" id="errorLastName"></span>
                 </div>
                 <div class="material-textfield mt-4">
                     <input id="address" placeholder=" " onblur="validateAddress()" class="input-sty"></input>
                     <label class="label-sty">Address</label>
                     <br>
-                    <span class="text-danger" id="errorAddress"></span>
+                    <span class="text-danger d-flex justify-content-center" id="errorAddress"></span>
                 </div>
 
                 <div class="material-textfield mt-4">
@@ -241,13 +284,13 @@
                         class="input-sty">
                     <label>Phone Number</label>
                     <br>
-                    <span class="text-danger" id="showMsg3"></span>
+                    <span class="text-danger d-flex justify-content-center" id="showMsg3"></span>
                 </div>
                 <div class="material-textfield mt-4">
                     <input id="email" placeholder=" " type="email" onblur="validateEmail()" class="input-sty">
                     <label class="label-sty">Email</label>
                     <br>
-                    <span class="text-danger" id="errorEmail"></span>
+                    <span class="text-danger d-flex justify-content-center" id="errorEmail"></span>
                 </div>
                 <button type="button" class="btn btn-green mt-3" onclick="validateForm()"
                     id="checkout-button">Pay</button>

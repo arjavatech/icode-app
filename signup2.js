@@ -78,6 +78,7 @@ const cid = uuid.v4();
 const firstSignupPageapiUrlBase = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company`;
 
 async function validateForm() {
+    document.getElementById('overlay').style.display = 'flex';
     const isFirstNameValid = validateFirstName();
     const isLastNameValid = validateLastName();
     const isAddressValid = validateAddress();
@@ -101,9 +102,10 @@ async function validateForm() {
         localStorage.setItem('email', email);
 
         //COMPANY API CALL
+        document.getElementById('overlay').style.display = 'none';
         await createCheckoutSession();
     } else {
-        alert('Please fix the errors in the form');
+        document.getElementById('overlay').style.display = 'none';
     }
 }
 
@@ -151,9 +153,9 @@ async function craeteFirstPageSignupAPiData() {
 
             }
             else {
-                alert(data.error);
                 setTimeout(() => {
                     window.location.href = "singup.html";
+                    document.getElementById('overlay').style.display = 'flex';
                 }, 100);
             }
         }
@@ -327,6 +329,5 @@ async function createCheckoutSession() {
         // session.id. 
     } catch (error) {
         console.error('Error creating checkout session:', error);
-        alert('Failed to create checkout session: ' + error.message);
     }
 }

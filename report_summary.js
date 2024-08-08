@@ -4,6 +4,7 @@ const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/
 
 
 function viewCurrentDateReport() {
+  document.getElementById('overlay').style.display = 'flex';
   selectedValue = localStorage.getItem('reportType');
     document.getElementById("reportName").textContent = selectedValue + " Report";
 
@@ -147,6 +148,7 @@ function viewCurrentDateReport() {
                 tableBody3.appendChild(newRow);
 
             }
+            document.getElementById('overlay').style.display = 'none';
         })
         .catch(error => {
             console.error('Error:', error);
@@ -289,8 +291,8 @@ function viewDateRangewiseReport(startValue, endValue) {
 }
 
 // Call fetchData when the page is fully loaded
-document.addEventListener('DOMContentLoaded', viewCurrentDateReport());
 
+document.addEventListener('DOMContentLoaded', viewCurrentDateReport());
 async function updateDailyReportAPiData(emp_id, cid, date, type, checkin_snap, checkin_time,checkout_snap, checkout_time , time_worked) {
   
     const userData = {
@@ -326,7 +328,8 @@ async function updateDailyReportAPiData(emp_id, cid, date, type, checkin_snap, c
       if (!data.error) {
             setTimeout(() => {
                 window.location.href = "report_summary.html"; 
-            }, 1000);        
+            }, 1000);   
+                 
       }
       else{
         alert(data.error);
@@ -534,7 +537,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var form = document.getElementById('entryForm');
   form.addEventListener('submit', function (e) {
       e.preventDefault();
-
+      document.getElementById('overlay').style.display = 'flex';
       var name = document.getElementById('name').value;
       var type = document.getElementById('type').value;
       var employeeId = document.getElementById('employeeId').value;

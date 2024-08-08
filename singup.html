@@ -14,8 +14,41 @@
     <link rel="stylesheet" href="employee_list.css">
     <title>Signup Page</title>
     <style>
+        /* Loading  */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overlay .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0A8080;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
         body {
-            overflow-x: hidden;
+            overflow-y: hidden;
         }
 
         .col-sty {
@@ -113,17 +146,12 @@
             font-size: 1.2rem;
         }
 
+        .btn-green:focus{
+            background-color: #0A8080;
+        }
         .btn-green:hover {
             background-color: #174f4f;
             color: white;
-        }
-
-        @media (max-width: 991px) {
-            .col-sty {
-            height: 100vh;
-                height: auto;
-                padding: 20px;
-            }
         }
 
         @media (max-width: 768px) {
@@ -132,6 +160,13 @@
                 padding: 10px !important;
             }
 
+            .col-sty{
+                height: 100vh;
+            }
+            body{
+                overflow-y: scroll !important;
+            }
+            
             .input-sty {
                 width: 100%;
                 padding: .4rem .3rem !important;
@@ -194,6 +229,9 @@
     </style>
 </head>
 <body>
+    <div class="overlay" id="overlay">
+        <div class="spinner"></div>
+    </div>
     <div class="row">
         <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6 col-sty">
             <img src="Image/signupImage.png" alt="" class="m-5 p-5 img-fluid login-img-sty">
@@ -216,32 +254,32 @@
                         class="input-sty">
                     <label class="label-sty">Company Name</label>
                     <br>
-                    <span class="text-danger" id="errorCompanyName"></span>
+                    <span class="text-danger d-flex justify-content-center" id="errorCompanyName"></span>
                 </div>
                 <div class="material-textfield mt-4">
                     <input id="companyLogo" placeholder=" " type="file" onblur="validateCompanyLogo()" accept="image/png,image/jpeg,image/jpg"
                         class="input-sty">
                     <label class="label-sty">Upload Company Logo</label>
                     <br>
-                    <span class="text-danger" id="errorCompanyLogo"></span>
+                    <span class="text-danger d-flex justify-content-center" id="errorCompanyLogo"></span>
                 </div>
                 <div class="material-textfield mt-4">
                     <input id="companyAddress" placeholder=" " onblur="validateCompanyAddress()" class="input-sty">
                     <label class="label-sty">Company Address</label>
                     <br>
-                    <span class="text-danger" id="errorCompanyAddress"></span>
+                    <span class="text-danger d-flex justify-content-center" id="errorCompanyAddress"></span>
                 </div>
                 <div class="material-textfield mt-4">
                     <input id="username" placeholder=" " type="text" onblur="validateUsername()" class="input-sty">
                     <label class="label-sty">Username</label>
                     <br>
-                    <span class="text-danger" id="errorUsername"></span>
+                    <span class="text-danger d-flex justify-content-center" id="errorUsername"></span>
                 </div>
                 <div class="material-textfield mt-4">
                     <input id="password" placeholder=" " type="password" onblur="validatePassword()" class="input-sty">
                     <label class="label-sty">Password</label>
                     <br>
-                    <span class="text-danger" id="errorPassword"></span>
+                    <span class="text-danger d-flex justify-content-center" id="errorPassword"></span>
                 </div>
                 <button type="button" class="btn btn-green mt-3" onclick="validateForm()">Next</button>
             </div>

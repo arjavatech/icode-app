@@ -4,7 +4,6 @@ const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/
 document.addEventListener("DOMContentLoaded", function () {
     selectedValue = localStorage.getItem('reportType');
     document.getElementById("reportViewType").textContent = selectedValue;
-
 });
 
 // Remove Data
@@ -151,6 +150,7 @@ function addreportdetails() {
 // View Data
 
 function viewReportdetails() {
+    document.getElementById('overlay').style.display = 'flex';
     const tableBody = document.getElementById("tBody");
     const company_id = localStorage.getItem('companyID');
     const apiUrl = `${apiUrlBase}/getAllReportEmail/${company_id}`;
@@ -195,6 +195,7 @@ function viewReportdetails() {
                 </td>
             `;
                 tableBody.appendChild(newRow);
+                document.getElementById('overlay').style.display = 'none';
             });
         })
         .catch(error => {

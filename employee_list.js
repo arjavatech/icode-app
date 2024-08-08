@@ -1,6 +1,13 @@
 
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/employee';
 
+// function showProgressIndicator() {
+//     document.getElementById('overlay').style.display = 'flex';
+// }
+
+// function hideProgressIndicator() {
+//     document.getElementById('overlay').style.display = 'none';
+// }
 
 // Remove Data
 
@@ -160,6 +167,7 @@ function viewEmpdetails() {
             `;
                 tableBody.appendChild(newRow);
             });
+            document.getElementById('overlay').style.display = 'none';
         })
         .catch(error => {
             console.error('Error:', error);
@@ -169,7 +177,7 @@ function viewEmpdetails() {
 
 // Call fetchData when the page is fully loaded
 document.addEventListener('DOMContentLoaded', viewEmpdetails);
-
+document.getElementById('overlay').style.display = 'flex';
 // Edit Data
 
 function editEmpdetails(emId) {

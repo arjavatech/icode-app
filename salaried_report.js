@@ -3,6 +3,7 @@ const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/
 
 
 function viewDateRangewiseReport() {
+  document.getElementById('overlay').style.display = 'flex';
   const apiBase = "https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyReport/getDateRangeReport";
   const tableBody = document.getElementById("tbody");
   tableBody.innerHTML = ''; 
@@ -73,6 +74,7 @@ function viewDateRangewiseReport() {
                       `;
                       tableBody.appendChild(newRow);
                   });
+                  document.getElementById('overlay').style.display = 'none';
               }
           } catch (error) {
               console.error('Error processing data:', error);
