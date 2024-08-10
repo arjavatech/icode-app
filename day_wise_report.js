@@ -1,76 +1,76 @@
 
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/getdatebasedata';
 
-document.addEventListener("DOMContentLoaded", function(){
-    selectedValue = localStorage.getItem('reportType');
-    document.getElementById("reportName").textContent = selectedValue + " Report";
+document.addEventListener("DOMContentLoaded", function () {
+  selectedValue = localStorage.getItem('reportType');
+  document.getElementById("reportName").textContent = selectedValue + " Report";
 });
 
 function viewDatewiseReport(dateValue) {
   document.getElementById('overlay').style.display = 'flex';
-    document.querySelector(".custom-table-container").style.display = "block";
-    document.getElementById("noDateSelect").style.display = "none";
-    const tableBody = document.getElementById("tbody");
-    tableBody.innerHTML = '';
+  document.querySelector(".custom-table-container").style.display = "block";
+  document.getElementById("noDateSelect").style.display = "none";
+  const tableBody = document.getElementById("tbody");
+  tableBody.innerHTML = '';
 
-    if (dateValue != "test") {
-        const apiUrl = `${apiUrlBase}/${dateValue}`;
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-              try {
-                  data.forEach(element => {
-                      const newRow = document.createElement('tr');
-                      if (element.CheckOutTime != null) {
-                          const checkInTimeUTC = new Date(element.CheckInTime);
-                          const checkOutTimeUTC = new Date(element.CheckOutTime);
-          
-                          // Convert to IST
-                          const checkInTimeIST = checkInTimeUTC.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
-                          const checkOutTimeIST = checkOutTimeUTC.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
-          
-                          // Convert to AM/PM format if needed
-                          const checkInTimeFormatted = convertToAmPm(new Date(checkInTimeIST));
-                          const checkOutTimeFormatted = convertToAmPm(new Date(checkOutTimeIST));
-          
-                          newRow.innerHTML = `
+  if (dateValue != "test") {
+    const apiUrl = `${apiUrlBase}/${dateValue}`;
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        try {
+          data.forEach(element => {
+            const newRow = document.createElement('tr');
+            if (element.CheckOutTime != null) {
+              const checkInTimeUTC = new Date(element.CheckInTime);
+              const checkOutTimeUTC = new Date(element.CheckOutTime);
+
+              // Convert to IST
+              const checkInTimeIST = checkInTimeUTC.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+              const checkOutTimeIST = checkOutTimeUTC.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+
+              // Convert to AM/PM format if needed
+              const checkInTimeFormatted = convertToAmPm(new Date(checkInTimeIST));
+              const checkOutTimeFormatted = convertToAmPm(new Date(checkOutTimeIST));
+
+              newRow.innerHTML = `
                               <td class="Name">${element.Name}</td>
                               <td class="Pin">${element.Pin}</td>
                               <td class="CheckInTime">${checkInTimeFormatted}</td>
                               <td class="CheckOutTime">${checkOutTimeFormatted}</td>
                               <td class="TimeWorked">${element.TimeWorked}</td>
                           `;
-                          tableBody.appendChild(newRow);
-                      }
-                  });
-              } catch {
-                  // alert("No Data Found");
-                  const newRow = document.createElement('tr');
-                  newRow.innerHTML = `
+              tableBody.appendChild(newRow);
+            }
+          });
+        } catch {
+          // alert("No Data Found");
+          const newRow = document.createElement('tr');
+          newRow.innerHTML = `
                       <td colspan="6" class="text-center">No Records Found</td>
                   `;
-                  tableBody.appendChild(newRow);
-              }
-              document.getElementById('overlay').style.display = 'none';
-          })          
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-    else {
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
+          tableBody.appendChild(newRow);
+        }
+        document.getElementById('overlay').style.display = 'none';
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+  else {
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
     <td colspan="6" class="text-center">No Date choosen</td>
 `;
-        tableBody.innerHTML = '';
-        tableBody.appendChild(newRow);
+    tableBody.innerHTML = '';
+    tableBody.appendChild(newRow);
 
-    }
+  }
 
 }
 
@@ -112,93 +112,93 @@ function convertToAmPm(date) {
 
 
 function getLastWeekDateRange() {
-    // Today's date
-    let today = new Date();
-  
-    // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-    let dayOfWeek = today.getDay();
-  
-    // Calculate the difference to the previous Monday (dayOfWeek - 1)
-    // If today is Monday, dayOfWeek - 1 is 0, so we go back 7 days (last Monday)
-    let daysSinceLastMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-  
-    // Calculate last Monday's date
-    let lastMonday = new Date(today);
-    lastMonday.setDate(today.getDate() - daysSinceLastMonday - 7);
-  
-    // Calculate last Sunday's date
-    let lastSunday = new Date(lastMonday);
-    lastSunday.setDate(lastMonday.getDate() + 6);
-  
-    // Format dates to yyyy-mm-dd
-    let formatDate = (date) => date.toISOString().split('T')[0];
-  
-    let lastMondayStr = formatDate(lastMonday);
-    let lastSundayStr = formatDate(lastSunday);
-  
-    return {
-      startRange: lastMondayStr,
-      endRange: lastSundayStr
-    };
-  }
+  // Today's date
+  let today = new Date();
 
-  function getLastTwoWeeksDateRange() {
-    // Today's date
-    let today = new Date();
-  
-    // Find the start of the current week (Monday)
-    let currentWeekStart = new Date(today);
-    currentWeekStart.setDate(today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1));
-  
-    // Calculate the start of the last two weeks (Monday two weeks ago)
-    let startDate = new Date(currentWeekStart);
-    startDate.setDate(currentWeekStart.getDate() - 14);
-  
-    // Calculate the end of the last two weeks (Sunday two weeks later)
-    let endDate = new Date(startDate);
-    endDate.setDate(startDate.getDate() + 13); // 14 days - 1 day
-  
-    // Format dates to yyyy-mm-dd
-    let formatDate = (date) => date.toISOString().split('T')[0];
-  
-    let startDateStr = formatDate(startDate);
-    let endDateStr = formatDate(endDate);
-  
-    return {
-      startRange: startDateStr,
-      endRange: endDateStr
-    };
+  // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+  let dayOfWeek = today.getDay();
+
+  // Calculate the difference to the previous Monday (dayOfWeek - 1)
+  // If today is Monday, dayOfWeek - 1 is 0, so we go back 7 days (last Monday)
+  let daysSinceLastMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+
+  // Calculate last Monday's date
+  let lastMonday = new Date(today);
+  lastMonday.setDate(today.getDate() - daysSinceLastMonday - 7);
+
+  // Calculate last Sunday's date
+  let lastSunday = new Date(lastMonday);
+  lastSunday.setDate(lastMonday.getDate() + 6);
+
+  // Format dates to yyyy-mm-dd
+  let formatDate = (date) => date.toISOString().split('T')[0];
+
+  let lastMondayStr = formatDate(lastMonday);
+  let lastSundayStr = formatDate(lastSunday);
+
+  return {
+    startRange: lastMondayStr,
+    endRange: lastSundayStr
+  };
 }
 
-  function getLastTwoMonthStartAndEndDates() {
-    // Get today's date
-    const today = new Date();
-    
-    // Calculate the start date (first day of the month two months ago)
-    const startDate = new Date(today.getFullYear(), today.getMonth() - 2, 1);
-    
-    // Calculate the end date (last day of the previous month)
-    const endDate = new Date(today.getFullYear(), today.getMonth(), 0);
+function getLastTwoWeeksDateRange() {
+  // Today's date
+  let today = new Date();
 
-    return {
-      startRange: formatDate(startDate),
-      endRange : formatDate(endDate)
-    };
+  // Find the start of the current week (Monday)
+  let currentWeekStart = new Date(today);
+  currentWeekStart.setDate(today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1));
+
+  // Calculate the start of the last two weeks (Monday two weeks ago)
+  let startDate = new Date(currentWeekStart);
+  startDate.setDate(currentWeekStart.getDate() - 14);
+
+  // Calculate the end of the last two weeks (Sunday two weeks later)
+  let endDate = new Date(startDate);
+  endDate.setDate(startDate.getDate() + 13); // 14 days - 1 day
+
+  // Format dates to yyyy-mm-dd
+  let formatDate = (date) => date.toISOString().split('T')[0];
+
+  let startDateStr = formatDate(startDate);
+  let endDateStr = formatDate(endDate);
+
+  return {
+    startRange: startDateStr,
+    endRange: endDateStr
+  };
+}
+
+function getLastTwoMonthStartAndEndDates() {
+  // Get today's date
+  const today = new Date();
+
+  // Calculate the start date (first day of the month two months ago)
+  const startDate = new Date(today.getFullYear(), today.getMonth() - 2, 1);
+
+  // Calculate the end date (last day of the previous month)
+  const endDate = new Date(today.getFullYear(), today.getMonth(), 0);
+
+  return {
+    startRange: formatDate(startDate),
+    endRange: formatDate(endDate)
+  };
 }
 
 function getLastMonthStartAndEndDates() {
   // Set today's date for testing
   const today = new Date();
-  
+
   // Calculate the start date of the last full month
   const startDateLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-  
+
   // Calculate the end date of the last full month
   const endDateLastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-  
- return {
-  startRange: formatDate(startDateLastMonth),
-  endRange : formatDate(endDateLastMonth)
+
+  return {
+    startRange: formatDate(startDateLastMonth),
+    endRange: formatDate(endDateLastMonth)
   };
 }
 
@@ -228,21 +228,21 @@ function calculateTotalTimeWorked(data) {
   const employeeTimes = {};
 
   data.forEach(entry => {
-      const { Name, Pin, TimeWorked } = entry;
+    const { Name, Pin, TimeWorked } = entry;
 
-      if (TimeWorked) {
-          const minutesWorked = timeToMinutes(TimeWorked);
+    if (TimeWorked) {
+      const minutesWorked = timeToMinutes(TimeWorked);
 
-          if (!employeeTimes[Pin]) {
-              employeeTimes[Pin] = { name: Name, totalMinutes: 0 };
-          }
-          employeeTimes[Pin].totalMinutes += minutesWorked;
+      if (!employeeTimes[Pin]) {
+        employeeTimes[Pin] = { name: Name, totalMinutes: 0 };
       }
+      employeeTimes[Pin].totalMinutes += minutesWorked;
+    }
   });
 
   // Convert total minutes to time string
   for (const [pin, details] of Object.entries(employeeTimes)) {
-      details.totalHoursWorked = minutesToTime(details.totalMinutes);
+    details.totalHoursWorked = minutesToTime(details.totalMinutes);
   }
 
   return employeeTimes;
@@ -262,4 +262,21 @@ function getDateTimeFromTimePicker(timeValue) {
   const combinedDateTime = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
 
   return combinedDateTime;
+}
+function logoutCall() {
+  localStorage.removeItem("username");
+  localStorage.removeItem("companyID");
+  localStorage.removeItem("customId");
+  localStorage.removeItem("password");
+
+  setTimeout(() => {
+    window.location.href = "index.html";
+  }, 10);
+}
+
+document.getElementById("logBtn").addEventListener("click", logoutCall);
+
+function logOutACtion() {
+  let myModal = new bootstrap.Modal(document.getElementById('addEntryModal'));
+  myModal.show();
 }

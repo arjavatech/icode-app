@@ -91,7 +91,8 @@
         }
 
         body {
-            overflow-x: hidden;
+            overflow-x: hidden !important;
+            overflow-y: hidden;
         }
 
         .span-sty {
@@ -126,9 +127,10 @@
         }
 
         .login-img-sty {
-            max-width: 100%;
+            max-width: 80%;
             height: auto;
         }
+
 
         @media (max-width: 768px) {
             .container-sty {
@@ -138,6 +140,14 @@
             .img-fluid {
                 width: 80% !important;
             }
+
+            
+            body{
+                overflow-x: hidden !important;
+                overflow-y: scroll;
+                
+            }
+
         }
 
         @media (max-width: 576px) {

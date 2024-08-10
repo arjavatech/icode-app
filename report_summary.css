@@ -257,7 +257,7 @@
     border: 1px solid #0A8080;
     background-color: white;
     color: #0A8080;
-    width: 100px;
+    /* width: 100px; */
     font-size: 18px;
     border-radius: 4px;
     margin-left: 20px;
@@ -267,7 +267,7 @@
     border: 1px solid #0A8080;
     background-color: white;
     color: #0A8080;
-    width: 100px;
+    /* width: 100px; */
     font-size: 18px;
     border-radius: 4px;
 }

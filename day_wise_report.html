@@ -274,7 +274,7 @@
 
                     </ul>
                     <div>
-                        <a href="index.html" class="btn btn-outline-light" id="logout">Logout</a>
+                        <a href="#" class="btn btn-outline-light" id="logout" onclick="logOutACtion()">Logout</a>    
                     </div>
                 </div>
             </div>
@@ -312,7 +312,7 @@
             </div>
         </div>
         <div class="container mt-5">
-            <h2 class="text-center fw-bold mb-1" id="current-checkin-date">Report Summary</h2><br>
+            <h3 class="text-center fw-bold mb-3" id="current-checkin-date">Report Summary</h3><br>
             <h5 class="text-center fw-bold">Current Day Report</h5>
             <div class="d-flex justify-content-center mt-5">
                 <input type="date" class="date pt-1 pb-1" id="dailyReportDate"
@@ -355,7 +355,26 @@
         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
         <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
       </div> -->
+
+      <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addEntryModalLabel">Add entry</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="text-center fw-bold mb-3">Are you sure you want to log out?</h5>
+                    <button class="btn btn-green" id="logBtn">Yes</button>
+                    <button class="btn btn-outline-green" data-bs-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
+    <script>
+        
+    </script>
 </body>
 
 </html>

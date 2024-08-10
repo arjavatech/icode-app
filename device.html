@@ -17,6 +17,69 @@
     <link rel="stylesheet" href="employee_list.css">
     <link rel="stylesheet" href="report_summary.css">
     <style>
+         /* Style for material textfield */
+         .material-textfield {
+            position: relative;
+            margin-bottom: 1.5rem;
+            width: 70%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .material-textfield input,
+        .material-textfield textarea {
+            width: 100%;
+            padding: 0.5rem;
+            padding-top: 1rem;
+            font-size: 1rem;
+            border: 1px solid #0A8080 !important;
+            border-radius: 10px !important;
+            box-sizing: border-box;
+        }
+
+        .material-textfield label {
+            position: absolute;
+            top: 9px;
+            left: 0.75rem;
+            transition: all 0.3s ease;
+            background: white;
+            padding: 0 0.25rem;
+            color: #0A8080;
+            pointer-events: none;
+        }
+
+        .material-textfield input:focus+label,
+        .material-textfield input:not(:placeholder-shown)+label,
+        .material-textfield textarea:focus+label,
+        .material-textfield textarea:not(:placeholder-shown)+label {
+            top: -0.75rem;
+            left: 0.75rem;
+            font-size: 0.75rem;
+            color: #0A8080;
+        }
+
+        .material-textfield input:focus,
+        .material-textfield textarea:focus {
+            outline: none;
+            border-color: #0A8080;
+            box-shadow: 0 0 0px;
+        }
+
+        /* Button Style */
+        .btn-green:hover {
+            opacity: 0.8;
+            color: white;
+        }
+
+        .btn-outline-green:hover {
+            color: #0A8080 !important;
+        }
+
+
+        .btn-outline-green {
+            margin-left: 2%;
+        }
+
         .btn-outline-light:hover {
             background-color: #0A8080;
             color: white;
@@ -109,6 +172,9 @@
         #noRadio{
             margin-left: 2%;
         }
+        .enabtn{
+            color: #0A8080;
+        }
     </style>
 </head>
 
@@ -150,12 +216,13 @@
                         </li>
                     </ul>
                     <div>
-                        <a href="index.html" class="btn btn-outline-light" id="logout">Logout</a>
+                        <a href="#" class="btn btn-outline-light" id="logout" onclick="logOutACtion()">Logout</a>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container mt-5" id="table">
         <br><br>
         <div class="emp-table table-responsive">
@@ -167,7 +234,7 @@
                             <th style="border-bottom: 1px solid #cdcdcd;">Access Key</th>
                             <th style="border-bottom: 1px solid #cdcdcd;">Device Id</th>
                             <th style="border-bottom: 1px solid #cdcdcd;">Device Name</th>
-                            <th style="border-bottom: 1px solid #cdcdcd;">Active</th>
+                            <th style="border-bottom: 1px solid #cdcdcd;">Enable</th>
                             <th style="border-bottom: 1px solid #cdcdcd;">Action</th>
                         </tr>
                     </thead>
@@ -189,16 +256,37 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editDeviceModalLabel">Edit Device</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title fw-bold" id="myModalLabel">Device</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editDeviceForm">
-                        <div class="mb-3">
+                    <form id="editDeviceForm" class="p-2 text-center">
+                        <!-- <div class="mb-3">
                             <label for="editTimeZone" class="form-label">Time Zone</label>
                             <input type="text" class="form-control" id="editTimeZone" name="timeZone">
+                        </div> -->
+                        <div class="material-textfield mb-3">
+                            <input type="text" id="editTimeZone" name="fName" placeholder=" " required>
+                            <label>Time Zone</label><br>
+                            <!-- <span class="text-danger" id="showMsg1"></span> -->
                         </div>
-                        <div class="mb-3">
+                        <div class="material-textfield mb-3">
+                            <input type="text" id="editDeviceID" name="fName" placeholder=" " required>
+                            <label>Device ID</label><br>
+                            <!-- <span class="text-danger" id="showMsg1"></span> -->
+                        </div>
+                        <div class="material-textfield mb-3">
+                            <input type="text" id="editDeviceName" name="fName" placeholder=" " required>
+                            <label>Device Name</label><br>
+                            <!-- <span class="text-danger" id="showMsg1"></span> -->
+                        </div>
+                        <div>
+                            <label class="enabtn">Enable</label><br>
+                            <div class="yesNoButton" id="isActiveThis"></div>
+                            <!-- <span class="text-danger" id="showMsg1"></span> -->
+                        </div>
+                        <!-- <div class="mb-3">
                             <label for="editDeviceID" class="form-label">Device ID</label>
                             <input type="text" class="form-control" id="editDeviceID" name="deviceID">
                         </div>
@@ -207,14 +295,30 @@
                             <input type="text" class="form-control" id="editDeviceName" name="deviceName">
                         </div>
                         <div class="mb-3">
-                            <label for="isActive" class="form-label">Is Active</label>
+                            <label for="isActive" class="form-label">Enable</label>
                             <div class="yesNoButton" id="isActiveThis"></div>
-                        </div>
+                        </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-teal" onclick="saveDeviceChanges()">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addEntryModalLabel">Add entry</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="text-center fw-bold mb-3">Are you sure you want to log out?</h5>
+                    <button class="btn btn-green" id="logBtn">Yes</button>
+                    <button class="btn btn-outline-green" data-bs-dismiss="modal">No</button>
                 </div>
             </div>
         </div>
@@ -231,6 +335,24 @@
 
         function hideProgressIndicator() {
             document.getElementById('overlay').style.display = 'none';
+        }
+
+        function logoutCall() {
+            localStorage.removeItem("username");
+            localStorage.removeItem("companyID");
+            localStorage.removeItem("customId");
+            localStorage.removeItem("password");
+
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 10);
+        }
+
+            document.getElementById("logBtn").addEventListener("click", logoutCall);
+
+        function logOutACtion(){
+            let myModal = new bootstrap.Modal(document.getElementById('addEntryModal'));
+            myModal.show();
         }
 
         function maskString(input, visibleChars) {
@@ -284,7 +406,7 @@
                                     </td>
 
                                     <td class="Action">
-                                        <button class="btn icon-button btn-outline-green" onclick="editDevice('${element.TimeZone}', '${element.DeviceID}',  '${element.DeviceName}', '${accessKey}')">Edit</button>
+                                        <button class="btn icon-button btn-green text-white" onclick="editDevice('${element.TimeZone}', '${element.DeviceID}',  '${element.DeviceName}', '${accessKey}')">Edit</button>
                                     </td>
                                 `;
                                 tableBody.appendChild(newRow);
