@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="report_summary.css">
     <link rel="stylesheet" href="employee_list.css">
     <script defer src="report_summary.js"></script>
-    <script defer src="logout.js"></script>
+    <!-- <script defer src="logout.js"></script> -->
 
     <style>
         /* Loading  */
@@ -93,7 +93,8 @@
 
                     </ul>
                     <div>
-                        <a href="index.html" class="btn btn-outline-light" id="logout">Logout</a>
+                        <a href="#" class="btn btn-outline-light" id="logout" onclick="logOutACtion()">Logout</a>
+                       
                     </div>
                 </div>
             </div>
@@ -191,7 +192,44 @@
     </div>
 
 
-    </section>
+    <div class="modal fade" id="addEntryModal2" tabindex="-1" aria-labelledby="addEntryModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addEntryModalLabel2">Add entry</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex align-items-center">
+                    <h5 class="fw-bold mb-3">Are you sure you want to log out?</h5>
+                    <button class="btn btn-green" id="logBtn" style="margin-left: 2%;">Yes</button>
+                    <button class="btn btn-outline-green" data-bs-dismiss="modal" style="margin-left: 2%;">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function logoutCall() {
+            localStorage.removeItem("username");
+            localStorage.removeItem("companyID");
+            localStorage.removeItem("customId");
+            localStorage.removeItem("password");
+
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 10);
+        }
+
+        document.getElementById("logBtn").addEventListener("click", logoutCall);
+
+        function logOutACtion() {
+            let myModal = new bootstrap.Modal(document.getElementById('addEntryModal2'));
+            myModal.show();
+        }
+    </script>
+
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

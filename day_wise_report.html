@@ -19,43 +19,43 @@
     <link rel="stylesheet" href="report_summary.css">
     <link rel="stylesheet" href="employee_list.css">
     <script defer src="day_wise_report.js"></script>
-    <script defer src="logout.js"></script>
 
 </head>
 
 <style>
     /* Loading  */
     .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .overlay .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #0A8080;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
         }
 
-        .overlay .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #0A8080;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
+        100% {
+            transform: rotate(360deg);
         }
+    }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
     .custom-table-container {
         display: none;
         border: 1px solid #cdcdcd;
@@ -274,7 +274,7 @@
 
                     </ul>
                     <div>
-                        <a href="#" class="btn btn-outline-light" id="logout" onclick="logOutACtion()">Logout</a>    
+                        <a href="#" class="btn btn-outline-light" id="logout" onclick="logOutACtion()">Logout</a>
                     </div>
                 </div>
             </div>
@@ -297,9 +297,10 @@
                             <!-- </a> -->
                         </div>
                         <div class="col-md-4 col-sm-12 nav-link">
-                           
-                                <span class="nav-tap"> <a href="#" style="text-decoration: none;color:white">Day wise Report</a></span>
-                         
+
+                            <span class="nav-tap"> <a href="#" style="text-decoration: none;color:white">Day wise
+                                    Report</a></span>
+
                         </div>
                         <div class="col-md-4 col-sm-12 nav-link">
                             <a href="salaried_report.html" style="text-decoration: none;">
@@ -339,41 +340,49 @@
             </div>
         </div>
     </section>
-    <!-- <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Home</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</button>
-        </li>
-      </ul>
-      <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">...</div>
-        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
-        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
-      </div> -->
 
-      <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addEntryModalLabel">Add entry</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h5 class="text-center fw-bold mb-3">Are you sure you want to log out?</h5>
-                    <button class="btn btn-green" id="logBtn">Yes</button>
-                    <button class="btn btn-outline-green" data-bs-dismiss="modal">No</button>
+                <div class="modal-body d-flex align-items-center">
+                    <h5 class="fw-bold mb-3">Are you sure you want to log out?</h5>
+                    <button class="btn btn-green" id="logBtn" style="margin-left: 2%;">Yes</button>
+                    <button class="btn btn-outline-green" data-bs-dismiss="modal" style="margin-left: 2%;">No</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function logoutCall() {
+            localStorage.removeItem("username");
+            localStorage.removeItem("companyID");
+            localStorage.removeItem("customId");
+            localStorage.removeItem("password");
+
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 10);
+        }
+
+        document.getElementById("logBtn").addEventListener("click", logoutCall);
+
+        function logOutACtion() {
+            let myModal = new bootstrap.Modal(document.getElementById('addEntryModal'));
+            myModal.show();
+        }
+    </script>
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
     <script>
-        
+
     </script>
 </body>
 

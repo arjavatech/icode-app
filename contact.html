@@ -19,26 +19,38 @@
     <link rel="stylesheet" href="contact.css">
     <link rel="stylesheet" href="form.css">
     <script defer src="contact.js"></script>
-    <script defer src="logout.js"></script>
+    <!-- <script defer src="logout.js"></script> -->
     <link rel="stylesheet" href="employee_list.css">
 </head>
+
 <style>
     body {
-    background-color: #f6f6f6;
-}
+        background-color: #f6f6f6;
+    }
 
     .btn-green {
         background-color: #0A8080;
         border: none;
         color: white;
-        width: 100%;
-        padding: 0.8rem;
+        /* width: 100%; */
+        /* padding: 0.8rem; */
         font-size: 1.2rem;
+    }
+
+    .btn-green:hover{
+        color: white;
     }
 
     .btn-outline-light:hover {
         background-color: #0A8080;
         color: white;
+    }
+
+   
+
+    .btn-outline-green:hover {
+        color: #0A8080;
+        background-color: white;
     }
 </style>
 
@@ -70,14 +82,14 @@
                                 <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report Settings</a></li>
                             </ul>
                         </li>
-                    
+
                         <li class="nav-item me-4">
                             <a class="nav-link" href="profile.html">Profile</a>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link  rounded-pill-active px-3" href="contact.html">Contact Us</a>
+                            <a class="nav-link rounded-pill-active px-3" href="contact.html">Contact Us</a>
                         </li>
-                        
+
                     </ul>
                     <div>
                         <a href="#" class="btn btn-outline-light" id="logout" onclick="logOutACtion()">Logout</a>
@@ -133,6 +145,7 @@
         </div>
     </section>
 
+    <!-- Logout Confirmation Modal -->
     <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -140,14 +153,34 @@
                     <h5 class="modal-title" id="addEntryModalLabel">Add entry</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h5 class="text-center fw-bold mb-3">Are you sure you want to log out?</h5>
-                    <button class="btn btn-green" id="logBtn">Yes</button>
-                    <button class="btn btn-outline-green" data-bs-dismiss="modal">No</button>
+                <div class="modal-body d-flex align-items-center">
+                    <h5 class="fw-bold mb-3">Are you sure you want to log out?</h5>
+                    <button class="btn btn-green" id="logBtn" >Yes</button>
+                    <button class="btn btn-outline-green" data-bs-dismiss="modal" style="margin-left: 2%;">No</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function logoutCall() {
+            localStorage.removeItem("username");
+            localStorage.removeItem("companyID");
+            localStorage.removeItem("customId");
+            localStorage.removeItem("password");
+
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 10);
+        }
+
+        document.getElementById("logBtn").addEventListener("click", logoutCall);
+
+        function logOutACtion() {
+            let myModal = new bootstrap.Modal(document.getElementById('addEntryModal'));
+            myModal.show();
+        }
+    </script>
 
 </body>
 
