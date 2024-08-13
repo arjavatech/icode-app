@@ -216,7 +216,7 @@
                         </li>
                     </ul>
                     <div>
-                        <a href="#" class="btn btn-outline-light" id="logout" onclick="logOutACtion()">Logout</a>
+                        <a href="#" class="btn btn-outline-light" onclick="logOutACtion()">Logout</a>
                     </div>
                 </div>
             </div>
@@ -225,7 +225,7 @@
 
     <div class="container mt-5" id="table">
         <br><br>
-        <div class="emp-table table-responsive">
+        <div class="emp-table table-responsive" id="tableBodys">
             <div class="custom-table-container">
                 <table class="table custom-table">
                     <thead>
@@ -234,7 +234,6 @@
                             <th style="border-bottom: 1px solid #cdcdcd;">Access Key</th>
                             <th style="border-bottom: 1px solid #cdcdcd;">Device Id</th>
                             <th style="border-bottom: 1px solid #cdcdcd;">Device Name</th>
-                            <th style="border-bottom: 1px solid #cdcdcd;">Enable</th>
                             <th style="border-bottom: 1px solid #cdcdcd;">Action</th>
                         </tr>
                     </thead>
@@ -248,7 +247,10 @@
     <div class="overlay" id="overlay">
         <div class="spinner"></div>
     </div>
-
+    <div class="text-center mt-5 button" id="deviceCheck">
+        <p id="para">No device Added</p>
+        <button id="addButton" onclick="addData()">Add device</button>
+    </div>
 
     <!-- Modal for editing device -->
     <div class="modal fade" id="editDeviceModal" tabindex="-1" aria-labelledby="editDeviceModalLabel"
@@ -300,10 +302,10 @@
                         </div> -->
                     </form>
                 </div>
-                <div class="modal-footer">
+                <!-- <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-teal" onclick="saveDeviceChanges()">Update</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -312,11 +314,11 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addEntryModalLabel">Add entry</h5>
+                    <h5 class="modal-title" id="addEntryModalLabel">Delete</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h5 class="text-center fw-bold mb-3">Are you sure you want to log out?</h5>
+                    <h5 class="fw-bold mb-3">Are you sure you want to log out?</h5>
                     <button class="btn btn-green" id="logBtn">Yes</button>
                     <button class="btn btn-outline-green" data-bs-dismiss="modal">No</button>
                 </div>
@@ -368,7 +370,7 @@
             const accessKeyTag = row.querySelector(".accesskey");
             const accessKeyValue = accessKeyTag.getAttribute("data-key");
             navigator.clipboard.writeText(accessKeyValue).then(() => {
-                alert("Access key copied to clipboard!");
+                // alert("Access key copied to clipboard!");
             }).catch(err => {
                 console.error('Failed to copy: ', err);
             });
@@ -401,12 +403,8 @@
                                     <td class="accesskey" data-key="${accessKey}">${maskString(accessKey, 4)} <span><button class="btn icon-button" onClick="copyAccessKey(this)"><i class="fa-solid fa-copy"></i></button></span></td>
                                     <td class="DId">${element.DeviceID}</td>
                                     <td class="DName">${element.DeviceName}</td>
-                                    <td class="isActive" id="isactiveId">
-                                        Not active
-                                    </td>
-
                                     <td class="Action">
-                                        <button class="btn icon-button btn-green text-white" onclick="editDevice('${element.TimeZone}', '${element.DeviceID}',  '${element.DeviceName}', '${accessKey}')">Edit</button>
+                                        <button class = "btn btn-outline-green" onclick="showNewDevice()">Delete</button>
                                     </td>
                                 `;
                                 tableBody.appendChild(newRow);
@@ -430,59 +428,56 @@
             document.getElementById('overlay').style.display = 'flex';
             viewDevices();
         });
-        function editDevice(timezone, deviceIDVal, deviceNameVal, accessKey, isActive) {
-            const timeZone = timezone;
-            const deviceID = deviceIDVal;
-            const deviceName = deviceNameVal;
 
-            localStorage.setItem("accessKey", accessKey);
+//         function editDevice(timezone, deviceIDVal, deviceNameVal, accessKey, isActive) {
+//             const timeZone = timezone;
+//             const deviceID = deviceIDVal;
+//             const deviceName = deviceNameVal;
 
-            document.getElementById('editTimeZone').value = timeZone;
-            document.getElementById('editDeviceID').value = deviceID;
-            document.getElementById('editDeviceName').value = deviceName;
+//             localStorage.setItem("accessKey", accessKey);
 
-            // Set up buttons for "Is Active" status
-            document.getElementById('isActiveThis').innerHTML = `
-       <div class="yesNoButton" id="yesNo">
-        <input type="radio" name="gender" onclick = "clickFun(true)">Yes
-    <input type="radio" name="gender" id="noRadio" onclick = "clickFun(false)">No
-</div>
-    `;
+//             document.getElementById('editTimeZone').value = timeZone;
+//             document.getElementById('editDeviceID').value = deviceID;
+//             document.getElementById('editDeviceName').value = deviceName;
 
-            const editDeviceModal = new bootstrap.Modal(document.getElementById('editDeviceModal'));
-            editDeviceModal.show();
-        }
+//             // Set up buttons for "Is Active" status
+//             document.getElementById('isActiveThis').innerHTML = `
+//        <div class="yesNoButton" id="yesNo">
+//         <input type="radio" name="gender" onclick = "clickFun(true)">Yes
+//     <input type="radio" name="gender" id="noRadio" onclick = "clickFun(false)">No
+// </div>
+//     `;
 
-        function clickFun(isActive) {
-            const accessKey = localStorage.getItem("accessKey");
-            const rows = Array.from(document.querySelectorAll('#tableBody tr'));
-            const row = rows.find(row => row.querySelector(".accesskey").getAttribute("data-key") === accessKey);
+//             const editDeviceModal = new bootstrap.Modal(document.getElementById('editDeviceModal'));
+//             editDeviceModal.show();
+//         }
 
-            if (row) {
-                const isActiveCell = row.querySelector(".isActive");
-                let displayYesButton = document.getElementById("yesNo"); // Get the button container
+        // function clickFun(isActive) {
+        //     const accessKey = localStorage.getItem("accessKey");
+        //     const rows = Array.from(document.querySelectorAll('#tableBody tr'));
+        //     const row = rows.find(row => row.querySelector(".accesskey").getAttribute("data-key") === accessKey);
 
-                // Update the cell to reflect the active status
-                isActiveCell.innerHTML = isActive ? "Is Active" : "Not Active";
+        //     if (row) {
+        //         const isActiveCell = row.querySelector(".isActive");
+        //         let displayYesButton = document.getElementById("yesNo"); // Get the button container
 
-                // Hide the buttons
-                displayYesButton.style.display = "none";
+        //         // Update the cell to reflect the active status
+        //         isActiveCell.innerHTML = isActive ? "Is Active" : "Not Active";
 
-                // Optionally close the modal after updating
-                const editDeviceModal = bootstrap.Modal.getInstance(document.getElementById('editDeviceModal'));
-                if (editDeviceModal) {
-                    editDeviceModal.hide();
-                }
+        //         // Hide the buttons
+        //         displayYesButton.style.display = "none";
 
-                console.log(`Updated status for ${accessKey}: ${isActive ? "Is Active" : "Not Active"}`);
-            } else {
-                console.error("Row not found for access key:", accessKey);
-            }
-        }
+        //         // Optionally close the modal after updating
+        //         const editDeviceModal = bootstrap.Modal.getInstance(document.getElementById('editDeviceModal'));
+        //         if (editDeviceModal) {
+        //             editDeviceModal.hide();
+        //         }
 
-
-
-
+        //         console.log(`Updated status for ${accessKey}: ${isActive ? "Is Active" : "Not Active"}`);
+        //     } else {
+        //         console.error("Row not found for access key:", accessKey);
+        //     }
+        // }
 
 
         function saveDeviceChanges() {
@@ -519,7 +514,65 @@
                     console.error('Error updating device:', error);
                 });
         }
+
+        function accessKeyCreate(firstFourDigit, lastFourDigit) {
+            const createUuidForAccessKey = uuid.v4().replace(/-/g, '').substring(0, 6);
+            return firstFourDigit + createUuidForAccessKey + lastFourDigit;
+        }
+
+        function addData() {
+            document.getElementById("deviceCheck").style.display = "none";
+            document.getElementById('overlay').style.display = 'flex';
+            const accesskeyvalFirstDigit = Math.random().toString(36).substring(2, 6);
+            const accesskeyvalLastDigit = Math.random().toString(36).substring(2, 6);
+            const accessKey = accessKeyCreate(accesskeyvalFirstDigit, accesskeyvalLastDigit);
+
+            const newDevice = {
+                TimeZone: "Not Registered",
+                DeviceID: "Not Registered",
+                CID: localStorage.getItem('companyID'),
+                DeviceName: "Not Registered",
+                AccessKey: accessKey,
+                AccessKeyGeneratedTime: new Date().toISOString()
+            };
+
+            fetch(`${apiUrlBase}/create`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newDevice)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => {
+                            throw new Error(`Error: ${response.status} - ${text}`);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Device added successfully:', data);
+                    document.getElementById("tableBodys").style.display = "block";
+                    // viewDevices(); // Ensure this function is defined
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                })
+                .finally(() => {
+                    document.getElementById('overlay').style.display = 'none';
+                });
+            
+        }
+
+
+        function showNewDevice(){
+            document.getElementById("tableBodys").style.display = "none";
+            document.getElementById("deviceCheck").style.display = "block";
+        }
     </script>
 </body>
 
 </html>
+
+<!-- <button class="btn icon-button btn-green text-white" onclick="editDevice('${element.TimeZone}', '${element.DeviceID}',  '${element.DeviceName}', '${accessKey}')">Edit</button> -->

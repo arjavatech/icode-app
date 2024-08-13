@@ -346,6 +346,7 @@ function logoutCall() {
     document.getElementById("logBtn").addEventListener("click", logoutCall);
 
 function logOutACtion(){
+    console.log("ghh");
     let myModal = new bootstrap.Modal(document.getElementById('addEntryModal'));
     myModal.show();
 }

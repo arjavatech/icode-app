@@ -1,15 +1,15 @@
-let logoutButton = document.getElementById("logout");
+// let logoutButton = document.getElementById("logout");
 
-function logoutCall()
-{
-    localStorage.removeItem("username");
-    localStorage.removeItem("companyID");
-    localStorage.removeItem("customId");
-    localStorage.removeItem("password");
+// function logoutCall()
+// {
+//     localStorage.removeItem("username");
+//     localStorage.removeItem("companyID");
+//     localStorage.removeItem("customId");
+//     localStorage.removeItem("password");
 
-    setTimeout(() => {
-        window.location.href = "index.html";  
-    }, 10);
-}
+//     setTimeout(() => {
+//         window.location.href = "index.html";  
+//     }, 10);
+// }
 
-logoutButton.addEventListener("click", logoutCall);
+// logoutButton.addEventListener("click", logoutCall);

@@ -119,3 +119,21 @@ textarea {
     padding-top: 5%;
     font-size: 32px;
 }
+
+body {
+    background-color: #f6f6f6;
+}
+
+    .btn-green {
+        background-color: #0A8080;
+        border: none;
+        color: white;
+        width: 100%;
+        padding: 0.8rem;
+        font-size: 1.2rem;
+    }
+
+    .btn-outline-light:hover {
+        background-color: #0A8080;
+        color: white;
+    }

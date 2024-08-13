@@ -33,7 +33,7 @@
             justify-content: center;
             align-items: center;
         }
-        
+
         .overlay .spinner {
             border: 4px solid #f3f3f3;
             border-top: 4px solid #0A8080;
@@ -189,8 +189,8 @@
 
                     </ul>
                     <div>
-                        <a href="#" class="btn btn-outline-light" id="logout" onclick="logOutACtion()">Logout</a>
-                       
+                        <a href="#" class="btn btn-outline-light" onclick="logOutACtion()">Logout</a>
+
                     </div>
                 </div>
             </div>
@@ -289,21 +289,33 @@
         </div>
     </section>
 
-    <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addEntryModal" tabindex="-1" 
+    aria-labelledby="addEntryModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addEntryModalLabel">Add entry</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="addEntryModalLabel">
+                        Delete
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" 
+                    data-bs-dismiss="modal"
+                        aria-label="Close">
+                    </button>
                 </div>
                 <div class="modal-body">
-                    <h5 class="text-center fw-bold mb-3">Are you sure you want to log out?</h5>
-                    <button class="btn btn-green" id="logBtn">Yes</button>
-                    <button class="btn btn-outline-green" data-bs-dismiss="modal">No</button>
+                    <h5 class="fw-bold mb-3">Are you sure you want to log out?
+                    </h5>
+                    <button class="btn btn-green" id="logBtn">
+                        Yes
+                    </button>
+                    <button class="btn btn-outline-green" data-bs-dismiss="modal">
+                        No
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
 </body>
 
 </html>

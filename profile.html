@@ -272,15 +272,29 @@
 
                     </ul>
                     <div>
-
-                        <a href="#" class="btn btn-outline-light" id="logout" onclick="logOutACtion()">Logout</a>
-
+                        <a href="index.html" class="btn btn-outline-light" onclick="logOutACtion()">Logout</a>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
 
+    <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addEntryModalLabel">Delete</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="text-center fw-bold mb-3">Are you sure you want to log out?</h5>
+                    <button class="btn btn-green" id="logBtn">Yes</button>
+                    <button class="btn btn-outline-green" data-bs-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <h3 class="text-center fw-bold mb-3 mt-4" id="header">Profile</h3>
     <div class="overlay" id="overlay">
         <div class="spinner"></div>
