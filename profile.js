@@ -273,21 +273,3 @@ function displaySuccessMessage() {
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
-
-function logoutCall() {
-    localStorage.removeItem("username");
-    localStorage.removeItem("companyID");
-    localStorage.removeItem("customId");
-    localStorage.removeItem("password");
-
-    setTimeout(() => {
-        window.location.href = "index.html";
-    }, 10);
-}
-
-    document.getElementById("logBtn").addEventListener("click", logoutCall);
-
-function logOutACtion(){
-    let myModal = new bootstrap.Modal(document.getElementById('addEntryModal'));
-    myModal.show();
-}

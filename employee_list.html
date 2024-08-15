@@ -146,6 +146,18 @@
         #dropDown {
             color: #0A8080;
         }
+
+        .no {
+            color: #0A8080 !important;
+            border: solid 1px #0A8080 !important;
+            padding: 5px 21px !important;
+        }
+
+        .yes {
+            color: white;
+            background-color: #0A8080;
+            padding: 5px 24px !important;
+        }
     </style>
 </head>
 
@@ -289,33 +301,42 @@
         </div>
     </section>
 
-    <div class="modal fade" id="addEntryModal" tabindex="-1" 
-    aria-labelledby="addEntryModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addEntryModalLabel">
-                        Delete
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" 
-                    data-bs-dismiss="modal"
-                        aria-label="Close">
-                    </button>
+                    <h5 class="modal-title" id="addEntryModalLabel">Delete</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h5 class="fw-bold mb-3">Are you sure you want to log out?
-                    </h5>
-                    <button class="btn btn-green" id="logBtn">
-                        Yes
-                    </button>
-                    <button class="btn btn-outline-green" data-bs-dismiss="modal">
-                        No
-                    </button>
+                <div class="modal-body d-flex align-items-center">
+                    <h5 class="fw-bold mb-3">Are you sure you want to logout?</h5>
+                    <button class="btn yes" id="logBtn" style="margin-left: 2%;">Yes</button>
+                    <button class="btn no" data-bs-dismiss="modal" style="margin-left: 2%;">No</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+        function logoutCall() {
+            localStorage.removeItem("username");
+            localStorage.removeItem("companyID");
+            localStorage.removeItem("customId");
+            localStorage.removeItem("password");
+
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 10);
+        }
+
+        document.getElementById("logBtn").addEventListener("click", logoutCall);
+
+        function logOutACtion() {
+            let myModal = new bootstrap.Modal(document.getElementById('addEntryModal'));
+            myModal.show();
+        }
+    </script>
 </body>
 
 </html>

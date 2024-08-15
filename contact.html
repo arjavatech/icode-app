@@ -25,18 +25,30 @@
 </head>
 
 <style>
-    .btn-green-contact-sty{
-    color: white;
-    background-color: #0A8080;
-    padding: 5px 30px;
+    .btn-green-contact-sty {
+        color: white;
+        background-color: #0A8080;
+        padding: 5px 30px;
 
     }
 
-   
+
 
     .btn-outline-green:hover {
         color: #0A8080;
         background-color: white;
+    }
+
+    .no {
+        color: #0A8080 !important;
+        border: solid 1px #0A8080 !important;
+        padding: 5px 21px !important;
+    }
+
+    .yes {
+        color: white;
+        background-color: #0A8080;
+        padding: 5px 24px !important;
     }
 </style>
 
@@ -65,7 +77,8 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="report_summary.html" id="dropDown">Report Summary</a>
                                 </li>
-                                <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report Settings</a></li>
+                                <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report
+                                        Settings</a></li>
                             </ul>
                         </li>
 
@@ -112,7 +125,8 @@
                             </div>
                             <div class="material-textfield mb-3 form-group">
                                 <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control"
-                                    placeholder=" " oninput="formatPhoneNumber()" onblur="validatePhoneNumber()" required>
+                                    placeholder=" " oninput="formatPhoneNumber()" onblur="validatePhoneNumber()"
+                                    required>
                                 <label>Phone Number <span class="text-danger">*</span></label>
                                 <span class="text-danger" id="error-phone"></span>
                             </div>
@@ -136,13 +150,14 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addEntryModalLabel">Delete</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="addEntryModalLabel">Logout</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body d-flex align-items-center">
                     <h5 class="fw-bold mb-3">Are you sure you want to log out?</h5>
-                    <button class="btn btn-green-contact-sty" id="logBtn">Yes</button>
-                    <button class="btn btn-outline-green" data-bs-dismiss="modal">No</button>
+                    <button class="btn yes" id="logBtn" style="margin-left: 2%;">Yes</button>
+                    <button class="btn no" data-bs-dismiss="modal" style="margin-left: 2%;">No</button>
                 </div>
             </div>
         </div>

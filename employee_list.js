@@ -162,7 +162,7 @@ function viewEmpdetails() {
                 <td class="phoneNumber">${element.PhoneNumber}</td>
                 <td>
                 <button class="btn icon-button btn-green" onclick="editEmpdetails('${element.EmpID}')" data-bs-toggle="modal" data-bs-target="#myModal"> Edit </button>
-                <button class="btn icon-button btn-outline-green" onclick="deleteEmpdetails('${element.EmpID}')"> Delete </button>
+                 <button class="btn icon-button btn-outline-green" id="buttonClick" onclick="showLogoutModal()">Delete</button>
                 </td>
             `;
                 tableBody.appendChild(newRow);
@@ -332,21 +332,93 @@ function formatPhoneNumber() {
 }
 
 
-function logoutCall() {
-    localStorage.removeItem("username");
-    localStorage.removeItem("companyID");
-    localStorage.removeItem("customId");
-    localStorage.removeItem("password");
 
-    setTimeout(() => {
-        window.location.href = "index.html";
-    }, 10);
+
+
+function ex(){
+    console.log("haskhdkshd")
 }
 
-    document.getElementById("logBtn").addEventListener("click", logoutCall);
 
-function logOutACtion(){
-    console.log("ghh");
-    let myModal = new bootstrap.Modal(document.getElementById('addEntryModal'));
-    myModal.show();
+
+function showLogoutModal() {
+    // Create modal container
+    const modal = document.createElement('div');
+    modal.className = 'modal fade';
+    modal.id = 'addEntryModal2';
+    modal.tabIndex = -1;
+    modal.setAttribute('aria-labelledby', 'addEntryModalLabel2');
+    modal.setAttribute('aria-hidden', 'true');
+    
+
+    // Modal dialog
+    const modalDialog = document.createElement('div');
+    modalDialog.className = 'modal-dialog modal-dialog-centered';
+
+    // Modal content
+    const modalContent = document.createElement('div');
+    modalContent.className = 'modal-content';
+
+    // Modal header
+    const modalHeader = document.createElement('div');
+    modalHeader.className = 'modal-header';
+
+    const modalTitle = document.createElement('h5');
+    modalTitle.className = 'modal-title';
+    modalTitle.id = 'addEntryModalLabel2';
+    modalTitle.textContent = 'Delete';
+
+    const closeButton = document.createElement('button');
+    closeButton.type = 'button';
+    closeButton.className = 'btn-close btn-close-white';
+    closeButton.setAttribute('data-bs-dismiss', 'modal');
+    closeButton.setAttribute('aria-label', 'Close');
+
+    // Append title and close button to header
+    modalHeader.appendChild(modalTitle);
+    modalHeader.appendChild(closeButton);
+
+    // Modal body
+    const modalBody = document.createElement('div');
+    modalBody.className = 'modal-body d-flex align-items-center';
+
+    const bodyText = document.createElement('h5');
+    bodyText.className = 'fw-bold mb-3';
+    bodyText.textContent = 'Are you sure you are deleting the data?';
+
+    const yesButton = document.createElement('button');
+    yesButton.className = 'btn yes';
+    yesButton.textContent = 'Yes';
+    yesButton.style="margin-left:15px"
+    yesButton.addEventListener('click', function() {
+        deleteEmpdetails()
+    });
+
+    const noButton = document.createElement('button');
+    noButton.className = 'btn btn-outline-green';
+    noButton.setAttribute('data-bs-dismiss', 'modal');
+    noButton.textContent = 'No';
+
+    // Append elements to body
+    modalBody.appendChild(bodyText);
+    modalBody.appendChild(yesButton);
+    modalBody.appendChild(noButton);
+
+    // Append header and body to content
+    modalContent.appendChild(modalHeader);
+    modalContent.appendChild(modalBody);
+
+    // Append content to dialog
+    modalDialog.appendChild(modalContent);
+
+    // Append dialog to modal
+    modal.appendChild(modalDialog);
+
+    // Append modal to body
+    document.body.appendChild(modal);
+
+    // Show the modal using Bootstrap's modal plugin
+    const modalInstance = new bootstrap.Modal(modal);
+    modalInstance.show();
 }
+document.getElementById('buttonClick').addEventListener('click', showLogoutModal);
