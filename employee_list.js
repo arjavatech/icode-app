@@ -162,7 +162,7 @@ function viewEmpdetails() {
                 <td class="phoneNumber">${element.PhoneNumber}</td>
                 <td>
                 <button class="btn icon-button btn-green" onclick="editEmpdetails('${element.EmpID}')" data-bs-toggle="modal" data-bs-target="#myModal"> Edit </button>
-                 <button class="btn icon-button btn-outline-green" id="buttonClick" onclick="showLogoutModal()">Delete</button>
+                 <button class="btn icon-button btn-outline-green" id="buttonClick" onclick="showLogoutModal('${element.EmpID}')">Delete</button>
                 </td>
             `;
                 tableBody.appendChild(newRow);
@@ -298,8 +298,6 @@ function validPhoneno() {
         phoneError.textContent = '';
         return true;
     }
-
-
 }
 
 
@@ -331,17 +329,7 @@ function formatPhoneNumber() {
     inputField.value = value;
 }
 
-
-
-
-
-function ex(){
-    console.log("haskhdkshd")
-}
-
-
-
-function showLogoutModal() {
+function showLogoutModal(empId) {
     // Create modal container
     const modal = document.createElement('div');
     modal.className = 'modal fade';
@@ -391,7 +379,7 @@ function showLogoutModal() {
     yesButton.textContent = 'Yes';
     yesButton.style="margin-left:15px"
     yesButton.addEventListener('click', function() {
-        deleteEmpdetails()
+        deleteEmpdetails(empId)
     });
 
     const noButton = document.createElement('button');

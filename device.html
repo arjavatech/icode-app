@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="employee_list.css">
     <link rel="stylesheet" href="report_summary.css">
     <style>
-         /* Style for material textfield */
-         .material-textfield {
+        /* Style for material textfield */
+        .material-textfield {
             position: relative;
             margin-bottom: 1.5rem;
             width: 70%;
@@ -169,10 +169,11 @@
             height: 3rem;
         }
 
-        #noRadio{
+        #noRadio {
             margin-left: 2%;
         }
-        .enabtn{
+
+        .enabtn {
             color: #0A8080;
         }
     </style>
@@ -264,48 +265,25 @@
                 </div>
                 <div class="modal-body">
                     <form id="editDeviceForm" class="p-2 text-center">
-                        <!-- <div class="mb-3">
-                            <label for="editTimeZone" class="form-label">Time Zone</label>
-                            <input type="text" class="form-control" id="editTimeZone" name="timeZone">
-                        </div> -->
                         <div class="material-textfield mb-3">
                             <input type="text" id="editTimeZone" name="fName" placeholder=" " required>
                             <label>Time Zone</label><br>
-                            <!-- <span class="text-danger" id="showMsg1"></span> -->
                         </div>
                         <div class="material-textfield mb-3">
                             <input type="text" id="editDeviceID" name="fName" placeholder=" " required>
                             <label>Device ID</label><br>
-                            <!-- <span class="text-danger" id="showMsg1"></span> -->
                         </div>
                         <div class="material-textfield mb-3">
                             <input type="text" id="editDeviceName" name="fName" placeholder=" " required>
                             <label>Device Name</label><br>
-                            <!-- <span class="text-danger" id="showMsg1"></span> -->
                         </div>
                         <div>
                             <label class="enabtn">Enable</label><br>
                             <div class="yesNoButton" id="isActiveThis"></div>
-                            <!-- <span class="text-danger" id="showMsg1"></span> -->
                         </div>
-                        <!-- <div class="mb-3">
-                            <label for="editDeviceID" class="form-label">Device ID</label>
-                            <input type="text" class="form-control" id="editDeviceID" name="deviceID">
-                        </div>
-                        <div class="mb-3">
-                            <label for="editDeviceName" class="form-label">Device Name</label>
-                            <input type="text" class="form-control" id="editDeviceName" name="deviceName">
-                        </div>
-                        <div class="mb-3">
-                            <label for="isActive" class="form-label">Enable</label>
-                            <div class="yesNoButton" id="isActiveThis"></div>
-                        </div> -->
+
                     </form>
                 </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-teal" onclick="saveDeviceChanges()">Update</button>
-                </div> -->
             </div>
         </div>
     </div>
@@ -315,7 +293,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addEntryModalLabel">Delete</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex align-items-center">
                     <h5 class="fw-bold mb-3">Are you sure you want to log out?</h5>
@@ -350,9 +329,9 @@
             }, 10);
         }
 
-            document.getElementById("logBtn").addEventListener("click", logoutCall);
+        document.getElementById("logBtn").addEventListener("click", logoutCall);
 
-        function logOutACtion(){
+        function logOutACtion() {
             let myModal = new bootstrap.Modal(document.getElementById('addEntryModal'));
             myModal.show();
         }
@@ -381,6 +360,7 @@
             document.getElementById('overlay').style.display = 'flex';
             const companyId = localStorage.getItem('companyID');
             const apiUrl = `${apiUrlBase}/getAll/${companyId}`;
+            console.log(companyId)
 
             fetch(apiUrl)
                 .then(response => {
@@ -390,21 +370,28 @@
                     return response.json();
                 })
                 .then(data => {
+                    console.log(data)
                     tableBody.innerHTML = '';
-                    if (data.length === 0) {
+                    if (data.error === "No devices found !" || data.length === 0) {
                         document.getElementById("table").style.display = "none";
+                        console.log("then codition")
+                        document.getElementById("deviceCheck").style.display = "block";
+
                     } else {
                         try {
                             data.forEach(element => {
+                                // console.log(element)
+                                // console.log(element.CID)
+                                // console.log(element.AccessKey)
                                 const newRow = document.createElement('tr');
                                 const accessKey = element.AccessKey;
                                 newRow.innerHTML = `
-                                    <td>IST</td>
+                                    <td>${element.TimeZone}</td>
                                     <td class="accesskey" data-key="${accessKey}">${maskString(accessKey, 4)} <span><button class="btn icon-button" onClick="copyAccessKey(this)"><i class="fa-solid fa-copy"></i></button></span></td>
                                     <td class="DId">${element.DeviceID}</td>
                                     <td class="DName">${element.DeviceName}</td>
                                     <td class="Action">
-                                        <button class = "btn btn-outline-green" onclick="showNewDevice()">Delete</button>
+                                        <button class = "btn btn-outline-green" onclick="deleteEmpdetails('${element.AccessKey}')">Delete</button>
                                     </td>
                                 `;
                                 tableBody.appendChild(newRow);
@@ -428,57 +415,6 @@
             document.getElementById('overlay').style.display = 'flex';
             viewDevices();
         });
-
-//         function editDevice(timezone, deviceIDVal, deviceNameVal, accessKey, isActive) {
-//             const timeZone = timezone;
-//             const deviceID = deviceIDVal;
-//             const deviceName = deviceNameVal;
-
-//             localStorage.setItem("accessKey", accessKey);
-
-//             document.getElementById('editTimeZone').value = timeZone;
-//             document.getElementById('editDeviceID').value = deviceID;
-//             document.getElementById('editDeviceName').value = deviceName;
-
-//             // Set up buttons for "Is Active" status
-//             document.getElementById('isActiveThis').innerHTML = `
-//        <div class="yesNoButton" id="yesNo">
-//         <input type="radio" name="gender" onclick = "clickFun(true)">Yes
-//     <input type="radio" name="gender" id="noRadio" onclick = "clickFun(false)">No
-// </div>
-//     `;
-
-//             const editDeviceModal = new bootstrap.Modal(document.getElementById('editDeviceModal'));
-//             editDeviceModal.show();
-//         }
-
-        // function clickFun(isActive) {
-        //     const accessKey = localStorage.getItem("accessKey");
-        //     const rows = Array.from(document.querySelectorAll('#tableBody tr'));
-        //     const row = rows.find(row => row.querySelector(".accesskey").getAttribute("data-key") === accessKey);
-
-        //     if (row) {
-        //         const isActiveCell = row.querySelector(".isActive");
-        //         let displayYesButton = document.getElementById("yesNo"); // Get the button container
-
-        //         // Update the cell to reflect the active status
-        //         isActiveCell.innerHTML = isActive ? "Is Active" : "Not Active";
-
-        //         // Hide the buttons
-        //         displayYesButton.style.display = "none";
-
-        //         // Optionally close the modal after updating
-        //         const editDeviceModal = bootstrap.Modal.getInstance(document.getElementById('editDeviceModal'));
-        //         if (editDeviceModal) {
-        //             editDeviceModal.hide();
-        //         }
-
-        //         console.log(`Updated status for ${accessKey}: ${isActive ? "Is Active" : "Not Active"}`);
-        //     } else {
-        //         console.error("Row not found for access key:", accessKey);
-        //     }
-        // }
-
 
         function saveDeviceChanges() {
             const editDeviceForm = document.getElementById('editDeviceForm');
@@ -552,9 +488,11 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log('Device added successfully:', data);
-                    document.getElementById("tableBodys").style.display = "block";
-                    // viewDevices(); // Ensure this function is defined
+                    // console.log('Device added successfully:', data);
+                    // document.getElementById("tableBodys").style.display = "block";
+                    setTimeout(function () {
+                        window.location.href = "device.html";
+                    }, 1000);
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -562,17 +500,55 @@
                 .finally(() => {
                     document.getElementById('overlay').style.display = 'none';
                 });
-            
+
         }
 
 
-        function showNewDevice(){
+        function showNewDevice() {
             document.getElementById("tableBodys").style.display = "none";
             document.getElementById("deviceCheck").style.display = "block";
         }
+
+
+        function deleteEmpdetails(accessKey) {
+            const comId = localStorage.getItem('companyID')
+            console.log(accessKey)
+            const apiUrl = `${apiUrlBase}/delete/${accessKey}/${comId}`;
+
+            fetch(apiUrl, {
+                method: 'PUT'
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        // document.querySelector(".e-msg").textContent = data.error;
+                        // $(".error-msg").show();
+                        setTimeout(function () {
+                            // $(".error-msg").hide();
+                            window.location.href = "device.html";
+                        }, 1000);
+                    } else {
+                        // document.querySelector(".s-msg").textContent = data.message;
+                        // $(".success-msg").show();
+                        setTimeout(function () {
+                            // $(".success-msg").hide();
+                            window.location.href = "device.html";
+                        }, 1000);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+
+
     </script>
 </body>
 
 </html>
-
-<!-- <button class="btn icon-button btn-green text-white" onclick="editDevice('${element.TimeZone}', '${element.DeviceID}',  '${element.DeviceName}', '${accessKey}')">Edit</button> -->
