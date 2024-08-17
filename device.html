@@ -292,7 +292,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addEntryModalLabel">Delete</h5>
+                    <h5 class="modal-title" id="addEntryModalLabel">Logout</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
@@ -391,7 +391,7 @@
                                     <td class="DId">${element.DeviceID}</td>
                                     <td class="DName">${element.DeviceName}</td>
                                     <td class="Action">
-                                        <button class = "btn btn-outline-green" onclick="deleteEmpdetails('${element.AccessKey}')">Delete</button>
+                                        <button class ="btn btn-outline-green" id="buttonClick"  onclick="showLogoutModal('${element.AccessKey}')">Delete</button>
                                     </td>
                                 `;
                                 tableBody.appendChild(newRow);
@@ -546,6 +546,89 @@
                 });
         }
 
+
+
+        function showLogoutModal(empId) {
+            // Create modal container
+            const modal = document.createElement('div');
+            modal.className = 'modal fade';
+            modal.id = 'addEntryModal2';
+            modal.tabIndex = -1;
+            modal.setAttribute('aria-labelledby', 'addEntryModalLabel2');
+            modal.setAttribute('aria-hidden', 'true');
+
+
+            // Modal dialog
+            const modalDialog = document.createElement('div');
+            modalDialog.className = 'modal-dialog modal-dialog-centered';
+
+            // Modal content
+            const modalContent = document.createElement('div');
+            modalContent.className = 'modal-content';
+
+            // Modal header
+            const modalHeader = document.createElement('div');
+            modalHeader.className = 'modal-header';
+
+            const modalTitle = document.createElement('h5');
+            modalTitle.className = 'modal-title';
+            modalTitle.id = 'addEntryModalLabel2';
+            modalTitle.textContent = 'Delete';
+
+            const closeButton = document.createElement('button');
+            closeButton.type = 'button';
+            closeButton.className = 'btn-close btn-close-white';
+            closeButton.setAttribute('data-bs-dismiss', 'modal');
+            closeButton.setAttribute('aria-label', 'Close');
+
+            // Append title and close button to header
+            modalHeader.appendChild(modalTitle);
+            modalHeader.appendChild(closeButton);
+
+            // Modal body
+            const modalBody = document.createElement('div');
+            modalBody.className = 'modal-body d-flex align-items-center';
+
+            const bodyText = document.createElement('h5');
+            bodyText.className = 'fw-bold mb-3';
+            bodyText.textContent = 'Are you sure you are deleting the data?';
+
+            const yesButton = document.createElement('button');
+            yesButton.className = 'btn yes';
+            yesButton.textContent = 'Yes';
+            yesButton.style = "margin-left:15px"
+            yesButton.addEventListener('click', function () {
+                deleteEmpdetails(empId)
+            });
+
+            const noButton = document.createElement('button');
+            noButton.className = 'btn btn-outline-green';
+            noButton.setAttribute('data-bs-dismiss', 'modal');
+            noButton.textContent = 'No';
+
+            // Append elements to body
+            modalBody.appendChild(bodyText);
+            modalBody.appendChild(yesButton);
+            modalBody.appendChild(noButton);
+
+            // Append header and body to content
+            modalContent.appendChild(modalHeader);
+            modalContent.appendChild(modalBody);
+
+            // Append content to dialog
+            modalDialog.appendChild(modalContent);
+
+            // Append dialog to modal
+            modal.appendChild(modalDialog);
+
+            // Append modal to body
+            document.body.appendChild(modal);
+
+            // Show the modal using Bootstrap's modal plugin
+            const modalInstance = new bootstrap.Modal(modal);
+            modalInstance.show();
+        }
+        document.getElementById('buttonClick').addEventListener('click', showLogoutModal);
 
 
     </script>
