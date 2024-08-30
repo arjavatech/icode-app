@@ -308,15 +308,21 @@ function formatPhoneNumber() {
 
 
 async function createCheckoutSession() {
-    try {
-        const response = await fetch('http://localhost:3000/create-checkout-session', {
+    try 
+    {
+        const link = "http://127.0.0.1:5504";
+        const link2 = "https://arjavatech.github.io/icode-app";
+        const response = await fetch(`https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/create-checkout-session`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({})
+            body: JSON.stringify({
+                "url": link2,
+                "productName": "EMS Product",
+                "amount": 2000
+              })
         });
-
         if (!response.ok) {
             const errorDetails = await response.json();
             throw new Error(errorDetails.error);
@@ -326,7 +332,7 @@ async function createCheckoutSession() {
         console.log('Checkout session:', session);
         const stripe = Stripe('pk_test_51OB8JlIPoM7JHRT2DlaE8KmPRFkgeSXkqf4eQZxEahu0Lbno3vHzCTH5J4rDAfw53PjdWlLteNJNzPVdahkzTb8100DA6sqAp4');
         await stripe.redirectToCheckout({ sessionId: session.id });
-        // session.id. 
+
     } catch (error) {
         console.error('Error creating checkout session:', error);
     }
