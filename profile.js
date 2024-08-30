@@ -316,6 +316,7 @@ async function loadImage() {
         document.getElementById('overlay').style.display = 'none';
 
     } catch (error) {
+        document.getElementById('overlay').style.display = 'none';
         console.error('Error in loadImage function:', error.message);
     }
 }

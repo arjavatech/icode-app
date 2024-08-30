@@ -77,7 +77,7 @@ function viewDateRangewiseReport() {
                   document.getElementById('overlay').style.display = 'none';
               }
           } catch (error) {
-              console.error('Error processing data:', error);
+            document.getElementById('overlay').style.display = 'none';
           }
       })
       .catch(error => {

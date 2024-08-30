@@ -199,7 +199,7 @@ function viewReportdetails() {
             });
         })
         .catch(error => {
-            console.error('Error:', error);
+            document.getElementById('overlay').style.display = 'none';
         });
 
 }
