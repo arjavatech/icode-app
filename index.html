@@ -91,7 +91,8 @@
         }
 
         body {
-            overflow-x: hidden;
+            overflow-x: hidden !important;
+            overflow-y: hidden;
         }
 
         .span-sty {
@@ -103,7 +104,6 @@
         .span-colo {
             color: #0A8080;
             text-decoration: none;
-            /* font-family: 'Abel'; */
             font-weight: bold;
         }
 
@@ -127,9 +127,10 @@
         }
 
         .login-img-sty {
-            max-width: 100%;
+            max-width: 80%;
             height: auto;
         }
+
 
         @media (max-width: 768px) {
             .container-sty {
@@ -139,6 +140,14 @@
             .img-fluid {
                 width: 80% !important;
             }
+
+
+            body {
+                overflow-x: hidden !important;
+                overflow-y: scroll;
+
+            }
+
         }
 
         @media (max-width: 576px) {
@@ -154,6 +163,13 @@
             .forget-password {
                 flex-direction: column;
                 align-items: center;
+            }
+
+            #loginBtn {
+                width: 100% !important;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                font-size: 18px;
             }
         }
 
@@ -234,14 +250,30 @@
                 </div>
                 <button type="button" class="btn btn-green mt-3" id="loginBtn">Submit</button>
                 <div id="errorMsg"></div>
-                <h5 class="m-3 text-center span-content fs-4">Are you <span class="p-2"><a href="singup.html"
-                            class="span-colo fs-4">Signup</a></span></h5>
+                <h5 class="m-4 text-center span-content fs-5">Don't have an account?<span class="p-2"><a
+                            href="singup.html" class="span-colo fs-5">Signup</a></span></h5>
             </div>
 
         </div>
     </div>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Retrieve the logo from local storage
+            const companyLogo = localStorage.getItem('companyLogo');
+
+            // If a logo exists, set it as the source for the image
+            if (companyLogo) {
+                const logoImg = document.getElementById('logo-img');
+                logoImg.src = companyLogo; // Set the logo image source
+                logoImg.onload = function () {
+                    console.log('Logo image loaded successfully');
+                };
+                logoImg.onerror = function () {
+                    console.error('Error loading logo image');
+                };
+            }
+        });
         document.getElementById('loginBtn').addEventListener('click', () => {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
@@ -249,10 +281,12 @@
                 .then(isAuthenticated => {
                     if (isAuthenticated) {
                         document.getElementById('overlay').style.display = 'flex';
-                        console.log("in");
+                        let exm = localStorage.getItem("companyID");
+                        getCustmData(exm);
                         setTimeout(function () {
                             window.location.href = 'employee_list.html';
                         }, 3000);
+
                     } else {
                         document.getElementById('errorMsg').innerHTML = "Invalid username or password";
                         document.getElementById('errorMsg').style = "color:red";
@@ -314,27 +348,87 @@
             const apiUrlBase2 = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/customer';
             const apiUrl2 = `${apiUrlBase2}/getUsingCID/${cid1}`;
 
-            fetch(apiUrl2)
+            getTimeZone(cid1).then(
+                abc => {
+                    fetch(apiUrl2)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`Error: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Data fetched:', data["CustomerID"]);
+                            localStorage.setItem('customId', data["CustomerID"]);
+                            localStorage.setItem('firstName', data["FName"]);
+                            localStorage.setItem('lastName', data["LName"]);
+                            localStorage.setItem('address', data["Address"]);
+                            localStorage.setItem('phone', data["PhoneNumber"]);
+                            localStorage.setItem('phoneNumber', data["PhoneNumber"]);
+                            localStorage.setItem('email', data["Email"]);
+
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+            )
+
+            // fetch(apiUrl2)
+            //     .then(response => {
+            //         if (!response.ok) {
+            //             throw new Error(`Error: ${response.status}`);
+            //         }
+            //         return response.json();
+            //     })
+            //     .then(data => {
+            //         console.log('Data fetched:', data["CustomerID"]);
+            //         localStorage.setItem('customId', data["CustomerID"]);
+            //         localStorage.setItem('firstName', data["FName"]);
+            //         localStorage.setItem('lastName', data["LName"]);
+            //         localStorage.setItem('address', data["Address"]);
+            //         localStorage.setItem('phone', data["PhoneNumber"]);
+            //         localStorage.setItem('email', data["Email"]);
+
+            //     })
+            //     .catch(error => {
+            //         console.error('Error:', error);
+            //     });
+        }
+
+
+
+        async function getTimeZone(cid1) {
+            const apiUrl = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/device/getAll/${cid1}`;
+
+            fetch(apiUrl)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error(`Error: ${response.status}`);
+                        localStorage.setItem("TimeZone", "PST")
                     }
                     return response.json();
                 })
                 .then(data => {
-                    console.log('Data fetched:', data["CustomerID"]);
-                    localStorage.setItem('customId', data["CustomerID"]);
-                    localStorage.setItem('firstName', data["FName"]);
-                    localStorage.setItem('lastName', data["LName"]);
-                    localStorage.setItem('address', data["Address"]);
-                    localStorage.setItem('phone', data["PhoneNumber"]);
-                    localStorage.setItem('email', data["Email"]);
-                    
+                    if (data.error === "No devices found !" || data.length === 0) {
+                        localStorage.setItem("TimeZone", "PST")
+
+                    } else {
+                        try {
+                            data.forEach(element => {
+                                localStorage.setItem("TimeZone", element.TimeZone)
+                            });
+                        }
+                        catch {
+                            console.error('Error:', error);
+                        }
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
+
         }
+
     </script>
 </body>
 

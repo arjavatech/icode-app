@@ -1,60 +1,135 @@
 
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/getdatebasedata';
 
-// document.addEventListener("DOMContentLoaded", function () {
-//     const buttons = document.querySelectorAll(".nav-button");
+const TZ = localStorage.getItem("TimeZone");
 
-//     buttons.forEach(button => {
-//         button.addEventListener("click", function () {
-//             buttons.forEach(btn => btn.classList.remove("active"));
-//             this.classList.add("active");
-//         });
-//     });
-// });
+
+const
+  timezone_mapping = {
+    "UTC": "UTC",  // Coordinated Universal Time
+    "GMT": "Europe/London",  // Greenwich Mean Time
+    "BST": "Europe/London",  // British Summer Time
+    "CET": "Europe/Paris",  // Central European Time
+    "CEST": "Europe/Paris",  // Central European Summer Time
+    "EET": "Europe/Helsinki",  // Eastern European Time
+    "EEST": "Europe/Helsinki",  // Eastern European Summer Time
+    "IST": "Asia/Kolkata",  // Indian Standard Time
+    "PKT": "Asia/Karachi",  // Pakistan Standard Time
+    "AST": "Asia/Riyadh",  // Arabian Standard Time
+    "GST": "Asia/Dubai",  // Gulf Standard Time
+    "MSK": "Europe/Moscow",  // Moscow Standard Time
+    "HKT": "Asia/Hong_Kong",  // Hong Kong Time
+    "SGT": "Asia/Singapore",  // Singapore Time
+    "CST": ["America/Chicago", "Asia/Shanghai"],  // Central Standard Time (US), China Standard Time
+    "CDT": "America/Chicago",  // Central Daylight Time (US)
+    "EST": "America/New_York",  // Eastern Standard Time (US)
+    "EDT": "America/New_York",  // Eastern Daylight Time (US)
+    "MST": "America/Denver",  // Mountain Standard Time (US)
+    "MDT": "America/Denver",  // Mountain Daylight Time (US)
+    "PST": "America/Los_Angeles",  // Pacific Standard Time (US)
+    "PDT": "America/Los_Angeles",  // Pacific Daylight Time (US)
+    "AKST": "America/Anchorage",  // Alaska Standard Time
+    "AKDT": "America/Anchorage",  // Alaska Daylight Time
+    "HST": "Pacific/Honolulu",  // Hawaii Standard Time
+    "HADT": "Pacific/Honolulu",  // Hawaii-Aleutian Daylight Time
+    "AEST": "Australia/Sydney",  // Australian Eastern Standard Time
+    "AEDT": "Australia/Sydney",  // Australian Eastern Daylight Time
+    "ACST": "Australia/Adelaide",  // Australian Central Standard Time
+    "ACDT": "Australia/Adelaide",  // Australian Central Daylight Time
+    "AWST": "Australia/Perth",  // Australian Western Standard Time
+    "NZST": "Pacific/Auckland",  // New Zealand Standard Time
+    "NZDT": "Pacific/Auckland",  // New Zealand Daylight Time
+    "JST": "Asia/Tokyo",  // Japan Standard Time
+    "KST": "Asia/Seoul",  // Korea Standard Time
+    "WIB": "Asia/Jakarta",  // Western Indonesia Time
+    "WITA": "Asia/Makassar",  // Central Indonesia Time
+    "WIT": "Asia/Jayapura",  // Eastern Indonesia Time
+    "ART": "America/Argentina/Buenos_Aires",  // Argentina Time
+    "BRT": "America/Sao_Paulo",  // Brasilia Time
+    "CLT": "America/Santiago",  // Chile Standard Time
+    "GFT": "America/Cayenne",  // French Guiana Time
+    "PYT": "America/Asuncion",  // Paraguay Time
+    "VET": "America/Caracas",  // Venezuela Time
+    "WET": "Europe/Lisbon",  // Western European Time
+    "WEST": "Europe/Lisbon",  // Western European Summer Time
+    "CAT": "Africa/Harare",  // Central Africa Time
+    "EAT": "Africa/Nairobi",  // East Africa Time
+    "SAST": "Africa/Johannesburg",  // South Africa Standard Time
+    "WAT": "Africa/Lagos",  // West Africa Time
+    "ADT": "America/Halifax",  // Atlantic Daylight Time
+    "AST": "America/Halifax",  // Atlantic Standard Time
+    "NST": "America/St_Johns",  // Newfoundland Standard Time
+    "NDT": "America/St_Johns",  // Newfoundland Daylight Time
+    "WAT": "Africa/Lagos",  // West Africa Time
+    "CST": "America/Havana",  // Cuba Standard Time
+    "WST": "Pacific/Apia",  // West Samoa Time
+    "ChST": "Pacific/Guam",  // Chamorro Standard Time
+    "PWT": "Pacific/Palau",  // Palau Time
+    "VOST": "Antarctica/Vostok",  // Vostok Station Time
+    "NZST": "Pacific/Auckland",  // New Zealand Standard Time
+    "NZDT": "Pacific/Auckland",  // New Zealand Daylight Time
+    "FJT": "Pacific/Fiji",  // Fiji Time
+    "GALT": "Pacific/Galapagos",  // Galapagos Time
+    "GAMT": "Pacific/Gambier",  // Gambier Time
+    "HKT": "Asia/Hong_Kong",  // Hong Kong Time
+    "IRKT": "Asia/Irkutsk",  // Irkutsk Time
+    "KRAT": "Asia/Krasnoyarsk",  // Krasnoyarsk Time
+    "MAWT": "Antarctica/Mawson",  // Mawson Station Time
+    "SCT": "Indian/Mahe",  // Seychelles Time
+    "SGT": "Asia/Singapore",  // Singapore Time
+    "SLST": "Asia/Colombo",  // Sri Lanka Standard Time
+    "THA": "Asia/Bangkok",  // Thailand Standard Time
+    "TLT": "Asia/Dili",  // East Timor Time
+    "YAKT": "Asia/Yakutsk",  // Yakutsk Time
+    "YEKST": "Asia/Yekaterinburg",  // Yekaterinburg Summer Time
+  }
 
 function viewCurrentDateReport() {
+  document.getElementById('overlay').style.display = 'flex';
   selectedValue = localStorage.getItem('reportType');
-    document.getElementById("reportName").textContent = selectedValue + " Report";
+  document.getElementById("reportName").textContent = selectedValue + " Report";
 
-    const tableBody3 = document.getElementById("current-checkin-tbody");
-    const heading = document.getElementById("current-checkin-header");
-    tableBody3.innerHTML = '';
-    // Get the current date
-    const now = new Date();
+  const tableBody3 = document.getElementById("current-checkin-tbody");
+  const heading = document.getElementById("current-checkin-header");
+  tableBody3.innerHTML = '';
 
-    // Get the date components
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const day = String(now.getDate()).padStart(2, '0');
+  // Format as yyyy-mm-dd
+  var date = getCurrentDateInTimezone(timezone_mapping[TZ]);
 
-    // Format as yyyy-mm-dd
-    var date = `${year}-${month}-${day}`;
-
-    heading.innerHTML = date;
-    const apiUrl = `${apiUrlBase}/${date}`;
-    fetch(apiUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            try {
+  heading.innerHTML = date;
+  const apiUrl = `${apiUrlBase}/${date}`;
+  fetch(apiUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      try {
         data.forEach(element => {
           console.log(element)
-            // Create a new table row
-            const newRow = document.createElement('tr');
-           console.log(element.CheckInTime)
-           
-            // Check if CheckOutTime is null
-            if (element.CheckOutTime == null) {
-              const datetimeId = `datetime-${element.CheckInTime}-${element.Pin}`;
-              const checkOutId = `check_out-${element.CheckInTime}-${element.Pin}`;       
-              newRow.innerHTML = `
+          // Create a new table row
+          const newRow = document.createElement('tr');
+
+          const checkInTimeUTC = new Date(element.CheckInTime);
+
+          // Convert to IST
+          const checkInTimeIST = checkInTimeUTC.toLocaleString("en-US", { timeZone: timezone_mapping[TZ] });
+
+          // Convert to AM/PM format if needed
+          const checkInTimeFormatted = convertToAmPm(new Date(checkInTimeIST));
+
+          console.log(checkInTimeFormatted)
+
+          // Check if CheckOutTime is null
+          if (element.CheckOutTime == null) {
+            const datetimeId = `datetime-${element.CheckInTime}-${element.Pin}`;
+            const checkOutId = `check_out-${element.CheckInTime}-${element.Pin}`;
+            newRow.innerHTML = `
                 <td class="Name">${element.Name}</td>
                 <td class="Pin">${element.Pin}</td>
-                <td class="CheckInTime">${(convertToAmPm((element.CheckInTime).substring(11)))}</td>
+                <td class="CheckInTime">${checkInTimeFormatted}</td>
                 <td>
                   <div class="text-center">
                                     <input type="time" id="${datetimeId}" name="time" class="time-input" step="1">
@@ -66,415 +141,287 @@ function viewCurrentDateReport() {
                 </td>
               `;
 
-              tableBody3.appendChild(newRow);
+            tableBody3.appendChild(newRow);
 
-              // Get references to the input and button for this row (using the unique IDs)
-              const datetimeInput = document.getElementById(datetimeId);
-              const checkOutButton = document.getElementById(checkOutId);
-          
-              // Set initial disabled state
-              checkOutButton.disabled = true;
-          
-              // Add event listener for this specific input
-              datetimeInput.addEventListener('change', function() {
-                if (this.value) {
-                  checkOutButton.disabled = false;
-                } else {
-                  checkOutButton.disabled = true;
-                }
-              });
+            // Get references to the input and button for this row (using the unique IDs)
+            const datetimeInput = document.getElementById(datetimeId);
+            const checkOutButton = document.getElementById(checkOutId);
 
-              checkOutButton.addEventListener('click', function(){
-                
-                const dateWithTime = getDateTimeFromTimePicker(datetimeInput.value);
+            // Set initial disabled state
+            checkOutButton.disabled = true;
 
-                
-                const date1 = new Date(dateWithTime);
-                const date2 = new Date(element.CheckInTime);
-
-                // Calculate the difference in milliseconds
-                const diffInMs = date1 - date2;
-
-                // Convert the difference from milliseconds to total minutes
-                const diffInMinutes = Math.floor(diffInMs / 1000 / 60);
-
-                // Calculate the total hours and remaining minutes
-                const totalHours = Math.floor(diffInMinutes / 60);
-                const minutes = diffInMinutes % 60;
-
-                // Format the hours and minutes
-                const formattedHours = String(totalHours).padStart(2, '0');
-                const formattedMinutes = String(minutes).padStart(2, '0');
-
-                const timeWorkedHours = formattedHours + ":" +formattedMinutes;
-
-                updateDailyReportAPiData(element.EmpID, element.CID, date, element.Type, element.CheckInSnap, element.CheckInTime, element.CheckOutSnap, dateWithTime, timeWorkedHours)
-                
-                datetimeInput.value = '';
+            // Add event listener for this specific input
+            datetimeInput.addEventListener('change', function () {
+              if (this.value) {
+                checkOutButton.disabled = false;
+              } else {
                 checkOutButton.disabled = true;
-              });
-          
+              }
+            });
+
+            checkOutButton.addEventListener('click', function () {
+
+              const dateWithTime = convertToUTC(getDateTimeFromTimePicker(datetimeInput.value));
+
+
               
-            }
-            else{
-                const datetimeId = `datetime-${element.CheckInTime}-${element.Pin}`;
-                const checkOutId = `check_out-${element.CheckInTime}-${element.Pin}`;       
-                newRow.innerHTML = `
+              const date2 = new Date(element.CheckInTime);
+              const date1 = new Date(dateWithTime)
+              
+              // Calculate the difference in milliseconds
+              const diffInMs = date1 - date2;
+
+              // Convert the difference from milliseconds to total minutes
+              const diffInMinutes = Math.floor(diffInMs / 1000 / 60);
+
+              // Calculate the total hours and remaining minutes
+              const totalHours = Math.floor(diffInMinutes / 60);
+              const minutes = diffInMinutes % 60;
+
+              // Format the hours and minutes
+              const formattedHours = String(totalHours).padStart(2, '0');
+              const formattedMinutes = String(minutes).padStart(2, '0');
+
+              const timeWorkedHours = formattedHours + ":" + formattedMinutes;
+
+              updateDailyReportAPiData(element.EmpID, element.CID, date, element.Type, element.CheckInSnap, element.CheckInTime, element.CheckOutSnap, dateWithTime, timeWorkedHours)
+
+              datetimeInput.value = '';
+              checkOutButton.disabled = true;
+            });
+
+
+          }
+          else {
+
+            const checkInTimeUTC = new Date(element.CheckInTime);
+            const checkOutTimeUTC = new Date(element.CheckOutTime);
+
+            // Convert to IST
+            const checkInTimeIST = checkInTimeUTC.toLocaleString("en-US", { timeZone: timezone_mapping[TZ] });
+            const checkOutTimeIST = checkOutTimeUTC.toLocaleString("en-US", { timeZone: timezone_mapping[TZ] });
+
+            // Convert to AM/PM format if needed
+            const checkInTimeFormatted = convertToAmPm(new Date(checkInTimeIST));
+            const checkOutTimeFormatted = convertToAmPm(new Date(checkOutTimeIST));
+
+            const checkOutId = `check_out-${element.CheckInTime}-${element.Pin}`;
+            newRow.innerHTML = `
                   <td class="Name">${element.Name}</td>
                   <td class="Pin">${element.Pin}</td>
-                  <td class="CheckInTime">${(convertToAmPm((element.CheckInTime).substring(11)))}</td>
-                  <td class="CheckOutTime">${(convertToAmPm((element.CheckOutTime).substring(11)))}</td>
+                  <td class="CheckInTime">${checkInTimeFormatted}</td>
+                  <td class="CheckOutTime">${checkOutTimeFormatted}</td>
                   <td class="text-center">
                     <button type="button" class="btn btn-grey" id="${checkOutId}" disabled>Check-out</button>
                   </td>
                 `;
-  
-                tableBody3.appendChild(newRow);
-  
-              }
-          });
 
-          if( tableBody3.innerHTML == '')
-              {
+            tableBody3.appendChild(newRow);
 
-                      const newRow = document.createElement('tr');
-                      newRow.innerHTML = `
+          }
+        });
+
+        if (tableBody3.innerHTML == '') {
+
+          const newRow = document.createElement('tr');
+          newRow.innerHTML = `
                       <td colspan="6" class="text-center">No Records Found</td>
                   `;
-                      tableBody3.innerHTML = '';
-                      tableBody3.appendChild(newRow);
+          tableBody3.innerHTML = '';
+          tableBody3.appendChild(newRow);
 
-              }
+        }
 
-            }
-            catch {
-                const newRow = document.createElement('tr');
-                newRow.innerHTML = `
+      }
+      catch {
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
                 <td colspan="6" class="text-center">No Records Found</td>
             `;
-                tableBody3.innerHTML = '';
-                tableBody3.appendChild(newRow);
+        tableBody3.innerHTML = '';
+        tableBody3.appendChild(newRow);
 
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+      }
+      document.getElementById('overlay').style.display = 'none';
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 }
 
 
 
 // View Data
 
-function viewDatewiseReport(dateValue) {
-    const tableBody = document.getElementById("tBody");
-    tableBody.innerHTML = '';
+// Call fetchData when the page is fully loaded
 
-    if (dateValue != "test") {
-        const apiUrl = `${apiUrlBase}/${dateValue}`;
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                try {
-                    data.forEach(element => {
-                        const newRow = document.createElement('tr');
-                        if(element.CheckOutTime != null)
-                            {
-                        newRow.innerHTML = `
-                    <td class="Name">${element.Name}</td>
-                    <td class="Pin">${element.Pin}</td>
-                    <td class="CheckInTime">${(convertToAmPm((element.CheckInTime).substring(11)))}</td>
-                    <td class="CheckOutTime">${(convertToAmPm((element.CheckOutTime).substring(11)))}</td>
-                    <td class="TimeWorked">${element.TimeWorked}</td>
-                `;
-                        tableBody.appendChild(newRow);
+document.addEventListener('DOMContentLoaded', viewCurrentDateReport());
+async function updateDailyReportAPiData(emp_id, cid, date, type, checkin_snap, checkin_time, checkout_snap, checkout_time, time_worked) {
 
-                            }
-                    });
-
-                }
-                catch {
-                    // alert("No Data Found");
-                    const newRow = document.createElement('tr');
-                    newRow.innerHTML = `
-                        <td colspan="6" class="text-center">No Records Found</td>
-                    `;
-                    tableBody.appendChild(newRow);
-
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-    else {
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-    <td colspan="6" class="text-center">No Date choosen</td>
-`;
-        tableBody.innerHTML = '';
-        tableBody.appendChild(newRow);
-
-    }
-
-}
-
-function viewDateRangewiseReport(startValue, endValue) {
-  const apiBase = "https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyReport/getDateRangeReport";
-  const tableBody2 = document.getElementById("tBody2");
-  tableBody2.innerHTML = ''; // Clear existing rows
-  const cid = localStorage.getItem('companyID');
-
-  let dateRange = {};
-
-  const selectedValue = localStorage.getItem('reportType');
-
-  switch (selectedValue) {
-      case "Weekly":
-          dateRange = getLastWeekDateRange();
-          break;
-      case "Monthly":
-          dateRange = getLastMonthStartAndEndDates();
-          break;
-      case "BiMonthly":
-          dateRange = getLastTwoMonthStartAndEndDates();
-          break;
-      case "BiWeekly":
-        dateRange = getLastTwoWeeksDateRange();
-        break;
-      default:
-          console.error("Invalid report type");
-          return;
+  const userData = {
+    CID: cid,
+    EmpID: emp_id,
+    Date: date,
+    TypeID: type,
+    CheckInSnap: checkin_snap,
+    CheckInTime: checkin_time,
+    CheckOutSnap: checkout_snap,
+    CheckOutTime: checkout_time,
+    TimeWorked: time_worked
   }
 
-  const apiUrl = `${apiBase}/${cid}/${dateRange.startRange}/${dateRange.endRange}`;
+  var apiBaseUrl = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/update/${emp_id}/${cid}/${checkin_time}`;
 
-  // Fetch data from API and render table
-  fetch(apiUrl)
-      .then(response => {
-          if (!response.ok) {
-              throw new Error(`Error: ${response.status}`);
-          }
-          return response.json();
-      })
-      .then(data => {
-          try {
-              // Calculate total time worked for each employee
-              const totalTimeWorked = calculateTotalTimeWorked(data);
+  try {
+    const response = await fetch(apiBaseUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    });
 
-              // Check if data is an empty array
-              if (Array.isArray(data) && data.length === 0) {
-                  const newRow = document.createElement('tr');
-                  newRow.innerHTML = `
-                      <td colspan="6" class="text-center">No Records Found</td>
-                  `;
-                  tableBody2.appendChild(newRow);
-              } else {
-                  // Clear existing rows
-                  tableBody2.innerHTML = '';
-
-                  // Process each employee and create rows
-                  Object.entries(totalTimeWorked).forEach(([pin, Employeedata]) => {
-                      const newRow = document.createElement('tr');
-                      newRow.innerHTML = `
-                          <td class="Name">${Employeedata.name}</td>
-                          <td class="Pin">${pin}</td>
-                          <td class="TimeWorked">${Employeedata.totalHoursWorked}</td>
-                      `;
-                      tableBody2.appendChild(newRow);
-                  });
-              }
-          } catch (error) {
-              console.error('Error processing data:', error);
-          }
-      })
-      .catch(error => {
-          console.error('Fetch error:', error);
-      });
-}
-
-// Call fetchData when the page is fully loaded
-document.addEventListener('DOMContentLoaded', viewCurrentDateReport());
-
-
-// document.addEventListener('DOMContentLoaded', viewDatewiseReport("test"));
-
-// document.getElementById('dailyReportDate').addEventListener('change', function () {
-//   const dateValue = this.value;
-//   document.addEventListener('DOMContentLoaded', viewDatewiseReport(dateValue));
-// });
-
-// document.addEventListener('DOMContentLoaded', function(){
-//     selectedValue = localStorage.getItem('reportType');
-//     document.getElementById("report-type-heading").textContent = selectedValue + " Report";
-//     viewDateRangewiseReport();
-// });
-
-
-
-
-async function updateDailyReportAPiData(emp_id, cid, date, type, checkin_snap, checkin_time,checkout_snap, checkout_time , time_worked) {
-  
-    const userData = {
-      CID: cid,
-        EmpID: emp_id,
-        Date: date,
-        TypeID: type,
-        CheckInSnap: checkin_snap,
-        CheckInTime: checkin_time,
-        CheckOutSnap: checkout_snap,
-        CheckOutTime: checkout_time,
-        TimeWorked: time_worked
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
     }
 
-    var apiBaseUrl = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/update/${emp_id}/${cid}/${checkin_time}`;
-
-    try {
-      const response = await fetch(apiBaseUrl, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-      });
-  
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-  
-      else{
+    else {
       const data = await response.json();
-  
+
       if (!data.error) {
-            setTimeout(() => {
-                window.location.href = "report_summary.html"; 
-            }, 1000);        
+        setTimeout(() => {
+          window.location.href = "report_summary.html";
+        }, 1000);
+
       }
-      else{
+      else {
         alert(data.error);
       }
     }
-    //   console.log(data);
-    } catch (error) {
-    //   console.error('Error:', error);
-    }
+  } catch (error) {
   }
-
-
-  function convertToAmPm(timeStr) {
-    // Split the input string into components
-    let [hours, minutes, seconds] = timeStr.split(':').map(Number);
-
-    // Determine AM or PM
-    let amPm = hours >= 12 ? 'PM' : 'AM';
-
-    // Convert hours to 12-hour format
-    hours = hours % 12 || 12; // Convert 0 to 12 for midnight
-
-    // Format hours, minutes, and seconds as two digits
-    hours = hours.toString().padStart(2, '0');
-    minutes = minutes.toString().padStart(2, '0');
-    seconds = seconds.toString().padStart(2, '0');
-
-    // Combine into the final formatted string
-    return `${hours}:${minutes}:${seconds} ${amPm}`;
 }
+
+
+function convertToAmPm(date) {
+  let hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+  return hours + ':' + minutesStr + ' ' + ampm;
+}
+
+// function convertToAmPm(timeStr) {
+//   // Split the input string into components
+//   let [hours, minutes, seconds] = timeStr.split(':').map(Number);
+
+//   // Determine AM or PM
+//   let amPm = hours >= 12 ? 'PM' : 'AM';
+
+//   // Convert hours to 12-hour format
+//   hours = hours % 12 || 12; // Convert 0 to 12 for midnight
+
+//   // Format hours, minutes, and seconds as two digits
+//   hours = hours.toString().padStart(2, '0');
+//   minutes = minutes.toString().padStart(2, '0');
+//   seconds = seconds.toString().padStart(2, '0');
+
+//   // Combine into the final formatted string
+//   return `${hours}:${minutes}:${seconds} ${amPm}`;
+// }
 
 // Weekly Report Date Calculation.
 
 function getLastWeekDateRange() {
-    // Today's date
-    let today = new Date();
-  
-    // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-    let dayOfWeek = today.getDay();
-  
-    // Calculate the difference to the previous Monday (dayOfWeek - 1)
-    // If today is Monday, dayOfWeek - 1 is 0, so we go back 7 days (last Monday)
-    let daysSinceLastMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-  
-    // Calculate last Monday's date
-    let lastMonday = new Date(today);
-    lastMonday.setDate(today.getDate() - daysSinceLastMonday - 7);
-  
-    // Calculate last Sunday's date
-    let lastSunday = new Date(lastMonday);
-    lastSunday.setDate(lastMonday.getDate() + 6);
-  
-    // Format dates to yyyy-mm-dd
-    let formatDate = (date) => date.toISOString().split('T')[0];
-  
-    let lastMondayStr = formatDate(lastMonday);
-    let lastSundayStr = formatDate(lastSunday);
-  
-    return {
-      startRange: lastMondayStr,
-      endRange: lastSundayStr
-    };
-  }
+  // Today's date
+  let today = new Date();
 
-  function getLastTwoWeeksDateRange() {
-    // Today's date
-    let today = new Date();
-  
-    // Find the start of the current week (Monday)
-    let currentWeekStart = new Date(today);
-    currentWeekStart.setDate(today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1));
-  
-    // Calculate the start of the last two weeks (Monday two weeks ago)
-    let startDate = new Date(currentWeekStart);
-    startDate.setDate(currentWeekStart.getDate() - 14);
-  
-    // Calculate the end of the last two weeks (Sunday two weeks later)
-    let endDate = new Date(startDate);
-    endDate.setDate(startDate.getDate() + 13); // 14 days - 1 day
-  
-    // Format dates to yyyy-mm-dd
-    let formatDate = (date) => date.toISOString().split('T')[0];
-  
-    let startDateStr = formatDate(startDate);
-    let endDateStr = formatDate(endDate);
-  
-    return {
-      startRange: startDateStr,
-      endRange: endDateStr
-    };
+  // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+  let dayOfWeek = today.getDay();
+
+  // Calculate the difference to the previous Monday (dayOfWeek - 1)
+  // If today is Monday, dayOfWeek - 1 is 0, so we go back 7 days (last Monday)
+  let daysSinceLastMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+
+  // Calculate last Monday's date
+  let lastMonday = new Date(today);
+  lastMonday.setDate(today.getDate() - daysSinceLastMonday - 7);
+
+  // Calculate last Sunday's date
+  let lastSunday = new Date(lastMonday);
+  lastSunday.setDate(lastMonday.getDate() + 6);
+
+  // Format dates to yyyy-mm-dd
+  let formatDate = (date) => date.toISOString().split('T')[0];
+
+  let lastMondayStr = formatDate(lastMonday);
+  let lastSundayStr = formatDate(lastSunday);
+
+  return {
+    startRange: lastMondayStr,
+    endRange: lastSundayStr
+  };
 }
 
-  function getLastTwoMonthStartAndEndDates() {
-    // Get today's date
-    const today = new Date();
-    
-    // Calculate the start date (first day of the month two months ago)
-    const startDate = new Date(today.getFullYear(), today.getMonth() - 2, 1);
-    
-    // Calculate the end date (last day of the previous month)
-    const endDate = new Date(today.getFullYear(), today.getMonth(), 0);
+function getLastTwoWeeksDateRange() {
+  // Today's date
+  let today = new Date();
 
-    return {
-      startRange: formatDate(startDate),
-      endRange : formatDate(endDate)
-    };
+  // Find the start of the current week (Monday)
+  let currentWeekStart = new Date(today);
+  currentWeekStart.setDate(today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1));
+
+  // Calculate the start of the last two weeks (Monday two weeks ago)
+  let startDate = new Date(currentWeekStart);
+  startDate.setDate(currentWeekStart.getDate() - 14);
+
+  // Calculate the end of the last two weeks (Sunday two weeks later)
+  let endDate = new Date(startDate);
+  endDate.setDate(startDate.getDate() + 13); // 14 days - 1 day
+
+  // Format dates to yyyy-mm-dd
+  let formatDate = (date) => date.toISOString().split('T')[0];
+
+  let startDateStr = formatDate(startDate);
+  let endDateStr = formatDate(endDate);
+
+  return {
+    startRange: startDateStr,
+    endRange: endDateStr
+  };
+}
+
+function getLastTwoMonthStartAndEndDates() {
+  // Get today's date
+  const today = new Date();
+
+  // Calculate the start date (first day of the month two months ago)
+  const startDate = new Date(today.getFullYear(), today.getMonth() - 2, 1);
+
+  // Calculate the end date (last day of the previous month)
+  const endDate = new Date(today.getFullYear(), today.getMonth(), 0);
+
+  return {
+    startRange: formatDate(startDate),
+    endRange: formatDate(endDate)
+  };
 }
 
 function getLastMonthStartAndEndDates() {
   // Set today's date for testing
   const today = new Date();
-  
+
   // Calculate the start date of the last full month
   const startDateLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-  
+
   // Calculate the end date of the last full month
   const endDateLastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-  
- return {
-  startRange: formatDate(startDateLastMonth),
-  endRange : formatDate(endDateLastMonth)
+
+  return {
+    startRange: formatDate(startDateLastMonth),
+    endRange: formatDate(endDateLastMonth)
   };
 }
 
@@ -504,21 +451,21 @@ function calculateTotalTimeWorked(data) {
   const employeeTimes = {};
 
   data.forEach(entry => {
-      const { Name, Pin, TimeWorked } = entry;
+    const { Name, Pin, TimeWorked } = entry;
 
-      if (TimeWorked) {
-          const minutesWorked = timeToMinutes(TimeWorked);
+    if (TimeWorked) {
+      const minutesWorked = timeToMinutes(TimeWorked);
 
-          if (!employeeTimes[Pin]) {
-              employeeTimes[Pin] = { name: Name, totalMinutes: 0 };
-          }
-          employeeTimes[Pin].totalMinutes += minutesWorked;
+      if (!employeeTimes[Pin]) {
+        employeeTimes[Pin] = { name: Name, totalMinutes: 0 };
       }
+      employeeTimes[Pin].totalMinutes += minutesWorked;
+    }
   });
 
   // Convert total minutes to time string
   for (const [pin, details] of Object.entries(employeeTimes)) {
-      details.totalHoursWorked = minutesToTime(details.totalMinutes);
+    details.totalHoursWorked = minutesToTime(details.totalMinutes);
   }
 
   return employeeTimes;
@@ -544,86 +491,127 @@ function getDateTimeFromTimePicker(timeValue) {
 document.addEventListener('DOMContentLoaded', function () {
   // Initialize Flatpickr
   flatpickr(".datetime", {
-      enableTime: true,
-      enableTime: true,
-      enableSeconds: true,
-      time_24hr: true,
-      dateFormat: "Y-m-d h:i:S",
-      minuteIncrement: 1,
-      allowInput: true
+    enableTime: true,
+    enableTime: true,
+    enableSeconds: true,
+    time_24hr: true,
+    dateFormat: "Y-m-d h:i:S",
+    minuteIncrement: 1,
+    allowInput: true
   });
 
   // Show modal on button click
   document.getElementById('add-entry').addEventListener('click', function () {
-      var modal = new bootstrap.Modal(document.getElementById('addEntryModal'));
-      modal.show();
+    var modal = new bootstrap.Modal(document.getElementById('addEntryModal'));
+    modal.show();
   });
 
   // Handle form submission
   var form = document.getElementById('entryForm');
   form.addEventListener('submit', function (e) {
-      e.preventDefault();
+    e.preventDefault();
+    document.getElementById('overlay').style.display = 'flex';
+    var name = document.getElementById('name').value;
+    var type = document.getElementById('type').value;
+    var employeeId = document.getElementById('employeeId').value;
+    var checkinTime = document.getElementById('checkinTime').value;
+    var checkoutTime = document.getElementById('checkoutTime').value;
 
-      var name = document.getElementById('name').value;
-      var type = document.getElementById('type').value;
-      var employeeId = document.getElementById('employeeId').value;
-      var checkinTime = document.getElementById('checkinTime').value;
-      var checkoutTime = document.getElementById('checkoutTime').value;
+    const cid = localStorage.getItem('companyID');
 
-      const cid = localStorage.getItem('companyID');
+    const date1 = new Date(convertToUTC(checkoutTime));
+    const date2 = new Date(convertToUTC(checkinTime));
 
-      const date1 = new Date(checkoutTime);
-      const date2 = new Date(checkinTime);
+    // Calculate the difference in milliseconds
+    const diffInMs = date1 - date2;
 
-      // Calculate the difference in milliseconds
-      const diffInMs = date1 - date2;
+    // Convert the difference from milliseconds to total minutes
+    const diffInMinutes = Math.floor(diffInMs / 1000 / 60);
 
-      // Convert the difference from milliseconds to total minutes
-      const diffInMinutes = Math.floor(diffInMs / 1000 / 60);
+    // Calculate the total hours and remaining minutes
+    const totalHours = Math.floor(diffInMinutes / 60);
+    const minutes = diffInMinutes % 60;
 
-      // Calculate the total hours and remaining minutes
-      const totalHours = Math.floor(diffInMinutes / 60);
-      const minutes = diffInMinutes % 60;
+    // Format the hours and minutes
+    const formattedHours = String(totalHours).padStart(2, '0');
+    const formattedMinutes = String(minutes).padStart(2, '0');
 
-      // Format the hours and minutes
-      const formattedHours = String(totalHours).padStart(2, '0');
-      const formattedMinutes = String(minutes).padStart(2, '0');
+    const timeWorkedHours = formattedHours + ":" + formattedMinutes;
 
-      const timeWorkedHours = formattedHours + ":" +formattedMinutes;
+    // Data object to be sent
+    var data = {
+      CID: cid,
+      EmpID: employeeId,
+      Date: checkinTime.substring(0, 10),
+      TypeID: type,
+      CheckInSnap: null,
+      CheckInTime: checkinTime,
+      CheckOutSnap: null,
+      CheckOutTime: checkoutTime,
+      TimeWorked: timeWorkedHours
 
-      // Data object to be sent
-      var data = {
-          CID: cid,
-          EmpID: employeeId,
-          Date: checkinTime.substring(0,10),
-          TypeID: type,
-          CheckInSnap: null,
-          CheckInTime: checkinTime,
-          CheckOutSnap: null,
-          CheckOutTime: checkoutTime,
-          TimeWorked: timeWorkedHours
+    };
 
-      };
-
-      // Send PUT request
-      fetch('https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/create', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-      })
+    // Send PUT request
+    fetch('https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
       .then(response => response.json())
       .then(data => {
-          console.log('Success:', data);
-          // Close the modal
-          var modal = bootstrap.Modal.getInstance(document.getElementById('addEntryModal'));
-          modal.hide();
-          viewCurrentDateReport();
-          // Optionally, you can refresh data or provide a success message
+        console.log('Success:', data);
+        // Close the modal
+        var modal = bootstrap.Modal.getInstance(document.getElementById('addEntryModal'));
+        modal.hide();
+        viewCurrentDateReport();
+        // Optionally, you can refresh data or provide a success message
       })
       .catch((error) => {
-          console.error('Error:', error);
+        console.error('Error:', error);
       });
   });
 });
+
+
+
+function getCurrentDateInTimezone(timezone) {
+  // Get the current date and time in UTC
+  const now = new Date();
+
+  // Options to format the date in the desired timezone
+  const options = {
+    timeZone: timezone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  };
+
+  // Format the date in the desired timezone using Intl.DateTimeFormat
+  const formatter = new Intl.DateTimeFormat('en-US', options);
+  const formattedDate = formatter.format(now);
+
+  // Convert the formatted date to "YYYY-MM-DD" format
+  const [month, day, year] = formattedDate.split('/');
+
+  return `${year}-${month}-${day}`;
+}
+
+
+function convertToUTC(dateTimeStr) {
+  // Create a Date object from the date and time string in local time
+  const localDate = new Date(dateTimeStr);
+
+  // Convert the local Date object to UTC components
+  const year = localDate.getUTCFullYear();
+  const month = String(localDate.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+  const day = String(localDate.getUTCDate()).padStart(2, '0');
+  const hours = String(localDate.getUTCHours()).padStart(2, '0');
+  const minutes = String(localDate.getUTCMinutes()).padStart(2, '0');
+  const seconds = String(localDate.getUTCSeconds()).padStart(2, '0');
+
+  // Format and return the UTC date and time as a string
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+}

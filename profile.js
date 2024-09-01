@@ -1,139 +1,112 @@
-
 document.addEventListener("DOMContentLoaded", function () {
-    const companyName = localStorage.getItem('companyName');
-    const companyAddress = localStorage.getItem('companyAddress');
-    const companyLogo = localStorage.getItem('companyLogo');
-    const username = localStorage.getItem('username');
-    const password = localStorage.getItem('password');
-    const firstName = localStorage.getItem('firstName');
-    const lastName = localStorage.getItem('lastName');
-    const address = localStorage.getItem('address');
-    const phone = localStorage.getItem('phone');
-    const email = localStorage.getItem('email');
-    console.log(companyLogo);
+    document.getElementById('overlay').style.display = 'flex';
+    loadImage();
+    loadLocalStorageData();
+    initializeFormSubmission();
+});
 
-    if (companyName) document.getElementById('companyName').value = companyName;
-    if (companyAddress) document.getElementById('companyAddress').value = companyAddress;
-    if (username) document.getElementById('username').value = username;
-    if (password) document.getElementById('password').value = password;
-    if (firstName) document.getElementById('fName').value = firstName;
-    if (phone) document.getElementById('phoneNumber').value = phone;
-    if (lastName) document.getElementById('lName').value = lastName;
-    if (address) document.getElementById('address').value = address;
-    if (email) document.getElementById('email').value = email;
-    if (companyLogo) document.getElementById('companyLogo').value = companyLogo;
+const cid = localStorage.getItem('companyID');
+const customerId1 = localStorage.getItem('customId');
+const phone = localStorage.getItem("phone")
 
+console.log(phone)
+async function loadImage() {
+    const url = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company/get/${cid}`;
 
-    document.getElementById('settingsForm').addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent the form from submitting
-
-        // Validation
-        let isValid = true;
-
-        if (!validateField('email', 'Invalid email format', /^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-            isValid = false;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Error fetching data: ${response.statusText}`);
         }
 
-        if (!validPhoneno()) {
-            isValid = false;
+        const responseData = await response.json();
+        console.log(responseData);
+
+        const comLoDataUrl = responseData.CLogo; // This is a data URL
+        const image = document.getElementById("logo-img");
+        console.log(comLoDataUrl)
+
+        if (comLoDataUrl.startsWith('data:image/')) {
+            image.src = comLoDataUrl; // Set the image source to the data URL
+            image.onload = function () {
+                console.log('Logo image loaded successfully');
+            };
+            image.onerror = function () {
+                console.error('Error loading logo image');
+            };
+        } else {
+            console.error('Invalid data URL:', comLoDataUrl);
         }
 
-        if (!validateField('fName', 'Only use letters and spaces', /^[a-zA-Z\s]+$/)) {
-            isValid = false;
+        document.getElementById('overlay').style.display = 'none';
+
+    } catch (error) {
+        document.getElementById('overlay').style.display = 'none';
+        console.error('Error in loadImage function:', error.message);
+    }
+}
+
+function loadLocalStorageData() {
+    const fields = [
+        'companyName', 'companyAddress', 'username', 'password',
+        'firstName', 'lastName', 'address', 'phone', 'email'
+    ];
+
+    fields.forEach(field => {
+        if (field === "phone") {
+            const value = localStorage.getItem(field);
+            if (value) {
+                const element = document.getElementById(field);
+                if (element) {
+                    element.value = formatPhoneNumber2(value);
+                } else {
+                    console.error(`Element with id ${field} not found`);
+                }
+            }
         }
-
-        if (!validateField('lName', 'Only use letters and spaces', /^[a-zA-Z\s]+$/)) {
-            isValid = false;
-        }
-
-        if (!validatePassword()) {
-            isValid = false;
-        }
-
-        if (isValid) {
-            // Save data to localStorage
-            localStorage.setItem('companyName', document.getElementById('companyName').value);
-            localStorage.setItem('companyAddress', document.getElementById('companyAddress').value);
-            localStorage.setItem('username', document.getElementById('username').value);
-            localStorage.setItem('password', document.getElementById('password').value);
-            localStorage.setItem('firstName', document.getElementById('fName').value);
-            localStorage.setItem('lastName', document.getElementById('lName').value);
-            localStorage.setItem('address', document.getElementById('address').value);
-            localStorage.setItem('phone', document.getElementById('phoneNumber').value);
-            localStorage.setItem('email', document.getElementById('email').value);
-
-            updateApiData();
-            document.getElementById('successMsg').innerHTML = 'success fully saved your changes';
-                document.getElementById('successMsg').style = "color:green";
-            document.getElementById('overlay').style.display = 'flex';
-            setTimeout(function () {
-                window.location.href = "profile.html";
-            }, 3000);
+        else {
+            const value = localStorage.getItem(field);
+            if (value) {
+                const element = document.getElementById(field);
+                if (element) {
+                    element.value = value;
+                } else {
+                    console.error(`Element with id ${field} not found`);
+                }
+            }
         }
     });
+}
 
-    // const input = document.querySelector("#phoneNumber");
-    // const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
-    // const iti = window.intlTelInput(input, {
-    //     initialCountry: "us",
-    //     utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.13/build/js/utils.js"
-    // });
+function initializeFormSubmission() {
+    document.getElementById('settingsForm').addEventListener('submit', function (event) {
+        event.preventDefault();
 
-    // input.addEventListener('keyup', () => {
-    //     resetPhoneError();
-    //     if (!input.value.trim()) {
-    //         showPhoneError("This field is required");
-    //     } else {
-    //         const isValid = iti.isValidNumber();
-    //         if (!isValid) {
-    //             const errorCode = iti.getValidationError();
-    //             const msg = errorMap[errorCode] || "Invalid number";
-    //             showPhoneError(msg);
-    //         }
-    //     }
-    // });
+        let isValid = validateForm();
+        if (isValid) {
+            saveFormDataToLocalStorage();
+            updateApiData();
+            // displaySuccessMessage();
+        }
+    });
+}
 
-    // input.addEventListener('countrychange', resetPhoneError);
+function validateForm() {
+    let isValid = true;
 
-    // function validatePhoneNumber() {
-    //     const errorPhoneNumber = document.getElementById('errorPhoneNumber');
-    //     if (!iti.isValidNumber()) {
-    //         const errorCode = iti.getValidationError();
-    //         const msg = errorMap[errorCode] || "Invalid number";
-    //         showPhoneError(msg);
-    //         return false;
-    //     }
-    //     clearPhoneError();
-    //     return true;
-    // }
+    isValid &= validateField('email', 'Invalid email format', /^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+    isValid &= validPhoneno();
+    isValid &= validateField('firstName', 'Only use letters and spaces', /^[a-zA-Z\s]+$/);
+    isValid &= validateField('lastName', 'Only use letters and spaces', /^[a-zA-Z\s]+$/);
+    isValid &= validatePassword();
 
-    // function showPhoneError(msg) {
-    //     const errorPhoneNumber = document.getElementById('errorPhoneNumber');
-    //     errorPhoneNumber.innerText = msg;
-    //     errorPhoneNumber.classList.remove("hide");
-    //     input.classList.add("error");
-    // }
-
-    // function clearPhoneError() {
-    //     const errorPhoneNumber = document.getElementById('errorPhoneNumber');
-    //     errorPhoneNumber.innerText = '';
-    //     errorPhoneNumber.classList.add("hide");
-    //     input.classList.remove("error");
-    // }
-
-    // function resetPhoneError() {
-    //     clearPhoneError();
-    // }
-});
+    return !!isValid; // Convert to boolean
+}
 
 function validateField(id, errorMessage, pattern) {
     const value = document.getElementById(id).value;
-    const errorField = document.getElementById('error' + id.charAt(0).toUpperCase() + id.slice(1));
-    if (value.trim() === '') {
-        showError(document.getElementById(id), 'This field is required');
-        return false;
-    } else if (!pattern.test(value)) {
-        showError(document.getElementById(id), errorMessage);
+    if (value.trim() === '' || !pattern.test(value)) {
+        showError(document.getElementById(id), value.trim() === '' ? 'This field is required' : errorMessage);
         return false;
     }
     clearError(document.getElementById(id));
@@ -142,12 +115,8 @@ function validateField(id, errorMessage, pattern) {
 
 function validatePassword() {
     const password = document.getElementById('password').value;
-    const errorPassword = document.getElementById('errorPassword');
-    if (password.trim() === '') {
-        showError(document.getElementById('password'), 'Password is required');
-        return false;
-    } else if (password.length < 8) {
-        showError(document.getElementById('password'), 'Password must be at least 8 characters');
+    if (password.trim() === '' || password.length < 8) {
+        showError(document.getElementById('password'), password.trim() === '' ? 'Password is required' : 'Password must be at least 8 characters');
         return false;
     }
     clearError(document.getElementById('password'));
@@ -156,36 +125,123 @@ function validatePassword() {
 
 function showError(input, message) {
     clearError(input);
-    let error = document.createElement('span');
+    const error = document.createElement('span');
     error.className = 'error';
     error.innerText = message;
     input.parentElement.appendChild(error);
 }
 
 function clearError(input) {
-    let error = input.parentElement.querySelector('.error');
+    const error = input.parentElement.querySelector('.error');
     if (error) {
         error.remove();
     }
+}
+
+function validPhoneno() {
+    const phoneInput = document.getElementById('phone');
+    const phoneError = document.getElementById('showMsg3');
+    const phoneNumber = phoneInput.value;
+    const phoneRegex = /^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/;
+
+    if (phoneNumber === "") {
+        phoneError.textContent = 'Enter phone number.';
+        return false;
+    } else if (!phoneRegex.test(phoneNumber)) {
+        phoneError.textContent = 'Invalid phone number.';
+        return false;
+    } else {
+        phoneError.textContent = '';
+        return true;
+    }
+}
+
+function formatPhoneNumber() {
+    const inputField = document.getElementById('phone');
+    let value = inputField.value;
+    // Remove all non-digit characters
+    value = value.replace(/\D/g, '');
+    // Format the phone number
+    if (value.length > 3 && value.length <= 6) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+    } else if (value.length > 6) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+    } else if (value.length > 3) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+    }
+    inputField.value = value;
+}
+
+function formatPhoneNumber2(phoneNumber) {
+    // Remove any non-digit characters from the input
+    const cleaned = phoneNumber.replace(/\D/g, '');
+
+    // Check if the cleaned number has the expected length (10 digits for this format)
+    if (cleaned.length !== 10) {
+        // throw new Error('Invalid phone number length');
+        return phoneNumber;
+    }
+
+    // Format the cleaned number
+    const areaCode = cleaned.substring(0, 3);
+    const centralOfficeCode = cleaned.substring(3, 6);
+    const lineNumber = cleaned.substring(6);
+
+    return `(${areaCode}) ${centralOfficeCode}-${lineNumber}`;
+}
+
+function handleFileSelect(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('companyLogo').value = input.files[0].name;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function loadFile(event) {
+    const logoImg = document.getElementById('logo-img');
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            logoImg.src = e.target.result; // Set the image source to the file's data URL
+            localStorage.setItem("imageFile", e.target.result); // Store the data URL in localStorage
+        };
+        reader.readAsDataURL(file); // Read the file as a data URL
+    }
+}
+
+function dataURLToBlob(dataURL) {
+    const parts = dataURL.split(',');
+    const mimeType = parts[0].match(/:(.*?);/)[1];
+    const byteString = atob(parts[1]);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+        uint8Array[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([uint8Array], { type: mimeType });
+}
+
+function saveFormDataToLocalStorage() {
+    const fields = [
+        'companyName', 'companyAddress', 'username', 'password',
+        'firstName', 'lastName', 'address', 'phone', 'email'
+    ];
+
+    fields.forEach(field => {
+        localStorage.setItem(field, document.getElementById(field).value);
+    });
 }
 
 const customerAPIUrlBase = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/customer`;
 const companyAPIUrlBase = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company`;
 
 function updateApiData() {
-    const username = document.getElementById('username').value;
-    const companyName = document.getElementById('companyName').value;
-    const fname = document.getElementById('fName').value;
-    const lname = document.getElementById('lName').value;
-    const customerAddress = document.getElementById('address').value;
-    const customerPhone = document.getElementById('phoneNumber').value;
-    const customerEmail = document.getElementById('email').value;
-    const cid = localStorage.getItem('companyID');
-    const customerId1 = localStorage.getItem('customId');
-    const companyAddress = document.getElementById("companyAddress").value;
-    const companyLogo = document.getElementById("companyAddress").value;
-    const password = document.getElementById("password").value;
-
     if (!cid || !customerId1) {
         console.error("UUID or CustomerID is missing in localStorage");
         return;
@@ -197,23 +253,22 @@ function updateApiData() {
     const customerData = {
         CustomerID: customerId1,
         CID: cid,
-        FName: fname,
-        LName: lname,
-        Address: customerAddress,
-        PhoneNumber: customerPhone,
-        Email: customerEmail,
+        FName: document.getElementById('firstName').value,
+        LName: document.getElementById('lastName').value,
+        Address: document.getElementById('address').value,
+        PhoneNumber: document.getElementById('phone').value,
+        Email: document.getElementById('email').value,
         IsActive: true
     };
 
     const companyData = {
         CID: cid,
-        UserName: username,
-        CName: companyName,
-        CAddress: companyAddress,
-        CLogo: companyLogo,
-        Password: password,
+        UserName: document.getElementById('username').value,
+        CName: document.getElementById('companyName').value,
+        CAddress: document.getElementById('companyAddress').value,
+        CLogo: localStorage.getItem("imageFile"),
+        Password: document.getElementById("password").value,
         ReportType: "Weekly"
-        // IsActive: true
     };
 
     Promise.all([
@@ -232,87 +287,22 @@ function updateApiData() {
             body: JSON.stringify(companyData)
         })
     ])
-        .then(responses => {
-            return Promise.all(responses.map(response => {
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status}`);
-                }
-                return response.json();
-            }));
-        })
+        .then(responses => Promise.all(responses.map(response => {
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            return response.json();
+        })))
         .then(data => {
+            console.log('Update successful:', data);
         })
         .catch(error => {
-            console.error('Error:', error);
-            // outPut.textContent = 'Error updating data.';
+            console.error('Error updating data:', error);
         });
 }
 
-// 4889996e-0224-4265-a449-9169c6184825
-
-// { CID: 'e57c8b8e-9570-4840-a7d0-7626cc63a340', UserName: 'best', CName: 'nrhbfhjb', CAddress: 'sdc', CLogo: 'sdc', … }
-function validPhoneno() {
-    const input = document.querySelector("#phoneNumber");
-    const phoneError = document.querySelector("#showMsg3");
-    // const employePin = document.getElementById("instructor");
-    const phoneNumber = input.value;
-
-    // employePin.value = (input.value).substring((input.value).length - 4);
-
-    const phoneRegex = /^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/;
-
-    if (phoneNumber === "") {
-        phoneError.textContent = 'Enter phone number.';
-        return false;
-    } else if (!phoneRegex.test(phoneNumber)) {
-        phoneError.textContent = 'Invalid phone number.';
-        return false;
-    } else {
-        phoneError.textContent = '';
-        return true;
-    }
-
-
-}
-
-function formatPhoneNumber() {
-    const inputField = document.getElementById('phoneNumber');
-    let value = inputField.value;
-    // Remove all non-digit characters
-    value = value.replace(/\D/g, '');
-    // Format the phone number
-    if (value.length > 3 && value.length <= 6) {
-        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
-    } else if (value.length > 6) {
-        value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
-    } else if (value.length > 3) {
-        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
-    }
-    inputField.value = value;
-}
-
-
-// Function to handle file input change event
-function handleFileSelect(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            document.getElementById('companyLogo').value = input.files[0].name;
-        }
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-// // Function to handle form submission
-// document.getElementById('settingsForm').addEventListener('submit', function (e) {
-//     e.preventDefault();
-//     // Add your form submission logic here
-// });
-
-// Function to handle password update
-// function updatePassword() {
-//     var password = document.getElementById('password').value;
-//     // Add your password update logic here
+// function displaySuccessMessage() {
+//     const messageContainer = document.getElementById('messageContainer');
+//     messageContainer.textContent = 'Update successful!';
+//     messageContainer.style.color = 'green';
 // }
-
-

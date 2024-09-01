@@ -1,7 +1,3 @@
-body{
-    font-family: "Gill Sans", sans-serif;
-}
-
 .bg-green {
     background-color: #0A8080;
 }
@@ -23,11 +19,19 @@ body{
     background-color: #0A8080;
     padding: 5px 30px;
 }
+.btn-green:hover {
+    color: white;
+    background-color: #095252;
+    padding: 5px 30px;
+}
 
 .btn-outline-green {
-    color: #0A8080;
-    border: solid 1px #0A8080;
-    padding: 5px 21px;
+    color: #0A8080 !important;
+    border: solid 1px #0A8080 !important;
+    padding: 5px 21px !important;
+}
+.btn-outline-green:focus {
+    outline: none !important;
 }
 
 .success-msg {
@@ -38,11 +42,18 @@ body{
     display: none;
 }
 
+.dropdown-item {
+    color: #0A8080 !important;
+}
 
+.dropdown-item:focus {
+    background-color: transparent !important;
+    color: #0A8080 !important;
+}
 
 @media (max-width:991px) {
     .rounded-pill-active {
-        border-radius: 10px;
+        border-radius: 10px !important;
         background-color: #fff;
         width: 230px;
         color: #0A8080 !important;
@@ -50,7 +61,33 @@ body{
     }
 }
 
+.modal-header {
+    background-color: #0A8080;
+    color: white;
+}
 
-#dropDown {
-    color: #0A8080;
+
+.no {
+    color: #0A8080 !important;
+    border: solid 1px #0A8080 !important;
+    padding: 5px 21px !important;
+}
+
+.yes {
+    color: white;
+    background-color: #0A8080;
+    padding: 5px 24px !important;
+}
+
+.no:hover {
+    color: #0A8080 !important;
+    border: solid 1px #0A8080 !important;
+    padding: 5px 21px !important;
+}
+
+.yes:hover {
+    opacity: 0.8 !important;
+    color: white;
+    background-color: #0A8080;
+    padding: 5px 24px !important;
 }

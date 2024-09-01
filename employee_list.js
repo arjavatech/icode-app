@@ -1,6 +1,13 @@
 
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/employee';
 
+// function showProgressIndicator() {
+//     document.getElementById('overlay').style.display = 'flex';
+// }
+
+// function hideProgressIndicator() {
+//     document.getElementById('overlay').style.display = 'none';
+// }
 
 // Remove Data
 
@@ -18,8 +25,6 @@ function addEmpdetails() {
     const isValidFName = validFName();
     const isValidLName = validLName();
     const isValidPhoneNumber = validPhoneno();
-    // const isvalidInstructerPin = validateInstructerPin();
-
     if (isValidFName && isValidLName && isValidPhoneNumber) {
         const empupdateid = document.getElementById("savebtn").value;
         const empfname = document.getElementById("fName").value;
@@ -27,17 +32,11 @@ function addEmpdetails() {
         const empphoneno = document.getElementById("phoneNumber").value;
         const empinst = document.getElementById("instructor").value;
         const empactive = true;
-        // const empid = "68f9bafc-2390-11ef-82b6-02d83582ee24";
         const empid = 'eid_' + Math.random().toString(36).substr(2, 12);
-        // const empcid = "68f9bafc-2390-11ef-82b6-02d83582ee21";
         const empcid = localStorage.getItem('companyID');
 
         if (empupdateid == "") {
             const apiUrl = `${apiUrlBase}/create`;
-            // return false;
-
-
-            // let outPut = document.getElementById("resmsg");
 
             const employeeObject = {
                 EmpID: empid,
@@ -82,7 +81,6 @@ function addEmpdetails() {
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    // outPut.textContent = 'Error creating data.';
                 });
         } else {
             const apiUrl = `${apiUrlBase}/update/${empupdateid}`;
@@ -130,7 +128,6 @@ function addEmpdetails() {
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    // outPut.textContent = 'Error creating data.';
                 });
         }
 
@@ -165,21 +162,22 @@ function viewEmpdetails() {
                 <td class="phoneNumber">${element.PhoneNumber}</td>
                 <td>
                 <button class="btn icon-button btn-green" onclick="editEmpdetails('${element.EmpID}')" data-bs-toggle="modal" data-bs-target="#myModal"> Edit </button>
-                <button class="btn icon-button btn-outline-green" onclick="deleteEmpdetails('${element.EmpID}')"> Delete </button>
-                </td>
+                 <button class="btn icon-button btn-outline-green" id="buttonClick" data-bs-toggle="modal"onclick="showLogoutModal('${element.EmpID}')">Delete</button>
+</td>
             `;
                 tableBody.appendChild(newRow);
             });
+            document.getElementById('overlay').style.display = 'none';
         })
         .catch(error => {
-            console.error('Error:', error);
+            document.getElementById('overlay').style.display = 'none';
         });
 
 }
 
 // Call fetchData when the page is fully loaded
 document.addEventListener('DOMContentLoaded', viewEmpdetails);
-
+document.getElementById('overlay').style.display = 'flex';
 // Edit Data
 
 function editEmpdetails(emId) {
@@ -300,8 +298,6 @@ function validPhoneno() {
         phoneError.textContent = '';
         return true;
     }
-
-
 }
 
 
@@ -312,10 +308,6 @@ function validateInstructerPin() {
         errorInstructerPin.textContent = 'Instructer pin is required';
         return false;
     }
-    // else if(isAlpha.test(instructerPin)){
-    //     errorInstructerPin.textContent = 'Only use digits, don\'t use letters';
-    //   return false;
-    // }
     errorInstructerPin.textContent = '';
     return true;
 }
@@ -336,3 +328,35 @@ function formatPhoneNumber() {
     }
     inputField.value = value;
 }
+
+    function showLogoutModal(empId) {
+        const modalHTML = `
+        <div class="modal fade" id="addEntryModal2" tabindex="-1" aria-labelledby="addEntryModalLabel2" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addEntryModalLabel2">Delete</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 class="fw-bold mb-3 text-center">Are you sure you are deleting the data?</h5>
+                        <p class="d-flex justify-content-center mt-4">
+                            <button class="btn yes" style="margin-left: 15px;" onclick="deleteEmpdetails('${empId}')">Yes</button>
+                            <button class="btn btn-outline-green" data-bs-dismiss="modal">No</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    
+        // Append the modal to the body
+        document.body.innerHTML += modalHTML;
+    
+        // Show the modal using Bootstrap's modal plugin
+        const modalElement = document.getElementById('addEntryModal2');
+        const modalInstance = new bootstrap.Modal(modalElement);
+        modalInstance.show();
+    }
+    
+

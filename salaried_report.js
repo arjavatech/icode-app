@@ -1,22 +1,13 @@
 
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/getdatebasedata';
 
-// document.addEventListener("DOMContentLoaded", function () {
-//     const buttons = document.querySelectorAll(".nav-button");
-
-//     buttons.forEach(button => {
-//         button.addEventListener("click", function () {
-//             buttons.forEach(btn => btn.classList.remove("active"));
-//             this.classList.add("active");
-//         });
-//     });
-// });
-
+const TZ = localStorage.getItem("TimeZone");
 
 function viewDateRangewiseReport() {
+  document.getElementById('overlay').style.display = 'flex';
   const apiBase = "https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyReport/getDateRangeReport";
   const tableBody = document.getElementById("tbody");
-  tableBody.innerHTML = ''; 
+  tableBody.innerHTML = '';
   const cid = localStorage.getItem('companyID');
 
   let dateRange = {};
@@ -24,21 +15,21 @@ function viewDateRangewiseReport() {
   const selectedValue = localStorage.getItem('reportType');
 
   switch (selectedValue) {
-      case "Weekly":
-          dateRange = getLastWeekDateRange();
-          break;
-      case "Monthly":
-          dateRange = getLastMonthStartAndEndDates();
-          break;
-      case "Bimonthly":
-          dateRange = getLastTwoMonthStartAndEndDates();
-          break;
-      case "Biweekly":
-        dateRange = getLastTwoWeeksDateRange();
-        break;
-      default:
-          console.error("Invalid report type");
-          return;
+    case "Weekly":
+      dateRange = getLastWeekDateRange();
+      break;
+    case "Monthly":
+      dateRange = getLastMonthStartAndEndDates();
+      break;
+    case "Bimonthly":
+      dateRange = getLastTwoMonthStartAndEndDates();
+      break;
+    case "Biweekly":
+      dateRange = getLastTwoWeeksDateRange();
+      break;
+    default:
+      console.error("Invalid report type");
+      return;
   }
 
 
@@ -52,158 +43,161 @@ function viewDateRangewiseReport() {
 
   // Fetch data from API and render table
   fetch(apiUrl)
-      .then(response => {
-          if (!response.ok) {
-              throw new Error(`Error: ${response.status}`);
-          }
-          return response.json();
-      })
-      .then(data => {
-          try {
-              // Calculate total time worked for each employee
-              const totalTimeWorked = calculateTotalTimeWorked(data);
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      try {
+        // Calculate total time worked for each employee
+        const totalTimeWorked = calculateTotalTimeWorked(data);
 
-              // Check if data is an empty array
-              if (Array.isArray(data) && data.length === 0) {
-                  const newRow = document.createElement('tr');
-                  newRow.innerHTML = `
+        // Check if data is an empty array
+        if (Array.isArray(data) && data.length === 0) {
+          const newRow = document.createElement('tr');
+          newRow.innerHTML = `
                       <td colspan="6" class="text-center">No Records Found</td>
                   `;
-                  tableBody.appendChild(newRow);
-              } else {
-                  // Clear existing rows
-                  tableBody.innerHTML = '';
+          tableBody.appendChild(newRow);
+        } else {
+          // Clear existing rows
+          tableBody.innerHTML = '';
 
-                  // Process each employee and create rows
-                  Object.entries(totalTimeWorked).forEach(([pin, Employeedata]) => {
-                      const newRow = document.createElement('tr');
-                      newRow.innerHTML = `
+          // Process each employee and create rows
+          Object.entries(totalTimeWorked).forEach(([pin, Employeedata]) => {
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
                           <td class="Name">${Employeedata.name}</td>
                           <td class="Pin">${pin}</td>
                           <td class="TimeWorked">${Employeedata.totalHoursWorked}</td>
                       `;
-                      tableBody.appendChild(newRow);
-                  });
-              }
-          } catch (error) {
-              console.error('Error processing data:', error);
-          }
-      })
-      .catch(error => {
-          console.error('Fetch error:', error);
-      });
+            tableBody.appendChild(newRow);
+          });
+          document.getElementById('overlay').style.display = 'none';
+        }
+      } catch (error) {
+        document.getElementById('overlay').style.display = 'none';
+      }
+    })
+    .catch(error => {
+      console.error('Fetch error:', error);
+    });
 }
 
-document.addEventListener('DOMContentLoaded', function(){
-    selectedValue = localStorage.getItem('reportType');
-    document.getElementById("reportName").textContent = selectedValue + " Report";
-    document.getElementById("report-type-heading").textContent = selectedValue + " Report";
-    viewDateRangewiseReport();
+document.addEventListener('DOMContentLoaded', function () {
+  selectedValue = localStorage.getItem('reportType');
+  document.getElementById("reportName").textContent = selectedValue + " Report";
+  document.getElementById("report-type-heading").textContent = selectedValue + " Report";
+  viewDateRangewiseReport();
 });
 
 // Weekly Report Date Calculation.
 
 function getLastWeekDateRange() {
-    // Today's date
-    let today = new Date();
-  
-    // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-    let dayOfWeek = today.getDay();
-  
-    // Calculate the difference to the previous Monday (dayOfWeek - 1)
-    // If today is Monday, dayOfWeek - 1 is 0, so we go back 7 days (last Monday)
-    let daysSinceLastMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-  
-    // Calculate last Monday's date
-    let lastMonday = new Date(today);
-    lastMonday.setDate(today.getDate() - daysSinceLastMonday - 7);
-  
-    // Calculate last Sunday's date
-    let lastSunday = new Date(lastMonday);
-    lastSunday.setDate(lastMonday.getDate() + 6);
-  
-    // Format dates to yyyy-mm-dd
-    let formatDate = (date) => date.toISOString().split('T')[0];
-  
-    let lastMondayStr = formatDate(lastMonday);
-    let lastSundayStr = formatDate(lastSunday);
-  
-    return {
-      startRange: lastMondayStr,
-      endRange: lastSundayStr
-    };
-  }
+  // Today's date
+  let today = new Date();
 
-  function getLastTwoWeeksDateRange() {
-    // Today's date
-    let today = new Date();
-  
-    // Find the start of the current week (Monday)
-    let currentWeekStart = new Date(today);
-    currentWeekStart.setDate(today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1));
-  
-    // Calculate the start of the last two weeks (Monday two weeks ago)
-    let startDate = new Date(currentWeekStart);
-    startDate.setDate(currentWeekStart.getDate() - 14);
-  
-    // Calculate the end of the last two weeks (Sunday two weeks later)
-    let endDate = new Date(startDate);
-    endDate.setDate(startDate.getDate() + 13); // 14 days - 1 day
-  
-    // Format dates to yyyy-mm-dd
-    let formatDate = (date) => date.toISOString().split('T')[0];
-  
-    let startDateStr = formatDate(startDate);
-    let endDateStr = formatDate(endDate);
-  
-    return {
-      startRange: startDateStr,
-      endRange: endDateStr
-    };
+  // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+  let dayOfWeek = today.getDay();
+
+  // Calculate the difference to the previous Monday (dayOfWeek - 1)
+  // If today is Monday, dayOfWeek - 1 is 0, so we go back 7 days (last Monday)
+  let daysSinceLastMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+
+  // Calculate last Monday's date
+  let lastMonday = new Date(today);
+  lastMonday.setDate(today.getDate() - daysSinceLastMonday - 7);
+
+  // Calculate last Sunday's date
+  let lastSunday = new Date(lastMonday);
+  lastSunday.setDate(lastMonday.getDate() + 6);
+
+  // Format dates to yyyy-mm-dd
+  let formatDate = (date) => date.toISOString().split('T')[0];
+
+  let lastMondayStr = formatDate(lastMonday);
+  let lastSundayStr = formatDate(lastSunday);
+
+  return {
+    startRange: lastMondayStr,
+    endRange: lastSundayStr
+  };
 }
 
-  function getLastTwoMonthStartAndEndDates() {
-      const today = new Date();
-    
-      // Calculate the middle of the month based on the number of days
-      const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-      const midMonthDay = Math.ceil(daysInMonth / 2);
-    
-      let startDate, endDate;
-    
-      if (today.getDate() >= midMonthDay) {
-        // Second half of the month, so return the first half
-        startDate = new Date(today.getFullYear(), today.getMonth(), 1);
-        endDate = new Date(today.getFullYear(), today.getMonth(), midMonthDay - 1);
-      } else {
-        // First half of the month, so return the second half of the previous month
-        const previousMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-        const daysInPrevMonth = new Date(previousMonth.getFullYear(), previousMonth.getMonth() + 1, 0).getDate();
-        startDate = new Date(previousMonth.getFullYear(), previousMonth.getMonth(), Math.ceil(daysInPrevMonth / 2));
-        endDate = new Date(previousMonth.getFullYear(), previousMonth.getMonth() + 1, 0);
-      }
-    
-      const padToTwoDigits = (num) => num.toString().padStart(2, '0');
-    
-      return {
-        startRange: `${startDate.getFullYear()}-${padToTwoDigits(startDate.getMonth() + 1)}-${padToTwoDigits(startDate.getDate())}`,
-        endRange: `${endDate.getFullYear()}-${padToTwoDigits(endDate.getMonth() + 1)}-${padToTwoDigits(endDate.getDate())}`
-      };
-    }
+function getLastTwoWeeksDateRange() {
+  // Today's date
+  let today = new Date();
+
+  // Find the start of the current week (Monday)
+  let currentWeekStart = new Date(today);
+  currentWeekStart.setDate(today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1));
+
+  // Calculate the start of the last two weeks (Monday two weeks ago)
+  let startDate = new Date(currentWeekStart);
+  startDate.setDate(currentWeekStart.getDate() - 14);
+
+  // Calculate the end of the last two weeks (Sunday two weeks later)
+  let endDate = new Date(startDate);
+  endDate.setDate(startDate.getDate() + 13); // 14 days - 1 day
+
+  // Format dates to yyyy-mm-dd
+  let formatDate = (date) => date.toISOString().split('T')[0];
+
+  let startDateStr = formatDate(startDate);
+  let endDateStr = formatDate(endDate);
+
+  return {
+    startRange: startDateStr,
+    endRange: endDateStr
+  };
+}
+
+
+function getLastTwoMonthStartAndEndDates() {
+  const today = new Date();
+
+  // Calculate the middle of the month based on the number of days
+  const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+  const midMonthDay = Math.ceil(daysInMonth / 2);
+
+  let startDate, endDate;
+
+  if (today.getDate() >= midMonthDay) {
+    // Second half of the month, so return the first half
+    startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+    endDate = new Date(today.getFullYear(), today.getMonth(), midMonthDay - 1);
+  }
+  else {
+    // First half of the month, so return the second half of the previous month
+    const previousMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+    const daysInPrevMonth = new Date(previousMonth.getFullYear(), previousMonth.getMonth() + 1, 0).getDate();
+    startDate = new Date(previousMonth.getFullYear(), previousMonth.getMonth(), Math.ceil(daysInPrevMonth / 2));
+    endDate = new Date(previousMonth.getFullYear(), previousMonth.getMonth() + 1, 0);
+  }
+
+  const padToTwoDigits = (num) => num.toString().padStart(2, '0');
+
+  return {
+    startRange: `${startDate.getFullYear()}-${padToTwoDigits(startDate.getMonth() + 1)}-${padToTwoDigits(startDate.getDate())}`,
+    endRange: `${endDate.getFullYear()}-${padToTwoDigits(endDate.getMonth() + 1)}-${padToTwoDigits(endDate.getDate())}`
+  };
+}
 
 function getLastMonthStartAndEndDates() {
   // Set today's date for testing
   const today = new Date();
-  
+
   // Calculate the start date of the last full month
   const startDateLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-  
+
   // Calculate the end date of the last full month
   const endDateLastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-  
- return {
-  startRange: formatDate(startDateLastMonth),
-  endRange : formatDate(endDateLastMonth)
+
+  return {
+    startRange: formatDate(startDateLastMonth),
+    endRange: formatDate(endDateLastMonth)
   };
 }
 
@@ -233,21 +227,21 @@ function calculateTotalTimeWorked(data) {
   const employeeTimes = {};
 
   data.forEach(entry => {
-      const { Name, Pin, TimeWorked } = entry;
+    const { Name, Pin, TimeWorked } = entry;
 
-      if (TimeWorked) {
-          const minutesWorked = timeToMinutes(TimeWorked);
+    if (TimeWorked) {
+      const minutesWorked = timeToMinutes(TimeWorked);
 
-          if (!employeeTimes[Pin]) {
-              employeeTimes[Pin] = { name: Name, totalMinutes: 0 };
-          }
-          employeeTimes[Pin].totalMinutes += minutesWorked;
+      if (!employeeTimes[Pin]) {
+        employeeTimes[Pin] = { name: Name, totalMinutes: 0 };
       }
+      employeeTimes[Pin].totalMinutes += minutesWorked;
+    }
   });
 
   // Convert total minutes to time string
   for (const [pin, details] of Object.entries(employeeTimes)) {
-      details.totalHoursWorked = minutesToTime(details.totalMinutes);
+    details.totalHoursWorked = minutesToTime(details.totalMinutes);
   }
 
   return employeeTimes;
@@ -268,3 +262,4 @@ function getDateTimeFromTimePicker(timeValue) {
 
   return combinedDateTime;
 }
+

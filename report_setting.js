@@ -4,7 +4,6 @@ const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/
 document.addEventListener("DOMContentLoaded", function () {
     selectedValue = localStorage.getItem('reportType');
     document.getElementById("reportViewType").textContent = selectedValue;
-
 });
 
 // Remove Data
@@ -92,7 +91,6 @@ function addreportdetails() {
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    // outPut.textContent = 'Error creating data.';
                 });
         } else {
             const apiUrl = `${apiUrlBase}/update/${reportUpdateid}/${company_id}`;
@@ -106,7 +104,6 @@ function addreportdetails() {
                 IsMonthlyReportActive: MonthlyReportActive,
                 IsBiMonthlyReportActive: BiMonthlyReportActive
             };
-            // return false;
 
             fetch(apiUrl, {
                 method: 'PUT',
@@ -139,7 +136,6 @@ function addreportdetails() {
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    // outPut.textContent = 'Error creating data.';
                 });
         }
 
@@ -154,6 +150,7 @@ function addreportdetails() {
 // View Data
 
 function viewReportdetails() {
+    document.getElementById('overlay').style.display = 'flex';
     const tableBody = document.getElementById("tBody");
     const company_id = localStorage.getItem('companyID');
     const apiUrl = `${apiUrlBase}/getAllReportEmail/${company_id}`;
@@ -194,14 +191,15 @@ function viewReportdetails() {
                 <td class="ReportActive">${Frequency}</td>
                 <td>
                 <button class="btn icon-button btn-green" onclick="editEmpdetails('${element.CompanyReporterEmail}')" data-bs-toggle="modal" data-bs-target="#myModal"> Edit </button>
-                <button class="btn icon-button btn-outline-green" onclick="deleteEmpdetails('${element.CompanyReporterEmail}')"> Delete </button>
+                <button class="btn icon-button btn-outline-green" id="buttonClick" onclick="showLogoutModal('${element.CompanyReporterEmail}')"> Delete </button>
                 </td>
             `;
                 tableBody.appendChild(newRow);
+                document.getElementById('overlay').style.display = 'none';
             });
         })
         .catch(error => {
-            console.error('Error:', error);
+            document.getElementById('overlay').style.display = 'none';
         });
 
 }
@@ -217,7 +215,7 @@ function viewSecondReportdetails() {
                 newRow.innerHTML = `
                 <td class="ReportActive">${reportType}</td>
                 <td>
-                <button class="btn icon-button btn-green" onclick="editReportdetails('${reportType}')" data-bs-toggle="modal" data-bs-target="#myModal2"> Edit </button>
+                <button class="btn icon-button btn-outline-green" onclick="editReportdetails('${reportType}')" data-bs-toggle="modal" data-bs-target="#myModal2"> Edit </button>
                 </td>
             `;
                 tableBody.appendChild(newRow);
@@ -387,6 +385,7 @@ function updateReportdetails() {
                 CID: company_id,
                 ReportType: selectedValues[0]
             };
+            console.log(reportObject)
 
             fetch(apiUrl, {
                 method: 'PUT',
@@ -421,7 +420,6 @@ function updateReportdetails() {
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    // outPut.textContent = 'Error creating data.';
                 });
         
 
@@ -432,3 +430,36 @@ function updateReportdetails() {
         document.getElementById('selectError2').textContent = null;
     }
 }
+
+
+
+
+function showLogoutModal(empId) {
+        const modalHTML = `
+        <div class="modal fade" id="addEntryModal2" tabindex="-1" aria-labelledby="addEntryModalLabel2" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addEntryModalLabel2">Delete</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 class="fw-bold mb-3 text-center">Are you sure you are deleting the data?</h5>
+                        <p class="d-flex justify-content-center mt-4">
+                            <button class="btn yes" style="margin-left: 15px;" onclick="deleteEmpdetails('${empId}')">Yes</button>
+                            <button class="btn btn-outline-green" data-bs-dismiss="modal">No</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    
+        // Append the modal to the body
+        document.body.innerHTML += modalHTML;
+    
+        // Show the modal using Bootstrap's modal plugin
+        const modalElement = document.getElementById('addEntryModal2');
+        const modalInstance = new bootstrap.Modal(modalElement);
+        modalInstance.show();
+    }
