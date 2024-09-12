@@ -4,9 +4,7 @@ const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/
 const cid = localStorage.getItem('companyID');
 const TZ = localStorage.getItem("TimeZone");
 
-
-const
-  timezone_mapping = {
+const timezone_mapping = {
     "UTC": "UTC",  // Coordinated Universal Time
     "GMT": "Europe/London",  // Greenwich Mean Time
     "BST": "Europe/London",  // British Summer Time
@@ -83,6 +81,7 @@ const
     "TLT": "Asia/Dili",  // East Timor Time
     "YAKT": "Asia/Yakutsk",  // Yakutsk Time
     "YEKST": "Asia/Yekaterinburg",  // Yekaterinburg Summer Time
+    "Not Registered": "America/Los_Angeles"
   }
 
 function viewCurrentDateReport() {
@@ -96,9 +95,6 @@ function viewCurrentDateReport() {
 
   // Format as yyyy-mm-dd
   var date = getCurrentDateInTimezone(timezone_mapping[TZ]);
-
-  console.log(TZ);
-  console.log(date);
 
   heading.innerHTML = date;
   const apiUrl = `${apiUrlBase}/${cid}/${date}`;
@@ -123,8 +119,6 @@ function viewCurrentDateReport() {
 
           // Convert to AM/PM format if needed
           const checkInTimeFormatted = convertToAmPm(new Date(checkInTimeIST));
-
-          console.log(checkInTimeFormatted)
 
           // Check if CheckOutTime is null
           if (element.CheckOutTime == null) {

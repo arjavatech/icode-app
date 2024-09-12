@@ -83,6 +83,7 @@ const timezone_mapping = {
   "TLT": "Asia/Dili",  // East Timor Time
   "YAKT": "Asia/Yakutsk",  // Yakutsk Time
   "YEKST": "Asia/Yekaterinburg",  // Yekaterinburg Summer Time
+  "Not Registered": "America/Los_Angeles"
 }
 
 
@@ -115,9 +116,17 @@ function viewDatewiseReport(dateValue) {
               const checkInTimeUTC = new Date(element.CheckInTime);
               const checkOutTimeUTC = new Date(element.CheckOutTime);
 
+              console.log(checkInTimeUTC);
+
               // Convert to IST
               const checkInTimeIST = checkInTimeUTC.toLocaleString("en-US", { timeZone: timezone_mapping[TZ] });
               const checkOutTimeIST = checkOutTimeUTC.toLocaleString("en-US", { timeZone: timezone_mapping[TZ] });
+
+              console.log(checkInTimeIST);
+              console.log(TZ);
+              console.log(timezone_mapping[TZ]);
+              console.log("--------------------------");
+
               // Convert to AM/PM format if needed
               const checkInTimeFormatted = convertToAmPm(new Date(checkInTimeIST));
 
