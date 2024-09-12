@@ -1,6 +1,8 @@
 
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/getdatebasedata';
 
+const cid = localStorage.getItem('companyID');
+
 const TZ = localStorage.getItem("TimeZone");
 
 
@@ -97,7 +99,7 @@ function viewDatewiseReport(dateValue) {
   tableBody.innerHTML = '';
 
   if (dateValue != "test") {
-    const apiUrl = `${apiUrlBase}/${dateValue}`;
+    const apiUrl = `${apiUrlBase}/${cid}/${dateValue}`;
     fetch(apiUrl)
       .then(response => {
         if (!response.ok) {
