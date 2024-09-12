@@ -104,7 +104,9 @@ async function validateForm() {
         //COMPANY API CALL
         document.getElementById('overlay').style.display = 'none';
         const passwordEncrypted = await checkPassword();
-        localStorage.setItem("passwordEncrypted",passwordEncrypted)
+        localStorage.setItem("passwordEncrypted",passwordEncrypted);
+        console.log(passwordEncrypted);
+        console.log("***************************************************************")
         await createCheckoutSession();
     } else {
         document.getElementById('overlay').style.display = 'none';

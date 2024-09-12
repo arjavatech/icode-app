@@ -96,6 +96,9 @@ function viewCurrentDateReport() {
   // Format as yyyy-mm-dd
   var date = getCurrentDateInTimezone(timezone_mapping[TZ]);
 
+  console.log(TZ);
+  console.log(date);
+
   heading.innerHTML = date;
   const apiUrl = `${apiUrlBase}/${date}`;
   fetch(apiUrl)
