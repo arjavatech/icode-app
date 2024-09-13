@@ -365,7 +365,7 @@
             document.getElementById('overlay').style.display = 'flex';
             const companyId = localStorage.getItem('companyID');
             const apiUrl = `${apiUrlBase}/getAll/${companyId}`;
-            console.log(companyId)
+
 
             fetch(apiUrl)
                 .then(response => {
@@ -375,19 +375,14 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data)
                     tableBody.innerHTML = '';
                     if (data.error === "No devices found !" || data.length === 0) {
                         document.getElementById("table").style.display = "none";
-                        console.log("then codition")
                         document.getElementById("deviceCheck").style.display = "block";
 
                     } else {
                         try {
                             data.forEach(element => {
-                                // console.log(element)
-                                // console.log(element.CID)
-                                // console.log(element.AccessKey)
                                 const newRow = document.createElement('tr');
                                 const accessKey = element.AccessKey;
                                 newRow.innerHTML = `
@@ -446,7 +441,6 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log('Device updated successfully:', data);
                     viewDevices();  // Refresh the device list
                     const editDeviceModal = bootstrap.Modal.getInstance(document.getElementById('editDeviceModal'));
                     editDeviceModal.hide();
@@ -493,7 +487,6 @@
                     return response.json();
                 })
                 .then(data => {
-                    // console.log('Device added successfully:', data);
                     // document.getElementById("tableBodys").style.display = "block";
                     setTimeout(function () {
                         window.location.href = "device.html";
@@ -517,7 +510,6 @@
 
         function deleteEmpdetails(accessKey) {
             const comId = localStorage.getItem('companyID')
-            console.log(accessKey)
             const apiUrl = `${apiUrlBase}/delete/${accessKey}/${comId}`;
 
             fetch(apiUrl, {

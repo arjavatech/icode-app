@@ -84,6 +84,82 @@ const timezone_mapping = {
     "Not Registered": "America/Los_Angeles"
   }
 
+  function formatDateTimeToTimezone(utcDateTime, timezone) {
+    // Append 'Z' to indicate UTC if it's not already present
+    if (!utcDateTime.endsWith('Z')) {
+        utcDateTime += 'Z';
+    }
+
+    // Create a Date object from the UTC date-time string
+    const utcDate = new Date(utcDateTime);
+
+    // Use Intl.DateTimeFormat to convert to the specified timezone
+    const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+        timeZone: timezone
+    };
+
+    const formatter = new Intl.DateTimeFormat('en-US', options);
+    const formattedParts = formatter.formatToParts(utcDate);
+
+    // Extract the individual date and time parts
+    const year = formattedParts.find(part => part.type === 'year').value;
+    const month = formattedParts.find(part => part.type === 'month').value;
+    const day = formattedParts.find(part => part.type === 'day').value;
+    const hour = formattedParts.find(part => part.type === 'hour').value;
+    const minute = formattedParts.find(part => part.type === 'minute').value;
+    const second = formattedParts.find(part => part.type === 'second').value;
+
+    // Return the formatted date-time string in 'YYYY-MM-DD HH:mm:ss' format
+    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+}
+
+  function formatDateTime(date) {
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const hours = String(date.getUTCHours()).padStart(2, '0');
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+    
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+function getUTCRangeForDate(timezone) {
+    // Get the current date and time in the given timezone
+    const currentDate = new Date().toLocaleString("en-US", { timeZone: timezone });
+
+    // Convert to Date object
+    const dateInTimeZone = new Date(currentDate);
+
+    // Set the start time to 00:00:00.000 in the timezone
+    const startTimeInTimeZone = new Date(dateInTimeZone);
+    startTimeInTimeZone.setHours(0, 0, 0, 0); // Set to start of the day
+
+    // Set the end time to 23:59:59.999 in the timezone
+    const endTimeInTimeZone = new Date(dateInTimeZone);
+    endTimeInTimeZone.setHours(23, 59, 59, 999); // Set to end of the day
+
+    // Convert start and end times to UTC
+    const startTimeInUTC = new Date(startTimeInTimeZone.toISOString());
+    const endTimeInUTC = new Date(endTimeInTimeZone.toISOString());
+
+    // Format the start and end times to 'YYYY-MM-DD HH:mm:ss'
+    const formattedStartTimeUTC = formatDateTime(startTimeInUTC);
+    const formattedEndTimeUTC = formatDateTime(endTimeInUTC);
+
+    return {
+        startTimeInUTC: formattedStartTimeUTC,
+        endTimeInUTC: formattedEndTimeUTC
+    };
+}
+
 function viewCurrentDateReport() {
   document.getElementById('overlay').style.display = 'flex';
   selectedValue = localStorage.getItem('reportType');
@@ -96,9 +172,22 @@ function viewCurrentDateReport() {
   // Format as yyyy-mm-dd
   var date = getCurrentDateInTimezone(timezone_mapping[TZ]);
 
+
+  const { startTimeInUTC, endTimeInUTC } = getUTCRangeForDate(timezone_mapping[TZ]);
+
+  var data = {
+    "startdate": startTimeInUTC,
+    "enddate": endTimeInUTC
+  }
   heading.innerHTML = date;
-  const apiUrl = `${apiUrlBase}/${cid}/${date}`;
-  fetch(apiUrl)
+  const apiUrl = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreportBasedonCID/get/${cid}`;
+  fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
     .then(response => {
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
@@ -108,14 +197,14 @@ function viewCurrentDateReport() {
     .then(data => {
       try {
         data.forEach(element => {
-          console.log(element)
           // Create a new table row
           const newRow = document.createElement('tr');
 
           const checkInTimeUTC = new Date(element.CheckInTime);
 
           // Convert to IST
-          const checkInTimeIST = checkInTimeUTC.toLocaleString("en-US", { timeZone: timezone_mapping[TZ] });
+          const checkInTimeIST = formatDateTimeToTimezone(element.CheckInTime, timezone_mapping[TZ]);
+          // checkInTimeUTC.toLocaleString("en-US", { timeZone: timezone_mapping[TZ] });
 
           // Convert to AM/PM format if needed
           const checkInTimeFormatted = convertToAmPm(new Date(checkInTimeIST));
@@ -125,7 +214,7 @@ function viewCurrentDateReport() {
             const datetimeId = `datetime-${element.CheckInTime}-${element.Pin}`;
             const checkOutId = `check_out-${element.CheckInTime}-${element.Pin}`;
             newRow.innerHTML = `
-                <td class="Name">${element.Name}</td>
+                <td class="Name">${(element.Name).split(" ")[0]}</td>
                 <td class="Pin">${element.Pin}</td>
                 <td class="CheckInTime">${checkInTimeFormatted}</td>
                 <td>
@@ -196,8 +285,10 @@ function viewCurrentDateReport() {
             const checkOutTimeUTC = new Date(element.CheckOutTime);
 
             // Convert to IST
-            const checkInTimeIST = checkInTimeUTC.toLocaleString("en-US", { timeZone: timezone_mapping[TZ] });
-            const checkOutTimeIST = checkOutTimeUTC.toLocaleString("en-US", { timeZone: timezone_mapping[TZ] });
+            const checkInTimeIST = formatDateTimeToTimezone(element.CheckInTime, timezone_mapping[TZ]);
+            // checkInTimeUTC.toLocaleString("en-US", { timeZone: timezone_mapping[TZ] });
+            const checkOutTimeIST = formatDateTimeToTimezone(element.CheckOutTime, timezone_mapping[TZ]);
+            // checkOutTimeUTC.toLocaleString("en-US", { timeZone: timezone_mapping[TZ] });
 
             // Convert to AM/PM format if needed
             const checkInTimeFormatted = convertToAmPm(new Date(checkInTimeIST));
@@ -205,7 +296,7 @@ function viewCurrentDateReport() {
 
             const checkOutId = `check_out-${element.CheckInTime}-${element.Pin}`;
             newRow.innerHTML = `
-                  <td class="Name">${element.Name}</td>
+                   <td class="Name">${(element.Name).split(" ")[0]}</td>
                   <td class="Pin">${element.Pin}</td>
                   <td class="CheckInTime">${checkInTimeFormatted}</td>
                   <td class="CheckOutTime">${checkOutTimeFormatted}</td>

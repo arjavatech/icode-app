@@ -3,6 +3,86 @@ const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/
 
 const TZ = localStorage.getItem("TimeZone");
 
+const timezone_mapping = {
+  "UTC": "UTC",  // Coordinated Universal Time
+  "GMT": "Europe/London",  // Greenwich Mean Time
+  "BST": "Europe/London",  // British Summer Time
+  "CET": "Europe/Paris",  // Central European Time
+  "CEST": "Europe/Paris",  // Central European Summer Time
+  "EET": "Europe/Helsinki",  // Eastern European Time
+  "EEST": "Europe/Helsinki",  // Eastern European Summer Time
+  "IST": "Asia/Kolkata",  // Indian Standard Time
+  "PKT": "Asia/Karachi",  // Pakistan Standard Time
+  "AST": "Asia/Riyadh",  // Arabian Standard Time
+  "GST": "Asia/Dubai",  // Gulf Standard Time
+  "MSK": "Europe/Moscow",  // Moscow Standard Time
+  "HKT": "Asia/Hong_Kong",  // Hong Kong Time
+  "SGT": "Asia/Singapore",  // Singapore Time
+  "CST": ["America/Chicago", "Asia/Shanghai"],  // Central Standard Time (US), China Standard Time
+  "CDT": "America/Chicago",  // Central Daylight Time (US)
+  "EST": "America/New_York",  // Eastern Standard Time (US)
+  "EDT": "America/New_York",  // Eastern Daylight Time (US)
+  "MST": "America/Denver",  // Mountain Standard Time (US)
+  "MDT": "America/Denver",  // Mountain Daylight Time (US)
+  "PST": "America/Los_Angeles",  // Pacific Standard Time (US)
+  "PDT": "America/Los_Angeles",  // Pacific Daylight Time (US)
+  "AKST": "America/Anchorage",  // Alaska Standard Time
+  "AKDT": "America/Anchorage",  // Alaska Daylight Time
+  "HST": "Pacific/Honolulu",  // Hawaii Standard Time
+  "HADT": "Pacific/Honolulu",  // Hawaii-Aleutian Daylight Time
+  "AEST": "Australia/Sydney",  // Australian Eastern Standard Time
+  "AEDT": "Australia/Sydney",  // Australian Eastern Daylight Time
+  "ACST": "Australia/Adelaide",  // Australian Central Standard Time
+  "ACDT": "Australia/Adelaide",  // Australian Central Daylight Time
+  "AWST": "Australia/Perth",  // Australian Western Standard Time
+  "NZST": "Pacific/Auckland",  // New Zealand Standard Time
+  "NZDT": "Pacific/Auckland",  // New Zealand Daylight Time
+  "JST": "Asia/Tokyo",  // Japan Standard Time
+  "KST": "Asia/Seoul",  // Korea Standard Time
+  "WIB": "Asia/Jakarta",  // Western Indonesia Time
+  "WITA": "Asia/Makassar",  // Central Indonesia Time
+  "WIT": "Asia/Jayapura",  // Eastern Indonesia Time
+  "ART": "America/Argentina/Buenos_Aires",  // Argentina Time
+  "BRT": "America/Sao_Paulo",  // Brasilia Time
+  "CLT": "America/Santiago",  // Chile Standard Time
+  "GFT": "America/Cayenne",  // French Guiana Time
+  "PYT": "America/Asuncion",  // Paraguay Time
+  "VET": "America/Caracas",  // Venezuela Time
+  "WET": "Europe/Lisbon",  // Western European Time
+  "WEST": "Europe/Lisbon",  // Western European Summer Time
+  "CAT": "Africa/Harare",  // Central Africa Time
+  "EAT": "Africa/Nairobi",  // East Africa Time
+  "SAST": "Africa/Johannesburg",  // South Africa Standard Time
+  "WAT": "Africa/Lagos",  // West Africa Time
+  "ADT": "America/Halifax",  // Atlantic Daylight Time
+  "AST": "America/Halifax",  // Atlantic Standard Time
+  "NST": "America/St_Johns",  // Newfoundland Standard Time
+  "NDT": "America/St_Johns",  // Newfoundland Daylight Time
+  "WAT": "Africa/Lagos",  // West Africa Time
+  "CST": "America/Havana",  // Cuba Standard Time
+  "WST": "Pacific/Apia",  // West Samoa Time
+  "ChST": "Pacific/Guam",  // Chamorro Standard Time
+  "PWT": "Pacific/Palau",  // Palau Time
+  "VOST": "Antarctica/Vostok",  // Vostok Station Time
+  "NZST": "Pacific/Auckland",  // New Zealand Standard Time
+  "NZDT": "Pacific/Auckland",  // New Zealand Daylight Time
+  "FJT": "Pacific/Fiji",  // Fiji Time
+  "GALT": "Pacific/Galapagos",  // Galapagos Time
+  "GAMT": "Pacific/Gambier",  // Gambier Time
+  "HKT": "Asia/Hong_Kong",  // Hong Kong Time
+  "IRKT": "Asia/Irkutsk",  // Irkutsk Time
+  "KRAT": "Asia/Krasnoyarsk",  // Krasnoyarsk Time
+  "MAWT": "Antarctica/Mawson",  // Mawson Station Time
+  "SCT": "Indian/Mahe",  // Seychelles Time
+  "SGT": "Asia/Singapore",  // Singapore Time
+  "SLST": "Asia/Colombo",  // Sri Lanka Standard Time
+  "THA": "Asia/Bangkok",  // Thailand Standard Time
+  "TLT": "Asia/Dili",  // East Timor Time
+  "YAKT": "Asia/Yakutsk",  // Yakutsk Time
+  "YEKST": "Asia/Yekaterinburg",  // Yekaterinburg Summer Time
+  "Not Registered": "America/Los_Angeles"
+}
+
 function viewDateRangewiseReport() {
   document.getElementById('overlay').style.display = 'flex';
   const apiBase = "https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyReport/getDateRangeReport";
@@ -39,10 +119,22 @@ function viewDateRangewiseReport() {
   document.getElementById("start-date-header").innerHTML = startVal;
   document.getElementById("end-date-header").innerHTML = endVal;
 
-  const apiUrl = `${apiBase}/${cid}/${startVal}/${endVal}`;
+  var data = {
+    "startdate": getUTCRangeForCustomDate(startVal, timezone_mapping[TZ])["startTimeInUTC"],
+    "enddate": getUTCRangeForCustomDate(endVal, timezone_mapping[TZ])["endTimeInUTC"]
+  }
+
+
+  const apiUrl = `${apiBase}/${cid}`;
 
   // Fetch data from API and render table
-  fetch(apiUrl)
+  fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
     .then(response => {
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
@@ -69,7 +161,7 @@ function viewDateRangewiseReport() {
           Object.entries(totalTimeWorked).forEach(([pin, Employeedata]) => {
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
-                          <td class="Name">${Employeedata.name}</td>
+                          <td class="Name">${Employeedata.name.split(" ")[0]}</td>
                           <td class="Pin">${pin}</td>
                           <td class="TimeWorked">${Employeedata.totalHoursWorked}</td>
                       `;
@@ -262,4 +354,45 @@ function getDateTimeFromTimePicker(timeValue) {
 
   return combinedDateTime;
 }
+
+function getUTCRangeForCustomDate(selectedDate, timezone) {
+  // Convert the selected date to a Date object
+  const selectedDateTime = new Date(selectedDate);
+
+  // Convert the selected date to the specified timezone
+  const dateInTimeZone = new Date(selectedDateTime.toLocaleString("en-US", { timeZone: timezone }));
+
+  // Set the start time to 00:00:00.000 in the timezone
+  const startTimeInTimeZone = new Date(dateInTimeZone);
+  startTimeInTimeZone.setHours(0, 0, 0, 0); // Set to start of the day
+
+  // Set the end time to 23:59:59.999 in the timezone
+  const endTimeInTimeZone = new Date(dateInTimeZone);
+  endTimeInTimeZone.setHours(23, 59, 59, 999); // Set to end of the day
+
+  // Convert start and end times to UTC
+  const startTimeInUTC = new Date(startTimeInTimeZone.toISOString());
+  const endTimeInUTC = new Date(endTimeInTimeZone.toISOString());
+
+  // Format the start and end times to 'YYYY-MM-DD HH:mm:ss'
+  const formattedStartTimeUTC = formatDateTime(startTimeInUTC);
+  const formattedEndTimeUTC = formatDateTime(endTimeInUTC);
+
+  return {
+      startTimeInUTC: formattedStartTimeUTC,
+      endTimeInUTC: formattedEndTimeUTC
+  };
+}
+
+function formatDateTime(date) {
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  const hours = String(date.getUTCHours()).padStart(2, '0');
+  const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+  const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+  
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
 

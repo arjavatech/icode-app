@@ -155,9 +155,10 @@ function viewEmpdetails() {
         .then(data => {
             data.forEach(element => {
                 const newRow = document.createElement('tr');
+                // <td class="lName">${element.LName}</td>
                 newRow.innerHTML = `
                 <td class="fName">${element.FName}</td>
-                <td class="lName">${element.LName}</td>
+                
                 <td class="instructor">${element.Pin}</td>
                 <td class="phoneNumber">${element.PhoneNumber}</td>
                 <td>
