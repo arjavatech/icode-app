@@ -124,11 +124,228 @@ function getUTCRangeForDate(timezone) {
   };
 }
 
+// function viewCurrentDateReport() {
+//   document.getElementById('overlay').style.display = 'flex';
+//   selectedValue = localStorage.getItem('reportType');
+//   document.getElementById("reportName").textContent = selectedValue + " Report";
+
+
+//   const tableBody3 = document.getElementById("current-checkin-tbody");
+//   const heading = document.getElementById("current-checkin-header");
+//   tableBody3.innerHTML = '';
+
+//   function myFunction() {
+//     dropdownValue = document.getElementById("dynamicDropdown").value;
+//   }
+
+//   document.getElementById("dynamicDropdown").addEventListener('change', myFunction);
+
+//   const employeeApiURL = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/employee/getall/${cid}`;
+//   fetch(employeeApiURL)
+//     .then(response => {
+//       if (!response.ok) {
+
+//       }
+//       return response.json();
+//     })
+//     .then(data => {
+//       if (data.error === "No devices found !" || data.length === 0) {
+//       } else {
+//         try {
+//           let optionsList = [];
+//           data.forEach(element => {
+//             let temp = `${element.FName}`;
+//             employeeDetails[temp] = element;
+//             optionsList.push(temp);
+//           });
+
+//           // Get the dropdown element
+//           const dropdown = document.getElementById("dynamicDropdown");
+
+//           // Function to dynamically add options
+//           function populateDropdown(options) {
+//             // Clear existing options except the first "Select" option
+//             dropdown.innerHTML = '<option value="">Select a option</option>';
+
+//             // Loop through the list and add each option to the dropdown
+//             options.forEach(option => {
+//               const newOption = document.createElement("option");
+//               newOption.value = option;
+//               newOption.text = option;
+//               dropdown.appendChild(newOption);
+//             });
+//           }
+//           populateDropdown(optionsList);
+//         }
+//         catch {
+//           console.error('Error:', error);
+//         }
+//       }
+//     })
+//     .catch(error => {
+//       console.error('Error:', error);
+//     });
+
+
+//   // Format as yyyy-mm-dd
+//   var date = getCurrentLocalTime().substring(0, 10);
+
+//   const apiUrl = `${apiUrlBase}/${cid}/${date}`;
+
+//   heading.innerHTML = date;
+//   fetch(apiUrl,)
+//     .then(response => {
+//       if (!response.ok) {
+//         throw new Error(`Error: ${response.status}`);
+//       }
+//       return response.json();
+//     })
+//     .then(data => {
+//       try {
+//         data.forEach(element => {
+//           // Create a new table row
+//           const newRow = document.createElement('tr');
+
+//           const checkInTimeUTC = new Date(element.CheckInTime);
+
+//           // Convert to AM/PM format if needed
+//           const checkInTimeFormatted = convertToAmPm(checkInTimeUTC);
+
+//           // Check if CheckOutTime is null
+//           if (element.CheckOutTime == null) {
+//             const datetimeId = `datetime-${element.CheckInTime}-${element.Pin}`;
+//             const checkOutId = `check_out-${element.CheckInTime}-${element.Pin}`;
+//             newRow.innerHTML = `
+//                 <td class="Pin">${element.Pin}</td>
+//                 <td class="Name">${(element.Name).split(" ")[0]}</td>
+//                 <td class="CheckInTime">${checkInTimeFormatted}</td>
+//                 <td>
+//                   <div class="text-center">
+//                     <input type="time" id="${datetimeId}" name="time" class="time-input" step="1">
+//                     <div class="calendar-icon" onclick="openTimePicker();"></div>
+//                 </div>
+//                 </td>
+//                 <td class="text-center">
+//                   <button type="button" class="btn btn-green" id="${checkOutId}" disabled>Check-out</button>
+//                 </td>
+//               `;
+
+//             tableBody3.appendChild(newRow);
+
+//             // Get references to the input and button for this row (using the unique IDs)
+//             const datetimeInput = document.getElementById(datetimeId);
+//             const checkOutButton = document.getElementById(checkOutId);
+
+//             // Set initial disabled state
+//             checkOutButton.disabled = true;
+
+//             // Add event listener for this specific input
+//             datetimeInput.addEventListener('change', function () {
+//               if (this.value) {
+//                 checkOutButton.disabled = false;
+//               } else {
+//                 checkOutButton.disabled = true;
+//               }
+//             });
+
+//             checkOutButton.addEventListener('click', function () {
+//               document.getElementById('overlay').style.display = 'flex';
+
+//               const dateWithTime = getDateTimeFromTimePicker(datetimeInput.value);
+
+//               const date2 = new Date(element.CheckInTime);
+//               const date1 = new Date(dateWithTime)
+
+//               // Calculate the difference in milliseconds
+//               const diffInMs = date1 - date2;
+
+//               // Convert the difference from milliseconds to total minutes
+//               const diffInMinutes = Math.floor(diffInMs / 1000 / 60);
+
+//               // Calculate the total hours and remaining minutes
+//               const totalHours = Math.floor(diffInMinutes / 60);
+//               const minutes = diffInMinutes % 60;
+
+//               // Format the hours and minutes
+//               const formattedHours = String(totalHours).padStart(2, '0');
+//               const formattedMinutes = String(minutes).padStart(2, '0');
+
+//               const timeWorkedHours = formattedHours + ":" + formattedMinutes;
+
+//               updateDailyReportAPiData(element.EmpID, element.CID, date, element.Type, element.CheckInSnap, element.CheckInTime, element.CheckOutSnap, dateWithTime, timeWorkedHours)
+
+//               datetimeInput.value = '';
+//               checkOutButton.disabled = true;
+//             });
+
+
+//           }
+//           else {
+
+//             const checkInTimeIST = new Date(element.CheckInTime);
+//             const checkOutTimeIST = new Date(element.CheckOutTime);
+
+
+//             // Convert to AM/PM format if needed
+//             const checkInTimeFormatted = convertToAmPm(new Date(checkInTimeIST));
+//             const checkOutTimeFormatted = convertToAmPm(new Date(checkOutTimeIST));
+
+//             const checkOutId = `check_out-${element.CheckInTime}-${element.Pin}`;
+//             newRow.innerHTML = `
+//                   <td class="Pin">${element.Pin}</td>
+//                   <td class="Name">${(element.Name).split(" ")[0]}</td>                  
+//                   <td class="CheckInTime">${checkInTimeFormatted}</td>
+//                   <td class="CheckOutTime">${checkOutTimeFormatted}</td>
+//                   <td class="text-center">
+//                     <button type="button" class="btn btn-grey" id="${checkOutId}" disabled>Check-out</button>
+//                   </td>
+//                 `;
+
+//             tableBody3.appendChild(newRow);
+
+//           }
+//         });
+
+//         if (tableBody3.innerHTML == '') {
+
+//           const newRow = document.createElement('tr');
+//           newRow.innerHTML = `
+//                       <td colspan="6" class="text-center">No Records Found</td>
+//                   `;
+//           tableBody3.innerHTML = '';
+//           tableBody3.appendChild(newRow);
+
+//         }
+
+//       }
+//       catch {
+//         const newRow = document.createElement('tr');
+//         newRow.innerHTML = `
+//                 <td colspan="6" class="text-center">No Records Found</td>
+//             `;
+//         tableBody3.innerHTML = '';
+//         tableBody3.appendChild(newRow);
+
+//       }
+//       document.getElementById('overlay').style.display = 'none';
+//     })
+//     .catch(error => {
+//       console.error('Error:', error);
+//     });
+// }
+
+
+
+// View Data
+
+// Call fetchData when the page is fully loaded
+
+
 function viewCurrentDateReport() {
   document.getElementById('overlay').style.display = 'flex';
+
   selectedValue = localStorage.getItem('reportType');
   document.getElementById("reportName").textContent = selectedValue + " Report";
-
 
   const tableBody3 = document.getElementById("current-checkin-tbody");
   const heading = document.getElementById("current-checkin-header");
@@ -140,60 +357,48 @@ function viewCurrentDateReport() {
 
   document.getElementById("dynamicDropdown").addEventListener('change', myFunction);
 
+  // Check employee API URL
   const employeeApiURL = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/employee/getall/${cid}`;
+  console.log('Fetching employee data from:', employeeApiURL); // Debugging
+
   fetch(employeeApiURL)
     .then(response => {
       if (!response.ok) {
-
+        throw new Error('Error fetching employee data');
       }
       return response.json();
     })
     .then(data => {
-      if (data.error === "No devices found !" || data.length === 0) {
-      } else {
-        try {
-          let optionsList = [];
-          data.forEach(element => {
-            let temp = `${element.FName}`;
-            employeeDetails[temp] = element;
-            optionsList.push(temp);
-          });
+      console.log('Employee data:', data); // Log data for debugging
 
-          // Get the dropdown element
-          const dropdown = document.getElementById("dynamicDropdown");
+      // Populate dropdown with employee names
+      let optionsList = [];
+      data.forEach(element => {
+        let temp = `${element.FName}`;
+        optionsList.push(temp);
+      });
 
-          // Function to dynamically add options
-          function populateDropdown(options) {
-            // Clear existing options except the first "Select" option
-            dropdown.innerHTML = '<option value="">Select a option</option>';
-
-            // Loop through the list and add each option to the dropdown
-            options.forEach(option => {
-              const newOption = document.createElement("option");
-              newOption.value = option;
-              newOption.text = option;
-              dropdown.appendChild(newOption);
-            });
-          }
-          populateDropdown(optionsList);
-        }
-        catch {
-          console.error('Error:', error);
-        }
-      }
+      const dropdown = document.getElementById("dynamicDropdown");
+      dropdown.innerHTML = '<option value="">Select an option</option>';
+      optionsList.forEach(option => {
+        const newOption = document.createElement("option");
+        newOption.value = option;
+        newOption.text = option;
+        dropdown.appendChild(newOption);
+      });
     })
     .catch(error => {
-      console.error('Error:', error);
+      console.error('Error fetching employee data:', error);
     });
 
-
-  // Format as yyyy-mm-dd
+  // Check current date report API
   var date = getCurrentLocalTime().substring(0, 10);
-
   const apiUrl = `${apiUrlBase}/${cid}/${date}`;
+  console.log('Fetching report data from:', apiUrl); // Debugging
 
   heading.innerHTML = date;
-  fetch(apiUrl,)
+
+  fetch(apiUrl)
     .then(response => {
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
@@ -201,144 +406,96 @@ function viewCurrentDateReport() {
       return response.json();
     })
     .then(data => {
-      try {
-        data.forEach(element => {
-          // Create a new table row
-          const newRow = document.createElement('tr');
+      console.log('Report data:', data); // Log report data for debugging
 
-          const checkInTimeUTC = new Date(element.CheckInTime);
+      if (!data.length) {
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `<td colspan="6" class="text-center">No Records Found</td>`;
+        tableBody3.appendChild(newRow);
+        document.getElementById('overlay').style.display = 'none';
+        return;
+      }
 
-          // Convert to AM/PM format if needed
-          const checkInTimeFormatted = convertToAmPm(checkInTimeUTC);
+      data.forEach(element => {
+        const newRow = document.createElement('tr');
+        const checkInTimeUTC = new Date(element.CheckInTime);
+        const checkInTimeFormatted = convertToAmPm(checkInTimeUTC);
 
-          // Check if CheckOutTime is null
-          if (element.CheckOutTime == null) {
-            const datetimeId = `datetime-${element.CheckInTime}-${element.Pin}`;
-            const checkOutId = `check_out-${element.CheckInTime}-${element.Pin}`;
-            newRow.innerHTML = `
-                <td class="Pin">${element.Pin}</td>
-                <td class="Name">${(element.Name).split(" ")[0]}</td>
-                <td class="CheckInTime">${checkInTimeFormatted}</td>
-                <td>
-                  <div class="text-center">
-                    <input type="time" id="${datetimeId}" name="time" class="time-input" step="1">
-                    <div class="calendar-icon" onclick="openTimePicker();"></div>
-                </div>
-                </td>
-                <td class="text-center">
-                  <button type="button" class="btn btn-green" id="${checkOutId}" disabled>Check-out</button>
-                </td>
-              `;
+        if (element.CheckOutTime == null) {
+          const datetimeId = `datetime-${element.CheckInTime}-${element.Pin}`;
+          const checkOutId = `check_out-${element.CheckInTime}-${element.Pin}`;
 
-            tableBody3.appendChild(newRow);
-
-            // Get references to the input and button for this row (using the unique IDs)
-            const datetimeInput = document.getElementById(datetimeId);
-            const checkOutButton = document.getElementById(checkOutId);
-
-            // Set initial disabled state
-            checkOutButton.disabled = true;
-
-            // Add event listener for this specific input
-            datetimeInput.addEventListener('change', function () {
-              if (this.value) {
-                checkOutButton.disabled = false;
-              } else {
-                checkOutButton.disabled = true;
-              }
-            });
-
-            checkOutButton.addEventListener('click', function () {
-              document.getElementById('overlay').style.display = 'flex';
-
-              const dateWithTime = getDateTimeFromTimePicker(datetimeInput.value);
-
-              const date2 = new Date(element.CheckInTime);
-              const date1 = new Date(dateWithTime)
-
-              // Calculate the difference in milliseconds
-              const diffInMs = date1 - date2;
-
-              // Convert the difference from milliseconds to total minutes
-              const diffInMinutes = Math.floor(diffInMs / 1000 / 60);
-
-              // Calculate the total hours and remaining minutes
-              const totalHours = Math.floor(diffInMinutes / 60);
-              const minutes = diffInMinutes % 60;
-
-              // Format the hours and minutes
-              const formattedHours = String(totalHours).padStart(2, '0');
-              const formattedMinutes = String(minutes).padStart(2, '0');
-
-              const timeWorkedHours = formattedHours + ":" + formattedMinutes;
-
-              updateDailyReportAPiData(element.EmpID, element.CID, date, element.Type, element.CheckInSnap, element.CheckInTime, element.CheckOutSnap, dateWithTime, timeWorkedHours)
-
-              datetimeInput.value = '';
-              checkOutButton.disabled = true;
-            });
-
-
-          }
-          else {
-
-            const checkInTimeIST = new Date(element.CheckInTime);
-            const checkOutTimeIST = new Date(element.CheckOutTime);
-
-
-            // Convert to AM/PM format if needed
-            const checkInTimeFormatted = convertToAmPm(new Date(checkInTimeIST));
-            const checkOutTimeFormatted = convertToAmPm(new Date(checkOutTimeIST));
-
-            const checkOutId = `check_out-${element.CheckInTime}-${element.Pin}`;
-            newRow.innerHTML = `
-                  <td class="Pin">${element.Pin}</td>
-                  <td class="Name">${(element.Name).split(" ")[0]}</td>                  
-                  <td class="CheckInTime">${checkInTimeFormatted}</td>
-                  <td class="CheckOutTime">${checkOutTimeFormatted}</td>
-                  <td class="text-center">
-                    <button type="button" class="btn btn-grey" id="${checkOutId}" disabled>Check-out</button>
-                  </td>
-                `;
-
-            tableBody3.appendChild(newRow);
-
-          }
-        });
-
-        if (tableBody3.innerHTML == '') {
-
-          const newRow = document.createElement('tr');
           newRow.innerHTML = `
-                      <td colspan="6" class="text-center">No Records Found</td>
-                  `;
-          tableBody3.innerHTML = '';
+              <td class="Pin">${element.Pin}</td>
+              <td class="Name">${(element.Name).split(" ")[0]}</td>
+              <td class="CheckInTime">${checkInTimeFormatted}</td>
+              <td>
+                <div class="text-center">
+                  <input type="time" id="${datetimeId}" name="time" class="time-input" step="1">
+                  <div class="calendar-icon" onclick="openTimePicker();"></div>
+                </div>
+              </td>
+              <td class="text-center">
+                <button type="button" class="btn btn-green" id="${checkOutId}" disabled>Check-out</button>
+              </td>
+            `;
+
           tableBody3.appendChild(newRow);
 
-        }
+          const datetimeInput = document.getElementById(datetimeId);
+          const checkOutButton = document.getElementById(checkOutId);
 
-      }
-      catch {
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-                <td colspan="6" class="text-center">No Records Found</td>
+          datetimeInput.addEventListener('change', function () {
+            checkOutButton.disabled = !this.value;
+          });
+
+          checkOutButton.addEventListener('click', function () {
+            document.getElementById('overlay').style.display = 'flex';
+
+            const dateWithTime = getDateTimeFromTimePicker(datetimeInput.value);
+
+            const date2 = new Date(element.CheckInTime);
+            const date1 = new Date(dateWithTime);
+
+            const diffInMs = date1 - date2;
+            const diffInMinutes = Math.floor(diffInMs / 1000 / 60);
+            const totalHours = Math.floor(diffInMinutes / 60);
+            const minutes = diffInMinutes % 60;
+
+            const timeWorkedHours = `${String(totalHours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+            
+            updateDailyReportAPiData(element.EmpID, element.CID, date, element.Type, element.CheckInSnap, element.CheckInTime, element.CheckOutSnap, dateWithTime, timeWorkedHours);
+
+            datetimeInput.value = '';
+            checkOutButton.disabled = true;
+          });
+        } else {
+          const checkInTimeIST = new Date(element.CheckInTime);
+          const checkOutTimeIST = new Date(element.CheckOutTime);
+          const checkInTimeFormatted = convertToAmPm(new Date(checkInTimeIST));
+          const checkOutTimeFormatted = convertToAmPm(new Date(checkOutTimeIST));
+
+          newRow.innerHTML = `
+              <td class="Pin">${element.Pin}</td>
+              <td class="Name">${(element.Name).split(" ")[0]}</td>
+              <td class="CheckInTime">${checkInTimeFormatted}</td>
+              <td class="CheckOutTime">${checkOutTimeFormatted}</td>
+              <td class="text-center">
+                <button type="button" class="btn btn-grey" disabled>Check-out</button>
+              </td>
             `;
-        tableBody3.innerHTML = '';
-        tableBody3.appendChild(newRow);
+          tableBody3.appendChild(newRow);
+        }
+      });
 
-      }
       document.getElementById('overlay').style.display = 'none';
     })
     .catch(error => {
-      console.error('Error:', error);
+      console.error('Error fetching report data:', error);
+      document.getElementById('overlay').style.display = 'none';
     });
 }
 
-
-
-// View Data
-
-// Call fetchData when the page is fully loaded
 
 document.addEventListener('DOMContentLoaded', viewCurrentDateReport());
 async function updateDailyReportAPiData(emp_id, cid, date, type, checkin_snap, checkin_time, checkout_snap, checkout_time, time_worked) {

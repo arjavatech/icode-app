@@ -140,6 +140,115 @@ function addEmpdetails() {
 
 // View Data
 
+// function viewEmpdetails() {
+//     const tableBody = document.getElementById("tBody");
+//     const company_id = localStorage.getItem('companyID');
+//     const apiUrl = `${apiUrlBase}/getall/${company_id}`;
+
+//     fetch(apiUrl)
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error(`Error: ${response.status}`);
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             data.forEach(element => {
+//                 const newRow = document.createElement('tr');
+//                 // <td class="lName">${element.LName}</td>
+//                 newRow.innerHTML = `
+//                 <td class="fName">${element.FName}</td>
+//                 <td class="instructor">${element.Pin}</td>
+//                 <td class="phoneNumber">${element.PhoneNumber}</td>
+//                 <td>
+//                 <button class="btn icon-button btn-green" onclick="editEmpdetails('${element.EmpID}')" data-bs-toggle="modal" data-bs-target="#myModal"> Edit </button>
+//                  <button class="btn icon-button btn-outline-green" id="buttonClick" data-bs-toggle="modal"onclick="showLogoutModal('${element.EmpID}')">Delete</button>
+// </td>
+//             `;
+//                 tableBody.appendChild(newRow);
+//             });
+//             document.getElementById('overlay').style.display = 'none';
+//         })
+//         .catch(error => {
+//             document.getElementById('overlay').style.display = 'none';
+//         });
+// }
+
+
+// Pagination variables
+const rowsPerPage = 10;
+let currentPage = 1;
+let employeesData = [];  // Variable to store fetched employee data
+
+function displayTable(data, page = 1) {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const paginatedData = data.slice(start, end);
+
+    const tbody = document.querySelector('#employeeTable tbody');
+    tbody.innerHTML = "";  // Clear previous table rows
+
+    paginatedData.forEach(element => {
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td class="instructor">${element.Pin}</td>
+            <td class="fName">${element.FName}</td>
+            <td class="phoneNumber">${element.PhoneNumber}</td>
+            <td>
+                <button class="btn icon-button btn-green" onclick="editEmpdetails('${element.EmpID}')" data-bs-toggle="modal" data-bs-target="#myModal">Edit</button>
+                <button class="btn icon-button btn-outline-green" id="buttonClick" data-bs-toggle="modal" onclick="showLogoutModal('${element.EmpID}')">Delete</button>
+            </td>
+        `;
+        tbody.appendChild(newRow);
+    });
+}
+
+function setupPagination(data) {
+    const paginationControls = document.getElementById('paginationControls');
+    const totalPages = Math.ceil(data.length / rowsPerPage);
+    paginationControls.innerHTML = "";  // Clear previous pagination buttons
+
+    // Create Previous button
+    const prevButton = document.createElement('button');
+    prevButton.textContent = 'Previous';
+    prevButton.onclick = () => {
+        if (currentPage > 1) {
+            currentPage--;
+            displayTable(data, currentPage);
+            setupPagination(data);
+        }
+    };
+    if (currentPage === 1) prevButton.classList.add('disabled');
+    paginationControls.appendChild(prevButton);
+
+    // Create page number buttons
+    for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        if (i === currentPage) pageButton.classList.add('disabled');
+        pageButton.onclick = () => {
+            currentPage = i;
+            displayTable(data, currentPage);
+            setupPagination(data);
+        };
+        paginationControls.appendChild(pageButton);
+    }
+
+    // Create Next button
+    const nextButton = document.createElement('button');
+    nextButton.textContent = 'Next';
+    nextButton.onclick = () => {
+        if (currentPage < totalPages) {
+            currentPage++;
+            displayTable(data, currentPage);
+            setupPagination(data);
+        }
+    };
+    if (currentPage === totalPages) nextButton.classList.add('disabled');
+    paginationControls.appendChild(nextButton);
+}
+
+// Function to fetch and display employee data
 function viewEmpdetails() {
     const tableBody = document.getElementById("tBody");
     const company_id = localStorage.getItem('companyID');
@@ -153,27 +262,20 @@ function viewEmpdetails() {
             return response.json();
         })
         .then(data => {
-            data.forEach(element => {
-                const newRow = document.createElement('tr');
-                // <td class="lName">${element.LName}</td>
-                newRow.innerHTML = `
-                <td class="fName">${element.FName}</td>
-                <td class="instructor">${element.Pin}</td>
-                <td class="phoneNumber">${element.PhoneNumber}</td>
-                <td>
-                <button class="btn icon-button btn-green" onclick="editEmpdetails('${element.EmpID}')" data-bs-toggle="modal" data-bs-target="#myModal"> Edit </button>
-                 <button class="btn icon-button btn-outline-green" id="buttonClick" data-bs-toggle="modal"onclick="showLogoutModal('${element.EmpID}')">Delete</button>
-</td>
-            `;
-                tableBody.appendChild(newRow);
-            });
+            employeesData = data;  // Store the fetched data for pagination
+            displayTable(employeesData, currentPage);
+            setupPagination(employeesData);
             document.getElementById('overlay').style.display = 'none';
         })
         .catch(error => {
+            console.error('Fetch error:', error);
             document.getElementById('overlay').style.display = 'none';
         });
-
 }
+
+// Call viewEmpdetails to fetch data and initialize the table
+viewEmpdetails();
+
 
 // Call fetchData when the page is fully loaded
 document.addEventListener('DOMContentLoaded', viewEmpdetails);
