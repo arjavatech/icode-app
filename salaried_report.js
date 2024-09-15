@@ -70,7 +70,7 @@ function viewDateRangewiseReport() {
           Object.entries(totalTimeWorked).forEach(([pin, Employeedata]) => {
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
-                          <td class="Name">${Employeedata.name.split(" ")[0]}</td>
+                          <td class="Name">${Employeedata.name}</td>
                           <td class="Pin">${pin}</td>
                           <td class="TimeWorked">${Employeedata.totalHoursWorked}</td>
                       `;
