@@ -24,85 +24,7 @@ const formattedToday = `${year}-${month}-${day}`; // Format: yyyy-mm-dd
 datePicker.setAttribute('max', formattedToday);
 
 
-const timezone_mapping = {
-  "UTC": "UTC",  // Coordinated Universal Time
-  "GMT": "Europe/London",  // Greenwich Mean Time
-  "BST": "Europe/London",  // British Summer Time
-  "CET": "Europe/Paris",  // Central European Time
-  "CEST": "Europe/Paris",  // Central European Summer Time
-  "EET": "Europe/Helsinki",  // Eastern European Time
-  "EEST": "Europe/Helsinki",  // Eastern European Summer Time
-  "IST": "Asia/Kolkata",  // Indian Standard Time
-  "PKT": "Asia/Karachi",  // Pakistan Standard Time
-  "AST": "Asia/Riyadh",  // Arabian Standard Time
-  "GST": "Asia/Dubai",  // Gulf Standard Time
-  "MSK": "Europe/Moscow",  // Moscow Standard Time
-  "HKT": "Asia/Hong_Kong",  // Hong Kong Time
-  "SGT": "Asia/Singapore",  // Singapore Time
-  "CST": ["America/Chicago", "Asia/Shanghai"],  // Central Standard Time (US), China Standard Time
-  "CDT": "America/Chicago",  // Central Daylight Time (US)
-  "EST": "America/New_York",  // Eastern Standard Time (US)
-  "EDT": "America/New_York",  // Eastern Daylight Time (US)
-  "MST": "America/Denver",  // Mountain Standard Time (US)
-  "MDT": "America/Denver",  // Mountain Daylight Time (US)
-  "PST": "America/Los_Angeles",  // Pacific Standard Time (US)
-  "PDT": "America/Los_Angeles",  // Pacific Daylight Time (US)
-  "AKST": "America/Anchorage",  // Alaska Standard Time
-  "AKDT": "America/Anchorage",  // Alaska Daylight Time
-  "HST": "Pacific/Honolulu",  // Hawaii Standard Time
-  "HADT": "Pacific/Honolulu",  // Hawaii-Aleutian Daylight Time
-  "AEST": "Australia/Sydney",  // Australian Eastern Standard Time
-  "AEDT": "Australia/Sydney",  // Australian Eastern Daylight Time
-  "ACST": "Australia/Adelaide",  // Australian Central Standard Time
-  "ACDT": "Australia/Adelaide",  // Australian Central Daylight Time
-  "AWST": "Australia/Perth",  // Australian Western Standard Time
-  "NZST": "Pacific/Auckland",  // New Zealand Standard Time
-  "NZDT": "Pacific/Auckland",  // New Zealand Daylight Time
-  "JST": "Asia/Tokyo",  // Japan Standard Time
-  "KST": "Asia/Seoul",  // Korea Standard Time
-  "WIB": "Asia/Jakarta",  // Western Indonesia Time
-  "WITA": "Asia/Makassar",  // Central Indonesia Time
-  "WIT": "Asia/Jayapura",  // Eastern Indonesia Time
-  "ART": "America/Argentina/Buenos_Aires",  // Argentina Time
-  "BRT": "America/Sao_Paulo",  // Brasilia Time
-  "CLT": "America/Santiago",  // Chile Standard Time
-  "GFT": "America/Cayenne",  // French Guiana Time
-  "PYT": "America/Asuncion",  // Paraguay Time
-  "VET": "America/Caracas",  // Venezuela Time
-  "WET": "Europe/Lisbon",  // Western European Time
-  "WEST": "Europe/Lisbon",  // Western European Summer Time
-  "CAT": "Africa/Harare",  // Central Africa Time
-  "EAT": "Africa/Nairobi",  // East Africa Time
-  "SAST": "Africa/Johannesburg",  // South Africa Standard Time
-  "WAT": "Africa/Lagos",  // West Africa Time
-  "ADT": "America/Halifax",  // Atlantic Daylight Time
-  "AST": "America/Halifax",  // Atlantic Standard Time
-  "NST": "America/St_Johns",  // Newfoundland Standard Time
-  "NDT": "America/St_Johns",  // Newfoundland Daylight Time
-  "WAT": "Africa/Lagos",  // West Africa Time
-  "CST": "America/Havana",  // Cuba Standard Time
-  "WST": "Pacific/Apia",  // West Samoa Time
-  "ChST": "Pacific/Guam",  // Chamorro Standard Time
-  "PWT": "Pacific/Palau",  // Palau Time
-  "VOST": "Antarctica/Vostok",  // Vostok Station Time
-  "NZST": "Pacific/Auckland",  // New Zealand Standard Time
-  "NZDT": "Pacific/Auckland",  // New Zealand Daylight Time
-  "FJT": "Pacific/Fiji",  // Fiji Time
-  "GALT": "Pacific/Galapagos",  // Galapagos Time
-  "GAMT": "Pacific/Gambier",  // Gambier Time
-  "HKT": "Asia/Hong_Kong",  // Hong Kong Time
-  "IRKT": "Asia/Irkutsk",  // Irkutsk Time
-  "KRAT": "Asia/Krasnoyarsk",  // Krasnoyarsk Time
-  "MAWT": "Antarctica/Mawson",  // Mawson Station Time
-  "SCT": "Indian/Mahe",  // Seychelles Time
-  "SGT": "Asia/Singapore",  // Singapore Time
-  "SLST": "Asia/Colombo",  // Sri Lanka Standard Time
-  "THA": "Asia/Bangkok",  // Thailand Standard Time
-  "TLT": "Asia/Dili",  // East Timor Time
-  "YAKT": "Asia/Yakutsk",  // Yakutsk Time
-  "YEKST": "Asia/Yekaterinburg",  // Yekaterinburg Summer Time
-  "Not Registered": "America/Los_Angeles"
-}
+
 
 // Enable end time only after start time is selected
 checkinTimeButton.addEventListener('change', () => {
@@ -266,7 +188,7 @@ function viewCurrentDateReport() {
 
 
   // Format as yyyy-mm-dd
-  var date = getCurrentLocalTime().substring(0,10);
+  var date = getCurrentLocalTime().substring(0, 10);
 
   const apiUrl = `${apiUrlBase}/${cid}/${date}`;
 
@@ -294,8 +216,8 @@ function viewCurrentDateReport() {
             const datetimeId = `datetime-${element.CheckInTime}-${element.Pin}`;
             const checkOutId = `check_out-${element.CheckInTime}-${element.Pin}`;
             newRow.innerHTML = `
-                <td class="Name">${(element.Name).split(" ")[0]}</td>
                 <td class="Pin">${element.Pin}</td>
+                <td class="Name">${(element.Name).split(" ")[0]}</td>
                 <td class="CheckInTime">${checkInTimeFormatted}</td>
                 <td>
                   <div class="text-center">
@@ -370,8 +292,8 @@ function viewCurrentDateReport() {
 
             const checkOutId = `check_out-${element.CheckInTime}-${element.Pin}`;
             newRow.innerHTML = `
-                   <td class="Name">${(element.Name).split(" ")[0]}</td>
                   <td class="Pin">${element.Pin}</td>
+                  <td class="Name">${(element.Name).split(" ")[0]}</td>                  
                   <td class="CheckInTime">${checkInTimeFormatted}</td>
                   <td class="CheckOutTime">${checkOutTimeFormatted}</td>
                   <td class="text-center">
@@ -670,26 +592,26 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       dateError.textContent = '';
       EmpTypeError.textContent = "";
-      startTimeError.textContent="";
-      EmpNameError.textContent="";
-      endTimeError.textContent="";
+      startTimeError.textContent = "";
+      EmpNameError.textContent = "";
+      endTimeError.textContent = "";
     }
-    if(document.getElementById("type").value === ""){
+    if (document.getElementById("type").value === "") {
       EmpTypeError.textContent = 'Please select a type.';
       isValid = false;
       dateError.textContent = '';
-      startTimeError.textContent="";
-      EmpNameError.textContent="";
-      endTimeError.textContent="";
+      startTimeError.textContent = "";
+      EmpNameError.textContent = "";
+      endTimeError.textContent = "";
     }
 
-    if(document.getElementById("dynamicDropdown").value === ""){
+    if (document.getElementById("dynamicDropdown").value === "") {
       EmpNameError.textContent = 'Please select a Employee.';
       isValid = false;
       dateError.textContent = '';
       EmpTypeError.textContent = "";
-      startTimeError.textContent="";
-      endTimeError.textContent="";
+      startTimeError.textContent = "";
+      endTimeError.textContent = "";
     }
     // Check if start time is selected
     if (!checkinTimeButton.value) {
@@ -697,8 +619,8 @@ document.addEventListener('DOMContentLoaded', function () {
       isValid = false;
       dateError.textContent = '';
       EmpTypeError.textContent = "";
-      EmpNameError.textContent="";
-      endTimeError.textContent="";
+      EmpNameError.textContent = "";
+      endTimeError.textContent = "";
     }
     // Check if end time is valid
     if (!checkoutTimeButton.value || checkoutTimeButton.value <= checkinTimeButton.value) {
@@ -706,8 +628,8 @@ document.addEventListener('DOMContentLoaded', function () {
       isValid = false;
       dateError.textContent = '';
       EmpTypeError.textContent = "";
-      startTimeError.textContent="";
-      EmpNameError.textContent="";
+      startTimeError.textContent = "";
+      EmpNameError.textContent = "";
     }
     if (isValid) {
       var datePickerValue = datePicker.value;
@@ -715,7 +637,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const checkoutTimeValue = checkoutTimeButton.value;
       const startDateTime = datePickerValue + ' ' + checkinTimeValue + ":00";
       const endDateTimeValue = datePickerValue + ' ' + checkoutTimeValue + ":00";
-      
+
 
       document.getElementById('overlay').style.display = 'flex';
       var name = document.getElementById('dynamicDropdown').value;
@@ -746,7 +668,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var data = {
         CID: cid,
         EmpID: employeeDetails[name]['EmpID'],
-        Date: startDateTime.substring(0,10),
+        Date: startDateTime.substring(0, 10),
         TypeID: type,
         CheckInSnap: null,
         CheckInTime: startDateTime,
@@ -783,37 +705,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  function getCurrentDateInTimezone(timezone) {
-    // Get the current date and time in UTC
-    const now = new Date();
+function getCurrentDateInTimezone(timezone) {
+  // Get the current date and time in UTC
+  const now = new Date();
 
-    // Options to format the date in the desired timezone
-    const options = {
-      timeZone: timezone,
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
-    };
+  // Options to format the date in the desired timezone
+  const options = {
+    timeZone: timezone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  };
 
-    // Format the date in the desired timezone using Intl.DateTimeFormat
-    const formatter = new Intl.DateTimeFormat('en-US', options);
-    const formattedDate = formatter.format(now);
+  // Format the date in the desired timezone using Intl.DateTimeFormat
+  const formatter = new Intl.DateTimeFormat('en-US', options);
+  const formattedDate = formatter.format(now);
 
-    // Convert the formatted date to "YYYY-MM-DD" format
-    const [month, day, year] = formattedDate.split('/');
+  // Convert the formatted date to "YYYY-MM-DD" format
+  const [month, day, year] = formattedDate.split('/');
 
-    return `${year}-${month}-${day}`;
-  }
+  return `${year}-${month}-${day}`;
+}
 
 
-  function getCurrentLocalTime() {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = date.getSeconds().toString().padStart(2, '0');
-  
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  }
+function getCurrentLocalTime() {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const seconds = date.getSeconds().toString().padStart(2, '0');
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}

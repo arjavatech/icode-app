@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Pagination</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .pagination {
+            margin-top: 10px;
+        }
+        .pagination button {
+            padding: 5px 10px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+        .pagination button.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Employee Table with Pagination</h1>
+
+<table id="employeeTable">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Employee ID</th>
+            <th>Session</th>
+            <th>Check-in Snap</th>
+            <th>Type</th>
+            <th>Check-out Time</th>
+            <th>Time Worked</th>
+            <th>Check-out Snap</th>
+            <th>Check-in Time</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<div class="pagination" id="paginationControls"></div>
+
+<script>
+// Sample data (replace this with your actual data)
+const data = [
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    {"Date": "2024-08-01", "EmployeeID": "5959", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:13", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:58:28"},
+    {"Date": "2024-08-01", "EmployeeID": "3069", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:47:04", "TimeWorked": "7:49", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:57:47"},
+    {"Date": "2024-08-01", "EmployeeID": "5257", "Session": "1", "CheckInSnap": "None", "Type": "Camp", "CheckOutTime": "2024-08-01 16:46:47", "TimeWorked": "7:47", "CheckOutSnap": "None", "CheckInTime": "2024-08-01 08:59:05"},
+    
+];
+
+// Pagination variables
+const rowsPerPage = 10;
+let currentPage = 1;
+
+function displayTable(data, page = 1) {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const paginatedData = data.slice(start, end);
+
+    const tbody = document.querySelector('#employeeTable tbody');
+    tbody.innerHTML = "";  // Clear previous table rows
+
+    paginatedData.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${row.Date}</td>
+            <td>${row.EmployeeID}</td>
+            <td>${row.Session}</td>
+            <td>${row.CheckInSnap}</td>
+            <td>${row.Type}</td>
+            <td>${row.CheckOutTime}</td>
+            <td>${row.TimeWorked}</td>
+            <td>${row.CheckOutSnap}</td>
+            <td>${row.CheckInTime}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function setupPagination(data) {
+    const paginationControls = document.getElementById('paginationControls');
+    const totalPages = Math.ceil(data.length / rowsPerPage);
+    paginationControls.innerHTML = "";  // Clear previous pagination buttons
+
+    // Create Previous button
+    const prevButton = document.createElement('button');
+    prevButton.textContent = 'Previous';
+    prevButton.onclick = () => {
+        if (currentPage > 1) {
+            currentPage--;
+            displayTable(data, currentPage);
+            setupPagination(data);
+        }
+    };
+    if (currentPage === 1) prevButton.classList.add('disabled');
+    paginationControls.appendChild(prevButton);
+
+    // Create page number buttons
+    for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        if (i === currentPage) pageButton.classList.add('disabled');
+        pageButton.onclick = () => {
+            currentPage = i;
+            displayTable(data, currentPage);
+            setupPagination(data);
+        };
+        paginationControls.appendChild(pageButton);
+    }
+
+    // Create Next button
+    const nextButton = document.createElement('button');
+    nextButton.textContent = 'Next';
+    nextButton.onclick = () => {
+        if (currentPage < totalPages) {
+            currentPage++;
+            displayTable(data, currentPage);
+            setupPagination(data);
+        }
+    };
+    if (currentPage === totalPages) nextButton.classList.add('disabled');
+    paginationControls.appendChild(nextButton);
+}
+
+// Initial display
+displayTable(data, currentPage);
+setupPagination(data);
+
+</script>
+
+</body>
+</html>
