@@ -24,7 +24,7 @@ function dataRemove(e) {
 function addEmpdetails() {
     const isValidFName = validFName();
     const isValidLName = validLName();
-    const isValidPhoneNumber = validPhoneno();
+    const isValidPhoneNumber = formatPhoneNumber();
     if (isValidFName && isValidLName && isValidPhoneNumber) {
         const empupdateid = document.getElementById("savebtn").value;
         const empfname = document.getElementById("fName").value;
@@ -158,7 +158,6 @@ function viewEmpdetails() {
                 // <td class="lName">${element.LName}</td>
                 newRow.innerHTML = `
                 <td class="fName">${element.FName}</td>
-                
                 <td class="instructor">${element.Pin}</td>
                 <td class="phoneNumber">${element.PhoneNumber}</td>
                 <td>
@@ -182,8 +181,9 @@ document.getElementById('overlay').style.display = 'flex';
 // Edit Data
 
 function editEmpdetails(emId) {
+    document.getElementById("showMsg1").textContent = "";
+    document.getElementById("showMsg2").textContent = "";
     const apiUrl = `${apiUrlBase}/get/` + emId;
-
     fetch(apiUrl)
         .then(response => {
             if (!response.ok) {
@@ -199,7 +199,6 @@ function editEmpdetails(emId) {
                 document.getElementById("phoneNumber").value = formvalue.PhoneNumber;
                 document.getElementById("savebtn").value = formvalue.EmpID;
             });
-
         })
         .catch(error => {
             console.error('Error:', error);
@@ -209,7 +208,6 @@ function editEmpdetails(emId) {
 // Delete Data
 
 function deleteEmpdetails(emId) {
-
     const apiUrl = `${apiUrlBase}/delete/${emId}`;
 
     fetch(apiUrl, {
@@ -279,27 +277,6 @@ function validLName() {
     return true;
 }
 
-function validPhoneno() {
-    const input = document.querySelector("#phoneNumber");
-    const phoneError = document.querySelector("#showMsg3");
-    const employePin = document.getElementById("instructor");
-    const phoneNumber = input.value;
-
-    employePin.value = (input.value).substring((input.value).length - 4);
-
-    const phoneRegex = /^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/;
-
-    if (phoneNumber === "") {
-        phoneError.textContent = 'Enter phone number.';
-        return false;
-    } else if (!phoneRegex.test(phoneNumber)) {
-        phoneError.textContent = 'Invalid phone number.';
-        return false;
-    } else {
-        phoneError.textContent = '';
-        return true;
-    }
-}
 
 
 function validateInstructerPin() {
@@ -328,6 +305,25 @@ function formatPhoneNumber() {
         value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
     }
     inputField.value = value;
+    const input = document.querySelector("#phoneNumber");
+    const phoneError = document.querySelector("#showMsg3");
+    const employePin = document.getElementById("instructor");
+    const phoneNumber = input.value;
+
+    employePin.value = (input.value).substring((input.value).length - 4);
+
+    const phoneRegex = /^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/;
+
+    if (phoneNumber === "") {
+        phoneError.textContent = 'Enter phone number.';
+        return false;
+    } else if (!phoneRegex.test(phoneNumber)) {
+        phoneError.textContent = 'Invalid phone number.';
+        return false;
+    } else {
+        phoneError.textContent = '';
+        return true;
+    }
 }
 
     function showLogoutModal(empId) {

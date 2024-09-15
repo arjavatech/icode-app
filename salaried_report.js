@@ -1,7 +1,6 @@
 
-const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/getdatebasedata';
+const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/report/dateRangeReportGet';
 
-const TZ = localStorage.getItem("TimeZone");
 
 const timezone_mapping = {
   "UTC": "UTC",  // Coordinated Universal Time
@@ -85,7 +84,6 @@ const timezone_mapping = {
 
 function viewDateRangewiseReport() {
   document.getElementById('overlay').style.display = 'flex';
-  const apiBase = "https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyReport/getDateRangeReport";
   const tableBody = document.getElementById("tbody");
   tableBody.innerHTML = '';
   const cid = localStorage.getItem('companyID');
@@ -119,22 +117,11 @@ function viewDateRangewiseReport() {
   document.getElementById("start-date-header").innerHTML = startVal;
   document.getElementById("end-date-header").innerHTML = endVal;
 
-  var data = {
-    "startdate": getUTCRangeForCustomDate(startVal, timezone_mapping[TZ])["startTimeInUTC"],
-    "enddate": getUTCRangeForCustomDate(endVal, timezone_mapping[TZ])["endTimeInUTC"]
-  }
 
-
-  const apiUrl = `${apiBase}/${cid}`;
+  const apiUrl = `${apiUrlBase}/${cid}/${startVal}/${endVal}`;
 
   // Fetch data from API and render table
-  fetch(apiUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
+  fetch(apiUrl)
     .then(response => {
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
@@ -339,60 +326,7 @@ function calculateTotalTimeWorked(data) {
   return employeeTimes;
 }
 
-function getDateTimeFromTimePicker(timeValue) {
-  // Get today's date
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-  const day = String(now.getDate()).padStart(2, '0');
 
-  // Extract time components from the time value
-  const [hours, minutes, seconds] = timeValue.split(':').map(part => part.padStart(2, '0'));
 
-  // Combine date with time
-  const combinedDateTime = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
-
-  return combinedDateTime;
-}
-
-function getUTCRangeForCustomDate(selectedDate, timezone) {
-  // Convert the selected date to a Date object
-  const selectedDateTime = new Date(selectedDate);
-
-  // Convert the selected date to the specified timezone
-  const dateInTimeZone = new Date(selectedDateTime.toLocaleString("en-US", { timeZone: timezone }));
-
-  // Set the start time to 00:00:00.000 in the timezone
-  const startTimeInTimeZone = new Date(dateInTimeZone);
-  startTimeInTimeZone.setHours(0, 0, 0, 0); // Set to start of the day
-
-  // Set the end time to 23:59:59.999 in the timezone
-  const endTimeInTimeZone = new Date(dateInTimeZone);
-  endTimeInTimeZone.setHours(23, 59, 59, 999); // Set to end of the day
-
-  // Convert start and end times to UTC
-  const startTimeInUTC = new Date(startTimeInTimeZone.toISOString());
-  const endTimeInUTC = new Date(endTimeInTimeZone.toISOString());
-
-  // Format the start and end times to 'YYYY-MM-DD HH:mm:ss'
-  const formattedStartTimeUTC = formatDateTime(startTimeInUTC);
-  const formattedEndTimeUTC = formatDateTime(endTimeInUTC);
-
-  return {
-      startTimeInUTC: formattedStartTimeUTC,
-      endTimeInUTC: formattedEndTimeUTC
-  };
-}
-
-function formatDateTime(date) {
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-  const day = String(date.getUTCDate()).padStart(2, '0');
-  const hours = String(date.getUTCHours()).padStart(2, '0');
-  const minutes = String(date.getUTCMinutes()).padStart(2, '0');
-  const seconds = String(date.getUTCSeconds()).padStart(2, '0');
-  
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-}
 
 

@@ -1,5 +1,5 @@
 .bg-green {
-    background-color: #0A8080;
+    background-color: #02066F;
 }
 .navbar-dark .navbar-nav .nav-link {
     color: #fff;
@@ -7,16 +7,16 @@
 .rounded-pill-active {
     border-radius: 50rem;
     background-color: #fff;
-    color: #0A8080 !important;
+    color: #02066F !important;
 }
 .btn-green {
     color: white;
-    background-color: #0A8080;
+    background-color: #02066F;
     padding: 5px 30px;
 }
 .btn-outline-green{
-    color: #0A8080;
-    border: solid 1px #0A8080;
+    color: #02066F;
+    border: solid 1px #02066F;
     padding: 5px 21px;
 }
 .success-msg {
@@ -37,14 +37,14 @@
 }
 
 .breadcrumb-item.active {
-    color: #0A8080;
+    color: #02066F;
 }
 .dropdown-item:focus, .dropdown-item:hover {
-    color: #0A8080;
+    color: #02066F;
     background-color: #e9ecef;
 }
 .bootstrap-select.show-tick .dropdown-menu .selected span.check-mark,.filter-option-inner-inner {
-    color: #0A8080;
+    color: #02066F;
 }
 .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn):hover {
     border: 1px solid gray;
@@ -58,7 +58,7 @@
         border-radius: 10px;
         background-color: #fff;
         width: 140px;
-        color: #0A8080 !important;
+        color: #02066F !important;
     }
     
 }

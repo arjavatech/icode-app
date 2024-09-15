@@ -12,10 +12,10 @@ textarea {
   transition: 0.1s ease-out;
 }
 textarea:focus {
-  border-color: #0A8080;  
+  border-color: #02066F;  
 }
 textarea:focus + label {
-  color: #0A8080;
+  color: #02066F;
   top: 0;
   transform: translateY(-50%) scale(.9);
 }
@@ -29,14 +29,14 @@ input {
   border: 1px solid gray;
   border-radius: 10px;  
   padding: .5rem 3rem !important;
-  color: #0A8080;
+  color: #02066F;
   transition: 0.1s ease-out;
 }
 input:focus {
-  border-color: #0A8080;  
+  border-color: #02066F;  
 }
 input:focus + label {
-  color: #0A8080;
+  color: #02066F;
   top: 0;
   transform: translateY(-50%) scale(.9);
   margin-left: 30%;

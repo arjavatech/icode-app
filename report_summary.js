@@ -1,163 +1,205 @@
 
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/getdatebasedata';
 
+
 const cid = localStorage.getItem('companyID');
-const TZ = localStorage.getItem("TimeZone");
+var dropdownValue;
+var employeeDetails = {}
+
+const datePicker = document.getElementById('datePicker');
+const checkinTimeButton = document.getElementById('checkinTime');
+const checkoutTimeButton = document.getElementById('checkoutTime');
+const AddEmployee = document.getElementById('AddEmployee');
+const dateError = document.getElementById('dateError');
+const startTimeError = document.getElementById('startTimeError');
+const endTimeError = document.getElementById('endTimeError');
+const EmpNameError = document.getElementById('EmpNameError');
+const EmpTypeError = document.getElementById('EmpTypeError');
+// Disable future dates in date picker
+const today = new Date();
+const year = today.getFullYear();
+const month = ('0' + (today.getMonth() + 1)).slice(-2); // Adding 1 since getMonth() is 0-indexed
+const day = ('0' + today.getDate()).slice(-2);
+const formattedToday = `${year}-${month}-${day}`; // Format: yyyy-mm-dd
+datePicker.setAttribute('max', formattedToday);
+
 
 const timezone_mapping = {
-    "UTC": "UTC",  // Coordinated Universal Time
-    "GMT": "Europe/London",  // Greenwich Mean Time
-    "BST": "Europe/London",  // British Summer Time
-    "CET": "Europe/Paris",  // Central European Time
-    "CEST": "Europe/Paris",  // Central European Summer Time
-    "EET": "Europe/Helsinki",  // Eastern European Time
-    "EEST": "Europe/Helsinki",  // Eastern European Summer Time
-    "IST": "Asia/Kolkata",  // Indian Standard Time
-    "PKT": "Asia/Karachi",  // Pakistan Standard Time
-    "AST": "Asia/Riyadh",  // Arabian Standard Time
-    "GST": "Asia/Dubai",  // Gulf Standard Time
-    "MSK": "Europe/Moscow",  // Moscow Standard Time
-    "HKT": "Asia/Hong_Kong",  // Hong Kong Time
-    "SGT": "Asia/Singapore",  // Singapore Time
-    "CST": ["America/Chicago", "Asia/Shanghai"],  // Central Standard Time (US), China Standard Time
-    "CDT": "America/Chicago",  // Central Daylight Time (US)
-    "EST": "America/New_York",  // Eastern Standard Time (US)
-    "EDT": "America/New_York",  // Eastern Daylight Time (US)
-    "MST": "America/Denver",  // Mountain Standard Time (US)
-    "MDT": "America/Denver",  // Mountain Daylight Time (US)
-    "PST": "America/Los_Angeles",  // Pacific Standard Time (US)
-    "PDT": "America/Los_Angeles",  // Pacific Daylight Time (US)
-    "AKST": "America/Anchorage",  // Alaska Standard Time
-    "AKDT": "America/Anchorage",  // Alaska Daylight Time
-    "HST": "Pacific/Honolulu",  // Hawaii Standard Time
-    "HADT": "Pacific/Honolulu",  // Hawaii-Aleutian Daylight Time
-    "AEST": "Australia/Sydney",  // Australian Eastern Standard Time
-    "AEDT": "Australia/Sydney",  // Australian Eastern Daylight Time
-    "ACST": "Australia/Adelaide",  // Australian Central Standard Time
-    "ACDT": "Australia/Adelaide",  // Australian Central Daylight Time
-    "AWST": "Australia/Perth",  // Australian Western Standard Time
-    "NZST": "Pacific/Auckland",  // New Zealand Standard Time
-    "NZDT": "Pacific/Auckland",  // New Zealand Daylight Time
-    "JST": "Asia/Tokyo",  // Japan Standard Time
-    "KST": "Asia/Seoul",  // Korea Standard Time
-    "WIB": "Asia/Jakarta",  // Western Indonesia Time
-    "WITA": "Asia/Makassar",  // Central Indonesia Time
-    "WIT": "Asia/Jayapura",  // Eastern Indonesia Time
-    "ART": "America/Argentina/Buenos_Aires",  // Argentina Time
-    "BRT": "America/Sao_Paulo",  // Brasilia Time
-    "CLT": "America/Santiago",  // Chile Standard Time
-    "GFT": "America/Cayenne",  // French Guiana Time
-    "PYT": "America/Asuncion",  // Paraguay Time
-    "VET": "America/Caracas",  // Venezuela Time
-    "WET": "Europe/Lisbon",  // Western European Time
-    "WEST": "Europe/Lisbon",  // Western European Summer Time
-    "CAT": "Africa/Harare",  // Central Africa Time
-    "EAT": "Africa/Nairobi",  // East Africa Time
-    "SAST": "Africa/Johannesburg",  // South Africa Standard Time
-    "WAT": "Africa/Lagos",  // West Africa Time
-    "ADT": "America/Halifax",  // Atlantic Daylight Time
-    "AST": "America/Halifax",  // Atlantic Standard Time
-    "NST": "America/St_Johns",  // Newfoundland Standard Time
-    "NDT": "America/St_Johns",  // Newfoundland Daylight Time
-    "WAT": "Africa/Lagos",  // West Africa Time
-    "CST": "America/Havana",  // Cuba Standard Time
-    "WST": "Pacific/Apia",  // West Samoa Time
-    "ChST": "Pacific/Guam",  // Chamorro Standard Time
-    "PWT": "Pacific/Palau",  // Palau Time
-    "VOST": "Antarctica/Vostok",  // Vostok Station Time
-    "NZST": "Pacific/Auckland",  // New Zealand Standard Time
-    "NZDT": "Pacific/Auckland",  // New Zealand Daylight Time
-    "FJT": "Pacific/Fiji",  // Fiji Time
-    "GALT": "Pacific/Galapagos",  // Galapagos Time
-    "GAMT": "Pacific/Gambier",  // Gambier Time
-    "HKT": "Asia/Hong_Kong",  // Hong Kong Time
-    "IRKT": "Asia/Irkutsk",  // Irkutsk Time
-    "KRAT": "Asia/Krasnoyarsk",  // Krasnoyarsk Time
-    "MAWT": "Antarctica/Mawson",  // Mawson Station Time
-    "SCT": "Indian/Mahe",  // Seychelles Time
-    "SGT": "Asia/Singapore",  // Singapore Time
-    "SLST": "Asia/Colombo",  // Sri Lanka Standard Time
-    "THA": "Asia/Bangkok",  // Thailand Standard Time
-    "TLT": "Asia/Dili",  // East Timor Time
-    "YAKT": "Asia/Yakutsk",  // Yakutsk Time
-    "YEKST": "Asia/Yekaterinburg",  // Yekaterinburg Summer Time
-    "Not Registered": "America/Los_Angeles"
-  }
-
-  function formatDateTimeToTimezone(utcDateTime, timezone) {
-    // Append 'Z' to indicate UTC if it's not already present
-    if (!utcDateTime.endsWith('Z')) {
-        utcDateTime += 'Z';
-    }
-
-    // Create a Date object from the UTC date-time string
-    const utcDate = new Date(utcDateTime);
-
-    // Use Intl.DateTimeFormat to convert to the specified timezone
-    const options = {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false,
-        timeZone: timezone
-    };
-
-    const formatter = new Intl.DateTimeFormat('en-US', options);
-    const formattedParts = formatter.formatToParts(utcDate);
-
-    // Extract the individual date and time parts
-    const year = formattedParts.find(part => part.type === 'year').value;
-    const month = formattedParts.find(part => part.type === 'month').value;
-    const day = formattedParts.find(part => part.type === 'day').value;
-    const hour = formattedParts.find(part => part.type === 'hour').value;
-    const minute = formattedParts.find(part => part.type === 'minute').value;
-    const second = formattedParts.find(part => part.type === 'second').value;
-
-    // Return the formatted date-time string in 'YYYY-MM-DD HH:mm:ss' format
-    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+  "UTC": "UTC",  // Coordinated Universal Time
+  "GMT": "Europe/London",  // Greenwich Mean Time
+  "BST": "Europe/London",  // British Summer Time
+  "CET": "Europe/Paris",  // Central European Time
+  "CEST": "Europe/Paris",  // Central European Summer Time
+  "EET": "Europe/Helsinki",  // Eastern European Time
+  "EEST": "Europe/Helsinki",  // Eastern European Summer Time
+  "IST": "Asia/Kolkata",  // Indian Standard Time
+  "PKT": "Asia/Karachi",  // Pakistan Standard Time
+  "AST": "Asia/Riyadh",  // Arabian Standard Time
+  "GST": "Asia/Dubai",  // Gulf Standard Time
+  "MSK": "Europe/Moscow",  // Moscow Standard Time
+  "HKT": "Asia/Hong_Kong",  // Hong Kong Time
+  "SGT": "Asia/Singapore",  // Singapore Time
+  "CST": ["America/Chicago", "Asia/Shanghai"],  // Central Standard Time (US), China Standard Time
+  "CDT": "America/Chicago",  // Central Daylight Time (US)
+  "EST": "America/New_York",  // Eastern Standard Time (US)
+  "EDT": "America/New_York",  // Eastern Daylight Time (US)
+  "MST": "America/Denver",  // Mountain Standard Time (US)
+  "MDT": "America/Denver",  // Mountain Daylight Time (US)
+  "PST": "America/Los_Angeles",  // Pacific Standard Time (US)
+  "PDT": "America/Los_Angeles",  // Pacific Daylight Time (US)
+  "AKST": "America/Anchorage",  // Alaska Standard Time
+  "AKDT": "America/Anchorage",  // Alaska Daylight Time
+  "HST": "Pacific/Honolulu",  // Hawaii Standard Time
+  "HADT": "Pacific/Honolulu",  // Hawaii-Aleutian Daylight Time
+  "AEST": "Australia/Sydney",  // Australian Eastern Standard Time
+  "AEDT": "Australia/Sydney",  // Australian Eastern Daylight Time
+  "ACST": "Australia/Adelaide",  // Australian Central Standard Time
+  "ACDT": "Australia/Adelaide",  // Australian Central Daylight Time
+  "AWST": "Australia/Perth",  // Australian Western Standard Time
+  "NZST": "Pacific/Auckland",  // New Zealand Standard Time
+  "NZDT": "Pacific/Auckland",  // New Zealand Daylight Time
+  "JST": "Asia/Tokyo",  // Japan Standard Time
+  "KST": "Asia/Seoul",  // Korea Standard Time
+  "WIB": "Asia/Jakarta",  // Western Indonesia Time
+  "WITA": "Asia/Makassar",  // Central Indonesia Time
+  "WIT": "Asia/Jayapura",  // Eastern Indonesia Time
+  "ART": "America/Argentina/Buenos_Aires",  // Argentina Time
+  "BRT": "America/Sao_Paulo",  // Brasilia Time
+  "CLT": "America/Santiago",  // Chile Standard Time
+  "GFT": "America/Cayenne",  // French Guiana Time
+  "PYT": "America/Asuncion",  // Paraguay Time
+  "VET": "America/Caracas",  // Venezuela Time
+  "WET": "Europe/Lisbon",  // Western European Time
+  "WEST": "Europe/Lisbon",  // Western European Summer Time
+  "CAT": "Africa/Harare",  // Central Africa Time
+  "EAT": "Africa/Nairobi",  // East Africa Time
+  "SAST": "Africa/Johannesburg",  // South Africa Standard Time
+  "WAT": "Africa/Lagos",  // West Africa Time
+  "ADT": "America/Halifax",  // Atlantic Daylight Time
+  "AST": "America/Halifax",  // Atlantic Standard Time
+  "NST": "America/St_Johns",  // Newfoundland Standard Time
+  "NDT": "America/St_Johns",  // Newfoundland Daylight Time
+  "WAT": "Africa/Lagos",  // West Africa Time
+  "CST": "America/Havana",  // Cuba Standard Time
+  "WST": "Pacific/Apia",  // West Samoa Time
+  "ChST": "Pacific/Guam",  // Chamorro Standard Time
+  "PWT": "Pacific/Palau",  // Palau Time
+  "VOST": "Antarctica/Vostok",  // Vostok Station Time
+  "NZST": "Pacific/Auckland",  // New Zealand Standard Time
+  "NZDT": "Pacific/Auckland",  // New Zealand Daylight Time
+  "FJT": "Pacific/Fiji",  // Fiji Time
+  "GALT": "Pacific/Galapagos",  // Galapagos Time
+  "GAMT": "Pacific/Gambier",  // Gambier Time
+  "HKT": "Asia/Hong_Kong",  // Hong Kong Time
+  "IRKT": "Asia/Irkutsk",  // Irkutsk Time
+  "KRAT": "Asia/Krasnoyarsk",  // Krasnoyarsk Time
+  "MAWT": "Antarctica/Mawson",  // Mawson Station Time
+  "SCT": "Indian/Mahe",  // Seychelles Time
+  "SGT": "Asia/Singapore",  // Singapore Time
+  "SLST": "Asia/Colombo",  // Sri Lanka Standard Time
+  "THA": "Asia/Bangkok",  // Thailand Standard Time
+  "TLT": "Asia/Dili",  // East Timor Time
+  "YAKT": "Asia/Yakutsk",  // Yakutsk Time
+  "YEKST": "Asia/Yekaterinburg",  // Yekaterinburg Summer Time
+  "Not Registered": "America/Los_Angeles"
 }
 
-  function formatDateTime(date) {
-    const year = date.getUTCFullYear();
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-    const day = String(date.getUTCDate()).padStart(2, '0');
-    const hours = String(date.getUTCHours()).padStart(2, '0');
-    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
-    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
-    
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+// Enable end time only after start time is selected
+checkinTimeButton.addEventListener('change', () => {
+  if (checkinTimeButton.value) {
+    checkoutTimeButton.disabled = false;
+    startTimeError.textContent = ''; // Clear any previous error
+  } else {
+    checkoutTimeButton.disabled = true;
+    startTimeError.textContent = 'Please select a valid start time.';
+  }
+});
+// Enable the button only if end time is greater than start time
+checkoutTimeButton.addEventListener('change', () => {
+  if (checkinTimeButton.value && checkoutTimeButton.value > checkinTimeButton.value) {
+    AddEmployee.disabled = false;
+    endTimeError.textContent = ''; // Clear any previous error
+  } else {
+    endTimeError.textContent = 'End time must be greater than start time.';
+    AddEmployee.disabled = true;
+  }
+});
+
+
+function formatDateTimeToTimezone(utcDateTime, timezone) {
+  // Append 'Z' to indicate UTC if it's not already present
+  if (!utcDateTime.endsWith('Z')) {
+    utcDateTime += 'Z';
+  }
+
+  // Create a Date object from the UTC date-time string
+  const utcDate = new Date(utcDateTime);
+
+  // Use Intl.DateTimeFormat to convert to the specified timezone
+  const options = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+    timeZone: timezone
+  };
+
+  const formatter = new Intl.DateTimeFormat('en-US', options);
+  const formattedParts = formatter.formatToParts(utcDate);
+
+  // Extract the individual date and time parts
+  const year = formattedParts.find(part => part.type === 'year').value;
+  const month = formattedParts.find(part => part.type === 'month').value;
+  const day = formattedParts.find(part => part.type === 'day').value;
+  const hour = formattedParts.find(part => part.type === 'hour').value;
+  const minute = formattedParts.find(part => part.type === 'minute').value;
+  const second = formattedParts.find(part => part.type === 'second').value;
+
+  // Return the formatted date-time string in 'YYYY-MM-DD HH:mm:ss' format
+  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+}
+
+function formatDateTime(date) {
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  const hours = String(date.getUTCHours()).padStart(2, '0');
+  const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+  const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
 function getUTCRangeForDate(timezone) {
-    // Get the current date and time in the given timezone
-    const currentDate = new Date().toLocaleString("en-US", { timeZone: timezone });
+  // Get the current date and time in the given timezone
+  const currentDate = new Date().toLocaleString("en-US", { timeZone: timezone });
 
-    // Convert to Date object
-    const dateInTimeZone = new Date(currentDate);
+  // Convert to Date object
+  const dateInTimeZone = new Date(currentDate);
 
-    // Set the start time to 00:00:00.000 in the timezone
-    const startTimeInTimeZone = new Date(dateInTimeZone);
-    startTimeInTimeZone.setHours(0, 0, 0, 0); // Set to start of the day
+  // Set the start time to 00:00:00.000 in the timezone
+  const startTimeInTimeZone = new Date(dateInTimeZone);
+  startTimeInTimeZone.setHours(0, 0, 0, 0); // Set to start of the day
 
-    // Set the end time to 23:59:59.999 in the timezone
-    const endTimeInTimeZone = new Date(dateInTimeZone);
-    endTimeInTimeZone.setHours(23, 59, 59, 999); // Set to end of the day
+  // Set the end time to 23:59:59.999 in the timezone
+  const endTimeInTimeZone = new Date(dateInTimeZone);
+  endTimeInTimeZone.setHours(23, 59, 59, 999); // Set to end of the day
 
-    // Convert start and end times to UTC
-    const startTimeInUTC = new Date(startTimeInTimeZone.toISOString());
-    const endTimeInUTC = new Date(endTimeInTimeZone.toISOString());
+  // Convert start and end times to UTC
+  const startTimeInUTC = new Date(startTimeInTimeZone.toISOString());
+  const endTimeInUTC = new Date(endTimeInTimeZone.toISOString());
 
-    // Format the start and end times to 'YYYY-MM-DD HH:mm:ss'
-    const formattedStartTimeUTC = formatDateTime(startTimeInUTC);
-    const formattedEndTimeUTC = formatDateTime(endTimeInUTC);
+  // Format the start and end times to 'YYYY-MM-DD HH:mm:ss'
+  const formattedStartTimeUTC = formatDateTime(startTimeInUTC);
+  const formattedEndTimeUTC = formatDateTime(endTimeInUTC);
 
-    return {
-        startTimeInUTC: formattedStartTimeUTC,
-        endTimeInUTC: formattedEndTimeUTC
-    };
+  return {
+    startTimeInUTC: formattedStartTimeUTC,
+    endTimeInUTC: formattedEndTimeUTC
+  };
 }
 
 function viewCurrentDateReport() {
@@ -165,29 +207,71 @@ function viewCurrentDateReport() {
   selectedValue = localStorage.getItem('reportType');
   document.getElementById("reportName").textContent = selectedValue + " Report";
 
+
   const tableBody3 = document.getElementById("current-checkin-tbody");
   const heading = document.getElementById("current-checkin-header");
   tableBody3.innerHTML = '';
 
-  // Format as yyyy-mm-dd
-  var date = getCurrentDateInTimezone(timezone_mapping[TZ]);
-
-
-  const { startTimeInUTC, endTimeInUTC } = getUTCRangeForDate(timezone_mapping[TZ]);
-
-  var data = {
-    "startdate": startTimeInUTC,
-    "enddate": endTimeInUTC
+  function myFunction() {
+    dropdownValue = document.getElementById("dynamicDropdown").value;
   }
+
+  document.getElementById("dynamicDropdown").addEventListener('change', myFunction);
+
+  const employeeApiURL = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/employee/getall/${cid}`;
+  fetch(employeeApiURL)
+    .then(response => {
+      if (!response.ok) {
+
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.error === "No devices found !" || data.length === 0) {
+      } else {
+        try {
+          let optionsList = [];
+          data.forEach(element => {
+            let temp = `${element.FName}`;
+            employeeDetails[temp] = element;
+            optionsList.push(temp);
+          });
+
+          // Get the dropdown element
+          const dropdown = document.getElementById("dynamicDropdown");
+
+          // Function to dynamically add options
+          function populateDropdown(options) {
+            // Clear existing options except the first "Select" option
+            dropdown.innerHTML = '<option value="">Select a option</option>';
+
+            // Loop through the list and add each option to the dropdown
+            options.forEach(option => {
+              const newOption = document.createElement("option");
+              newOption.value = option;
+              newOption.text = option;
+              dropdown.appendChild(newOption);
+            });
+          }
+          populateDropdown(optionsList);
+        }
+        catch {
+          console.error('Error:', error);
+        }
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+
+  // Format as yyyy-mm-dd
+  var date = getCurrentLocalTime().substring(0,10);
+
+  const apiUrl = `${apiUrlBase}/${cid}/${date}`;
+
   heading.innerHTML = date;
-  const apiUrl = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreportBasedonCID/get/${cid}`;
-  fetch(apiUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
+  fetch(apiUrl,)
     .then(response => {
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
@@ -202,12 +286,8 @@ function viewCurrentDateReport() {
 
           const checkInTimeUTC = new Date(element.CheckInTime);
 
-          // Convert to IST
-          const checkInTimeIST = formatDateTimeToTimezone(element.CheckInTime, timezone_mapping[TZ]);
-          // checkInTimeUTC.toLocaleString("en-US", { timeZone: timezone_mapping[TZ] });
-
           // Convert to AM/PM format if needed
-          const checkInTimeFormatted = convertToAmPm(new Date(checkInTimeIST));
+          const checkInTimeFormatted = convertToAmPm(checkInTimeUTC);
 
           // Check if CheckOutTime is null
           if (element.CheckOutTime == null) {
@@ -219,9 +299,9 @@ function viewCurrentDateReport() {
                 <td class="CheckInTime">${checkInTimeFormatted}</td>
                 <td>
                   <div class="text-center">
-                                    <input type="time" id="${datetimeId}" name="time" class="time-input" step="1">
-                                    <div class="calendar-icon" onclick="openTimePicker();"></div>
-                                </div>
+                    <input type="time" id="${datetimeId}" name="time" class="time-input" step="1">
+                    <div class="calendar-icon" onclick="openTimePicker();"></div>
+                </div>
                 </td>
                 <td class="text-center">
                   <button type="button" class="btn btn-green" id="${checkOutId}" disabled>Check-out</button>
@@ -247,14 +327,13 @@ function viewCurrentDateReport() {
             });
 
             checkOutButton.addEventListener('click', function () {
+              document.getElementById('overlay').style.display = 'flex';
 
-              const dateWithTime = convertToUTC(getDateTimeFromTimePicker(datetimeInput.value));
+              const dateWithTime = getDateTimeFromTimePicker(datetimeInput.value);
 
-
-              
               const date2 = new Date(element.CheckInTime);
               const date1 = new Date(dateWithTime)
-              
+
               // Calculate the difference in milliseconds
               const diffInMs = date1 - date2;
 
@@ -281,14 +360,9 @@ function viewCurrentDateReport() {
           }
           else {
 
-            const checkInTimeUTC = new Date(element.CheckInTime);
-            const checkOutTimeUTC = new Date(element.CheckOutTime);
+            const checkInTimeIST = new Date(element.CheckInTime);
+            const checkOutTimeIST = new Date(element.CheckOutTime);
 
-            // Convert to IST
-            const checkInTimeIST = formatDateTimeToTimezone(element.CheckInTime, timezone_mapping[TZ]);
-            // checkInTimeUTC.toLocaleString("en-US", { timeZone: timezone_mapping[TZ] });
-            const checkOutTimeIST = formatDateTimeToTimezone(element.CheckOutTime, timezone_mapping[TZ]);
-            // checkOutTimeUTC.toLocaleString("en-US", { timeZone: timezone_mapping[TZ] });
 
             // Convert to AM/PM format if needed
             const checkInTimeFormatted = convertToAmPm(new Date(checkInTimeIST));
@@ -402,24 +476,7 @@ function convertToAmPm(date) {
   return hours + ':' + minutesStr + ' ' + ampm;
 }
 
-// function convertToAmPm(timeStr) {
-//   // Split the input string into components
-//   let [hours, minutes, seconds] = timeStr.split(':').map(Number);
 
-//   // Determine AM or PM
-//   let amPm = hours >= 12 ? 'PM' : 'AM';
-
-//   // Convert hours to 12-hour format
-//   hours = hours % 12 || 12; // Convert 0 to 12 for midnight
-
-//   // Format hours, minutes, and seconds as two digits
-//   hours = hours.toString().padStart(2, '0');
-//   minutes = minutes.toString().padStart(2, '0');
-//   seconds = seconds.toString().padStart(2, '0');
-
-//   // Combine into the final formatted string
-//   return `${hours}:${minutes}:${seconds} ${amPm}`;
-// }
 
 // Weekly Report Date Calculation.
 
@@ -488,6 +545,7 @@ function getLastTwoMonthStartAndEndDates() {
 
   // Calculate the start date (first day of the month two months ago)
   const startDate = new Date(today.getFullYear(), today.getMonth() - 2, 1);
+
 
   // Calculate the end date (last day of the previous month)
   const endDate = new Date(today.getFullYear(), today.getMonth(), 0);
@@ -591,116 +649,171 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Show modal on button click
   document.getElementById('add-entry').addEventListener('click', function () {
+    document.getElementById("checkinTime").value = '';
+    document.getElementById("checkoutTime").value = '';
+    document.getElementById("type").value = '';
+    document.getElementById("dynamicDropdown").value = '';
     var modal = new bootstrap.Modal(document.getElementById('addEntryModal'));
     modal.show();
   });
 
   // Handle form submission
   var form = document.getElementById('entryForm');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    document.getElementById('overlay').style.display = 'flex';
-    var name = document.getElementById('name').value;
-    var type = document.getElementById('type').value;
-    var employeeId = document.getElementById('employeeId').value;
-    var checkinTime = document.getElementById('checkinTime').value;
-    var checkoutTime = document.getElementById('checkoutTime').value;
 
-    const cid = localStorage.getItem('companyID');
+  // Show the formatted start and end datetime with validation
+  AddEmployee.addEventListener('click', (event) => {
+    let isValid = true;
+    // Check if date is selected
+    if (!datePicker.value) {
+      dateError.textContent = 'Please select a valid date.';
+      isValid = false;
+    } else {
+      dateError.textContent = '';
+      EmpTypeError.textContent = "";
+      startTimeError.textContent="";
+      EmpNameError.textContent="";
+      endTimeError.textContent="";
+    }
+    if(document.getElementById("type").value === ""){
+      EmpTypeError.textContent = 'Please select a type.';
+      isValid = false;
+      dateError.textContent = '';
+      startTimeError.textContent="";
+      EmpNameError.textContent="";
+      endTimeError.textContent="";
+    }
 
-    const date1 = new Date(convertToUTC(checkoutTime));
-    const date2 = new Date(convertToUTC(checkinTime));
+    if(document.getElementById("dynamicDropdown").value === ""){
+      EmpNameError.textContent = 'Please select a Employee.';
+      isValid = false;
+      dateError.textContent = '';
+      EmpTypeError.textContent = "";
+      startTimeError.textContent="";
+      endTimeError.textContent="";
+    }
+    // Check if start time is selected
+    if (!checkinTimeButton.value) {
+      startTimeError.textContent = 'Please select a valid check in time.';
+      isValid = false;
+      dateError.textContent = '';
+      EmpTypeError.textContent = "";
+      EmpNameError.textContent="";
+      endTimeError.textContent="";
+    }
+    // Check if end time is valid
+    if (!checkoutTimeButton.value || checkoutTimeButton.value <= checkinTimeButton.value) {
+      endTimeError.textContent = 'Checkout time must be greater than check in time.';
+      isValid = false;
+      dateError.textContent = '';
+      EmpTypeError.textContent = "";
+      startTimeError.textContent="";
+      EmpNameError.textContent="";
+    }
+    if (isValid) {
+      var datePickerValue = datePicker.value;
+      const checkinTimeValue = checkinTimeButton.value;
+      const checkoutTimeValue = checkoutTimeButton.value;
+      const startDateTime = datePickerValue + ' ' + checkinTimeValue + ":00";
+      const endDateTimeValue = datePickerValue + ' ' + checkoutTimeValue + ":00";
+      
 
-    // Calculate the difference in milliseconds
-    const diffInMs = date1 - date2;
+      document.getElementById('overlay').style.display = 'flex';
+      var name = document.getElementById('dynamicDropdown').value;
+      var type = document.getElementById('type').value;
 
-    // Convert the difference from milliseconds to total minutes
-    const diffInMinutes = Math.floor(diffInMs / 1000 / 60);
 
-    // Calculate the total hours and remaining minutes
-    const totalHours = Math.floor(diffInMinutes / 60);
-    const minutes = diffInMinutes % 60;
+      const cid = localStorage.getItem('companyID');
+      const date1 = new Date(endDateTimeValue);
+      const date2 = new Date(startDateTime);
 
-    // Format the hours and minutes
-    const formattedHours = String(totalHours).padStart(2, '0');
-    const formattedMinutes = String(minutes).padStart(2, '0');
+      // Calculate the difference in milliseconds
+      const diffInMs = date1 - date2;
 
-    const timeWorkedHours = formattedHours + ":" + formattedMinutes;
+      // Convert the difference from milliseconds to total minutes
+      const diffInMinutes = Math.floor(diffInMs / 1000 / 60);
 
-    // Data object to be sent
-    var data = {
-      CID: cid,
-      EmpID: employeeId,
-      Date: checkinTime.substring(0, 10),
-      TypeID: type,
-      CheckInSnap: null,
-      CheckInTime: checkinTime,
-      CheckOutSnap: null,
-      CheckOutTime: checkoutTime,
-      TimeWorked: timeWorkedHours
+      // Calculate the total hours and remaining minutes
+      const totalHours = Math.floor(diffInMinutes / 60);
+      const minutes = diffInMinutes % 60;
 
-    };
+      // Format the hours and minutes
+      const formattedHours = String(totalHours).padStart(2, '0');
+      const formattedMinutes = String(minutes).padStart(2, '0');
 
-    // Send PUT request
-    fetch('https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-        // Close the modal
-        var modal = bootstrap.Modal.getInstance(document.getElementById('addEntryModal'));
-        modal.hide();
-        viewCurrentDateReport();
-        // Optionally, you can refresh data or provide a success message
+      const timeWorkedHours = formattedHours + ":" + formattedMinutes;
+
+      // Data object to be sent
+      var data = {
+        CID: cid,
+        EmpID: employeeDetails[name]['EmpID'],
+        Date: startDateTime.substring(0,10),
+        TypeID: type,
+        CheckInSnap: null,
+        CheckInTime: startDateTime,
+        CheckOutSnap: null,
+        CheckOutTime: endDateTimeValue,
+        TimeWorked: timeWorkedHours
+
+      };
+
+      // Send Post request
+      fetch('https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
       })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+        .then(response => response.json())
+        .then(data => {
+          // Close the modal
+          var modal = bootstrap.Modal.getInstance(document.getElementById('addEntryModal'));
+          AddEmployee.disabled = true;
+          modal.hide();
+          viewCurrentDateReport();
+          // Optionally, you can refresh data or provide a success message
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
   });
 });
 
 
 
-function getCurrentDateInTimezone(timezone) {
-  // Get the current date and time in UTC
-  const now = new Date();
 
-  // Options to format the date in the desired timezone
-  const options = {
-    timeZone: timezone,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  };
+  function getCurrentDateInTimezone(timezone) {
+    // Get the current date and time in UTC
+    const now = new Date();
 
-  // Format the date in the desired timezone using Intl.DateTimeFormat
-  const formatter = new Intl.DateTimeFormat('en-US', options);
-  const formattedDate = formatter.format(now);
+    // Options to format the date in the desired timezone
+    const options = {
+      timeZone: timezone,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    };
 
-  // Convert the formatted date to "YYYY-MM-DD" format
-  const [month, day, year] = formattedDate.split('/');
+    // Format the date in the desired timezone using Intl.DateTimeFormat
+    const formatter = new Intl.DateTimeFormat('en-US', options);
+    const formattedDate = formatter.format(now);
 
-  return `${year}-${month}-${day}`;
-}
+    // Convert the formatted date to "YYYY-MM-DD" format
+    const [month, day, year] = formattedDate.split('/');
+
+    return `${year}-${month}-${day}`;
+  }
 
 
-function convertToUTC(dateTimeStr) {
-  // Create a Date object from the date and time string in local time
-  const localDate = new Date(dateTimeStr);
-
-  // Convert the local Date object to UTC components
-  const year = localDate.getUTCFullYear();
-  const month = String(localDate.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-indexed
-  const day = String(localDate.getUTCDate()).padStart(2, '0');
-  const hours = String(localDate.getUTCHours()).padStart(2, '0');
-  const minutes = String(localDate.getUTCMinutes()).padStart(2, '0');
-  const seconds = String(localDate.getUTCSeconds()).padStart(2, '0');
-
-  // Format and return the UTC date and time as a string
-  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
-}
+  function getCurrentLocalTime() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+  
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }

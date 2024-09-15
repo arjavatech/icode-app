@@ -5,7 +5,7 @@ body {
 }
 
 .appbar {
-    background-color: #0A8080;
+    background-color: #02066F;
     border: none;
     color: black;
     border: 1px solid black;
@@ -69,7 +69,7 @@ a {
 .box-sty {
     max-width: 500px;
     background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+     //box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
 }
 
@@ -176,16 +176,16 @@ a {
     border: 1px solid gray;
     border-radius: 10px;
     padding: 1rem 5.7rem;
-    color: #0A8080;
+    color: #02066F;
     transition: 0.1s ease-out;
 }
 
 .input-sty:focus {
-    border-color: #0A8080;
+    border-color: #02066F;
 }
 
 .input-sty:focus+.label-sty {
-    color: #0A8080;
+    color: #02066F;
     top: 0;
     transform: translateY(-50%) scale(.9);
 }

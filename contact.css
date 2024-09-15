@@ -1,6 +1,6 @@
 /* Navbar Styles */
 .bg-green {
-    background-color: #0A8080;
+    background-color: #02066F;
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -12,18 +12,18 @@
 .rounded-pill-active {
     border-radius: 50rem;
     background-color: #fff;
-    color: #0A8080 !important;
+    color: #02066F !important;
 }
 
 .btn-green {
     color: white;
-    background-color: #0A8080;
+    background-color: #02066F;
     padding: 5px 30px;
 }
 
 .btn-outline-green {
-    color: #0A8080;
-    border: solid 1px #0A8080;
+    color: #02066F;
+    border: solid 1px #02066F;
     padding: 5px 21px;
 }
 
@@ -33,8 +33,12 @@ textarea {
     width: 100%;
     padding: 1rem;
     font-size: 1rem;
-    border: 1px solid #0A8080 !important;
+    border: 1px solid #02066F !important;
     border-radius: 10px !important;
+}
+input:focus,
+textarea:focus {
+   box-shadow: none;
 }
 
 input {
@@ -110,7 +114,7 @@ textarea {
         border-radius: 10px;
         background-color: #fff;
         width: 140px;
-        color: #0A8080 !important;
+        color: #02066F !important;
     }
 }
 
@@ -125,7 +129,7 @@ body {
 }
 
     .btn-green {
-        background-color: #0A8080;
+        background-color: #02066F;
         border: none;
         color: white;
         width: 100%;
@@ -134,6 +138,6 @@ body {
     }
 
     .btn-outline-light:hover {
-        background-color: #0A8080;
+        background-color: #02066F;
         color: white;
     }

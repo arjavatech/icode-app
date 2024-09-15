@@ -1,5 +1,5 @@
 .bg-green {
-    background-color: #0A8080;
+    background-color: #02066F;
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -11,23 +11,23 @@
 .rounded-pill-active {
     border-radius: 50rem;
     background-color: #fff;
-    color: #0A8080 !important;
+    color: #02066F !important;
 }
 
 .btn-green {
     color: white;
-    background-color: #0A8080;
+    background-color: #02066F;
     padding: 5px 30px;
 }
 .btn-green:hover {
     color: white;
-    background-color: #095252;
+    background-color: #02066F;
     padding: 5px 30px;
 }
 
 .btn-outline-green {
-    color: #0A8080 !important;
-    border: solid 1px #0A8080 !important;
+    color: #02066F !important;
+    border: solid 1px #02066F !important;
     padding: 5px 21px !important;
 }
 .btn-outline-green:focus {
@@ -43,12 +43,12 @@
 }
 
 .dropdown-item {
-    color: #0A8080 !important;
+    color: #02066F !important;
 }
 
 .dropdown-item:focus {
     background-color: transparent !important;
-    color: #0A8080 !important;
+    color: #02066F !important;
 }
 
 @media (max-width:991px) {
@@ -56,38 +56,38 @@
         border-radius: 10px !important;
         background-color: #fff;
         width: 230px;
-        color: #0A8080 !important;
+        color: #02066F !important;
         margin-top: 2%;
     }
 }
 
 .modal-header {
-    background-color: #0A8080;
+    background-color: #02066F;
     color: white;
 }
 
 
 .no {
-    color: #0A8080 !important;
-    border: solid 1px #0A8080 !important;
+    color: #02066F !important;
+    border: solid 1px #02066F !important;
     padding: 5px 21px !important;
 }
 
 .yes {
     color: white;
-    background-color: #0A8080;
+    background-color: #02066F;
     padding: 5px 24px !important;
 }
 
 .no:hover {
-    color: #0A8080 !important;
-    border: solid 1px #0A8080 !important;
+    color: #02066F !important;
+    border: solid 1px #02066F !important;
     padding: 5px 21px !important;
 }
 
 .yes:hover {
     opacity: 0.8 !important;
     color: white;
-    background-color: #0A8080;
+    background-color: #02066F;
     padding: 5px 24px !important;
 }
