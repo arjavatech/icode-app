@@ -30,162 +30,213 @@
 
     <!-- <script defer src="logout.js"></script> -->
     <link rel="icon" href="Image/app_logo.png">
-    <style>
-        /* Loading  */
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-        }
 
-        .overlay .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #02066F;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .material-textfield {
-            position: relative;
-            margin-bottom: 1.5rem;
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .material-textfield .input-sty,
-        .material-textfield textarea {
-            width: 100%;
-            padding: 0.5rem;
-            padding-top: 1rem;
-            font-size: 1rem;
-            border: 1px solid #02066F !important;
-            border-radius: 10px !important;
-            box-sizing: border-box;
-        }
-
-        .material-textfield label {
-            position: absolute;
-            top: 9px;
-            left: 0.75rem;
-            transition: all 0.3s ease;
-            background: white;
-            padding: 0 0.25rem;
-            color: #02066F;
-            pointer-events: none;
-        }
-
-        .material-textfield input::placeholder {
-            color: transparent;
-        }
-
-        .material-textfield .input-sty:focus+label,
-        .material-textfield .input-sty:not(:placeholder-shown)+label,
-        .material-textfield textarea:focus+label,
-        .material-textfield textarea:not(:placeholder-shown)+label {
-            top: -0.75rem;
-            left: 0.75rem;
-            font-size: 0.75rem;
-            color: #02066F;
-        }
-
-        .material-textfield .input-sty:focus,
-        .material-textfield textarea:focus {
-            outline: none;
-            border-color: #02066F;
-        }
-
-        .no {
-            color: #02066F !important;
-            border: solid 1px #02066F !important;
-            padding: 5px 21px !important;
-        }
-
-        .yes {
-            color: white;
-            background-color: #02066F;
-            padding: 5px 24px !important;
-        }
-
-        .modal-content {
-            width: 80%;
-        }
-
-        .footer-fluid {
-            margin-top: 14% !important;
-        }
-
-        .error {
-            color: red;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-
-
-        .pagination {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .pagination button {
-            padding: 8px 15px;
-            border: 1px solid #02066F;
-            background-color: white;
-            color: #02066F;
-            font-size: 14px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .pagination button:hover {
-            background-color: #02066F;
-            color: white;
-        }
-
-        .pagination button.disabled {
-            cursor: not-allowed;
-            opacity: 0.5;
-            background-color: #e9ecef;
-            border-color: #e9ecef;
-            color: #6c757d;
-        }
-
-        .pagination button.disabled:hover {
-            background-color: #e9ecef;
-            color: #6c757d;
-        }
-
-        .pagination button.active {
-            background-color: #02066F;
-            color: white;
-            border-color: #02066F;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 </head>
+<style>
+    /* Loading  */
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .overlay .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #02066F;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .dataTables_filter {
+    margin-bottom: 20px; /* Adjust the gap here */
+}
+
+    .custom-table thead th {
+        background-color:  #02066F;
+        color: white;
+    }
+
+    .custom-table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .custom-table tbody tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    .dataTables_wrapper {
+        margin-bottom: 20px;
+    }
+
+    .dataTables_filter {
+        float: right;
+    }
+
+    .dataTables_length {
+        float: left;
+    }
+
+    .dataTables_paginate {
+        float: right;
+    }
+
+    .material-textfield {
+        position: relative;
+        margin-bottom: 1.5rem;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .material-textfield .input-sty,
+    .material-textfield textarea {
+        width: 100%;
+        padding: 0.5rem;
+        padding-top: 1rem;
+        font-size: 1rem;
+        border: 1px solid #02066F !important;
+        border-radius: 10px !important;
+        box-sizing: border-box;
+    }
+
+    .material-textfield label {
+        position: absolute;
+        top: 9px;
+        left: 0.75rem;
+        transition: all 0.3s ease;
+        background: white;
+        padding: 0 0.25rem;
+        color: #02066F;
+        pointer-events: none;
+    }
+
+    .material-textfield input::placeholder {
+        color: transparent;
+    }
+
+    .material-textfield .input-sty:focus+label,
+    .material-textfield .input-sty:not(:placeholder-shown)+label,
+    .material-textfield textarea:focus+label,
+    .material-textfield textarea:not(:placeholder-shown)+label {
+        top: -0.75rem;
+        left: 0.75rem;
+        font-size: 0.75rem;
+        color: #02066F;
+    }
+
+    .material-textfield .input-sty:focus,
+    .material-textfield textarea:focus {
+        outline: none;
+        border-color: #02066F;
+    }
+
+    .no {
+        color: #02066F !important;
+        border: solid 1px #02066F !important;
+        padding: 5px 21px !important;
+    }
+
+    .yes {
+        color: white;
+        background-color: #02066F;
+        padding: 5px 24px !important;
+    }
+
+    .modal-content {
+        width: 80%;
+    }
+
+    .footer-fluid {
+        margin-top: 14% !important;
+    }
+
+    .error {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+    .custom-table-container {
+        border: 1px solid #cdcdcd;
+        background-color: white;
+        border-radius: 12px;
+        overflow: hidden;
+        padding: 20px;
+        margin: 0 auto;
+        max-width: 1000px;
+        font-weight: 600;
+        position: relative;
+        margin-top: 1%;
+    }
+
+    @media (min-width: 990px) {
+        .container {
+            padding: 0 20px;
+        }
+
+        .nav-tap {
+            width: 180px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .nav-bar-style {
+            width: 240px;
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .custom-table-container {
+            max-width: 100%;
+        }
+
+        #add-entry {
+            border: 1px solid #02066F;
+            color: #02066F;
+            margin-left: -100%;
+            background-color: white;
+            border-radius: 6px;
+        }
+
+
+    }
+
+    @media (max-width: 768px) {
+        .custom-table-container {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        .custom-table th,
+        .custom-table td {
+            padding: 5px;
+            font-size: 12px;
+        }
+    }
+</style>
+
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
@@ -238,23 +289,22 @@
             <div class="spinner"></div>
         </div>
         <div class="container-fluid pt-2 pb-2" style="background-color: white;">
-            <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-12">
-                    <div class="row justify-content-center">
-                        <div class="col-md-4 col-sm-12 nav-link">
-                            <a href="#" class="current">
-                                Current Day Report
-                            </a>
+            <div class="row">
+                <div class="container">
+                    <div class="row justify-content-center pt-3 pb-2">
+                        <!-- Current Day Report Link -->
+                        <div class="col-md-3 col-sm-12 text-center nav-link">
+                            <a href="#" class="current">Current Day Report</a>
                         </div>
-                        <div class="col-md-4 col-sm-12 nav-link">
-                            <a href="day_wise_report.html" class="unselect">
-                                Day Wise Report
-                            </a>
+                        
+                        <!-- Day Wise Report Link -->
+                        <div class="col-md-3 col-sm-12 text-center nav-link">
+                            <a href="day_wise_report.html" class="unselect">Day Wise Report</a>
                         </div>
-
-                        <div class="col-md-4 col-sm-12 nav-link">
-                            <a href="salaried_report.html" class="unselect" id="reportName">
-                            </a>
+                        
+                        <!-- Placeholder for Salaried Report -->
+                        <div class="col-md-3 col-sm-12 text-center nav-link">
+                            <a href="salaried_report.html" class="unselect" id="reportName">Salaried Report</a>
                         </div>
                     </div>
                 </div>
@@ -263,29 +313,27 @@
 
 
         <div class="container mt-5">
-            <h3 class="text-center fw-bold mb-3" id="current-checkin-date">Report Summary</h3><br>
             <h5 class="text-center fw-bold">Current Day Report</h5><br>
             <h5 class="Date" id="Date">Date: <span id="current-checkin-header"></span><button class="btn float-end"
                     id="add-entry">Add Entry</button></h5><br>
-            <div class="emp-table table-responsive">
-                <div class="custom-table-container">
-                    <table class="table custom-table">
-                        <thead>
-                            <tr>
+                    <div class="emp-table table-responsive">
+                        <div class="custom-table-container">
+                          <table id="employeeTable" class="table custom-table table-bordered">
+                            <thead>
+                              <tr>
                                 <th style="border-bottom: 1px solid #cdcdcd;">Employee ID</th>
                                 <th style="border-bottom: 1px solid #cdcdcd;">Name</th>
                                 <th style="border-bottom: 1px solid #cdcdcd;">Check-in Time</th>
                                 <th style="border-bottom: 1px solid #cdcdcd;">Check-out Time</th>
                                 <th style="border-bottom: 1px solid #cdcdcd;"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="current-checkin-tbody">
-                        </tbody>
-                    </table>
-
-                    <div class="pagination" id="paginationControls"></div>
-                </div>
-            </div>
+                              </tr>
+                            </thead>
+                            <tbody id="current-checkin-tbody">
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      
         </div>
 
         <!-- Add Entry Modal -->
@@ -374,17 +422,17 @@
         <footer class="footer-fluid mt-5">
             <div class="row py-5 footer-row">
                 <div class="col-0 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4 mb-lg-0">
-                    <h6 class="text-uppercase font-weight-bold mb-4">Quick Explore</h6>
+                    <h6 class="text-uppercase fw-bold mb-4">Quick Explore</h6>
                     <a href="device.html" class="quick-explore">Device page</a><br>
                     <a href="employee_list.html" class="quick-explore">Employee page</a><br>
-                    <a href="report_summary.html" class="quick-explore">Report summary page</a><br>
+                    <a href="#" class="quick-explore">Report summary page</a><br>
                     <a href="report_setting.html" class="quick-explore">Report settings page</a><br>
                     <a href="profile.html" class="quick-explore">Profile page</a><br>
                     <a href="contact.html" class="quick-explore">Contact page</a><br>
                 </div>
 
                 <div class="col-0 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4 mb-lg-0">
-                    <h6 class="text-uppercase font-weight-bold mb-4">Contact Us</h6>
+                    <h6 class="text-uppercase fw-bold mb-4">Contact Us</h6>
 
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                         class="bi bi-geo-alt" viewBox="0 0 16 16">
@@ -405,7 +453,7 @@
                 </div>
 
                 <div class="col-0 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4 mb-lg-0">
-                    <h6 class="text-uppercase font-weight-bold mb-4 ">Social Media</h6>
+                    <h6 class="text-uppercase fw-bold mb-4 ">Social Media</h6>
                     <a href="#" target="_blank" title="facebook"><svg xmlns="http://www.w3.org/2000/svg" width="30"
                             height="30" fill="currentColor" class="bi bi-facebook social-media" viewBox="0 0 16 16">
                             <path
@@ -437,13 +485,7 @@
                     </ul>
                 </div>
 
-                <div class="col-0 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4 mb-lg-0">
-                    <h6 class="text-uppercase font-weight-bold mb-4">Location</h6>
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.828674489334!2d-122.06503089999998!3d47.629461500000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x549072128ba4e249%3A0x2cc42acad5a718f!2s2135%20204th%20Pl%20NE%2C%20Sammamish%2C%20WA%2098074%2C%20USA!5e0!3m2!1sen!2sin!4v1726315007185!5m2!1sen!2sin"
-                        class="location-link" width="600" height="450" style="border:0;" allowfullscreen=""
-                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
+
             </div>
         </footer>
         <div class="bg-light py-2">
@@ -475,9 +517,6 @@
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
 
 </body>
 

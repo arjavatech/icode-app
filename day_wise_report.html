@@ -23,6 +23,10 @@
     <link rel="stylesheet" href="nav.css">
 
     <link rel="stylesheet" href="footer.css">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 </head>
 
 <style>
@@ -59,13 +63,46 @@
         }
     }
 
+    .dataTables_filter {
+    margin-bottom: 20px; /* Adjust the gap here */
+}
+
+    .custom-table thead th {
+        background-color:  #02066F;
+        color: white;
+    }
+
+    .custom-table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .custom-table tbody tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    .dataTables_wrapper {
+        margin-bottom: 20px;
+    }
+
+    .dataTables_filter {
+        float: right;
+    }
+
+    .dataTables_length {
+        float: left;
+    }
+
+    .dataTables_paginate {
+        float: right;
+    }
+
     .custom-table-container {
         display: none;
         border: 1px solid #cdcdcd;
         background-color: white;
         border-radius: 12px;
         overflow: hidden;
-        padding: 0;
+        padding: 20px;
         margin: 0 auto;
         max-width: 1000px;
         font-weight: 600;
@@ -281,25 +318,22 @@
             <div class="spinner"></div>
         </div>
         <div class="container-fluid pt-2 pb-2" style="background-color: white;">
-            <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-12">
-                    <div class="row justify-content-center">
-                        <div class="col-md-4 col-sm-12 nav-link">
-                            <a href="report_summary.html"
-                            class="unselect">
-                                Current Day Report
-                            </a>
+            <div class="row">
+                <div class="container">
+                    <div class="row justify-content-center pt-3 pb-2">
+                        <!-- Current Day Report Link -->
+                        <div class="col-md-3 col-sm-12 text-center nav-link">
+                            <a href="report_summary.html" class="unselect">Current Day Report</a>
                         </div>
-                        <div class="col-md-4 col-sm-12 nav-link">
-                            <a href="#"
-                                class="current">
-                                Day Wise Report
-                            </a>
+                        
+                        <!-- Day Wise Report Link -->
+                        <div class="col-md-3 col-sm-12 text-center nav-link">
+                            <a href="#" class="current">Day Wise Report</a>
                         </div>
-
-                        <div class="col-md-4 col-sm-12 nav-link">
-                            <a href="salaried_report.html" class="unselect" id="reportName">
-                            </a>
+                        
+                        <!-- Placeholder for Salaried Report -->
+                        <div class="col-md-3 col-sm-12 text-center nav-link">
+                            <a href="salaried_report.html" class="unselect" id="reportName">Salaried Report</a>
                         </div>
                     </div>
                 </div>
@@ -307,8 +341,7 @@
         </div>
 
         <div class="container mt-5">
-            <h3 class="text-center fw-bold mb-3" id="current-checkin-date">Report Summary</h3><br>
-            <div class="d-flex justify-content-center mt-5">
+            <div class="d-flex justify-content-center mt-2">
                 <input type="date" class="date pt-1 pb-1" id="dailyReportDate"
                     style="width: 200px;padding-left: 10px;border-radius: 5px;border-color: #cdcdcd;">
             </div>
@@ -316,7 +349,7 @@
                 <p id="noDateSelect" style="text-align: center;">Please select a date to show report.</p>
                 <div class="custom-table-container">
 
-                    <table class="table custom-table">
+                    <table id="employeeTable" class="table custom-table table-bordered">
                         <thead>
                             <tr>
                                 <th style="border-bottom: 1px solid #cdcdcd;">Employee Name</th>
@@ -327,7 +360,7 @@
                             </tr>
                         </thead>
                         <tbody id="tbody">
-
+                            
                         </tbody>
                     </table>
                 </div>
@@ -360,7 +393,7 @@
     <footer class="footer-fluid mt-5">
         <div class="row py-5 footer-row">
             <div class="col-0 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4 mb-lg-0">
-                <h6 class="text-uppercase font-weight-bold mb-4">Quick Explore</h6>
+                <h6 class="text-uppercase fw-bold mb-4">Quick Explore</h6>
                 <a href="device.html" class="quick-explore">Device page</a><br>
                 <a href="employee_list.html" class="quick-explore">Employee page</a><br>
                 <a href="report_summary.html" class="quick-explore">Report summary page</a><br>
@@ -370,7 +403,7 @@
             </div>
     
             <div class="col-0 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4 mb-lg-0">
-                <h6 class="text-uppercase font-weight-bold mb-4">Contact Us</h6>
+                <h6 class="text-uppercase fw-bold mb-4">Contact Us</h6>
                 
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-geo-alt"
                 viewBox="0 0 16 16">
@@ -391,7 +424,7 @@
             </div>
     
             <div class="col-0 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4 mb-lg-0">
-                <h6 class="text-uppercase font-weight-bold mb-4 ">Social Media</h6>
+                <h6 class="text-uppercase fw-bold mb-4 ">Social Media</h6>
                 <a href="#" target="_blank" title="facebook"><svg xmlns="http://www.w3.org/2000/svg" width="30"
                         height="30" fill="currentColor" class="bi bi-facebook social-media" viewBox="0 0 16 16">
                         <path
@@ -423,10 +456,7 @@
                 </ul>
             </div>
     
-            <div class="col-0 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4 mb-lg-0">
-                <h6 class="text-uppercase font-weight-bold mb-4">Location</h6>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.828674489334!2d-122.06503089999998!3d47.629461500000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x549072128ba4e249%3A0x2cc42acad5a718f!2s2135%20204th%20Pl%20NE%2C%20Sammamish%2C%20WA%2098074%2C%20USA!5e0!3m2!1sen!2sin!4v1726315007185!5m2!1sen!2sin"  class="location-link" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-             </div>
+           
         </div>
     </footer>
     <div class="bg-light py-2">

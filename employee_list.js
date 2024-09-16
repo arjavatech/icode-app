@@ -180,73 +180,6 @@ const rowsPerPage = 10;
 let currentPage = 1;
 let employeesData = [];  // Variable to store fetched employee data
 
-function displayTable(data, page = 1) {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    const paginatedData = data.slice(start, end);
-
-    const tbody = document.querySelector('#employeeTable tbody');
-    tbody.innerHTML = "";  // Clear previous table rows
-
-    paginatedData.forEach(element => {
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td class="instructor">${element.Pin}</td>
-            <td class="fName">${element.FName}</td>
-            <td class="phoneNumber">${element.PhoneNumber}</td>
-            <td>
-                <button class="btn icon-button btn-green" onclick="editEmpdetails('${element.EmpID}')" data-bs-toggle="modal" data-bs-target="#myModal">Edit</button>
-                <button class="btn icon-button btn-outline-green" id="buttonClick" data-bs-toggle="modal" onclick="showLogoutModal('${element.EmpID}')">Delete</button>
-            </td>
-        `;
-        tbody.appendChild(newRow);
-    });
-}
-
-function setupPagination(data) {
-    const paginationControls = document.getElementById('paginationControls');
-    const totalPages = Math.ceil(data.length / rowsPerPage);
-    paginationControls.innerHTML = "";  // Clear previous pagination buttons
-
-    // Create Previous button
-    const prevButton = document.createElement('button');
-    prevButton.textContent = 'Previous';
-    prevButton.onclick = () => {
-        if (currentPage > 1) {
-            currentPage--;
-            displayTable(data, currentPage);
-            setupPagination(data);
-        }
-    };
-    if (currentPage === 1) prevButton.classList.add('disabled');
-    paginationControls.appendChild(prevButton);
-
-    // Create page number buttons
-    for (let i = 1; i <= totalPages; i++) {
-        const pageButton = document.createElement('button');
-        pageButton.textContent = i;
-        if (i === currentPage) pageButton.classList.add('disabled');
-        pageButton.onclick = () => {
-            currentPage = i;
-            displayTable(data, currentPage);
-            setupPagination(data);
-        };
-        paginationControls.appendChild(pageButton);
-    }
-
-    // Create Next button
-    const nextButton = document.createElement('button');
-    nextButton.textContent = 'Next';
-    nextButton.onclick = () => {
-        if (currentPage < totalPages) {
-            currentPage++;
-            displayTable(data, currentPage);
-            setupPagination(data);
-        }
-    };
-    if (currentPage === totalPages) nextButton.classList.add('disabled');
-    paginationControls.appendChild(nextButton);
-}
 
 // Function to fetch and display employee data
 function viewEmpdetails() {
@@ -262,9 +195,40 @@ function viewEmpdetails() {
             return response.json();
         })
         .then(data => {
-            employeesData = data;  // Store the fetched data for pagination
-            displayTable(employeesData, currentPage);
-            setupPagination(employeesData);
+            // Store the fetched data
+            employeesData = data;
+
+            // Clear any existing DataTables instance
+            if ($.fn.DataTable.isDataTable('#employeeTable')) {
+                $('#employeeTable').DataTable().clear().destroy();
+            }
+
+            // Clear the existing table body content
+            tableBody.innerHTML = '';
+
+            // Populate the table body with fetched data
+            employeesData.forEach(element => {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td class="pin-column">${element.Pin}</td>
+                    <td class="name-column">${element.FName}</td>
+                    <td class="phone-column">${element.PhoneNumber}</td>
+                    <td class="action-column">
+                        <button class="btn icon-button btn-green" onclick="editEmpdetails('${element.EmpID}')" data-bs-toggle="modal" data-bs-target="#myModal">Edit</button>
+                        <button class="btn icon-button btn-outline-green" onclick="showLogoutModal('${element.EmpID}')">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(newRow);
+            });
+
+            // Initialize DataTables
+            $('#employeeTable').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true
+            });
+
             document.getElementById('overlay').style.display = 'none';
         })
         .catch(error => {

@@ -344,7 +344,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="material-textfield mb-4">
-                        <input id="companyAddress" placeholder=" " type="text" class="input-sty" disabled>
+                        <input id="companyAddress" placeholder=" " type="text" class="input-sty disabledData" disabled>
                         <label class="label-sty">Company Address</label>
                     </div>
                 </div>
@@ -358,14 +358,14 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="material-textfield mb-4">
-                        <input id="firstName" placeholder=" " type="text" class="input-sty" disabled>
+                        <input id="firstName" placeholder=" " type="text" class="input-sty disabledData" disabled>
                         <label class="label-sty">First name</label>
                         <span class="text-danger" id="errorFName"></span>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="material-textfield mb-4">
-                        <input id="lastName" placeholder=" " type="text" class="input-sty" disabled>
+                        <input id="lastName" placeholder=" " type="text" class="input-sty disabledData" disabled>
                         <label class="label-sty">Last name</label>
                         <span class="text-danger" id="errorLName"></span>
                     </div>
@@ -375,7 +375,7 @@
 
                 <div class="col-sm-6">
                     <div class="material-textfield">
-                        <input type="tel" id="phone" name="phoneNumber" placeholder=" " class="input-sty" disabled
+                        <input type="tel" id="phone" name="phoneNumber" placeholder=" " class="input-sty disabledData" disabled
                             oninput="formatPhoneNumber()">
                         <label>Phone Number</label>
                         <br>
@@ -384,7 +384,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="material-textfield mb-4">
-                        <input id="address" placeholder=" " type="text" class="input-sty" disabled>
+                        <input id="address" placeholder=" " type="text" class="input-sty disabledData" disabled>
                         <label class="label-sty" id="address_lable">Address</label>
                         <span class="text-danger" id="errorEmail"></span>
                     </div>
@@ -406,7 +406,7 @@
                 <a href="employee_list.html" class="quick-explore">Employee page</a><br>
                 <a href="report_summary.html" class="quick-explore">Report summary page</a><br>
                 <a href="report_setting.html" class="quick-explore">Report settings page</a><br>
-                <a href="profile.html" class="quick-explore">Profile page</a><br>
+                <a href="#" class="quick-explore">Profile page</a><br>
                 <a href="contact.html" class="quick-explore">Contact page</a><br>
             </div>
     
@@ -464,10 +464,6 @@
                 </ul>
             </div>
     
-            <div class="col-0 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4 mb-lg-0">
-                <h6 class="text-uppercase font-weight-bold mb-4">Location</h6>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.828674489334!2d-122.06503089999998!3d47.629461500000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x549072128ba4e249%3A0x2cc42acad5a718f!2s2135%20204th%20Pl%20NE%2C%20Sammamish%2C%20WA%2098074%2C%20USA!5e0!3m2!1sen!2sin!4v1726315007185!5m2!1sen!2sin"  class="location-link" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-             </div>
         </div>
     </footer>
     <div class="bg-light py-2">
@@ -497,13 +493,17 @@
         myModal.show();
     }
     function enableEdit() {
-        document.querySelector(".float-end").textContent = "Save"
-        // document.querySelector()
-        let inputs = document.querySelectorAll('input');
-        inputs.forEach(function (input) {
-            input.disabled = false;
-        });
-    }
+    // Change the button text to "Save"
+    let button = document.querySelector(".btn-green");
+    button.textContent = "Save";
+    
+    // Enable all inputs with the class "disabledData"
+    let inputs = document.querySelectorAll('.disabledData');
+    inputs.forEach(function (input) {
+        input.disabled = false;
+    });
+}
+
 </script>
 
 </html>

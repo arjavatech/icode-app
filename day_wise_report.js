@@ -95,71 +95,79 @@ function viewDatewiseReport(dateValue) {
   const tableBody = document.getElementById("tbody");
   tableBody.innerHTML = '';
 
+  if ($.fn.DataTable.isDataTable('#employeeTable')) {
+      $('#employeeTable').DataTable().destroy();
+  }
+
   if (dateValue != "test") {
-    const apiUrl = `${apiUrlBase}/${cid}/${dateValue}`;
+      const apiUrl = `${apiUrlBase}/${cid}/${dateValue}`;
 
-  fetch(apiUrl)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        try {
-          data.forEach(element => {
-            const newRow = document.createElement('tr');
-            if (element.CheckOutTime != null) {
-              const checkInTimeUTC = new Date(element.CheckInTime);
-              const checkOutTimeUTC = new Date(element.CheckOutTime);
+      fetch(apiUrl)
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error(`Error: ${response.status}`);
+              }
+              return response.json();
+          })
+          .then(data => {
+              try {
+                  data.forEach(element => {
+                      const newRow = document.createElement('tr');
+                      if (element.CheckOutTime != null) {
+                          const checkInTimeUTC = new Date(element.CheckInTime);
+                          const checkOutTimeUTC = new Date(element.CheckOutTime);
 
+                          // Convert to AM/PM format if needed
+                          const checkInTimeFormatted = convertToAmPm(checkInTimeUTC);
+                          const checkOutTimeFormatted = convertToAmPm(checkOutTimeUTC);
 
-              // Convert to AM/PM format if needed
-              const checkInTimeFormatted = convertToAmPm(checkInTimeUTC);
-
-              const checkOutTimeFormatted = convertToAmPm(checkOutTimeUTC);
-
-              newRow.innerHTML = `
-                               <td class="Name">${(element.Name).split(" ")[0]}</td>
+                          newRow.innerHTML = `
+                              <td class="Name">${(element.Name).split(" ")[0]}</td>
                               <td class="Pin">${element.Pin}</td>
                               <td class="CheckInTime">${checkInTimeFormatted}</td>
                               <td class="CheckOutTime">${checkOutTimeFormatted}</td>
                               <td class="TimeWorked">${element.TimeWorked}</td>
                           `;
-              tableBody.appendChild(newRow);
-              // document.getElementById("timeZoneBasedData").textContent = formatDateOnly(checkInTimeIST);
-            }
-          });
-        } catch {
-          // alert("No Data Found");
-          const newRow = document.createElement('tr');
-          newRow.innerHTML = `
+                          tableBody.appendChild(newRow);
+                      }
+                  });
+
+                  // Initialize DataTable after populating the table
+                  $('#employeeTable').DataTable({
+                      "paging": true,
+                      "searching": true,
+                      "ordering": true,
+                      "info": true
+                  });
+
+              } catch {
+                  const newRow = document.createElement('tr');
+                  newRow.innerHTML = `
                       <td colspan="6" class="text-center">No Records Found</td>
                   `;
-          tableBody.appendChild(newRow);
-        }
-        document.getElementById('overlay').style.display = 'none';
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+                  tableBody.appendChild(newRow);
+              }
+              document.getElementById('overlay').style.display = 'none';
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+  } else {
+      const newRow = document.createElement('tr');
+      newRow.innerHTML = `
+          <td colspan="6" class="text-center">No Date chosen</td>
+      `;
+      tableBody.innerHTML = '';
+      tableBody.appendChild(newRow);
   }
-  else {
-    const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-    <td colspan="6" class="text-center">No Date choosen</td>
-`;
-    tableBody.innerHTML = '';
-    tableBody.appendChild(newRow);
-
-  }
-
 }
 
+// Trigger report on date change
 document.getElementById('dailyReportDate').addEventListener('change', function () {
   const dateValue = this.value;
-  document.addEventListener('DOMContentLoaded', viewDatewiseReport(dateValue));
+  viewDatewiseReport(dateValue);
 });
+
 
 
 function convertToAmPm(date) {

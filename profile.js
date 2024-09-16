@@ -98,20 +98,11 @@ function validateForm() {
     isValid &= validPhoneno();
     isValid &= validateField('firstName', 'Only use letters and spaces', /^[a-zA-Z\s]+$/);
     isValid &= validateField('lastName', 'Only use letters and spaces', /^[a-zA-Z\s]+$/);
-    isValid &= validatePassword();
 
     return !!isValid; // Convert to boolean
 }
 
-function validateField(id, errorMessage, pattern) {
-    const value = document.getElementById(id).value;
-    if (value.trim() === '' || !pattern.test(value)) {
-        showError(document.getElementById(id), value.trim() === '' ? 'This field is required' : errorMessage);
-        return false;
-    }
-    clearError(document.getElementById(id));
-    return true;
-}
+
 
 function validatePassword() {
     const password = document.getElementById('password').value;

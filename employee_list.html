@@ -22,7 +22,105 @@
     <link rel="icon" href="Image/app_logo.png">
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="nav.css">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
     <style>
+
+.custom-table-container {
+        
+        border: 1px solid #cdcdcd;
+        background-color: white;
+        border-radius: 12px;
+        overflow: hidden;
+        padding: 20px;
+        margin: 0 auto;
+        max-width: 1000px;
+        font-weight: 600;
+        position: relative;
+        margin-top: 1%;
+    }
+
+    /* Adjust column widths */
+table#employeeTable .pin-column {
+    width: 80px; /* Adjust as needed */
+    text-align: center; /* Center-align the pin */
+}
+
+table#employeeTable .phone-column {
+    width: 120px; /* Adjust as needed */
+    text-align: center; /* Center-align the phone number */
+}
+
+table#employeeTable .action-column {
+    width: 200px; /* Adjust as needed */
+    text-align: center; /* Center-align the action buttons */
+}
+
+/* Ensure buttons wrap correctly and have some spacing */
+table#employeeTable .action-column .btn {
+    margin: 2px; /* Add some spacing between buttons */
+    white-space: nowrap; /* Prevent buttons from wrapping */
+}
+
+table#employeeTable .action-column {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping of buttons */
+    justify-content: center; /* Center the buttons */
+}
+
+
+    @media (max-width: 1024px) {
+        .custom-table-container {
+            max-width: 100%;
+        }
+
+        #add-entry {
+            border: 1px solid #02066F;
+            color: #02066F;
+            margin-left: -100%;
+            background-color: white;
+            border-radius: 6px;
+        }
+
+
+    }
+
+    @media (max-width: 768px) {
+        .custom-table-container {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        .custom-table th,
+        .custom-table td {
+            padding: 5px;
+            font-size: 12px;
+        }
+    }
+
+    .custom-table {
+        margin: 0;
+        text-align: center;
+    }
+
+    .custom-table th,
+    .custom-table td {
+        text-align: center;
+        padding: 10px;
+    }
+
+    .custom-table thead tr {
+        border-bottom: 1px solid #cdcdcd;
+    }
+
+    .custom-table th {
+        padding-top: 16px;
+        border-bottom: 1px solid #cdcdcd;
+    }
+
         /* Loading  */
         .overlay {
             display: none;
@@ -45,6 +143,42 @@
             height: 40px;
             animation: spin 1s linear infinite;
         }
+
+        .dataTables_filter {
+    margin-bottom: 20px; /* Adjust the gap here */
+}
+
+    .custom-table thead th {
+        background-color:  #02066F;
+        color: white;
+    }
+
+    .custom-table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .custom-table tbody tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    .dataTables_wrapper {
+        margin-bottom: 20px;
+    }
+
+    .dataTables_filter {
+        float: right;
+    }
+
+    .dataTables_length {
+        float: left;
+    }
+
+    .dataTables_paginate {
+        float: right;
+    }
+
+    
+
 
         @keyframes spin {
             0% {
@@ -236,7 +370,7 @@
                 </div>
             </div>
             <div class="emp-list">
-                <h3 class="text-center fw-bold mb-3">Employee Details</h3>
+                <h3 class="text-center fw-bold mb-1">Employee Details</h3>
 
                 <!-- Add Employee -->
                 <span id="current-checkin-header"></span> <span style="float:right;"><button class="btn float-end"
@@ -246,10 +380,10 @@
                 <br><br>
                 <div class="emp-table table-responsive">
                     <div class="custom-table-container">
-                        <table class="table custom-table" id="employeeTable">
+                        <table class="table custom-table table-bordered" id="employeeTable">
                             <thead>
                                 <tr>
-                                    <th style="border-bottom: 1px solid #cdcdcd;">Employee ID</th>
+                                    <th style="border-bottom: 1px solid #cdcdcd;">Pin</th>
 
                                     <th style="border-bottom: 1px solid #cdcdcd;">Name</th>
                                     <!-- <th style="border-bottom: 1px solid #cdcdcd;">Last Name</th> -->
@@ -261,8 +395,6 @@
                                 <!-- Table rows will be dynamically inserted here -->
                             </tbody>
                         </table>
-
-                        <div class="pagination" id="paginationControls"></div>
 
                         <!-- Modal -->
                         <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel"
@@ -402,13 +534,6 @@
                 </ul>
             </div>
 
-            <div class="col-0 col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4 mb-lg-0">
-                <h6 class="text-uppercase font-weight-bold mb-4">Location</h6>
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.828674489334!2d-122.06503089999998!3d47.629461500000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x549072128ba4e249%3A0x2cc42acad5a718f!2s2135%20204th%20Pl%20NE%2C%20Sammamish%2C%20WA%2098074%2C%20USA!5e0!3m2!1sen!2sin!4v1726315007185!5m2!1sen!2sin"
-                    class="location-link" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
         </div>
     </footer>
     <div class="bg-light py-2">

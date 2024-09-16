@@ -7,31 +7,32 @@ const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/
 function viewDateRangewiseReport() {
   document.getElementById('overlay').style.display = 'flex';
   const tableBody = document.getElementById("tbody");
+  const table = $('#employeeTable').DataTable(); // Get DataTable instance
+  table.clear().destroy(); // Clear existing DataTable instance
+  
   tableBody.innerHTML = '';
   const cid = localStorage.getItem('companyID');
 
   let dateRange = {};
-
   const selectedValue = localStorage.getItem('reportType');
 
   switch (selectedValue) {
-    case "Weekly":
-      dateRange = getLastWeekDateRange();
-      break;
-    case "Monthly":
-      dateRange = getLastMonthStartAndEndDates();
-      break;
-    case "Bimonthly":
-      dateRange = getLastTwoMonthStartAndEndDates();
-      break;
-    case "Biweekly":
-      dateRange = getLastTwoWeeksDateRange();
-      break;
-    default:
-      console.error("Invalid report type");
-      return;
+      case "Weekly":
+          dateRange = getLastWeekDateRange();
+          break;
+      case "Monthly":
+          dateRange = getLastMonthStartAndEndDates();
+          break;
+      case "Bimonthly":
+          dateRange = getLastTwoMonthStartAndEndDates();
+          break;
+      case "Biweekly":
+          dateRange = getLastTwoWeeksDateRange();
+          break;
+      default:
+          console.error("Invalid report type");
+          return;
   }
-
 
   const startVal = dateRange.startRange;
   const endVal = dateRange.endRange;
@@ -39,60 +40,63 @@ function viewDateRangewiseReport() {
   document.getElementById("start-date-header").innerHTML = startVal;
   document.getElementById("end-date-header").innerHTML = endVal;
 
-
   const apiUrl = `${apiUrlBase}/${cid}/${startVal}/${endVal}`;
 
-  // Fetch data from API and render table
   fetch(apiUrl)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      try {
-        // Calculate total time worked for each employee
-        const totalTimeWorked = calculateTotalTimeWorked(data);
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`Error: ${response.status}`);
+          }
+          return response.json();
+      })
+      .then(data => {
+          try {
+              const totalTimeWorked = calculateTotalTimeWorked(data);
 
-        // Check if data is an empty array
-        if (Array.isArray(data) && data.length === 0) {
-          const newRow = document.createElement('tr');
-          newRow.innerHTML = `
-                      <td colspan="6" class="text-center">No Records Found</td>
+              if (Array.isArray(data) && data.length === 0) {
+                  const newRow = document.createElement('tr');
+                  newRow.innerHTML = `
+                      <td colspan="3" class="text-center">No Records Found</td>
                   `;
-          tableBody.appendChild(newRow);
-        } else {
-          // Clear existing rows
-          tableBody.innerHTML = '';
-
-          // Process each employee and create rows
-          Object.entries(totalTimeWorked).forEach(([pin, Employeedata]) => {
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
+                  tableBody.appendChild(newRow);
+              } else {
+                  Object.entries(totalTimeWorked).forEach(([pin, Employeedata]) => {
+                      const newRow = document.createElement('tr');
+                      newRow.innerHTML = `
                           <td class="Name">${Employeedata.name}</td>
                           <td class="Pin">${pin}</td>
                           <td class="TimeWorked">${Employeedata.totalHoursWorked}</td>
                       `;
-            tableBody.appendChild(newRow);
-          });
+                      tableBody.appendChild(newRow);
+                  });
+              }
+
+              $('#employeeTable').DataTable({ // Reinitialize DataTable
+                  "paging": true,
+                  "searching": true,
+                  "ordering": true,
+                  "info": true
+              });
+
+              document.getElementById('overlay').style.display = 'none';
+          } catch (error) {
+              console.error('Error:', error);
+              document.getElementById('overlay').style.display = 'none';
+          }
+      })
+      .catch(error => {
+          console.error('Fetch error:', error);
           document.getElementById('overlay').style.display = 'none';
-        }
-      } catch (error) {
-        document.getElementById('overlay').style.display = 'none';
-      }
-    })
-    .catch(error => {
-      console.error('Fetch error:', error);
-    });
+      });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  selectedValue = localStorage.getItem('reportType');
-  document.getElementById("reportName").textContent = selectedValue + " Report";
-  document.getElementById("report-type-heading").textContent = selectedValue + " Report";
+  const selectedValue = localStorage.getItem('reportType');
+  document.getElementById("reportName").textContent = `${selectedValue} Report`;
+  document.getElementById("report-type-heading").textContent = `${selectedValue} Report`;
   viewDateRangewiseReport();
 });
+
 
 // Weekly Report Date Calculation.
 
