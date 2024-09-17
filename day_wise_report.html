@@ -64,11 +64,12 @@
     }
 
     .dataTables_filter {
-    margin-bottom: 20px; /* Adjust the gap here */
-}
+        margin-bottom: 20px;
+        /* Adjust the gap here */
+    }
 
     .custom-table thead th {
-        background-color:  #02066F;
+        background-color: #02066F;
         color: white;
     }
 
@@ -94,6 +95,10 @@
 
     .dataTables_paginate {
         float: right;
+    }
+
+    footer{
+        position: fixed;
     }
 
     .custom-table-container {
@@ -236,7 +241,7 @@
         width: 80%;
     }
 
-   
+
 
     @media (max-width: 1024px) {
         .Date {
@@ -267,6 +272,18 @@
             margin-left: 0%;
         }
     }
+
+    @media (max-width:570px) {
+        footer {
+            position: unset !important;
+        }
+    }
+
+    @media (max-width:850px) {
+        footer{
+            position: unset;
+        }
+    }
 </style>
 
 <body>
@@ -284,16 +301,16 @@
                         <a class="nav-link" href="device.html" style="color: white;">Device</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="employee_list.html"  style="color: white;">Employee Management</a>
+                        <a class="nav-link" href="employee_list.html" style="color: white;">Employee Management</a>
                     </li>
-            
+
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle rounded-pill-active px-3" href="#service" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
+                        <a class="nav-link dropdown-toggle rounded-pill-active px-3" href="#service" id="navbarDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
                             Report
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="report_summary.html" id="dropDown" >Report Summary</a>
+                            <li><a class="dropdown-item" href="report_summary.html" id="dropDown">Report Summary</a>
                             </li>
                             <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report
                                     Settings</a></li>
@@ -325,12 +342,12 @@
                         <div class="col-md-3 col-sm-12 text-center nav-link">
                             <a href="report_summary.html" class="unselect">Current Day Report</a>
                         </div>
-                        
+
                         <!-- Day Wise Report Link -->
                         <div class="col-md-3 col-sm-12 text-center nav-link">
                             <a href="#" class="current">Day Wise Report</a>
                         </div>
-                        
+
                         <!-- Placeholder for Salaried Report -->
                         <div class="col-md-3 col-sm-12 text-center nav-link">
                             <a href="salaried_report.html" class="unselect" id="reportName">Salaried Report</a>
@@ -360,7 +377,7 @@
                             </tr>
                         </thead>
                         <tbody id="tbody">
-                            
+
                         </tbody>
                     </table>
                 </div>
@@ -388,6 +405,66 @@
         </div>
     </div>
 
+    <!-- Footer  -->
+    <footer id="footer_id">
+        <div class="footer-container container-fluid">
+            <!-- Logo and Social Links Section -->
+            <div class="logo-social">
+                <div class="logo ">
+                    <img src="icon/logo.png" alt="Tap Time Logo">
+                </div>
+                <p style="text-align: center !important;">Powered by <br>Arjava Technologies</p>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/company/arjavatech/"><img src="icon/linkedin 1.png"
+                            alt="LinkedIn"></a>
+                    <a href="https://www.facebook.com/profile.php?id=61565587366048
+                    "><img src="icon/facebook 1.png" alt="Facebook"></a>
+                    <a href="https://www.instagram.com/_tap_time
+                    "><img src="icon/instagram 1.png" alt="Instagram"></a>
+                    <a href=" https://x.com/_Tap_Time
+                    "><img src="icon/twitter 1.png" alt="X"></a>
+                </div>
+            </div>
+
+            <!-- Quick Links Section -->
+            <div class="quick-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="device.html">Device</a></li>
+                    <li><a href="employee_list.html">Employee Management</a></li>
+                    <li><a href="report_summary.html">Report Summary</a></li>
+                    <li><a href="report_setting.html">Report Settings</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Address Section -->
+
+            <div class="address">
+                <div style="display: inline-flex;">
+                    <img src="icon/location-pin (1) 1.png"
+                        style="width: 20px;padding-right: 15px; height: 20px; padding-top: 25px;" alt="">
+                    <h4>Address</h4>
+                </div>
+
+                <p style="padding-left: 30px;">Arjava Technologies,<br>2135 204th PL NE,<br>Sammamish,<br> WA - 98074,
+                    USA.</p>
+                <div style="display: inline-flex;margin-top: 5px;">
+                    <img src="icon/phone-call (1) 1.png"
+                        style="width: 18px;padding-right: 10px; height: 20px; padding-top: 5px;" alt="">
+                    <p><a href="tel:+14258181900">(541) 371-2950 </a></p>
+                </div><br>
+                <div style="display: inline-flex;margin-top: 5px;">
+                    <img src="icon/paper-plane 1.png"
+                        style="width: 18px;padding-right: 10px; height: 20px; padding-top: 5px;" alt="">
+                    <p><a href="mailto:contact@tap-time.com">contact@tap-time.com</a></p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
     <script>
         function logoutCall() {
             localStorage.removeItem("username");
@@ -411,9 +488,7 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
-    <script>
 
-    </script>
 </body>
 
 </html>

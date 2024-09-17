@@ -64,16 +64,16 @@ function addEmpdetails() {
                 .then(data => {
                     if (data.error) {
                         document.querySelector(".e-msg").textContent = data.error;
-                        $(".error-msg").show();
+                        // $(".error-msg").show();
                         setTimeout(function () {
-                            $(".error-msg").hide();
+                            // $(".error-msg").hide();
                             window.location.href = "employee_list.html";
                         }, 1000);
                     } else {
                         document.querySelector(".s-msg").textContent = data.message;
-                        $(".success-msg").show();
+                        // $(".success-msg").show();
                         setTimeout(function () {
-                            $(".success-msg").hide();
+                            // $(".success-msg").hide();
                             window.location.href = "employee_list.html";
                         }, 1000);
                     }
@@ -111,16 +111,16 @@ function addEmpdetails() {
                 .then(data => {
                     if (data.error) {
                         document.querySelector(".e-msg").textContent = data.error;
-                        $(".error-msg").show();
+                        // $(".error-msg").show();
                         setTimeout(function () {
-                            $(".error-msg").hide();
+                            // $(".error-msg").hide();
                             window.location.href = "employee_list.html";
                         }, 1000);
                     } else {
                         document.querySelector(".s-msg").textContent = data.message;
-                        $(".success-msg").show();
+                        // $(".success-msg").show();
                         setTimeout(function () {
-                            $(".success-msg").hide();
+                            // $(".success-msg").hide();
                             window.location.href = "employee_list.html";
                         }, 1000);
                     }
@@ -138,42 +138,6 @@ function addEmpdetails() {
 }
 
 
-// View Data
-
-// function viewEmpdetails() {
-//     const tableBody = document.getElementById("tBody");
-//     const company_id = localStorage.getItem('companyID');
-//     const apiUrl = `${apiUrlBase}/getall/${company_id}`;
-
-//     fetch(apiUrl)
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error(`Error: ${response.status}`);
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             data.forEach(element => {
-//                 const newRow = document.createElement('tr');
-//                 // <td class="lName">${element.LName}</td>
-//                 newRow.innerHTML = `
-//                 <td class="fName">${element.FName}</td>
-//                 <td class="instructor">${element.Pin}</td>
-//                 <td class="phoneNumber">${element.PhoneNumber}</td>
-//                 <td>
-//                 <button class="btn icon-button btn-green" onclick="editEmpdetails('${element.EmpID}')" data-bs-toggle="modal" data-bs-target="#myModal"> Edit </button>
-//                  <button class="btn icon-button btn-outline-green" id="buttonClick" data-bs-toggle="modal"onclick="showLogoutModal('${element.EmpID}')">Delete</button>
-// </td>
-//             `;
-//                 tableBody.appendChild(newRow);
-//             });
-//             document.getElementById('overlay').style.display = 'none';
-//         })
-//         .catch(error => {
-//             document.getElementById('overlay').style.display = 'none';
-//         });
-// }
-
 
 // Pagination variables
 const rowsPerPage = 10;
@@ -183,6 +147,7 @@ let employeesData = [];  // Variable to store fetched employee data
 
 // Function to fetch and display employee data
 function viewEmpdetails() {
+    document.getElementById("footer_id").style.position = "fixed";
     const tableBody = document.getElementById("tBody");
     const company_id = localStorage.getItem('companyID');
     const apiUrl = `${apiUrlBase}/getall/${company_id}`;
@@ -195,6 +160,7 @@ function viewEmpdetails() {
             return response.json();
         })
         .then(data => {
+            let index = 1;
             // Store the fetched data
             employeesData = data;
 
@@ -219,6 +185,11 @@ function viewEmpdetails() {
                     </td>
                 `;
                 tableBody.appendChild(newRow);
+                index++;
+                if(index===5){
+                  document.getElementById("footer_id").style.position = "unset";
+                }
+           
             });
 
             // Initialize DataTables
@@ -288,16 +259,16 @@ function deleteEmpdetails(emId) {
         .then(data => {
             if (data.error) {
                 document.querySelector(".e-msg").textContent = data.error;
-                $(".error-msg").show();
+                // $(".error-msg").show();
                 setTimeout(function () {
-                    $(".error-msg").hide();
+                    // $(".error-msg").hide();
                     window.location.href = "employee_list.html";
                 }, 1000);
             } else {
                 document.querySelector(".s-msg").textContent = data.message;
-                $(".success-msg").show();
+                // $(".success-msg").show();
                 setTimeout(function () {
-                    $(".success-msg").hide();
+                    // $(".success-msg").hide();
                     window.location.href = "employee_list.html";
                 }, 1000);
             }

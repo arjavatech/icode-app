@@ -4,6 +4,10 @@ const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/
 const cid = localStorage.getItem('companyID');
 
 
+document.addEventListener("DOMContentLoaded",()=>{
+  document.getElementById("footer_id").style.position = "fixed";
+})
+
 
 
 function formatDateTime(date) {
@@ -111,6 +115,8 @@ function viewDatewiseReport(dateValue) {
           })
           .then(data => {
               try {
+                  tableBody.innerHTML = "";
+                  let index = 1;
                   data.forEach(element => {
                       const newRow = document.createElement('tr');
                       if (element.CheckOutTime != null) {
@@ -129,6 +135,10 @@ function viewDatewiseReport(dateValue) {
                               <td class="TimeWorked">${element.TimeWorked}</td>
                           `;
                           tableBody.appendChild(newRow);
+                          index++;
+                          if(index===5){
+                            document.getElementById("footer_id").style.position = "unset";
+                          }
                       }
                   });
 
@@ -146,6 +156,7 @@ function viewDatewiseReport(dateValue) {
                       <td colspan="6" class="text-center">No Records Found</td>
                   `;
                   tableBody.appendChild(newRow);
+                  document.getElementById("footer_id").style.position = "fixed";
               }
               document.getElementById('overlay').style.display = 'none';
           })

@@ -28,98 +28,109 @@
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
     <style>
+     
 
-.custom-table-container {
-        
-        border: 1px solid #cdcdcd;
-        background-color: white;
-        border-radius: 12px;
-        overflow: hidden;
-        padding: 20px;
-        margin: 0 auto;
-        max-width: 1000px;
-        font-weight: 600;
-        position: relative;
-        margin-top: 1%;
-    }
-
-    /* Adjust column widths */
-table#employeeTable .pin-column {
-    width: 80px; /* Adjust as needed */
-    text-align: center; /* Center-align the pin */
-}
-
-table#employeeTable .phone-column {
-    width: 120px; /* Adjust as needed */
-    text-align: center; /* Center-align the phone number */
-}
-
-table#employeeTable .action-column {
-    width: 200px; /* Adjust as needed */
-    text-align: center; /* Center-align the action buttons */
-}
-
-/* Ensure buttons wrap correctly and have some spacing */
-table#employeeTable .action-column .btn {
-    margin: 2px; /* Add some spacing between buttons */
-    white-space: nowrap; /* Prevent buttons from wrapping */
-}
-
-table#employeeTable .action-column {
-    display: flex;
-    flex-wrap: wrap; /* Allow wrapping of buttons */
-    justify-content: center; /* Center the buttons */
-}
-
-
-    @media (max-width: 1024px) {
         .custom-table-container {
-            max-width: 100%;
-        }
 
-        #add-entry {
-            border: 1px solid #02066F;
-            color: #02066F;
-            margin-left: -100%;
+            border: 1px solid #cdcdcd;
             background-color: white;
-            border-radius: 6px;
+            border-radius: 12px;
+            overflow: hidden;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 1000px;
+            font-weight: 600;
+            position: relative;
+            margin-top: 1%;
+        }
+
+        /* Adjust column widths */
+        table#employeeTable .pin-column {
+            width: 80px;
+            /* Adjust as needed */
+            text-align: center;
+            /* Center-align the pin */
+        }
+
+        table#employeeTable .phone-column {
+            width: 120px;
+            /* Adjust as needed */
+            text-align: center;
+            /* Center-align the phone number */
+        }
+
+        table#employeeTable .action-column {
+            width: 200px;
+            /* Adjust as needed */
+            text-align: center;
+            /* Center-align the action buttons */
+        }
+
+        /* Ensure buttons wrap correctly and have some spacing */
+        table#employeeTable .action-column .btn {
+            margin: 2px;
+            /* Add some spacing between buttons */
+            white-space: nowrap;
+            /* Prevent buttons from wrapping */
+        }
+
+        table#employeeTable .action-column {
+            display: flex;
+            flex-wrap: wrap;
+            /* Allow wrapping of buttons */
+            justify-content: center;
+            /* Center the buttons */
         }
 
 
-    }
+        @media (max-width: 1024px) {
+            .custom-table-container {
+                max-width: 100%;
+            }
 
-    @media (max-width: 768px) {
-        .custom-table-container {
-            max-width: 100%;
-            overflow-x: auto;
+            #add-entry {
+                border: 1px solid #02066F;
+                color: #02066F;
+                margin-left: -100%;
+                background-color: white;
+                border-radius: 6px;
+            }
+
+
+        }
+
+        @media (max-width: 768px) {
+            .custom-table-container {
+                max-width: 100%;
+                overflow-x: auto;
+            }
+
+            .custom-table th,
+            .custom-table td {
+                padding: 5px;
+                font-size: 12px;
+            }
+        }
+
+        .custom-table {
+            margin: 0;
+            text-align: center;
         }
 
         .custom-table th,
         .custom-table td {
-            padding: 5px;
-            font-size: 12px;
+            text-align: center;
+            padding: 10px;
         }
-    }
 
-    .custom-table {
-        margin: 0;
-        text-align: center;
-    }
+        .custom-table thead tr {
+            border-bottom: 1px solid #cdcdcd;
+        }
 
-    .custom-table th,
-    .custom-table td {
-        text-align: center;
-        padding: 10px;
-    }
-
-    .custom-table thead tr {
-        border-bottom: 1px solid #cdcdcd;
-    }
-
-    .custom-table th {
-        padding-top: 16px;
-        border-bottom: 1px solid #cdcdcd;
-    }
+        .custom-table th {
+            padding-top: 16px;
+            border-bottom: 1px solid #cdcdcd;
+        }
 
         /* Loading  */
         .overlay {
@@ -145,39 +156,40 @@ table#employeeTable .action-column {
         }
 
         .dataTables_filter {
-    margin-bottom: 20px; /* Adjust the gap here */
-}
+            margin-bottom: 20px;
+            /* Adjust the gap here */
+        }
 
-    .custom-table thead th {
-        background-color:  #02066F;
-        color: white;
-    }
+        .custom-table thead th {
+            background-color: #02066F;
+            color: white;
+        }
 
-    .custom-table tbody tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
+        .custom-table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
 
-    .custom-table tbody tr:nth-child(odd) {
-        background-color: #ffffff;
-    }
+        .custom-table tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
 
-    .dataTables_wrapper {
-        margin-bottom: 20px;
-    }
+        .dataTables_wrapper {
+            margin-bottom: 20px;
+        }
 
-    .dataTables_filter {
-        float: right;
-    }
+        .dataTables_filter {
+            float: right;
+        }
 
-    .dataTables_length {
-        float: left;
-    }
+        .dataTables_length {
+            float: left;
+        }
 
-    .dataTables_paginate {
-        float: right;
-    }
+        .dataTables_paginate {
+            float: right;
+        }
 
-    
+
 
 
         @keyframes spin {
@@ -302,11 +314,6 @@ table#employeeTable .action-column {
         input {
             width: 100% !important;
         }
-
-        .footer-fluid {
-            margin-top: 14% !important;
-        }
-
     </style>
 </head>
 
@@ -354,7 +361,7 @@ table#employeeTable .action-column {
         </div>
     </nav>
 
-    <section>
+    <section class="mb-5">
         <div class="overlay" id="overlay">
             <div class="spinner"></div>
         </div>
@@ -466,6 +473,67 @@ table#employeeTable .action-column {
             </div>
         </div>
     </div>
+
+
+    <!-- Footer  -->
+    <footer id="footer_id">
+        <div class="footer-container container-fluid mt-5">
+            <!-- Logo and Social Links Section -->
+            <div class="logo-social">
+                <div class="logo ">
+                    <img src="icon/logo.png" alt="Tap Time Logo">
+                </div>
+                <p style="text-align: center !important;">Powered by <br>Arjava Technologies</p>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/company/arjavatech/"><img src="icon/linkedin 1.png"
+                            alt="LinkedIn"></a>
+                    <a href="https://www.facebook.com/profile.php?id=61565587366048
+                    "><img src="icon/facebook 1.png" alt="Facebook"></a>
+                    <a href="https://www.instagram.com/_tap_time
+                    "><img src="icon/instagram 1.png" alt="Instagram"></a>
+                    <a href=" https://x.com/_Tap_Time
+                    "><img src="icon/twitter 1.png" alt="X"></a>
+                </div>
+            </div>
+
+            <!-- Quick Links Section -->
+            <div class="quick-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="device.html">Device</a></li>
+                    <li><a href="#">Employee Management</a></li>
+                    <li><a href="report_summary.html">Report Summary</a></li>
+                    <li><a href="report_setting.html">Report Settings</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Address Section -->
+
+            <div class="address">
+                <div style="display: inline-flex;">
+                    <img src="icon/location-pin (1) 1.png"
+                        style="width: 20px;padding-right: 15px; height: 20px; padding-top: 25px;" alt="">
+                    <h4>Address</h4>
+                </div>
+
+                <p style="padding-left: 30px;">Arjava Technologies,<br>2135 204th PL NE,<br>Sammamish,<br> WA - 98074,
+                    USA.</p>
+                <div style="display: inline-flex;margin-top: 5px;">
+                    <img src="icon/phone-call (1) 1.png"
+                        style="width: 18px;padding-right: 10px; height: 20px; padding-top: 5px;" alt="">
+                    <p><a href="tel:+14258181900">(541) 371-2950 </a></p>
+                </div><br>
+                <div style="display: inline-flex;margin-top: 5px;">
+                    <img src="icon/paper-plane 1.png"
+                        style="width: 18px;padding-right: 10px; height: 20px; padding-top: 5px;" alt="">
+                    <p><a href="mailto:contact@tap-time.com">contact@tap-time.com</a></p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
 
     <script>
         function logoutCall() {
