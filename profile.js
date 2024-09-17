@@ -9,7 +9,6 @@ const cid = localStorage.getItem('companyID');
 const customerId1 = localStorage.getItem('customId');
 const phone = localStorage.getItem("phone")
 
-console.log(phone)
 async function loadImage() {
     const url = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company/get/${cid}`;
 
@@ -20,17 +19,17 @@ async function loadImage() {
         }
 
         const responseData = await response.json();
-        console.log(responseData);
+
 
         const comLoDataUrl = responseData.CLogo; // This is a data URL
         const image = document.getElementById("logo-img");
-        console.log(comLoDataUrl)
+
 
         if (comLoDataUrl.startsWith('data:image/')) {
             image.src = comLoDataUrl; // Set the image source to the data URL
-            image.onload = function () {
-                console.log('Logo image loaded successfully');
-            };
+            // image.onload = function () {
+            //     console.log('Logo image loaded successfully');
+            // };
             image.onerror = function () {
                 console.error('Error loading logo image');
             };
@@ -70,36 +69,35 @@ function loadLocalStorageData() {
                 const element = document.getElementById(field);
                 if (element) {
                     element.value = value;
-                } else {
-                    console.error(`Element with id ${field} not found`);
                 }
             }
         }
     });
 }
 
-function initializeFormSubmission() {
-    document.getElementById('settingsForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        let isValid = validateForm();
-        if (isValid) {
-            saveFormDataToLocalStorage();
-            updateApiData();
-            // displaySuccessMessage();
-        }
-    });
+function triggerFileUpload() {
+    document.getElementById('fileInput').click();
 }
 
-function validateForm() {
-    let isValid = true;
+function initializeFormSubmission() {
+    document.getElementById('settingsForm').addEventListener('submit', function (event) {
+        let button = document.getElementById("submit");
+        event.preventDefault();
+        if (button.textContent === "Edit") {
+            document.querySelectorAll('.disabledData').forEach(function (input) {
+                input.disabled = false;
+            });           
+            button.textContent = "Save"
+        } else {
+            saveFormDataToLocalStorage();
+            // console.log("ABCD");
+            updateApiData();
+            // console.log("AK");
+        }
 
-    isValid &= validateField('email', 'Invalid email format', /^[^\s@]+@[^\s@]+\.[^\s@]+$/);
-    isValid &= validPhoneno();
-    isValid &= validateField('firstName', 'Only use letters and spaces', /^[a-zA-Z\s]+$/);
-    isValid &= validateField('lastName', 'Only use letters and spaces', /^[a-zA-Z\s]+$/);
 
-    return !!isValid; // Convert to boolean
+
+    });
 }
 
 
@@ -220,7 +218,7 @@ function dataURLToBlob(dataURL) {
 
 function saveFormDataToLocalStorage() {
     const fields = [
-        'companyName', 'companyAddress', 'username', 'password',
+        'companyName', 'companyAddress', 'username',
         'firstName', 'lastName', 'address', 'phone', 'email'
     ];
 
@@ -258,7 +256,7 @@ function updateApiData() {
         CName: document.getElementById('companyName').value,
         CAddress: document.getElementById('companyAddress').value,
         CLogo: localStorage.getItem("imageFile"),
-        Password: document.getElementById("password").value,
+        Password: localStorage.getItem("password"),
         ReportType: "Weekly"
     };
 
@@ -282,18 +280,24 @@ function updateApiData() {
             if (!response.ok) {
                 throw new Error(`Error: ${response.status}`);
             }
-            return response.json();
-        })))
-        .then(data => {
-            console.log('Update successful:', data);
-        })
-        .catch(error => {
-            console.error('Error updating data:', error);
-        });
-}
 
-// function displaySuccessMessage() {
-//     const messageContainer = document.getElementById('messageContainer');
-//     messageContainer.textContent = 'Update successful!';
-//     messageContainer.style.color = 'green';
-// }
+
+            else {
+                const modalElement = document.getElementById('addEntryModal');
+                const modalInstance = new bootstrap.Modal(modalElement);
+                modalInstance.show();
+                document.getElementById("submit").textContent = "Edit";
+
+                setTimeout(() => {
+                    modalInstance.hide();
+                }, 2000);
+
+
+                document.querySelectorAll('.disabledData').forEach(function (input) {
+                    input.disabled = true;
+                });
+            }
+
+            return response.json();
+        })));
+}

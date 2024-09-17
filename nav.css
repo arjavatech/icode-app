@@ -20,6 +20,8 @@ nav{
 }
 
 
+/* Default .current styles */
+/* Default .current styles */
 .current {
     background-color: #02066F;
     color: white;
@@ -31,6 +33,7 @@ nav{
     padding-right: 25px;
     text-decoration: none;
 }
+
 .current:hover {
     background-color: #02066F;
     color: white;
@@ -42,6 +45,27 @@ nav{
     padding-right: 25px;
     text-decoration: none;
 }
+
+@media (min-width: 768px) and (max-width: 900px) {
+    .current {
+        background-color: #02066F;
+        font-size: 13px;
+        padding: 8px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .current:hover{
+        background-color: #02066F;
+        font-size: 13px;
+        padding: 8px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+
+
+
 
 .unselect {
     color: #02066F;
