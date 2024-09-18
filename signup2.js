@@ -265,7 +265,7 @@ function createApiData() {
         })
         .then(data => {
             console.log(data);
-            window.location.href = "index.html";
+            window.location.href = "login.html";
         })
         .catch(error => {
             console.error('Error:', error);

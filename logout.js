@@ -8,7 +8,7 @@ function logoutCall()
     localStorage.removeItem("password");
 
     setTimeout(() => {
-        window.location.href = "index.html";  
+        window.location.href = "login.html";  
     }, 10);
 }
 
