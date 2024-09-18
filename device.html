@@ -198,41 +198,39 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #02066F;">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;border-bottom: 2px solid #02066F;">
         <div class="container-fluid">
-          <img src="icon/logo.png" alt="Tap Time Logo" class="app_logo">
+            <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="app_logo">
     
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <img src="icon/menu.png" style="width: 30px;" alt="">
-          </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                 <span class="navbar-toggler-icon"></span>
+            </button>
     
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
-            <div class="navbar-nav">
-              <a class="nav-link active" href="device.html" style="color: white;">Device</a>
-              <a class="nav-link" href="employee_list.html" style="color: white;">Employee Management</a>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
+                <div class="navbar-nav">
+                    <a class="nav-link active" href="#" style="color: #02066F;">Device</a>
+                    <a class="nav-link" href="employee_list.html" style="color: #02066F;">Employee Management</a>
     
-              <!-- Report Dropdown -->
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#service" id="navbarDropdown" role="button"
-                  data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
-                  Report
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="report_summary.html">Report Summary</a></li>
-                  <li><a class="dropdown-item" href="report_setting.html">Report Settings</a></li>
-                </ul>
-              </li>
-              <a class="nav-link" href="#" style="color: white;">Profile</a>
-              <a class="nav-link" href="contact.html" style="color: white;" >Contact Us</a>
-              <!-- <a class="nav-link" href="contact_us.html">Contact us</a> -->
-              <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
+                    <!-- Report Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#service" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false" style="color: #02066F;">
+                            Report
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="report_summary.html">Report Summary</a></li>
+                            <li><a class="dropdown-item" href="report_setting.html">Report Settings</a></li>
+                        </ul>
+                    </li>
+                    <a class="nav-link" href="profile.html" style="color: #02066F;">Profile</a>
+                    <a class="nav-link" href="contact.html" style="color: #02066F;">Contact Us</a>
+                    <!-- <a class="nav-link" href="contact_us.html">Contact us</a> -->
+                    <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
+                </div>
             </div>
-          </div>
         </div>
-      </nav>
-
-
+    </nav>
 
 
     <div class="container mt-5" id="table">
@@ -624,7 +622,7 @@
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <h5 class="fw-bold mb-3 text-center">Are you sure you are deleting the data?</h5>
+                        <h5 class="fw-bold mb-3 text-center">Are you sure, you want to remove the employee?</h5>
                         <p class="d-flex justify-content-center mt-4">
                             <button class="btn yes" style="margin-left: 15px;" onclick="deleteEmpdetails('${empId}')">Yes</button>
                             <button class="btn btn-outline-green" data-bs-dismiss="modal">No</button>

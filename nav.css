@@ -21,11 +21,11 @@
     /* Ensures the link is inline and allows margin */
     text-decoration: none;
     /* Removes underline from links */
-    color: white;
+    color: gray !important;
     /* Sets the text color */
     margin: 0 15px;
     /* Adds horizontal margin */
-    font-size: 20px;
+    font-size: 17px;
     /* Sets the font size */
 
     /* Sets the font weight */
@@ -33,8 +33,7 @@
 
 /* Hover effect for navigation links */
 .nav-link:hover {
-    color: white;
-    /* Changes text color on hover */
+    color: #02066F;
 }
 
 /* Underline effect on hover */
@@ -43,7 +42,7 @@
     /* Expands the underline to full width on hover */
     left: 0;
     /* Aligns the underline to the left */
-    color: white;
+    color: #02066F;
     /* Sets the color of the text on hover */
 }
 
@@ -63,12 +62,12 @@
     /* Adds top margin */
     left: 0;
     /* Aligns the underline to the left */
-    background: white;
+    background: #02066F;
     ;
     /* Sets the underline color */
     transition: width 0.9s ease, right 0.4s ease;
     /* Adds a transition effect for width and right properties */
-    color: white;
+    color: #02066F;
     /* Sets the color of the text */
 }
 
@@ -76,19 +75,27 @@
 .nav-link.active::after {
     width: 100%;
     /* Expands the underline to full width when active */
-    background: white;
+    background: #02066F;
+    font-weight: 600;
     /* Sets the underline color when active */
 }
 
 /* Active state text color for navigation links */
 .nav-link.active {
-    color: white;
+    color: #02066F !important;
+    font-weight: 600;
 }
 
 /* Removes box shadow from the navbar toggler when focused */
 .navbar-toggler:focus {
     box-shadow: none;
     /* Removes the default box shadow */
+}
+
+#logBtn{
+    color: white;
+    background-color: #02066F !important;
+    opacity: 1 !important;
 }
 
 .app_logo {
@@ -101,13 +108,15 @@
     /* border: 1px solid white; */
     font-size: 18px;
     font-weight: 600;
-    background-color: white;
-    color: #02066F;
+    background-color: #02066F;
+    color: white;
+    border-radius: 10px;
 }
 
 .logoutButton:hover {
-    background-color: white;
-    color: #02066F;
+    background-color: #02066F;
+    color: white;
+    opacity: 0.8;
     font-weight: 600;
 }
 
@@ -213,11 +222,11 @@
         /* Adds top margin */
         left: 0;
         /* Aligns the underline to the left */
-        background: white;
+        background: #02066F;
         /* Sets the underline color */
         transition: width 0.9s ease, right 0.4s ease;
         /* Adds a transition effect for width and right properties */
-        color: white;
+        color: #02066F;
         /* Sets the color of the text */
     }
 

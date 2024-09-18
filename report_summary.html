@@ -248,24 +248,24 @@
 
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #02066F;">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;border-bottom: 2px solid #02066F;">
         <div class="container-fluid">
-            <img src="icon/logo.png" alt="Tap Time Logo" class="app_logo">
-
+            <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="app_logo">
+    
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <img src="icon/menu.png" style="width: 30px;" alt="">
+                 <span class="navbar-toggler-icon"></span>
             </button>
-
+    
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
                 <div class="navbar-nav">
-                    <a class="nav-link" href="device.html" style="color: white;">Device</a>
-                    <a class="nav-link" href="employee_list.html" style="color: white;">Employee Management</a>
-
+                    <a class="nav-link" href="device.html" style="color: #02066F;">Device</a>
+                    <a class="nav-link" href="employee_list.html" style="color: #02066F;">Employee Management</a>
+    
                     <!-- Report Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active" href="#service" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
+                            data-bs-toggle="dropdown" aria-expanded="false" style="color: #02066F;">
                             Report
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -273,15 +273,14 @@
                             <li><a class="dropdown-item" href="report_setting.html">Report Settings</a></li>
                         </ul>
                     </li>
-                    <a class="nav-link" href="profile.html" style="color: white;">Profile</a>
-                    <a class="nav-link" href="contact.html" style="color: white;">Contact Us</a>
+                    <a class="nav-link" href="profile.html" style="color: #02066F;">Profile</a>
+                    <a class="nav-link" href="contact.html" style="color: #02066F;">Contact Us</a>
                     <!-- <a class="nav-link" href="contact_us.html">Contact us</a> -->
                     <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
                 </div>
             </div>
         </div>
     </nav>
-
 
 
     <section class="mb-5">
@@ -405,7 +404,7 @@
                             aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <h5 class="fw-bold text-center">Are you sure you want to logout?</h5>
+                        <h5 class="fw-bold text-center">Are you sure, you want to logout?</h5>
                         <p class="d-flex justify-content-center mt-3">
                             <button class="btn yes" id="logBtn" style="margin-left: 2%;">Yes</button>
                             <button class="btn no" data-bs-dismiss="modal" style="margin-left: 2%;">No</button>

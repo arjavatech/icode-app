@@ -444,7 +444,7 @@ function showLogoutModal(empId) {
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <h5 class="fw-bold mb-3 text-center">Are you sure you are deleting the data?</h5>
+                        <h5 class="fw-bold mb-3 text-center">Are you sure, you want to remove the employee?</h5>
                         <p class="d-flex justify-content-center mt-4">
                             <button class="btn yes" style="margin-left: 15px;" onclick="deleteEmpdetails('${empId}')">Yes</button>
                             <button class="btn btn-outline-green" data-bs-dismiss="modal">No</button>
