@@ -59,7 +59,7 @@ function viewDateRangewiseReport() {
                       <td colspan="3" class="text-center">No Records Found</td>
                   `;
                   tableBody.appendChild(newRow);
-                  document.getElementById("footer_id").style.position = "fixed";
+                  // document.getElementById("footer_id").style.position = "fixed";
               } else {
                   Object.entries(totalTimeWorked).forEach(([pin, Employeedata]) => {
                       const newRow = document.createElement('tr');

@@ -189,9 +189,9 @@
         margin-top: 1%;
     }
 
-    footer {
+    /* footer {
         position: fixed;
-    }
+    } */
 
     @media (min-width: 990px) {
         .container {
@@ -239,54 +239,45 @@
         }
     }
 
-    @media (max-width:570px) {
+    /* @media (max-width:570px) {
         footer {
             position:unset !important;
         }
-    }
+    } */
 </style>
 
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #02066F;">
         <div class="container-fluid">
-            <img src="Image/Group 91.png" alt="" class="app_logo">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="device.html" style="color: white;">Device</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="employee_list.html" style="color: white;">Employee Management</a>
-                    </li>
+            <img src="icon/logo.png" alt="Tap Time Logo" class="app_logo">
 
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <img src="icon/menu.png" style="width: 30px;" alt="">
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="device.html" style="color: white;">Device</a>
+                    <a class="nav-link" href="employee_list.html" style="color: white;">Employee Management</a>
+
+                    <!-- Report Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle rounded-pill-active px-3" href="#service" id="navbarDropdown"
-                            role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
+                        <a class="nav-link dropdown-toggle active" href="#service" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
                             Report
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="report_summary.html" id="dropDown">Report Summary</a>
-                            </li>
-                            <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report
-                                    Settings</a></li>
+                            <li><a class="dropdown-item" href="report_summary.html">Report Summary</a></li>
+                            <li><a class="dropdown-item" href="report_setting.html">Report Settings</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="profile.html" style="color: white;">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html" style="color: white;">Contact Us</a>
-                    </li>
-                </ul>
-                <form class="d-flex">
-                    <buttton href="#" class="btn btn-outline-light" onclick="logOutACtion()">Logout</buttton>
-                </form>
+                    <a class="nav-link" href="profile.html" style="color: white;">Profile</a>
+                    <a class="nav-link" href="contact.html" style="color: white;">Contact Us</a>
+                    <!-- <a class="nav-link" href="contact_us.html">Contact us</a> -->
+                    <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
+                </div>
             </div>
         </div>
     </nav>
@@ -297,23 +288,20 @@
         <div class="overlay" id="overlay">
             <div class="spinner"></div>
         </div>
-        <div class="container-fluid pt-2 pb-2" style="background-color: white;">
+        <div class="container-fluid pt-2 pb-2 bg-white">
             <div class="row">
                 <div class="container">
-                    <div class="row justify-content-center pt-3 pb-2">
-                        <!-- Current Day Report Link -->
-                        <div class="col-md-3 col-sm-12 text-center nav-link">
-                            <a href="#" class="current">Current Day Report</a>
-                        </div>
-
-                        <!-- Day Wise Report Link -->
-                        <div class="col-md-3 col-sm-12 text-center nav-link">
-                            <a href="day_wise_report.html" class="unselect">Day Wise Report</a>
-                        </div>
-
-                        <!-- Placeholder for Salaried Report -->
-                        <div class="col-md-3 col-sm-12 text-center nav-link">
-                            <a href="salaried_report.html" class="unselect" id="reportName">Salaried Report</a>
+                    <div class="row">
+                        <div class="list-container d-flex flex-wrap justify-content-end">
+                            <a href="#" style="text-decoration: none;">
+                                <div class="list-item current">Todays Report</div>
+                            </a>
+                            <a href="day_wise_report.html" style="text-decoration: none;">
+                                <div class="list-item unselect">Day Wise Report</div>
+                            </a>
+                            <a href="salaried_report.html" style="text-decoration: none;">
+                                <div class="list-item unselect" id="reportName">Salaried Report</div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -430,7 +418,7 @@
 
         <!-- Footer  -->
         <footer>
-            <div class="footer-container container-fluid">
+            <div class="footer-container container-fluid mt-5">
                 <!-- Logo and Social Links Section -->
                 <div class="logo-social">
                     <div class="logo ">

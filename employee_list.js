@@ -147,7 +147,7 @@ let employeesData = [];  // Variable to store fetched employee data
 
 // Function to fetch and display employee data
 function viewEmpdetails() {
-    document.getElementById("footer_id").style.position = "fixed";
+    // document.getElementById("footer_id").style.position = "fixed";
     const tableBody = document.getElementById("tBody");
     const company_id = localStorage.getItem('companyID');
     const apiUrl = `${apiUrlBase}/getall/${company_id}`;
@@ -187,7 +187,7 @@ function viewEmpdetails() {
                 tableBody.appendChild(newRow);
                 index++;
                 if(index===5){
-                  document.getElementById("footer_id").style.position = "unset";
+                //   document.getElementById("footer_id").style.position = "unset";
                 }
            
             });

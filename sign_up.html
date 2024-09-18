@@ -11,6 +11,7 @@
         crossorigin="anonymous"></script>
     <link rel="icon" href="Image/app_logo.png">
     <title>Tap time</title>
+    <link rel="stylesheet" href="nav.css">
     <link rel="stylesheet" href="employee_list.css">
     <style>
         /* Loading  */
@@ -139,6 +140,16 @@
             border-color: #02066F;
         }
 
+        nav {
+            display: none !important;
+        }
+
+        @media (max-width:350px) {
+            h4 {
+                font-size: 14px;
+            }
+        }
+
         .btn-green {
             background-color: #02066F;
             border: none;
@@ -159,6 +170,8 @@
             color: white;
             padding: 0.8rem !important;
         }
+
+
 
         @media (max-width: 768px) {
             .container-sty {
@@ -195,6 +208,10 @@
             .col-sty {
                 display: none !important;
             }
+
+            nav {
+                display: block !important;
+            }
         }
 
         @media (max-width: 576px) {
@@ -223,6 +240,8 @@
             label {
                 font-size: 0.7rem !important;
             }
+
+            
         }
 
         @media (max-width: 360px) {
@@ -235,6 +254,10 @@
             label {
                 font-size: 0.6rem !important;
             }
+            .btn-green {
+                padding: 8px !important;
+                font-size: 15px;
+            }
         }
 
         .login-img-sty {
@@ -244,9 +267,21 @@
 </head>
 
 <body>
-    <div class="overlay" id="overlay">
-        <div class="spinner"></div>
-    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #02066F;">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <!-- Logo aligned to the left -->
+            <img src="icon/logo.png" alt="Tap Time Logo" class="app_logo">
+
+            <!-- Centered Heading -->
+            <div class="flex-grow-1 text-center">
+                <h4 class="m-0" style="color: white;">Employee Time Tracking</h4>
+            </div>
+        </div>
+    </nav>
+
+
+
     <div class="row">
         <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6 col-sty">
             <img src="Image/icode logo 2 (1).png" class="p-5 img-fluid login-img-sty">
@@ -313,7 +348,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-green mt-3">Submit</button>
+                    <button type="submit" class="btn btn-green mt-3" id="submitButton">Submit</button>
                 </form>
             </div>
         </div>
@@ -354,7 +389,6 @@
             // Check if all fields are filled
             if (companyName && phoneNumber && emailAddress && companyAddress && streetAddress && state && zip) {
                 callContactUsCreateAPiData();
-
                 return true;
             } else {
                 alert('Please fill in all the fields!');
@@ -394,7 +428,7 @@
 
 
         async function callContactUsCreateAPiData() {
-            document.getElementById('overlay').style.display = 'flex';
+            // document.getElementById('overlay').style.display = 'flex';
             const apiLink = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/contact/send`;
 
             let companyName = document.getElementById('companyName').value.trim();
@@ -447,7 +481,7 @@
                     console.error('Error:', error);
                 })
                 .finally(() => {
-                    document.getElementById('overlay').style.display = 'none';
+                    // document.getElementById('overlay').style.display = 'none';
                 });
 
         }

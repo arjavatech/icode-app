@@ -60,49 +60,39 @@
 </style>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #02066F;">
         <div class="container-fluid">
-            <img src="Image/Group 91.png" alt="" class="app_logo">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <img src="icon/logo.png" alt="Tap Time Logo" class="app_logo">
+    
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <img src="icon/menu.png" style="width: 30px;" alt="">
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="device.html" style="color: white;">Device</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3" style="color: white;"  href="employee_list.html">Employee Management</a>
-                    </li>
-            
+    
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="device.html" style="color: white;">Device</a>
+                    <a class="nav-link" href="employee_list.html" style="color: white;">Employee Management</a>
+    
+                    <!-- Report Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle " href="#service" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle" href="#service" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
                             Report
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="report_summary.html" id="dropDown" >Report Summary</a>
-                            </li>
-                            <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report
-                                    Settings</a></li>
+                            <li><a class="dropdown-item" href="report_summary.html">Report Summary</a></li>
+                            <li><a class="dropdown-item" href="report_setting.html">Report Settings</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="profile.html" style="color: white;">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link rounded-pill-active px-3" href="#">Contact Us</a>
-                    </li>
-                </ul>
-                <form class="d-flex">
-                    <buttton href="#" class="btn btn-outline-light" onclick="logOutACtion()">Logout</buttton>
-                </form>
+                    <a class="nav-link active" href="#" style="color: white;">Profile</a>
+                    <a class="nav-link" href="#" style="color: white;">Contact Us</a>
+                    <!-- <a class="nav-link" href="contact_us.html">Contact us</a> -->
+                    <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
+                </div>
             </div>
         </div>
     </nav>
-
     <section>
         <div class="container box-sty mt-5">
             <h3 class="modal-title text-center fw-bold mb-3" id="myModalLabel">Contact Us</h3>
@@ -173,7 +163,7 @@
 
     <!-- Footer  -->
     <footer>
-        <div class="footer-container container-fluid">
+        <div class="footer-container container-fluid mt-5">
             <!-- Logo and Social Links Section -->
             <div class="logo-social">
                 <div class="logo ">
