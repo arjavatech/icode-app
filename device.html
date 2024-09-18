@@ -29,7 +29,6 @@
             margin-right: auto;
         }
 
-       
         .material-textfield input,
         .material-textfield textarea {
             width: 100%;
@@ -89,7 +88,7 @@
             color: white;
         }
 
-      
+
 
         .btn-teal {
             background-color: #02066F;
@@ -179,7 +178,17 @@
             color: #02066F;
         }
 
-        
+
+        @media (max-height:700px) {
+            footer{
+                position: unset;
+            }
+        }
+        @media (min-height:700px) {
+            footer{
+                position: unset;
+            }
+        }
     </style>
 </head>
 
@@ -219,7 +228,7 @@
     </nav>
 
 
-    <div class="container mt-5" id="table">
+    <div class="container mt-5 mb-5" id="table">
         <br><br>
         <div class="emp-table table-responsive" id="tableBodys">
             <div class="custom-table-container">
