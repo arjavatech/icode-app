@@ -27,6 +27,10 @@
             align-items: center;
         }
 
+        body {
+            overflow-x: hidden !important;
+        }
+
         .overlay .spinner {
             border: 4px solid #f3f3f3;
             border-top: 4px solid #02066F;
@@ -168,6 +172,7 @@
 
             body {
                 overflow-y: scroll !important;
+                overflow-x: hidden !important;
             }
 
             .input-sty {
@@ -182,6 +187,13 @@
 
             .progress-bar {
                 height: 0.5rem !important;
+            }
+
+        }
+
+        @media (max-width:767px) {
+            .col-sty {
+                display: none !important;
             }
         }
 
@@ -380,31 +392,31 @@
             }
         });
 
-        
-async function callContactUsCreateAPiData() {
-    document.getElementById('overlay').style.display = 'flex';
-    const apiLink = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/contact/send`;
 
-    let companyName = document.getElementById('companyName').value.trim();
-    let phoneNumber = document.getElementById('phoneNumber').value.trim();
-    let emailAddress = document.getElementById('emailAddress').value.trim();
-    let companyAddress = document.getElementById('companyAddress').value.trim();
-    let streetAddress = document.getElementById('streetAddress').value.trim();
-    let state = document.getElementById('state').value.trim();
-    let zip = document.getElementById('zip').value.trim();
+        async function callContactUsCreateAPiData() {
+            document.getElementById('overlay').style.display = 'flex';
+            const apiLink = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/contact/send`;
 
-    const userData = {
-    "Name": companyAddress,
-    "CompanyName": companyName,
-    "PhoneNumber": phoneNumber,
-    "email": emailAddress,
-    "street": streetAddress,
-    "state": state,
-    "zip": zip
-    }
+            let companyName = document.getElementById('companyName').value.trim();
+            let phoneNumber = document.getElementById('phoneNumber').value.trim();
+            let emailAddress = document.getElementById('emailAddress').value.trim();
+            let companyAddress = document.getElementById('companyAddress').value.trim();
+            let streetAddress = document.getElementById('streetAddress').value.trim();
+            let state = document.getElementById('state').value.trim();
+            let zip = document.getElementById('zip').value.trim();
 
-    
-    fetch(apiLink, {
+            const userData = {
+                "Name": companyAddress,
+                "CompanyName": companyName,
+                "PhoneNumber": phoneNumber,
+                "email": emailAddress,
+                "street": streetAddress,
+                "state": state,
+                "zip": zip
+            }
+
+
+            fetch(apiLink, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -421,15 +433,15 @@ async function callContactUsCreateAPiData() {
                 })
                 .then(data => {
                     const modalElement = document.getElementById('addEntryModal');
-            const modalInstance = new bootstrap.Modal(modalElement);
-            modalInstance.show();
-            document.getElementById('companyName').value = "";
-            document.getElementById('phoneNumber').value = "";
-            document.getElementById('emailAddress').value = "";
-            document.getElementById('companyAddress').value = "";
-            document.getElementById('streetAddress').value = "";
-            document.getElementById('state').value = "";
-            document.getElementById('zip').value = "";
+                    const modalInstance = new bootstrap.Modal(modalElement);
+                    modalInstance.show();
+                    document.getElementById('companyName').value = "";
+                    document.getElementById('phoneNumber').value = "";
+                    document.getElementById('emailAddress').value = "";
+                    document.getElementById('companyAddress').value = "";
+                    document.getElementById('streetAddress').value = "";
+                    document.getElementById('state').value = "";
+                    document.getElementById('zip').value = "";
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -438,7 +450,7 @@ async function callContactUsCreateAPiData() {
                     document.getElementById('overlay').style.display = 'none';
                 });
 
-}
+        }
     </script>
 </body>
 
