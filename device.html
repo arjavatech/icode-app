@@ -29,16 +29,7 @@
             margin-right: auto;
         }
 
-        /* footer {
-            color: white;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #02066F;
-            padding: 40px 0;
-        } */
-
+       
         .material-textfield input,
         .material-textfield textarea {
             width: 100%;
@@ -98,10 +89,7 @@
             color: white;
         }
 
-        .modal-header {
-            background-color: #02066F;
-            color: white;
-        }
+      
 
         .btn-teal {
             background-color: #02066F;
@@ -191,9 +179,7 @@
             color: #02066F;
         }
 
-        .modal-content {
-            width: 80%;
-        }
+        
     </style>
 </head>
 
@@ -201,17 +187,17 @@
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;border-bottom: 2px solid #02066F;">
         <div class="container-fluid">
             <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="app_logo">
-    
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                 <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
-    
+
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
                 <div class="navbar-nav">
                     <a class="nav-link active" href="#" style="color: #02066F;">Device</a>
                     <a class="nav-link" href="employee_list.html" style="color: #02066F;">Employee Management</a>
-    
+
                     <!-- Report Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#service" id="navbarDropdown" role="button"
@@ -299,17 +285,17 @@
 
     <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content" id="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addEntryModalLabel">Logout</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h5 class="fw-bold mb-3 text-center">Are you sure you want to log out?</h5>
+                    <h5 class="fw-bold mb-3 text-center">Are you sure, you want to logout?</h5>
                     <p class="d-flex justify-content-center">
-                        <button class="btn btn-green" id="logBtn">Yes</button>
-                        <button class="btn btn-outline-green" data-bs-dismiss="modal">No</button>
+                        <button class="btn yes" id="logBtn" style="margin-left: 2%;">Yes</button>
+                        <button class="btn no" data-bs-dismiss="modal" style="margin-left: 2%;">No</button>
                     </p>
                 </div>
             </div>

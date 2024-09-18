@@ -9,7 +9,7 @@ function viewDateRangewiseReport() {
   const tableBody = document.getElementById("tbody");
   const table = $('#employeeTable').DataTable(); // Get DataTable instance
   table.clear().destroy(); // Clear existing DataTable instance
-  
+
   tableBody.innerHTML = '';
   const cid = localStorage.getItem('companyID');
 
@@ -17,21 +17,21 @@ function viewDateRangewiseReport() {
   const selectedValue = localStorage.getItem('reportType');
 
   switch (selectedValue) {
-      case "Weekly":
-          dateRange = getLastWeekDateRange();
-          break;
-      case "Monthly":
-          dateRange = getLastMonthStartAndEndDates();
-          break;
-      case "Bimonthly":
-          dateRange = getLastTwoMonthStartAndEndDates();
-          break;
-      case "Biweekly":
-          dateRange = getLastTwoWeeksDateRange();
-          break;
-      default:
-          console.error("Invalid report type");
-          return;
+    case "Weekly":
+      dateRange = getLastWeekDateRange();
+      break;
+    case "Monthly":
+      dateRange = getLastMonthStartAndEndDates();
+      break;
+    case "Bimonthly":
+      dateRange = getLastTwoMonthStartAndEndDates();
+      break;
+    case "Biweekly":
+      dateRange = getLastTwoWeeksDateRange();
+      break;
+    default:
+      console.error("Invalid report type");
+      return;
   }
 
   const startVal = dateRange.startRange;
@@ -43,52 +43,56 @@ function viewDateRangewiseReport() {
   const apiUrl = `${apiUrlBase}/${cid}/${startVal}/${endVal}`;
 
   fetch(apiUrl)
-      .then(response => {
-          if (!response.ok) {
-              throw new Error(`Error: ${response.status}`);
-          }
-          return response.json();
-      })
-      .then(data => {
-          try {
-              const totalTimeWorked = calculateTotalTimeWorked(data);
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      try {
+        const totalTimeWorked = calculateTotalTimeWorked(data);
 
-              if (Array.isArray(data) && data.length === 0) {
-                  const newRow = document.createElement('tr');
-                  newRow.innerHTML = `
+        if (Array.isArray(data) && data.length === 0) {
+          const newRow = document.createElement('tr');
+          newRow.innerHTML = `
                       <td colspan="3" class="text-center">No Records Found</td>
                   `;
-                  tableBody.appendChild(newRow);
-                  // document.getElementById("footer_id").style.position = "fixed";
-              } else {
-                  Object.entries(totalTimeWorked).forEach(([pin, Employeedata]) => {
-                      const newRow = document.createElement('tr');
-                      newRow.innerHTML = `
+          tableBody.appendChild(newRow);
+        } else {
+          Object.entries(totalTimeWorked).forEach(([pin, Employeedata]) => {
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
                           <td class="Name">${Employeedata.name}</td>
                           <td class="Pin">${pin}</td>
                           <td class="TimeWorked">${Employeedata.totalHoursWorked}</td>
                       `;
-                      tableBody.appendChild(newRow);
-                  });
-              }
+            tableBody.appendChild(newRow);
+          });
+        }
 
-              $('#employeeTable').DataTable({ // Reinitialize DataTable
-                  "paging": true,
-                  "searching": true,
-                  "ordering": true,
-                  "info": true
-              });
+        $('#employeeTable').DataTable({ // Reinitialize DataTable
+          "paging": true,
+          "searching": true,
+          "ordering": true,
+          "info": true
+        });
 
-              document.getElementById('overlay').style.display = 'none';
-          } catch (error) {
-              console.error('Error:', error);
-              document.getElementById('overlay').style.display = 'none';
-          }
-      })
-      .catch(error => {
-          console.error('Fetch error:', error);
-          document.getElementById('overlay').style.display = 'none';
-      });
+        document.getElementById('overlay').style.display = 'none';
+      } catch (error) {
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+                      <td colspan="3" class="text-center">No Records Found</td>
+                  `;
+        tableBody.appendChild(newRow);
+        console.error('Error:', error);
+        document.getElementById('overlay').style.display = 'none';
+      }
+    })
+    .catch(error => {
+      console.error('Fetch error:', error);
+      document.getElementById('overlay').style.display = 'none';
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function () {

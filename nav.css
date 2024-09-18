@@ -161,6 +161,22 @@
     color: #02066F;
 }
 
+
+.modal.show {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.modal-dialog {
+    margin: 0 auto !important;
+}
+
+.modal-header {
+    background-color: #02066F;
+    color: white;
+}
+
 /* Custom media queries for responsiveness */
 @media (max-width: 768px) {
     .inline-list {
@@ -170,6 +186,10 @@
         font-size: 14px;
         padding: 8px 16px;
         margin-bottom: 8px;
+    }
+    .modal-dialog {
+        max-width: 350px !important; /* You can adjust this width as needed */
+        margin: 0 auto !important;
     }
 }
 
@@ -190,6 +210,40 @@
     .list-item {
         margin-right: 0; /* Remove right margin */
         margin-bottom: 10px; /* Increase bottom margin for vertical spacing */
+    }
+
+    .modal-dialog {
+        max-width: 250px !important; /* You can adjust this width as needed */
+        margin: 0 auto !important;
+    }
+
+    .modal-body h5{
+        font-size: 12px !important;
+    }
+
+    .modal-title{
+        font-size: 12px !important;
+    }
+
+    .modal.show {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    .btn-close{
+        size: 12px;
+    }
+    .yes{
+        font-size: 12px !important;
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+    }
+    .no{
+        font-size: 12px !important;
+        /* padding: 12px !important; */
+        padding-left: 14px !important;
+        padding-right: 14px !important;
     }
 }
 
@@ -275,8 +329,10 @@
     .logoutButton {
         font-size: 15px;
         font-weight: 600;
-        background-color: white;
-        color: #02066F;
+        background-color: #02066F;
+        color: white;
+        padding: 8px;
+        padding-left: px;
     }
     .current, .unselect {
         font-size: 15px;
