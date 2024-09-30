@@ -20,7 +20,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="profile.css">
     <link rel="stylesheet" href="nav.css">
-    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="footer.css">   
     <script defer src="profile.js"></script>
     <link rel="icon" href="Image/app_logo.png">
 
@@ -28,6 +28,65 @@
         body {
             background-color: #f6f6f6;
         }
+
+        .material-textfield {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .material-textfield input {
+            width: 100%;
+            padding: 0.8rem !important;
+            font-size: 1rem;
+            border-radius: 10px;
+            border: 1px solid #02066F;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            color: #02066F;
+            /* font-family: "Times New Roman", Times, serif; */
+        }
+
+        .material-textfield label {
+            position: absolute;
+            top: 0.75rem;
+            left: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+            padding: 0 0.25rem;
+            color: #02066F;
+            pointer-events: none;
+        }
+
+        .material-textfield input:focus+label,
+        .material-textfield input:not(:placeholder-shown)+label {
+            top: -0.75rem;
+            left: 0.75rem;
+            font-size: 0.75rem;
+            color: #02066F;
+        }
+
+        .material-textfield input:focus {
+            outline: none;
+            border-color: #02066F;
+        }
+
+
+        .btn-green {
+            background-color: #02066F;
+            border: none;
+            color: white;
+            width: 50%;
+            padding: 0.8rem !important;
+            font-size: 1.2rem;
+            border-radius: 10px;
+        }
+
+        .btn-green:hover {
+            background-color: #02066F !important;
+            color: white !important;
+            padding: 0.8rem !important;
+
+        }
+
 
         .loading-overlay {
             position: fixed;
@@ -86,89 +145,91 @@
         .btn-outline-light:hover {
             background-color: #02066F;
             color: white;
+            
         }
 
-        .box-sty {
-            max-width: 800px;
-            background-color: white;
-            border-radius: 20px;
-            padding: 20px;
-            margin: 20px auto;
-        }
+        /* General input and textarea styles */
+input,
+textarea {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 1px solid #02066F !important;
+    border-radius: 10px !important;
+    height: auto;
+}
 
-        .material-textfield {
-            position: relative;
-            margin-bottom: 1.5rem;
-            width: 70%;
-            margin-left: auto;
-            margin-right: auto;
-        }
+input:focus,
+textarea:focus {
+    box-shadow: none;
+    border-color: #007bff;
+    box-shadow: #999;
+}
 
-        .material-textfield input,
-        .material-textfield textarea {
-            width: 110%;
-            padding: 0.5rem;
-            padding-top: 1rem;
-            font-size: 1rem;
-            border: 1px solid #02066F !important;
-            border-radius: 10px !important;
-            box-sizing: border-box;
-        }
 
-        .material-textfield label {
-            position: absolute;
-            top: 12px;
-            left: 0.75rem;
-            transition: all 0.3s ease;
-            background: white;
-            padding: 0 0.25rem;
-            color: #02066F;
-            pointer-events: none;
-        }
+input {
+    height: 3rem; 
+}
 
-        .material-textfield input:focus+label,
-        .material-textfield input:not(:placeholder-shown)+label,
-        .material-textfield textarea:focus+label,
-        .material-textfield textarea:not(:placeholder-shown)+label {
-            top: -0.75rem;
-            left: 0.75rem;
-            font-size: 0.75rem;
-            color: #02066F;
-        }
+textarea {
+    height: 6rem;
+}
 
-        .material-textfield input:focus,
-        .material-textfield textarea:focus {
-            outline: none;
-            border-color: #02066F;
-        }
 
-        .btn-green {
-            color: white;
-            background-color: #02066F;
-            padding: 10px 30px;
-            border: none;
-            font-weight: 600;
-            border-radius: 5px;
-            font-size: 1.1rem;
-            cursor: pointer;
-        }
+.material-textfield {
+    position: relative;
+}
 
-        .btn-green:hover {
-            opacity: 0.8;
-            color: white;
-        }
+.label-sty {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    transition: all 0.3s ease;
+    color: #999; 
+    pointer-events: none; 
+}
 
-        #errorLName,
-        #errorFName {
-            color: red !important;
-        }
 
-        .logo-img {
+.box-sty {
+    max-width: 600px;
+    background-color: white;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    border-radius: 20px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.btn-green {
+    background-color: #02066F;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-green:hover {
+    background-color: #1c219d;
+}
+
+/* Form input for smaller screens */
+@media (max-width: 576px) {
+    input,
+    textarea {
+        padding: 0.5rem !important;
+    }
+
+    label {
+        font-size: 0.7rem;
+    }
+}
+
+
+ .logo-img {
             width: 100%;
             height: 100%;
         }
 
-        .logo-sty {
+         .logo-sty {
             width: 100px;
             height: 100px;
             border: 1px solid #02066F;
@@ -178,10 +239,10 @@
             cursor: pointer;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: center; 
             /* Align icon vertically */
-            margin: 20px auto;
-        }
+             margin: 20px auto;
+        } 
 
         .logo-sty input[type="file"] {
             position: absolute;
@@ -193,29 +254,23 @@
             cursor: pointer;
         }
 
-        .pencil-icon {
+         .pencil-icon {
             position: absolute;
-            bottom: 10px;
+            bottom: 5px;
             /* Adjust the icon's position */
-            right: 10px;
+             right: 10px;
             font-size: 16px;
             color: #02066F;
             background-color: white;
             padding: 5px;
             border-radius: 50%;
-        }
-
+        } 
+ 
 
 
         #dropDown {
             color: #02066F;
         }
-
-
-
-
-
-
         .btn-outline-light:hover {
             background-color: #02066F !important;
             color: white !important;
@@ -233,7 +288,10 @@
             background-color: white;
         }
 
-        
+        .modal-header {
+            background-color: #02066F;
+            color: white;
+        }
 
         @media (max-width: 576px) {
             .material-textfield {
@@ -261,26 +319,212 @@
         }
 
 
+        .modal-content {
+            width: 80%;
+        }
+        .navbar-toggler {
+            background-color: white;
+            color: white;
+            border: 2px solid #02066F;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .navbar-toggler:hover {
+            background-color: gainsboro;
+            color: white;
+            border-color: gray;
+        }
+
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 250px;
+            height: 100%;
+            background-color: #02066f;
+            transition: left 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar a {
+            position: relative;
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+            width: 80%;
+            padding-left: 10%;
+            border-radius: 20px;
+            background: none;
+            margin-left: 8%;
+            overflow: hidden;
+        }
+
+        .sidebar a.active {
+            color: #f1f1f1;
+        }
+
+        .sidebar a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 2px;
+            width: 100%;
+            background: #f1f1f1;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar a:hover::before,
+        .sidebar a.active::before {
+            transform: translateX(0);
+        }
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+            box-shadow: #fff;
+            transform: scale(1.05);
+            background: rgba(0, 0, 0, 0.5);
+
+        }
+
+
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 300px;
+                padding-top: 40px;
+                margin-top: 10%;
+            }
+
+            .sidebar a {
+                font-size: 20px;
+                padding: 10px 20px;
+            }
+
+            .sidebar .closebtn {
+                font-size: 30px;
+                right: 15px;
+            }
+
+            #main {
+                margin-left: 0;
+            }
+        }
+
+
+        @media screen and (max-width: 480px) {
+            .sidebar {
+                width: 250px;
+                padding-top: 30px;
+                margin-top: 2%;
+            }
+
+            .sidebar a {
+                font-size: 18px;
+                padding: 8px 15px;
+            }
+
+            .sidebar .closebtn {
+                font-size: 24px;
+                right: 10px;
+            }
+        }
+
+        .sidebar a i {
+            margin-right: 15px;
+        }
+
+        .sidebar button {
+            background-color: #02066F;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar button:hover {
+            background-color: white;
+            color: #02066F;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+        }
         
     </style>
 </head>
 
 <body>
+    <!-- <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <img src="Image/Group 91.png" alt="" class="app_logo">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="device.html" style="color: white;">Device</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="employee_list.html" style="color: white;">Employee Management</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" style="color: white;" href="#service" id="navbarDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
+                            Report
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="report_summary.html" id="dropDown">Report Summary</a>
+                            </li>
+                            <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report
+                                    Settings</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill-active px-3" href="#">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html" style="color: white;">Contact Us</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <buttton href="#" class="btn btn-outline-light" onclick="logOutACtion()">Logout</buttton>
+                </form>
+            </div>
+        </div>
+    </nav> -->
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;border-bottom: 2px solid #02066F;">
         <div class="container-fluid">
             <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="app_logo">
-    
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                 <span class="navbar-toggler-icon"></span>
+
+            <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
-    
+
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
                 <div class="navbar-nav">
                     <a class="nav-link" href="device.html" style="color: #02066F;">Device</a>
                     <a class="nav-link" href="employee_list.html" style="color: #02066F;">Employee Management</a>
-    
-                    <!-- Report Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#service" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false" style="color: #02066F;">
@@ -299,6 +543,21 @@
             </div>
         </div>
     </nav>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+
+
+        <a href="device.html"> Device</a>
+        <a href="employee_list.html"> Employee Management</a>
+        <a href="report_summary.html">Report Summary</a>
+        <a href="report_setting.html">Report Settings</a>
+        <a href="profile.html">Profile</a>
+        <a href="contact.html">Contact Us</a>
+        <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
+
+    </div>
+
 
 
     <div class="modal fade" id="logOut" tabindex="-1" aria-labelledby="logOutLabel" aria-hidden="true">
@@ -319,22 +578,22 @@
             </div>
         </div>
     </div>
-
+        <div class="contact">
     <h3 class="text-center fw-bold mb-3 mt-4" id="header">Profile</h3>
     <div class="overlay" id="overlay">
         <div class="spinner"></div>
     </div>
 
     <div class="rounded-circle logo-sty">
-        <img src="" alt="Company Logo" id="logo-img" class="logo-img">
+        <img src="" alt= "Company Logo" id="logo-img" class="logo-img">
         <input type="file" class="input-sty disabledData" accept="image/*" onchange="loadFile(event)" id="fileInput"
             style="display: none;" disabled>
         <i class="fa fa-pencil-alt pencil-icon" onclick="triggerFileUpload()"></i>
     </div>
+    <div>
 
-
-
-    <div class="container box-sty mt-3">
+<!-- 
+     <div class="container box-sty mt-3">
         <form id="settingsForm" class="p-5 text-center">
             <div class="row">
                 <div class="col-sm-6">
@@ -399,35 +658,191 @@
                     </div>
                 </div>
             </div>
+            <div class="box-sty">
+                <div class="material-textfield">
+                    <input type="text" id="streetAddress" placeholder=" " required>
+                    <label for="streetAddress">Street Address</label>
+                </div>
+            
+                <div class="material-textfield">
+                    <input type="text" id="city" placeholder=" " required>
+                    <label for="city">City</label>
+                </div>
+            
+                <div class="material-textfield">
+                    <input type="text" id="state" placeholder=" " required>
+                    <label for="state">State</label>
+                </div>
+            
+                <div class="material-textfield">
+                    <input type="text" id="pincode" placeholder=" " required>
+                    <label for="pincode">Pincode</label>
+                </div>
+            </div>
+            
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn-green float-end" id="submit">Edit</button>
+                <button type="submit" class="btn-green float-end" id="submit">Edit</button> 
+                <button type="button" class="btn-green float-end" id="submit" onclick="toggleEdit()">Edit</button>
+
             </div>
         </form>
-    </div>
-
-
-
-    <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" id="modal-content">
-                <div class="modal-header justify-content-center">
-                    <h5 class="modal-title" style="text-align: center;" id="addEntryModalLabel">Profile page data has
-                        been successfully updated.
-                    </h5>
-
+    </div> 
+ -->
+<div class="container box-sty mt-3">
+    <form id="settingsForm" class="p-5 text-center">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="material-textfield mb-4">
+                    <input id="companyName" placeholder=" " type="text" class="input-sty" disabled>
+                    <label class="label-sty">Company Name</label>
                 </div>
-                <div class="modal-body">
-                    <p class="d-flex justify-content-center">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfz3upZJUzgki4bn27faJf6gPIIo7Yo5HxZg&s"
-                            style="width: 100px;" alt="">
-                    </p>
+            </div>
+            <div class="col-sm-6">
+                <div class="material-textfield mb-4">
+                    <input id="username" placeholder=" " type="text" class="input-sty" disabled>
+                    <label class="label-sty">Username</label>
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            
+            <div class="col-sm-6">
+                <div class="material-textfield mb-4">
+                    <input id="companyStreet" placeholder=" " type="text" class="input-sty disabledData" disabled>
+                    <label class="label-sty">Company Street</label>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="material-textfield mb-4">
+                    <input id="companyCity" placeholder=" " type="text" class="input-sty disabledData" disabled>
+                    <label class="label-sty">Company City</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            
+            <div class="col-sm-6">
+                <div class="material-textfield mb-4">
+                    <input id="companyState" placeholder=" " type="text" class="input-sty disabledData" disabled>
+                    <label class="label-sty">Company State</label>
+                </div>
+            </div>
+
+            
+            <div class="col-sm-6">
+                <div class="material-textfield mb-4">
+                    <input id="companyZip" placeholder=" " type="text" class="input-sty disabledData" disabled>
+                    <label class="label-sty">Company Zip</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            
+            <div class="col-sm-6">
+                <div class="material-textfield">
+                    <input id="email" placeholder=" " type="email" class="input-sty disabledData" disabled>
+                    <label class="label-sty">Email</label>
+                </div>
+            </div>
+            <br>
+            
+            <div class="col-sm-6">
+                <div class="material-textfield">
+                    <input type="tel" id="phone" name="phoneNumber" placeholder=" " class="input-sty disabledData" disabled>
+                    <label class="label-sty">Phone Number</label>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            
+            <div class="col-sm-6">
+                <div class="material-textfield mb-4">
+                    <input id="firstName" placeholder=" " type="text" class="input-sty disabledData" disabled>
+                    <label class="label-sty">First Name</label>
+                </div>
+            </div>
+
+           
+            <div class="col-sm-6">
+                <div class="material-textfield mb-4">
+                    <input id="lastName" placeholder=" " type="text" class="input-sty disabledData" disabled>
+                    <label class="label-sty">Last Name</label>
+                    <span class="text-danger" id="errorLName"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+           
+            <div class="col-sm-6">
+                <div class="material-textfield mb-4">
+                    <input id="customerStreet" placeholder=" " type="text" class="input-sty disabledData" disabled>
+                    <label class="label-sty">Customer Street</label>
+                </div>
+            </div>
+
+           
+            <div class="col-sm-6">
+                <div class="material-textfield mb-4">
+                    <input id="customerCity" placeholder=" " type="text" class="input-sty disabledData" disabled>
+                    <label class="label-sty">Customer City</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+           
+            <div class="col-sm-6">
+                <div class="material-textfield mb-4">
+                    <input id="customerState" placeholder=" " type="text" class="input-sty disabledData" disabled>
+                    <label class="label-sty">Customer State</label>
+                </div>
+            </div>
+
+           
+            <div class="col-sm-6">
+                <div class="material-textfield mb-4">
+                    <input id="customerZip" placeholder=" " type="text" class="input-sty disabledData" disabled>
+                    <label class="label-sty">Customer Zip</label>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn-green float-end" id="submit">Edit</button>
+        </div>
+    </form>
+</div>
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Success!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Your details have been updated successfully!
+            </div>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div> 
+        </div>
     </div>
+</div>
+
+
+    
+
     <!-- Footer  -->
     <footer class="mt-5">
-        <div class="footer-container container-fluid mt-5">
+        <div class="footer-container container-fluid">
             <!-- Logo and Social Links Section -->
             <div class="logo-social">
                 <div class="logo ">
@@ -468,7 +883,8 @@
                     <h4>Address</h4>
                 </div>
 
-                <p style="padding-left: 30px;">Arjava Technologies,<br>2135 204th PL NE,<br>Sammamish,<br> WA - 98074.</p>
+                <p style="padding-left: 30px;">Arjava Technologies,<br>2135 204th PL NE,<br>Sammamish,<br> WA - 98074,
+                    USA.</p>
                 <div style="display: inline-flex;margin-top: 5px;">
                     <img src="icon/phone-call (1) 1.png"
                         style="width: 30px;padding-right: 10px; height: 25px; padding-top:8px;" alt="">
@@ -494,7 +910,7 @@
         localStorage.removeItem("password");
 
         setTimeout(() => {
-            window.location.href = "login.html";
+            window.location.href = "index.html";
         }, 10);
     }
 

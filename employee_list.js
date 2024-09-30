@@ -18,6 +18,31 @@ function dataRemove(e) {
     document.getElementById("phoneNumber").value = "";
     document.getElementById("savebtn").value = "";
 }
+const sidebar = document.getElementById('sidebar');
+const toggler = document.querySelector('.navbar-toggler');
+
+// Toggle sidebar open/close
+toggler.addEventListener('click', function () {
+    sidebar.classList.toggle('open');
+});
+
+document.addEventListener('click', function (event) {
+    const isClickInside = sidebar.contains(event.target) || toggler.contains(event.target);
+    if (!isClickInside) {
+        sidebar.classList.remove('open');
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const currentLocation = location.href; 
+    const menuItems = document.querySelectorAll('.sidebar a');
+
+    menuItems.forEach(item => {
+        if (item.href === currentLocation) {
+            item.classList.add('active'); 
+        }
+    });
+});
 
 // Create Data
 
@@ -32,6 +57,7 @@ function addEmpdetails() {
         const empphoneno = document.getElementById("phoneNumber").value;
         const empinst = document.getElementById("instructor").value;
         const empactive = true;
+        const admin  = document.getElementById("Dropdown").value==='true' ? true : false;
         const empid = 'eid_' + Math.random().toString(36).substr(2, 12);
         const empcid = localStorage.getItem('companyID');
 
@@ -45,7 +71,9 @@ function addEmpdetails() {
                 LName: emplname,
                 IsActive: empactive,
                 PhoneNumber: empphoneno,
-                Pin: empinst
+                Pin: empinst,
+                IsAdmin: admin
+
             };
 
             fetch(apiUrl, {
@@ -92,7 +120,8 @@ function addEmpdetails() {
                 LName: emplname,
                 IsActive: empactive,
                 PhoneNumber: empphoneno,
-                Pin: empinst
+                Pin: empinst,
+                IsAdmin: admin
             };
 
             fetch(apiUrl, {
@@ -174,11 +203,13 @@ function viewEmpdetails() {
 
             // Populate the table body with fetched data
             employeesData.forEach(element => {
+                console.log(element.IsActive);
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
                     <td class="pin-column">${element.Pin}</td>
                     <td class="name-column">${element.FName}</td>
                     <td class="phone-column">${element.PhoneNumber}</td>
+                    <td class="isAdmin">${element.IsAdmin == 0 ? false : true}</td>
                     <td class="action-column">
                         <button class="btn icon-button btn-green" onclick="editEmpdetails('${element.EmpID}')" data-bs-toggle="modal" data-bs-target="#myModal">Edit</button>
                         <button class="btn icon-button btn-outline-green" onclick="showLogoutModal('${element.EmpID}')">Delete</button>
@@ -234,6 +265,7 @@ function editEmpdetails(emId) {
                 document.getElementById("fName").value = formvalue.FName;
                 document.getElementById("lName").value = formvalue.LName;
                 document.getElementById("phoneNumber").value = formvalue.PhoneNumber;
+                document.getElementById("Dropdown").value = (formvalue.IsAdmin == 0 ? false : true) 
                 document.getElementById("savebtn").value = formvalue.EmpID;
             });
         })

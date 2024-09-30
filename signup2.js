@@ -81,12 +81,29 @@ async function validateForm() {
     document.getElementById('overlay').style.display = 'flex';
     const isFirstNameValid = validateFirstName();
     const isLastNameValid = validateLastName();
-    const isAddressValid = validateAddress();
+
+    const custStreet =
+   requriedCheck(document.getElementById('customerStreet'),
+   document.getElementById('errorStreet'));
+   const custCity =
+   requriedCheck(document.getElementById('customerCity'),
+   document.getElementById('errorCity'));
+   const custState =
+   requriedCheck(document.getElementById('customerState'),
+   document.getElementById('errorState'));
+   const custpZip =
+   requriedCheck(document.getElementById('customerZip'),
+   document.getElementById('errorZip'));
+
     const isPhoneNumberValid = validPhoneno();
     // const isCentreNameValid = validateCentreName();
     const isEmailValid = validateEmail();
 
-    if (isFirstNameValid && isLastNameValid && isAddressValid && isPhoneNumberValid && isEmailValid) {
+    if (isFirstNameValid && isLastNameValid && 
+        custState &&
+        custCity &&
+        custStreet &&
+        custpZip && isPhoneNumberValid && isEmailValid) {
         document.querySelector('.progress-bar').style.width = '100%';
 
         const firstName = document.getElementById('firstName').value;
@@ -109,6 +126,7 @@ async function validateForm() {
         console.log("***************************************************************")
         await createCheckoutSession();
     } else {
+        document.getElementById('totalError').textContent = 'Please fix the errors';
         document.getElementById('overlay').style.display = 'none';
     }
 }
@@ -117,7 +135,12 @@ async function craeteFirstPageSignupAPiData() {
     const firstSignupPageapiUrl = `${firstSignupPageapiUrlBase}/create`;
     const cname = localStorage.getItem('companyName');
     const clogo = localStorage.getItem('companyLogo');
-    const caddress = localStorage.getItem('companyAddress');
+    // Address 
+    const companyStreet = localStorage.getItem('companyStreet');
+    const companyCity =localStorage.getItem('companyCity');
+    const companyState =localStorage.getItem('companyState');
+    const companyZip =localStorage.getItem('companyZip');
+
     const username = localStorage.getItem('username');
 
     // Call the asynchronous checkPassword function to get the encrypted password
@@ -127,7 +150,12 @@ async function craeteFirstPageSignupAPiData() {
         CID: cid,
         CName: cname,
         CLogo: clogo,
-        CAddress: caddress,
+        CAddress: `
+        ${companyStreet} -- 
+        ${companyCity} -- 
+        ${companyState} -- 
+        ${companyZip} -- 
+        `,
         UserName: username,
         Password: passwordEncrypted,
         ReportType: "Weekly"
@@ -153,8 +181,6 @@ async function craeteFirstPageSignupAPiData() {
             if (!data.error) {
                 // Call Customer api
                 createApiData();
-
-
             }
             else {
                 setTimeout(() => {
@@ -229,13 +255,23 @@ function createApiData() {
     const apiUrl = `${apiUrlBase}/create`;
     const firstName = document.getElementById("firstName").value;
     const lastName = document.getElementById("lastName").value;
-    const address = document.getElementById("address").value;
+    // Address 
+    const customerStreet = document.getElementById('customerStreet').value;
+    const customerCity = document.getElementById('customerCity').value;
+    const customerState = document.getElementById('customerState').value;
+    const customerZip = document.getElementById('customerZip').value;
+
     const phone = document.getElementById("phoneNumber").value;
     const email = document.getElementById("email").value;
 
     localStorage.setItem('firstName', firstName);
     localStorage.setItem('lastName', lastName);
-    localStorage.setItem('address', address);
+    // Address 
+    localStorage.setItem('customerStreet', customerStreet);
+    localStorage.setItem('customerCity', customerCity);
+    localStorage.setItem('customerState', customerState);
+    localStorage.setItem('customerZip', customerZip);
+
     localStorage.setItem('phone', phone);
     localStorage.setItem('email', email);
 
@@ -244,7 +280,11 @@ function createApiData() {
         CID: cid, // Example value
         FName: firstName,
         LName: lastName,
-        Address: address,
+        Address: `${customerStreet} -- 
+        ${customerCity} -- 
+        ${customerState} -- 
+        ${customerZip} -- 
+        `,
         PhoneNumber: phone,
         Email: email,
         IsActive: true // Assuming this field is required and should be set to true
@@ -290,8 +330,6 @@ function validPhoneno() {
         phoneError.textContent = '';
         return true;
     } 
-
-
 }
 
 function formatPhoneNumber() {
@@ -338,4 +376,15 @@ async function createCheckoutSession() {
     } catch (error) {
         console.error('Error creating checkout session:', error);
     }
+}
+
+// required filed 
+function requriedCheck(id,msg){
+    const getId = id.value;
+    if(getId.trim() === ''){
+      msg.textContent = 'This field is required';
+        return false;
+    }
+    msg.textContent = '';
+    return true;
 }

@@ -1,126 +1,18 @@
 
-/* Index  */
-    /* Second column images  */
+/* FIRST ROW SECTION  */
+    /* first row second column images  */
     .inside-col-img-sty {
         width: 35%;
         max-width: 150px;
     }
 
+    /* Heading sty  */
     .head-sty {
         color: #02066F;
         font-weight: bold;
     }
 
-    @media (max-width: 768px) {
-        .head-sty {
-            font-size: 1.5rem;
-        }
-
-        .inside-head {
-            font-size: 1rem;
-        }
-        /* Second row first column  */
-        .sec-img{
-            margin-top: 100px;
-        }
-    }
-
-    @media (max-width:358px) {
-        .box-sty{
-            width: 100% !important;
-            font-size: 0.8rem;
-        }
-    }
-
-    .feature-section {
-        margin-bottom: 25px; /* Increase space between sections for desktop */
-    }
-    
-    .inside-col-img-sty {
-        width: 70px; /* Larger icons for desktop */
-        height: auto;
-    }
-    
-    .feature-section h4 {
-        font-size: 1.6em; /* Larger title font size for desktop */
-        margin-bottom: 10px; 
-    }
-    
-    .feature-section p {
-        font-size: 1.1em; /* Larger text size for desktop */
-        line-height: 1.6;
-    }
-    
-    /* Responsive adjustments for medium screens */
-    @media (max-width: 992px) {
-        .feature-section {
-            margin-bottom: 20px;
-        }
-    
-        .inside-col-img-sty {
-            width: 65px; /* Slightly smaller icons for medium screens */
-        }
-    
-        .feature-section h4 {
-            font-size: 1.5em;
-        }
-    
-        .feature-section p {
-            font-size: 1em;
-        }
-    }
-    
-    /* Responsive adjustments for tablet screens */
-    @media (max-width: 768px) {
-        .feature-section {
-            margin-bottom: 15px;
-        }
-    
-        .inside-col-img-sty {
-            width: 60px; /* Smaller icons for tablet */
-        }
-    
-        .feature-section h4 {
-            font-size: 1.4em;
-        }
-    
-        .feature-section p {
-            font-size: 0.95em;
-        }
-    }
-    
-    /* Responsive adjustments for mobile screens */
-    @media (max-width: 576px) {
-        .feature-section {
-            margin-bottom: 10px; /* Reduce space for mobile */
-        }
-    
-        .inside-col-img-sty {
-            width: 40px; /* Smaller icons for mobile to fit better */
-            height: auto;
-        }
-    
-        .feature-section h4 {
-            font-size: 1.2em; /* Smaller title for mobile */
-            margin-bottom: 8px;
-        }
-    
-        .feature-section p {
-            font-size: 0.85em; /* Smaller text for mobile */
-            line-height: 1.4;
-            margin: 0 10px; /* Reduce padding for text on mobile */
-            text-align: left;
-        }
-    }
-    
-    
-
-    .image-with-content{
-        display: flex;
-        justify-content: center;
-    }
-
-/* Contact  */
+/* CONTACT  */
     .material-textfield {
         position: relative;
         margin-bottom: 1.5rem;
@@ -164,13 +56,6 @@
         width: 80%;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-    .companyaddress{
-        border: 1px solid #02066F;
-        border-radius: 10px;
-    }
-    .cAdd{
-        color: #02066F;
-    }
 
     .btn-green {
             background-color: #02066F;
@@ -183,7 +68,7 @@
         }
 
 
-/* Privacy policy  */
+/* PRIVACY POLICY */
 
 .policy-box{
     border: 2px solid #02066F;
@@ -191,6 +76,110 @@
 }
 
 
+/* MEDIA QUERY */
+@media (max-width: 768px) {
+    .head-sty {
+        font-size: 1.5rem;
+    }
+
+    .inside-head {
+        font-size: 1rem;
+    }
+    /* first row first column image */
+    .sec-img{
+        margin-top: 100px;
+    }
+}
+
+@media (max-width:358px) {
+    /* Contact page form box  */
+    .box-sty{
+        width: 100% !important;
+        font-size: 0.8rem;
+    }
+}
+
+/* First row second column section  */
+.feature-section {
+    margin-bottom: 25px; /* Increase space between sections for desktop */
+}
+
+.inside-col-img-sty {
+    width: 70px; /* Larger icons for desktop */
+    height: auto;
+}
+
+.feature-section h4 {
+    font-size: 1.6em; /* Larger title font size for desktop */
+    margin-bottom: 10px; 
+}
+
+.feature-section p {
+    font-size: 1.1em; /* Larger text size for desktop */
+    line-height: 1.6;
+}
+
+/* Responsive adjustments for medium screens */
+@media (max-width: 992px) {
+    .feature-section {
+        margin-bottom: 20px;
+    }
+
+    .inside-col-img-sty {
+        width: 65px; /* Slightly smaller icons for medium screens */
+    }
+
+    .feature-section h4 {
+        font-size: 1.5em;
+    }
+
+    .feature-section p {
+        font-size: 1em;
+    }
+}
+
+/* Responsive adjustments for tablet screens */
+@media (max-width: 768px) {
+    .feature-section {
+        margin-bottom: 15px;
+    }
+
+    .inside-col-img-sty {
+        width: 60px; /* Smaller icons for tablet */
+    }
+
+    .feature-section h4 {
+        font-size: 1.4em;
+    }
+
+    .feature-section p {
+        font-size: 0.95em;
+    }
+}
+
+/* Responsive adjustments for mobile screens */
+@media (max-width: 576px) {
+    .feature-section {
+        margin-bottom: 10px; /* Reduce space for mobile */
+    }
+
+    .inside-col-img-sty {
+        width: 40px; /* Smaller icons for mobile to fit better */
+        height: auto;
+    }
+
+    .feature-section h4 {
+        font-size: 1.2em; /* Smaller title for mobile */
+        margin-bottom: 8px;
+    }
+
+    .feature-section p {
+        font-size: 0.85em; /* Smaller text for mobile */
+        line-height: 1.4;
+        margin: 0 10px; /* Reduce padding for text on mobile */
+        text-align: left;
+    }
+}
 
 @media (max-width:767px) {
     .sec-img {

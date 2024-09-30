@@ -1,10 +1,11 @@
 /* Footer Styles */
 
-html,
+  html,
 body {
     margin: 0;
     padding: 0%;
-}
+    height: 100%;
+    } 
 
 footer {
     color: white;
@@ -15,16 +16,14 @@ footer {
     padding: 40px 0;
     margin-top: 50px;
 }
-
 .footer-container {
     display: flex;
     justify-content: space-around;
     padding: 0 40px;
     align-items: flex-start;
-}
-
+}  
 /* Logo and Social Links */
-.logo-social {
+  .logo-social {
     display: flex;
     align-items: center !important;
     flex-direction: column;
@@ -63,10 +62,10 @@ p {
 .social-icons img {
     width: 20px;
     height: auto;
-}
+}  
 
 /* Quick Links */
-.quick-links h4 {
+  .quick-links h4 {
     font-size: 18px;
     margin-bottom: 20px;
     margin-left: 10px;
@@ -91,10 +90,10 @@ p {
 .quick-links ul li a:hover {
     color: white;
     opacity: 1;
-}
+} 
 
 /* Address Section */
-.address h4 {
+ .address h4 {
     font-size: 18px;
     margin-bottom: 10px;
 }
@@ -107,31 +106,31 @@ p {
 .address a {
     color: white;
     text-decoration: none;
-}
+} 
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    /* .footer-container {
+/*Responsive Design */
+ @media (max-width: 768px) {
+     .footer-container {
         flex-direction: column; 
          align-items: center;
         text-align: start;
-    } */
+    } 
 
-    .logo-social,
+      .logo-social,
     .quick-links,
     .address {
         margin-bottom: 20px;
     }
-}
+} 
 
-@media (max-width: 550px) {
+ @media (max-width: 550px) {
     footer {
         padding: 20px 0;
     }
 
-    .footer-container {
+    .footer-container {   
         /* padding: 0 10px; */
-        flex-direction: column;
+          flex-direction: column;
         align-items: center;
     }
 
@@ -161,9 +160,9 @@ p {
     .social-icons img {
         width: 16px;
     }
-}
+} 
 
-@media (max-width:597px) {
+ @media (max-width:597px) {
     .footer-container {
         font-size: 0.7rem;
     }
@@ -173,4 +172,4 @@ p {
     .address {
         margin-left: -34px;
     }
-}
+} 

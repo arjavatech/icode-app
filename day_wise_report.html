@@ -97,7 +97,7 @@
         float: right;
     }
 
-    
+
 
     .custom-table-container {
         display: none;
@@ -280,6 +280,153 @@
         }
     }
 
+    .navbar-toggler {
+        background-color: white;
+        color: white;
+        border: 2px solid #02066F;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .navbar-toggler:hover {
+        background-color: gainsboro;
+        color: white;
+        border-color: gray;
+    }
+
+
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -300px;
+        width: 250px;
+        height: 100%;
+        background-color: #02066f;
+        transition: left 0.3s ease;
+        z-index: 1000;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .sidebar a {
+        position: relative;
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: white;
+        display: block;
+        transition: 0.3s;
+        width: 80%;
+        padding-left: 10%;
+        border-radius: 20px;
+        background: none;
+        margin-left: 8%;
+        overflow: hidden;
+    }
+
+    .sidebar a.active {
+        color: #f1f1f1;
+    }
+
+    .sidebar a::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 2px;
+        width: 100%;
+        background: #f1f1f1;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar a:hover::before,
+    .sidebar a.active::before {
+        transform: translateX(0);
+    }
+
+    .sidebar a:hover {
+        color: #f1f1f1;
+        box-shadow: #fff;
+        transform: scale(1.05);
+        background: rgba(0, 0, 0, 0.5);
+
+    }
+
+
+
+    #main {
+        transition: margin-left .5s;
+        padding: 16px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .sidebar {
+            width: 300px;
+            padding-top: 40px;
+            margin-top: 10%;
+        }
+
+        .sidebar a {
+            font-size: 20px;
+            padding: 10px 20px;
+        }
+
+        .sidebar .closebtn {
+            font-size: 30px;
+            right: 15px;
+        }
+
+        #main {
+            margin-left: 0;
+        }
+    }
+
+
+    @media screen and (max-width: 480px) {
+        .sidebar {
+            width: 250px;
+            padding-top: 30px;
+            margin-top: 2%;
+        }
+
+        .sidebar a {
+            font-size: 18px;
+            padding: 8px 15px;
+        }
+
+        .sidebar .closebtn {
+            font-size: 24px;
+            right: 10px;
+        }
+    }
+
+    .sidebar a i {
+        margin-right: 15px;
+    }
+
+    .sidebar button {
+        background-color: #02066F;
+        color: white;
+        padding: 10px 20px;
+        font-size: 18px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .sidebar button:hover {
+        background-color: #02066F;
+        color: #02066F;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+
     /* @media (max-width:570px) {
         footer {
             position: unset !important;
@@ -294,39 +441,91 @@
 </style>
 
 <body>
+
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;border-bottom: 2px solid #02066F;">
         <div class="container-fluid">
             <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="app_logo">
-    
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                 <span class="navbar-toggler-icon"></span>
+
+            <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
-    
+
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
                 <div class="navbar-nav">
                     <a class="nav-link" href="device.html" style="color: #02066F;">Device</a>
                     <a class="nav-link" href="employee_list.html" style="color: #02066F;">Employee Management</a>
-    
-                    <!-- Report Dropdown -->
+
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active" href="#service" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false" style="color: #02066F;">
                             Report
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item " href="#">Report Summary</a></li>
+                            <li><a class="dropdown-item" href="report_summary.html">Report Summary</a></li>
                             <li><a class="dropdown-item" href="report_setting.html">Report Settings</a></li>
                         </ul>
                     </li>
                     <a class="nav-link" href="profile.html" style="color: #02066F;">Profile</a>
                     <a class="nav-link" href="contact.html" style="color: #02066F;">Contact Us</a>
-                    <!-- <a class="nav-link" href="contact_us.html">Contact us</a> -->
                     <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
                 </div>
             </div>
         </div>
     </nav>
+
+    <!-- <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <img src="Image/app_logo.png" alt="" class="app_logo">  
+            <button class="navbar-toggler" type="button"  aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="device.html" style="color: white;">Device</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill-active px-3" href="employee_list.html">Employee Management</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#service" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
+                            Report
+                        </a>
+                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="report_summary.html" id="dropDown">Report Summary</a></li>
+                            <li><a class="dropdown-item" href="report_setting.html" id="dropDown">Report Settings</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html" style="color: white;">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html" style="color: white;">Contact Us</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <button href="#" class="btn btn-outline-light" onclick="logOutAction()">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>  -->
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+
+
+        <a href="device.html"> Device</a>
+        <a href="employee_list.html"> Employee Management</a>
+        <a href="report_summary.html">Report Summary</a>
+        <a href="report_setting.html">Report Settings</a>
+        <a href="profile.html">Profile</a>
+        <a href="contact.html">Contact Us</a>
+        <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
+
+    </div>
+
+
     <section>
 
         <div class="overlay" id="overlay">
@@ -411,16 +610,22 @@
                 <div class="logo ">
                     <img src="icon/logo.png" alt="Tap Time Logo">
                 </div>
+                <br>
                 <p style="text-align: center !important;">Powered by <br>Arjava Technologies</p>
+                <br>
                 <div class="social-icons">
-                    <a href="https://www.linkedin.com/company/arjavatech/"><img src="icon/linkedin 1.png"
-                            alt="LinkedIn"></a>
-                    <a href="https://www.facebook.com/profile.php?id=61565587366048
-                    "><img src="icon/facebook 1.png" alt="Facebook"></a>
-                    <a href="https://www.instagram.com/_tap_time
-                    "><img src="icon/instagram 1.png" alt="Instagram"></a>
-                    <a href=" https://x.com/_Tap_Time
-                    "><img src="icon/twitter 1.png" alt="X"></a>
+                    <a href="https://www.linkedin.com/company/arjavatech/" style="transition: all 0.3s ease;"
+                        onmouseover="this.style.boxShadow='0 0 10px white';" onmouseout="this.style.boxShadow='none';">
+                        <img src="icon/linkedin 1.png" alt="LinkedIn"></a>
+                    <a href="https://www.facebook.com/profile.php?id=61565587366048" style="transition: all 0.3s ease;"
+                        onmouseover="this.style.boxShadow='0 0 10px white';" onmouseout="this.style.boxShadow='none';">
+                        <img src="icon/facebook 1.png" alt="Facebook"></a>
+                    <a href="https://www.instagram.com/_tap_time" style="transition: all 0.3s ease;"
+                        onmouseover="this.style.boxShadow='0 0 10px white';" onmouseout="this.style.boxShadow='none';">
+                        <img src="icon/instagram 1.png" alt="Instagram"></a>
+                    <a href=" https://x.com/_Tap_Time" style="transition: all 0.3s ease;"
+                        onmouseover="this.style.boxShadow='0 0 10px white';" onmouseout="this.style.boxShadow='none';">
+                        <img src="icon/twitter 1.png" alt="X"></a>
                 </div>
             </div>
 
@@ -446,7 +651,9 @@
                     <h4>Address</h4>
                 </div>
 
-                <p style="padding-left: 30px;">Arjava Technologies,<br>2135 204th PL NE,<br>Sammamish,<br> WA - 98074.</p>
+                <p style="padding-left: 30px;">Arjava Technologies,<br>2135 204th PL NE,<br>Sammamish,<br> WA - 98074.
+                </p>
+                <br>
                 <div style="display: inline-flex;margin-top: 5px;">
                     <img src="icon/phone-call (1) 1.png"
                         style="width: 18px;padding-right: 10px; height: 20px; padding-top: 5px;" alt="">

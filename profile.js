@@ -1,3 +1,48 @@
+// const sidebar = document.getElementById('sidebar');
+// const toggler = document.querySelector('.navbar-toggler');
+
+// // Toggle sidebar open/close
+// toggler.addEventListener('click', function () {
+//     sidebar.classList.toggle('open');
+// });
+
+// document.addEventListener('click', function (event) {
+//     const isClickInside = sidebar.contains(event.target) || toggler.contains(event.target);
+//     if (!isClickInside) {
+//         sidebar.classList.remove('open');
+//     }
+// });
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     const currentLocation = location.href; 
+//     const menuItems = document.querySelectorAll('.sidebar a');
+
+//     menuItems.forEach(item => {
+//         if (item.href === currentLocation) {
+//             item.classList.add('active'); 
+//         }
+//     });
+// });
+
+
+const sidebar = document.getElementById('sidebar');
+const toggler = document.querySelector('.navbar-toggler');
+
+// Toggle sidebar open/close
+toggler.addEventListener('click', function () {
+    sidebar.classList.toggle('open');
+});
+
+document.addEventListener('click', function (event) {
+    const isClickInside = sidebar.contains(event.target) || toggler.contains(event.target);
+    if (!isClickInside) {
+        sidebar.classList.remove('open'); // Close sidebar if the user clicks outside
+    }
+});
+
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('overlay').style.display = 'flex';
     loadImage();
@@ -47,12 +92,34 @@ async function loadImage() {
 
 function loadLocalStorageData() {
     const fields = [
-        'companyName', 'companyAddress', 'username', 'password',
+        'companyName', 'companyAddress', 'username',
         'firstName', 'lastName', 'address', 'phone', 'email'
     ];
 
     fields.forEach(field => {
+        console.log(field);
+        if(field == 'companyAddress'){
+            console.log(localStorage.getItem(field));
+            let val = localStorage.getItem(field).split("--");
+
+            console.log(val);
+
+            document.getElementById('companyStreet').value = val[0];
+            document.getElementById('companyCity').value = val[1]; 
+            document.getElementById('companyState').value = val[2]; 
+            document.getElementById('companyZip').value = val[3]; 
+        }
+        if(field == 'address'){
+            console.log(localStorage.getItem(field));
+            let val2 = localStorage.getItem(field).split("--");
+
+            document.getElementById('customerStreet').value = val2[0];
+            document.getElementById('customerCity').value = val2[1]; 
+            document.getElementById('customerState').value = val2[2]; 
+            document.getElementById('customerZip').value = val2[3]; 
+        }
         if (field === "phone") {
+            // Phone format 
             const value = localStorage.getItem(field);
             if (value) {
                 const element = document.getElementById(field);
@@ -64,6 +131,7 @@ function loadLocalStorageData() {
             }
         }
         else {
+            // all fileds expect phone 
             const value = localStorage.getItem(field);
             if (value) {
                 const element = document.getElementById(field);
@@ -94,7 +162,6 @@ function initializeFormSubmission() {
             updateApiData();
             // console.log("AK");
         }
-
 
 
     });
@@ -223,7 +290,16 @@ function saveFormDataToLocalStorage() {
     ];
 
     fields.forEach(field => {
-        localStorage.setItem(field, document.getElementById(field).value);
+        if(field == 'companyAddress'){
+            localStorage.setItem(field,`${document.getElementById('companyStreet').value}--${document.getElementById('companyCity').value}--${document.getElementById('companyState').value}--${document.getElementById('companyZip').value}--`);
+        }
+        else if(field == 'address'){
+            localStorage.setItem(field,`${document.getElementById('customerStreet').value}--${document.getElementById('customerCity').value}--${document.getElementById('customerState').value}--${document.getElementById('customerZip').value}--`); 
+        }
+        else{
+            console.log(field);
+            localStorage.setItem(field, document.getElementById(field).value);
+        }
     });
 }
 
@@ -240,21 +316,23 @@ function updateApiData() {
     const companyApiUrl = `${companyAPIUrlBase}/update/${cid}`;
 
     const customerData = {
+        // Customer details 
         CustomerID: customerId1,
         CID: cid,
         FName: document.getElementById('firstName').value,
         LName: document.getElementById('lastName').value,
-        Address: document.getElementById('address').value,
+        Address: `${document.getElementById('customerStreet').value}--${document.getElementById('customerCity').value}--${document.getElementById('customerState').value}--${document.getElementById('customerZip').value}--`,
         PhoneNumber: document.getElementById('phone').value,
         Email: document.getElementById('email').value,
         IsActive: true
     };
-
+    console.log('--------------------');
+    console.log(document.getElementById('username').value);
     const companyData = {
         CID: cid,
         UserName: document.getElementById('username').value,
         CName: document.getElementById('companyName').value,
-        CAddress: document.getElementById('companyAddress').value,
+        CAddress: `${document.getElementById('companyStreet').value}--${document.getElementById('companyCity').value}--${document.getElementById('companyState').value}--${document.getElementById('companyZip').value}--`,
         CLogo: localStorage.getItem("imageFile"),
         Password: localStorage.getItem("password"),
         ReportType: "Weekly"
@@ -283,7 +361,7 @@ function updateApiData() {
 
 
             else {
-                const modalElement = document.getElementById('addEntryModal');
+                const modalElement = document.getElementById('successModal');
                 const modalInstance = new bootstrap.Modal(modalElement);
                 modalInstance.show();
                 document.getElementById("submit").textContent = "Edit";
@@ -296,6 +374,7 @@ function updateApiData() {
                 document.querySelectorAll('.disabledData').forEach(function (input) {
                     input.disabled = true;
                 });
+                console.log("update");
             }
 
             return response.json();

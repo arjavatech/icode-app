@@ -1,3 +1,32 @@
+const sidebar = document.getElementById('sidebar');
+const toggler = document.querySelector('.navbar-toggler');
+
+// Toggle sidebar open/close
+toggler.addEventListener('click', function () {
+    sidebar.classList.toggle('open');
+});
+
+document.addEventListener('click', function (event) {
+    const isClickInside = sidebar.contains(event.target) || toggler.contains(event.target);
+    if (!isClickInside) {
+        sidebar.classList.remove('open');
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const currentLocation = location.href; 
+    const menuItems = document.querySelectorAll('.sidebar a');
+
+    menuItems.forEach(item => {
+        if (item.href === currentLocation) {
+            item.classList.add('active'); 
+        }
+    });
+});
+
+
+
+
 var isAlpha = /^[a-zA-Z\s]+$/;
 
 function validCName() {
@@ -171,3 +200,15 @@ function logOutACtion(){
     let myModal = new bootstrap.Modal(document.getElementById('addEntryModal'));
     myModal.show();
 }
+
+// Restrict the inspect element 
+
+// document.addEventListener('contextmenu', function(e) {
+//     e.preventDefault();
+//   });
+
+//   document.onkeydown = function(e) {
+//     if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+//       e.preventDefault();
+//     }
+//   };

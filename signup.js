@@ -74,16 +74,36 @@ function validateForm() {
     document.getElementById('overlay').style.display = 'flex';
   const isCompanyNameValid = validateCompanyName();
   const isCompanyLogoValid = validateCompanyLogo();
-  const isCompanyAddressValid = validateCompanyAddress();
+  // const isCompanyAddressValid = validateCompanyAddress();
   const isUsernameValid = validateUsername();
   const isPasswordValid = validatePassword();
+  const compStreet =
+   requriedCheck(document.getElementById('companyStreet'),
+   document.getElementById('errorStreetAddress'));
+   const compCity =
+   requriedCheck(document.getElementById('companyCity'),
+   document.getElementById('errorCityAddress'));
+   const compState =
+   requriedCheck(document.getElementById('companyState'),
+   document.getElementById('errorStateAddress'));
+   const compZip =
+   requriedCheck(document.getElementById('companyZip'),
+   document.getElementById('errorZipAddress'));
 
-  if (isCompanyNameValid && isCompanyLogoValid && isCompanyAddressValid && isUsernameValid && isPasswordValid) {
+  if (isCompanyNameValid && isCompanyLogoValid && compStreet &&
+    compCity &&
+    compState &&
+    compZip && isUsernameValid && isPasswordValid) {
       document.querySelector('.progress-bar').style.width = '50%';
       // Store the values in localStorage
       const companyName = document.getElementById('companyName').value;
-      // const companyLogo = document.getElementById('companyLogo').value;
-      const companyAddress = document.getElementById('companyAddress').value;
+
+      // Address 
+      const companyStreet = document.getElementById('companyStreet').value;
+      const companyCity = document.getElementById('companyCity').value;
+      const companyState = document.getElementById('companyState').value;
+      const companyZip = document.getElementById('companyZip').value;
+
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
       const logoInput = document.getElementById('companyLogo');
@@ -100,7 +120,12 @@ function validateForm() {
               localStorage.setItem('companyLogo', companyLogo);
               // Store other fields
               localStorage.setItem('companyName', companyName);
-              localStorage.setItem('companyAddress', companyAddress);
+              // Address 
+              localStorage.setItem('companyStreet', companyStreet);
+              localStorage.setItem('companyCity', companyCity);
+              localStorage.setItem('companyState', companyState);
+              localStorage.setItem('companyZip', companyZip);
+
               localStorage.setItem('username', username);
               localStorage.setItem('password', password);
           };
@@ -116,8 +141,19 @@ function validateForm() {
         }, 100);
     
   } else {
-    //   alert('Please fix the errors in the form');
+      // alert('Please fix the errors in the form');
+      document.getElementById('totalError').textContent = 'Please fix the errors';
       document.getElementById('overlay').style.display = 'none';
   }
 }
 
+// required filed 
+function requriedCheck(id,msg){
+  const getId = id.value;
+  if(getId.trim() === ''){
+    msg.textContent = 'This field is required';
+      return false;
+  }
+  msg.textContent = '';
+  return true;
+}

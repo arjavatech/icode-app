@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Phone  -->
@@ -13,9 +12,10 @@
     <script src="https://js.stripe.com/v3/"></script>
     <link rel="stylesheet" href="employee_list.css">
     <script defer src="signup2.js"></script>
+    <link rel="stylesheet" href="nav.css">
     <title>Tap time</title>
     <link rel="icon" href="Image/app_logo.png">
-    <style>
+    <!-- <style>
         /* Loading  */
         .overlay {
             display: none;
@@ -111,18 +111,12 @@
             .col-sty{
                 height: 100vh;
             }
-            body{
-                overflow-y: scroll !important;
-            }
 
             .input-sty {
                 padding: .4rem .3rem !important;
                 font-size: 0.8rem !important;
             }
 
-            /* .input-sty[type="tel"] {
-                max-width: 100% !important;
-            } */
 
             label {
                 font-size: 0.9rem !important;
@@ -227,6 +221,9 @@
         .btn-green:hover {
             background-color: #02066F;
             color: white;
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1.2rem;
         }
 
         #checkout-button:focus{
@@ -234,24 +231,450 @@
             color: white;
         }
 
+        .login-img-sty {
+            max-width: 60%;
+            height: auto;
+        }
+
+        #logo {
+            width: 30%;
+        }
+
+        
+        nav {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .container-sty {
+                padding: 2rem 1rem !important;
+            }
+
+            #logo {
+                width: 30% !important;
+            }
+
+            .img-fluid {
+                width: 80% !important;
+            }
+
+            /* body{
+                overflow-x:scroll !important;
+            } */
+
+        }
+
+        @media (max-width: 576px) {
+            .login-img-sty {
+                width: 100% !important;
+                padding: 2rem !important;
+            }
+
+            .container-sty {
+                padding: 1rem !important;
+            }
+
+            #logo {
+                width: 40% !important;
+            }
+            
+
+            .forget-password {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #loginBtn {
+                width: 100% !important;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                font-size: 18px;
+            }
+        }
+
+        @media (min-width:1310px) {
+            #logo {
+                width: 30% !important;
+            }
+        }
+
+        @media(max-width: 1300px) {
+            #logo {
+                width: 40% !important;
+            }
+        }
+
+        @media (min-width:800px) and (max-width:1000px) {
+            #logo {
+                width: 40% !important;
+            }
+        }
+
+        @media (max-width: 760px) {
+            #logo {
+                width: 30% !important;
+            }
+
+            .col-sty {
+                display: none !important;
+            }
+
+            nav {
+                display: block !important;
+            }
+            /* body{
+                overflow-x: hidden !important;
+            } */
+        }
+    </style> -->
+    <style>
+        body {
+            overflow-y: hidden !important;
+            overflow-x: hidden !important;
+        }
+
+        /* Loading  */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overlay .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #02066F;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .span-content {
+            font-weight: bold;
+        }
+
+        .material-textfield {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .material-textfield input {
+            width: 100%;
+            padding: 0.8rem !important;
+            font-size: 1rem;
+            border-radius: 10px;
+            border: 1px solid #02066F;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            font-family: "Times New Roman", Times, serif;
+        }
+
+        .material-textfield label {
+            position: absolute;
+            top: 0.75rem;
+            left: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+            padding: 0 0.25rem;
+            color: #02066F;
+            pointer-events: none;
+        }
+
+        .material-textfield input:focus+label,
+        .material-textfield input:not(:placeholder-shown)+label {
+            top: -0.75rem;
+            left: 0.75rem;
+            font-size: 0.75rem;
+            color: #02066F;
+        }
+
+        .material-textfield input:focus {
+            outline: none;
+            border-color: #02066F;
+        }
+
+
+        .span-sty {
+            color: #02066F;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .span-colo {
+            color: #02066F;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .col-sty {
+            height: 100vh;
+            background-color: #D9E9FB;
+        }
+
+        .btn-green {
+            background-color: #02066F;
+            border: none;
+            color: white;
+            width: 100%;
+            padding: 0.8rem !important;
+            font-size: 1.2rem;
+            border-radius: 10px;
+        }
+
+        .btn-green:hover {
+            background-color: #02066F !important;
+            color: white !important;
+            padding: 0.8rem !important;
+
+        }
+
+        .login-img-sty {
+            max-width: 60%;
+            height: auto;
+        }
+
+        #logo {
+            width: 30%;
+        }
+
+        nav {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .container-sty {
+                padding: 2rem 1rem !important;
+            }
+
+            #logo {
+                width: 30% !important;
+            }
+
+            .img-fluid {
+                width: 80% !important;
+            }
+
+        }
+
+        @media (max-width: 576px) {
+            .login-img-sty {
+                width: 100% !important;
+                padding: 2rem !important;
+            }
+
+            .container-sty {
+                padding: 1rem !important;
+            }
+
+            #logo {
+                width: 40% !important;
+            }
+            
+
+            .forget-password {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #loginBtn {
+                width: 100% !important;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                font-size: 18px;
+            }
+        }
+
+        @media (min-width:1310px) {
+            #logo {
+                width: 30% !important;
+            }
+        }
+
+
+
+
+        @media(max-width: 1300px) {
+            #logo {
+                width: 40% !important;
+            }
+        }
+
+        @media (min-width:800px) and (max-width:1000px) {
+            #logo {
+                width: 40% !important;
+            }
+        }
+
+        @media (max-width: 760px) {
+            #logo {
+                width: 30% !important;
+            }
+
+            .col-sty {
+                display: none !important;
+            }
+
+            nav {
+                display: block !important;
+            }
+            body{
+                overflow-x: hidden !important;
+            }
+        }
+
+
+        @media (min-width: 401px) {
+            .input-sty {
+                padding: 1rem !important;
+                font-size: 1rem;
+            }
+
+            .span-sty,
+            .span-colo,
+            .span-content {
+                font-size: 1rem;
+            }
+            body{
+                overflow-x: hidden !important;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .input-sty {
+                padding: 0.5rem !important;
+                font-size: 0.8rem !important;
+            }
+
+            .span-sty,
+            .span-colo,
+            .span-content {
+                font-size: 0.8rem !important;
+            }
+
+            #logo {
+                width: 43% !important;
+            }
+
+        }
+
+        @media (max-width: 400px) {
+            .input-sty {
+                padding: 1.3rem !important;
+            }
+
+            #logo {
+                width: 50% !important;
+            }
+            
+        }
+
+        @media (max-width:350px) {
+            h4{
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 245px) {
+            .container-sty {
+                margin-right: 30% !important;
+            }
+
+            .input-sty {
+                padding: 1.3rem 5.10rem !important;
+            }
+        }
+
+        @media (max-width: 183px) {
+            .input-sty {
+                padding: 1.3rem 4.10rem !important;
+            }
+        }
+
+        /* address box  */
+
+        .caddsty{
+            border: 1px solid #02066F;
+            border-radius: 10px;
+
+        }
+
+        .caddHeadSty{
+            color: #02066F;
+        }
+
+        @media (max-width:800px) {
+            .p-3{
+                padding: 4px !important;
+            }
+        }
+
+        @media (max-width:767px) {
+            body{
+                overflow-y: scroll !important;
+            }
+        }
+
+        @media (max-width:245px) {
+            .container-sty{
+                margin-left: 100px !important;
+            }
+            .material-textfield input {
+                padding-left: 100px !important;
+                padding-right: 100px !important;
+            }
+        }
+
+        @media (max-width:234px) {
+            .material-textfield input {
+                padding-left: 70px !important;
+                padding-right: 70px !important;
+            }
+        }
     </style>
+
 </head>
 
 <body>
     <div class="overlay" id="overlay">
         <div class="spinner"></div>
     </div>
-    <div class="row">
-        
-        <div
-            class="col-sm-12 col-xl-6 col-md-6 col-lg-6 col-sty d-flex flex-column justify-content-center align-items-center">
-            <img src="Image/icode logo 2 (1).png" alt="" class="m-5 p-5 img-fluid login-img-sty">
-            <h3 class="text-center">Join Us Today</h3>
-            <p class="text-center">Create an account to unlock seamless time tracking and boost your team's efficiency.
-            </p>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;border-bottom: 2px solid #02066F;">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <!-- Logo aligned to the left -->
+            <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="app_logo">
+
+            <!-- Centered Heading -->
+            <div class="flex-grow-1 text-center">
+                <h4 class="m-0" style="color: #02066F;">Employee Time Tracking</h4>
+            </div>
         </div>
-        <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6 d-flex justify-content-center align-items-center">
-            <div class="container container-sty m-5 p-5 text-center">
+    </nav>
+    <div class="row" style="height: auto;">
+        <div
+        class="col-sm-12 col-xl-6 col-md-6 col-lg-6 col-sty d-flex flex-column justify-content-center align-items-center">
+        <img src="Image/icode logo 2 (1).png" alt="" class=" p-5 img-fluid login-img-sty">
+            <h3 class="text-center">Join Us Today</h3>
+            <p class="text-center">Create an account to unlock seamless time tracking and boost <br> your team's
+                efficiency.</p>
+        </div>
+        <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6 example d-flex justify-content-center align-items-center">
+            <div class="container container-sty p-4 text-center">
                 <h2 class="text-center m-3">Signup</h2>
                 <div class="progress-container">
                     <div class="progress">
@@ -259,6 +682,7 @@
                             aria-valuemax="100"></div>
                     </div>
                 </div>
+                <div class="text-danger" id="totalError"></div>
                 <div class="material-textfield mt-4">
                     <input id="firstName" placeholder=" " type="text" onblur="validateFirstName()" class="input-sty">
                     <label class="label-sty">First Name</label>
@@ -271,11 +695,46 @@
                     <br>
                     <span class="text-danger d-flex justify-content-center" id="errorLastName"></span>
                 </div>
-                <div class="material-textfield mt-4">
-                    <input id="address" placeholder=" " onblur="validateAddress()" class="input-sty"></input>
-                    <label class="label-sty">Address</label>
-                    <br>
-                    <span class="text-danger d-flex justify-content-center" id="errorAddress"></span>
+
+                <div class="caddsty p-3">
+                    <p class="text-center caddHeadSty">customer Address</p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="material-textfield mt-4">
+                                <input id="customerStreet" placeholder=" " class="input-sty">
+                                <label class="label-sty">Customer Street</label>
+                                <br>
+                                <span class="text-danger d-flex justify-content-center" id="errorStreet"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="material-textfield mt-4">
+                                <input id="customerCity" placeholder=" " class="input-sty">
+                                <label class="label-sty">Customer City</label>
+                                <br>
+                                <span class="text-danger d-flex justify-content-center" id="errorCity"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="material-textfield mt-4">
+                                <input id="customerState" placeholder=" " class="input-sty">
+                                <label class="label-sty">Customer State</label>
+                                <br>
+                                <span class="text-danger d-flex justify-content-center" id="errorState"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="material-textfield mt-4">
+                                <input id="customerZip" placeholder=" " class="input-sty">
+                                <label class="label-sty">Customer Zip</label>
+                                <br>
+                                <span class="text-danger d-flex justify-content-center" id="errorZip"></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="material-textfield mt-4">

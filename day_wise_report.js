@@ -8,6 +8,33 @@ const cid = localStorage.getItem('companyID');
 //   document.getElementById("footer_id").style.position = "fixed";
 // })
 
+const sidebar = document.getElementById('sidebar');
+const toggler = document.querySelector('.navbar-toggler');
+
+// Toggle sidebar open/close
+toggler.addEventListener('click', function () {
+    sidebar.classList.toggle('open');
+});
+
+document.addEventListener('click', function (event) {
+    const isClickInside = sidebar.contains(event.target) || toggler.contains(event.target);
+    if (!isClickInside) {
+        sidebar.classList.remove('open');
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const currentLocation = location.href; 
+    const menuItems = document.querySelectorAll('.sidebar a');
+
+    menuItems.forEach(item => {
+        if (item.href === currentLocation) {
+            item.classList.add('active'); 
+        }
+    });
+});
+
+
 
 
 function formatDateTime(date) {

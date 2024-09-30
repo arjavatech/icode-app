@@ -16,7 +16,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"   />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
     <!-- Custom CSS -->
-     <link rel="stylesheet" href="nav.css">
+    <link rel="stylesheet" href="nav.css">
     <link rel="stylesheet" href="employee_list.css">
     <link rel="icon" href="Image/app_logo.png">
     <link rel="stylesheet" href="footer.css">
@@ -78,44 +78,201 @@
         border-radius: 5px;
     }
 
-   
+    .navbar-toggler {
+        background-color: white;
+        color: white;
+        border: 2px solid #02066F;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        /* Smooth transitions */
+    }
+
+    .navbar-toggler:hover {
+        background-color: #02066F;
+        color: white;
+        border-color: white;
+    }
+
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -300px;
+        width: 250px;
+        height: 100%;
+        background-color: #02066f;
+        transition: left 0.3s ease;
+        z-index: 1000;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .sidebar a {
+        position: relative;
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: white;
+        display: block;
+        transition: 0.3s;
+        width: 80%;
+        padding-left: 10%;
+        border-radius: 20px;
+        background: none;
+        margin-left: 8%;
+        overflow: hidden;
+    }
+
+    .sidebar a.active {
+        color: #f1f1f1;
+    }
+
+    .sidebar a::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 2px;
+        width: 100%;
+        background: #f1f1f1;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar a:hover::before,
+    .sidebar a.active::before {
+        transform: translateX(0);
+    }
+
+    .sidebar a:hover {
+        color: #f1f1f1;
+        box-shadow: #fff;
+        transform: scale(1.05);
+        background: rgba(0, 0, 0, 0.5);
+
+    }
+
+
+
+    #main {
+        transition: margin-left .5s;
+        padding: 16px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .sidebar {
+            width: 300px;
+            padding-top: 40px;
+            margin-top: 10%;
+        }
+
+        .sidebar a {
+            font-size: 20px;
+            padding: 10px 20px;
+        }
+
+        .sidebar .closebtn {
+            font-size: 30px;
+            right: 15px;
+        }
+
+        #main {
+            margin-left: 0;
+        }
+    }
+
+
+    @media screen and (max-width: 480px) {
+        .sidebar {
+            width: 250px;
+            padding-top: 30px;
+            margin-top: 2%;
+        }
+
+        .sidebar a {
+            font-size: 18px;
+            padding: 8px 15px;
+        }
+
+        .sidebar .closebtn {
+            font-size: 24px;
+            right: 10px;
+        }
+    }
+
+    .sidebar a i {
+        margin-right: 15px;
+    }
+
+    .sidebar button {
+        background-color: #02066F;
+        color: white;
+        padding: 10px 20px;
+        font-size: 18px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .sidebar button:hover {
+        background-color: #02066F;
+        color: #02066F;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
 </style>
 
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;border-bottom: 2px solid #02066F;">
-        <div class="container-fluid">
-            <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="app_logo">
-    
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                 <span class="navbar-toggler-icon"></span>
-            </button>
-    
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
-                <div class="navbar-nav">
-                    <a class="nav-link active" href="#" style="color: #02066F;">Device</a>
-                    <a class="nav-link" href="#" style="color: #02066F;">Employee Management</a>
-    
-                    <!-- Report Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#service" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false" style="color: #02066F;">
-                            Report
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Report Summary</a></li>
-                            <li><a class="dropdown-item" href="#">Report Settings</a></li>
-                        </ul>
-                    </li>
-                    <a class="nav-link" href="#" style="color: #02066F;">Profile</a>
-                    <a class="nav-link" href="#" style="color: #02066F;">Contact Us</a>
-                    <!-- <a class="nav-link" href="contact_us.html">Contact us</a> -->
-                    <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
-                </div>
+    </nav>
+    <div class="container-fluid">
+        <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="app_logo">
+
+        <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
+            <div class="navbar-nav">
+                <a class="nav-link active" href="device.html" style="color: #02066F;">Device</a>
+                <a class="nav-link" href="employee_list.html" style="color: #02066F;">Employee Management</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#service" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false" style="color: #02066F;">
+                        Report
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="report_summary.html">Report Summary</a></li>
+                        <li><a class="dropdown-item" href="report_setting.html">Report Settings</a></li>
+                    </ul>
+                </li>
+                <a class="nav-link" href="profile.html" style="color: #02066F;">Profile</a>
+                <a class="nav-link" href="contact.html" style="color: #02066F;">Contact Us</a>
+                <!-- <a class="nav-link" href="contact_us.html">Contact us</a> -->
+                <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
             </div>
         </div>
+    </div>
     </nav>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+
+
+        <a href="device.html"> Device</a>
+        <a href="employee_list.html"> Employee Management</a>
+        <a href="report_summary.html">Report Summary</a>
+        <a href="report_setting.html">Report Settings</a>
+        <a href="profile.html">Profile</a>
+        <a href="contact.html">Contact Us</a>
+        <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
+
+    </div>
+
 
     <div class="overlay" id="overlay">
         <div class="spinner"></div>
@@ -202,6 +359,32 @@
                 });
 
         }
+        const sidebar = document.getElementById('sidebar');
+        const toggler = document.querySelector('.navbar-toggler');
+
+        // Toggle sidebar open/close
+        toggler.addEventListener('click', function () {
+            sidebar.classList.toggle('open');
+        });
+
+        document.addEventListener('click', function (event) {
+            const isClickInside = sidebar.contains(event.target) || toggler.contains(event.target);
+            if (!isClickInside) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentLocation = location.href;
+            const menuItems = document.querySelectorAll('.sidebar a');
+
+            menuItems.forEach(item => {
+                if (item.href === currentLocation) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
     </script>
 </body>
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,15 +16,16 @@
     <link rel="stylesheet" href="web_nav.css">
     <link rel="stylesheet" href="web_footer.css">
 </head>
+
 <body>
-    
+
     <!-- Nav bar  -->
     <nav class="navbar navbar-expand-lg" id="navbar">
         <a class="logo" href="index.html"><img src="web_Image/app_logo.png" alt="arjava_logo" class="logo"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu"
-        aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span>
-    </button>
+        <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span>
+        </button>
+        </button>
         <div class="collapse navbar-collapse justify-content-end" id="menu">
             <ul class="navbar-nav">
                 <li class="nav-item mr-5">
@@ -40,7 +42,7 @@
                 </li>
                 <li class="nav-item mr-5">
                     <div class="active">
-                        <a class="nav-link nav-links" href="web_privacy_policy.html">Privacy Policy</a>
+                        <a class="nav-link nav-links" href="#">Privacy Policy</a>
                     </div>
                 </li>
             </ul>
@@ -48,11 +50,20 @@
     </nav>
 
 
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <a href="index.html">Home</a>
+        <a href="login.html">Login</a>
+        <a href="sign_up.html">Register</a>
+        <a href="index.html#contact">Contact Us</a>
+        <a href="web_privacy_policy.html">Privacy Policy</a>
+    </div>
+
     <!-- Privacy policy  -->
     <div id="privacyPolicy" class="mb-4">
         <h1 class="h1 text-center">Privacy Policy</h1>
         <div class="container policy-box"><br>
-            <p>Last updated: October 14, 2023</p>
+            <p>Last updated: October 1, 2024</p>
             <p>This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your
                 information when You use the Service and tells You about Your privacy rights and how the law protects
                 You.</p>
@@ -948,6 +959,7 @@
             <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
         </div>
     </div>
+    
     <footer class="footer-fluid">
         <div class="container py-5">
             <div class="row">
@@ -956,16 +968,20 @@
                     <div class="text-center text-md-left">
                         <img src="web_Image/footer_logo.png" alt="Logo" class="footer-logo-img">
                         <p class="font-weight-bold mb-5">Powered by <br>
-                        Arjava Technology</p>
+                            Arjava Technology</p>
                         <div class="social-icons">
-                            <a href="https://www.facebook.com/profile.php?id=61565587366048" target="_blank" title="Facebook" class="mx-2"><i class="fa-brands fa-facebook"></i></a>
-                            <a href=" https://www.instagram.com/_tap_time" target="_blank" title="Instagram" class="mx-2"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="https://www.linkedin.com/company/arjavatech/" target="_blank" title="LinkedIn" class="mx-2"><i class="fa-brands fa-linkedin"></i></a>
-                            <a href="https://x.com/_Tap_Time" target="_blank" title="Twitter" class="mx-2"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="https://www.facebook.com/profile.php?id=61565587366048" target="_blank"
+                                title="Facebook" class="mx-2"><i class="fa-brands fa-facebook"></i></a>
+                            <a href=" https://www.instagram.com/_tap_time" target="_blank" title="Instagram"
+                                class="mx-2"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/company/arjavatech/" target="_blank" title="LinkedIn"
+                                class="mx-2"><i class="fa-brands fa-linkedin"></i></a>
+                            <a href="https://x.com/_Tap_Time" target="_blank" title="Twitter" class="mx-2"><i
+                                    class="fa-brands fa-twitter"></i></a>
                         </div>
                     </div>
                 </div>
-    
+
                 <!-- Footer Column 2: Quick Links -->
                 <div class="col-12 col-md-4 mb-4">
                     <h6 class="text-uppercase font-weight-bold mb-4 text-center text-md-left">Quick Explore</h6>
@@ -977,13 +993,14 @@
                         <li><a href="#" class="quick-explore">Privacy Policy</a></li>
                     </ul>
                 </div>
-    
+
                 <!-- Footer Column 3: Contact Information -->
                 <div class="col-12 col-md-4">
                     <h6 class="text-uppercase font-weight-bold mb-4 text-center text-md-left">Contact Information</h6>
                     <div class="d-flex align-items-center mb-3">
                         <i class="fa-solid fa-location-dot mr-2"></i>
-                        <address class="mb-0">Arjava Technologies,<br>2135 204th PL NE,<br>Sammamish,<br>WA - 98074.</address>
+                        <address class="mb-0">Arjava Technologies,<br>2135 204th PL NE,<br>Sammamish,<br>WA - 98074.
+                        </address>
                     </div>
                     <div class="d-flex align-items-center mb-3">
                         <i class="fa-solid fa-phone mr-2"></i>
@@ -997,7 +1014,35 @@
             </div>
         </div>
     </footer>
-    
+
 </body>
+<script>
+    const sidebar = document.getElementById('sidebar');
+    const toggler = document.querySelector('.navbar-toggler');
+
+    // Toggle sidebar open/close
+    toggler.addEventListener('click', function () {
+        sidebar.classList.toggle('open');
+    });
+
+    document.addEventListener('click', function (event) {
+        const isClickInside = sidebar.contains(event.target) || toggler.contains(event.target);
+        if (!isClickInside) {
+            sidebar.classList.remove('open');
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const currentLocation = location.href;
+        const menuItems = document.querySelectorAll('.sidebar a');
+
+        menuItems.forEach(item => {
+            if (item.href === currentLocation) {
+                item.classList.add('active');
+            }
+        });
+    });
+
+</script>
 
 </html>

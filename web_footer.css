@@ -1,3 +1,6 @@
+.footer {
+    overflow: hidden !important;
+}
 
 .footer-fluid {
     background-color: #02066F;
