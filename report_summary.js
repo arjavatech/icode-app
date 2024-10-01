@@ -656,7 +656,7 @@ document.addEventListener('DOMContentLoaded', function () {
         TimeWorked: timeWorkedHours
 
       };
-
+ console.log(data);
       // Send Post request
       fetch('https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/create', {
         method: 'POST',

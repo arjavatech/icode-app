@@ -367,22 +367,20 @@
     }
 
     .sidebar button {
-        background-color: #02066F;
-        color: white;
-        padding: 10px 20px;
-        font-size: 18px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
+            background-color: white;
+            color: #02066F;
+            margin: 20px;
+            font-size: 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
-    .sidebar button:hover {
-        background-color: white;
-        color: #02066F;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    }
-
+        .sidebar button:hover {
+            background-color: gray;
+            color: #02066F;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
 
     /* @media (max-width:570px) {
         footer {
@@ -427,9 +425,8 @@
     </nav>
 
     <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
-
-
+    <div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;">
+        <img src="Image/Group 91.png" alt="Tap Time Logo" class="app_logo" style="width: 100%; height: auto; margin-bottom: 20px;">
         <a href="device.html"> Device</a>
         <a href="employee_list.html"> Employee Management</a>
         <a href="report_summary.html">Report Summary</a>
@@ -437,9 +434,7 @@
         <a href="profile.html">Profile</a>
         <a href="contact.html">Contact Us</a>
         <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
-
     </div>
-
 
     <section class="mb-5">
         <div class="overlay" id="overlay">

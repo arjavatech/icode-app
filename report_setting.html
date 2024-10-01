@@ -275,21 +275,21 @@
         }
 
         .sidebar button {
-            background-color: #02066F;
-            color: white;
-            padding: 10px 20px;
+            background-color: white;
+            color: #02066F;
+            margin: 20px;
             font-size: 18px;
-            border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .sidebar button:hover {
-            background-color: white;
+            background-color: gray;
             color: #02066F;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         }
+        
         
 
         
@@ -328,19 +328,19 @@
             </div>
         </div>
     </nav>
+    
     <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
+<div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;">
+    <img src="Image/Group 91.png" alt="Tap Time Logo" class="app_logo" style="width: 100%; height: auto; margin-bottom: 20px;">
+    <a href="device.html"> Device</a>
+    <a href="employee_list.html"> Employee Management</a>
+    <a href="report_summary.html">Report Summary</a>
+    <a href="report_setting.html">Report Settings</a>
+    <a href="profile.html">Profile</a>
+    <a href="contact.html">Contact Us</a>
+    <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
+</div>
 
-
-        <a href="device.html"> Device</a>
-        <a href="employee_list.html"> Employee Management</a>
-        <a href="report_summary.html">Report Summary</a>
-        <a href="report_setting.html">Report Settings</a>
-        <a href="profile.html">Profile</a>
-        <a href="contact.html">Contact Us</a>
-        <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
-
-    </div>
 
 
     <section>
@@ -353,12 +353,10 @@
             <div class="emp-list">
                 <h3 class="text-center fw-bold mb-3">Report Settings</h3>
 
-                <span style="float:right;"><button class="btn float-end" onclick="dataRemove()" data-bs-toggle="modal"
+                  <span style="float:right;"><button class="btn float-end" onclick="dataRemove()" data-bs-toggle="modal"
                         data-bs-target="#myModal" id="add-entry">Add
-                        Entry</button></span>
-
-
-                <br><br>
+                        Entry</button></span> 
+                        <br><br>
                 <div class="emp-table table-responsive">
                     <div class="custom-table-container">
                         <table class="table custom-table">
@@ -377,21 +375,20 @@
                         <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel"
                             aria-hidden="true">
                             <div class="modal-dialog">
-                                <div class="modal-content" style="width: 350px;" >
+                                <div class="modal-content" style="width:500px;" >
                                     <div class="modal-header">
-                                        <h5 class="modal-title fw-bold" id="myModalLabel">Report Details</h5>
-                                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                                        <h5 class="modal-title fw-bold" id="myModalLabel" style="margin: 0 auto; text-align: center;">Report Details</h5>
+                                        <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close" ></button>
                                     </div>
+                                    
                                     <div class="modal-body">
                                         <form id="emp_form" class="p-2 text-center">
                                             <div class="material-textfield mb-3">
-                                                <input id="remail" placeholder=" " type="email" required
+                                                    <input id="remail" placeholder="" type="email" required
+                                                    style="width: 100%; padding: 10px; font-size: 16px; margin: 5px;" 
                                                     onblur="validREmail()">
-                                                <label class="cemail">Email</label>
-                                                <br>
-                                                <span id="error-email" class="text-danger"
-                                                    style="width: 100% !important;"> </span>
+                                                    <label class="cemail">Email</label>
+                                                    <span id="error-email" class="text-danger" style="width: 100% !important;"></span>
                                             </div>
                                             <div class="material-textfield mb-3">
                                                 <select id="frequencySelect" class="selectpicker" multiple
@@ -402,10 +399,11 @@
                                                     <option value="Monthly">Monthly</option>
                                                     <option value="Bimonthly">Bimonthly</option>
                                                 </select>
-                                                <label class="cfrequency"></label>
+                                                <label class="cfrequency" style="float: right;"></label> 
                                                 <br>
                                                 <span id="selectError" class="error text-danger"></span>
                                             </div>
+                                            
                                             <button type="button" id="savebtn" class="settings-btn-sty btn btn-green"
                                                 onclick="addreportdetails(event)" data-bs-toggle="modal"
                                                 data-bs-target="#staticBackdrop" data-bs-dismiss="modal">

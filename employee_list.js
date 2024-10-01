@@ -1,6 +1,6 @@
 
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/employee';
-
+let adminCount = 0;
 // function showProgressIndicator() {
 //     document.getElementById('overlay').style.display = 'flex';
 // }
@@ -180,7 +180,7 @@ function viewEmpdetails() {
     const tableBody = document.getElementById("tBody");
     const company_id = localStorage.getItem('companyID');
     const apiUrl = `${apiUrlBase}/getall/${company_id}`;
-
+    
     fetch(apiUrl)
         .then(response => {
             if (!response.ok) {
@@ -200,10 +200,22 @@ function viewEmpdetails() {
 
             // Clear the existing table body content
             tableBody.innerHTML = '';
-
+            adminCount = 0;
             // Populate the table body with fetched data
             employeesData.forEach(element => {
-                console.log(element.IsActive);
+                if(element.IsAdmin==1){
+                    adminCount+=1;
+                }
+
+
+                if(adminCount >= 3){
+                    document.getElementById("Dropdown").disabled = true;
+                    document.getElementById("Dropdown").value = "false";
+                }
+                else{
+                    document.getElementById("Dropdown").disabled = false;
+                    document.getElementById("Dropdown").value = "false";
+                }
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
                     <td class="pin-column">${element.Pin}</td>

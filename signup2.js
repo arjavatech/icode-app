@@ -352,7 +352,7 @@ function formatPhoneNumber() {
 async function createCheckoutSession() {
     try {
         const link = "http://127.0.0.1:5504";
-        const link2 = "https://arjavatech.github.io/icode-app";
+        const link2 = "https://tap-time.com";
         const link3 = "https://arunkavitha1982.github.io/icode"
         const response = await fetch(`https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/create-checkout-session`, {
             method: 'POST',

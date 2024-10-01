@@ -119,7 +119,7 @@ function validatePhone(inputElement, errorElement) {
     const phoneRegex = /^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/;
 
     if (pNumber === "") {
-        errorElement.textContent = inputElement.placeholder + ' is required';
+        errorElement.textContent = 'This is required field';
         return false;
     } else if (!phoneRegex.test(pNumber)) {
         errorElement.textContent = 'Invalid phone number format';
@@ -133,7 +133,7 @@ function validatePhone(inputElement, errorElement) {
 
 function checkRequired(errorElement, inputElement) {
     if (inputElement.value.trim() === '') {
-        errorElement.textContent = inputElement.placeholder + ' is required';
+        errorElement.textContent = 'This is required field';
         return false;
     }
     errorElement.textContent = '';

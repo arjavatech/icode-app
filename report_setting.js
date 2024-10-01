@@ -166,7 +166,7 @@ function addreportdetails() {
 
     }
     else {
-        alert('Please fix the errors in the form');
+        // alert('Please fix the errors in the form');
         document.getElementById('selectError').textContent = null;
     }
 }
@@ -337,27 +337,80 @@ function deleteEmpdetails(companyEmail) {
 
 
 // Validation
-var isEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+// var isEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
+// function validREmail() {
+//     const remail = document.getElementById('remail').value;
+//     const errorrEmail = document.getElementById('error-email');
+
+//     if (remail.trim() === '') {
+//         errorrEmail.textContent = 'Email is required';
+//         return false;
+//     }
+//     else if (!isEmail.test(remail)) {
+//         errorrEmail.textContent = 'Email pattern is Invalid';
+//         return false;
+//     } else {
+//         errorrEmail.textContent = '';
+//         return true;
+//     }
+
+// }
+
+
+// function validReportDays() {
+//     const select = document.getElementById('frequencySelect');
+//     const errorMsg = document.getElementById('selectError');
+
+//     if (select.selectedOptions.length === 0) {
+//         errorMsg.textContent = 'Please select at least one option.';
+//         return false;
+//     } else if (select.selectedOptions.length > 2) {
+//         errorMsg.textContent = 'Please select only two option.';
+//         return false;
+//     } 
+//     else {
+//         errorMsg.textContent = '';
+//         return true;
+//     }
+// }
+
+
+// function validReportDays2() {
+//     const select = document.getElementById('frequencySelect2');
+//     const errorMsg = document.getElementById('selectError2');
+
+//     if (select.selectedOptions.length === 0) {
+//         errorMsg.textContent = 'Please select at least one option.';
+//         return false;
+//     } else if (select.selectedOptions.length > 1) {
+//         errorMsg.textContent = 'Please select only one option.';
+//         return false;
+//     } 
+//     else {
+//         errorMsg.textContent = '';
+//         return true;
+//     }
+// }
+// Function to validate email
 function validREmail() {
     const remail = document.getElementById('remail').value;
-    const errorrEmail = document.getElementById('error-email');
+    const errorEmail = document.getElementById('error-email');
+    const isEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     if (remail.trim() === '') {
-        errorrEmail.textContent = 'Email is required';
+        errorEmail.textContent = 'Email is required';
         return false;
-    }
-    else if (!isEmail.test(remail)) {
-        errorrEmail.textContent = 'Email pattern is Invalid';
+    } else if (!isEmail.test(remail)) {
+        errorEmail.textContent = 'Email pattern is invalid';
         return false;
     } else {
-        errorrEmail.textContent = '';
+        errorEmail.textContent = ''; // Clear error message
         return true;
     }
-
 }
 
-
+// Function to validate report days selection
 function validReportDays() {
     const select = document.getElementById('frequencySelect');
     const errorMsg = document.getElementById('selectError');
@@ -366,16 +419,40 @@ function validReportDays() {
         errorMsg.textContent = 'Please select at least one option.';
         return false;
     } else if (select.selectedOptions.length > 2) {
-        errorMsg.textContent = 'Please select only two option.';
+        errorMsg.textContent = 'Please select only two options.';
         return false;
-    } 
-    else {
-        errorMsg.textContent = '';
+    } else {
+        errorMsg.textContent = ''; // Clear error message
         return true;
     }
 }
 
+// Reset the form and error messages
+function resetFormAndErrors() {
+    document.getElementById('remail').value = ''; // Reset email input
+    const frequencySelect = document.getElementById('frequencySelect');
+    for (let option of frequencySelect.options) {
+        option.selected = false; // Deselect all options
+    }
+    document.getElementById('error-email').textContent = ''; // Clear email error
+    document.getElementById('selectError').textContent = ''; // Clear frequency select error
+}
 
+// Function to handle adding report details
+function addreportdetails(event) {
+    const isEmailValid = validREmail();
+    const isDaysValid = validReportDays();
+
+    if (isEmailValid && isDaysValid) {
+        // Proceed with saving the details
+        console.log("Report details saved successfully.");
+    } else {
+        event.preventDefault(); // Prevent modal close if validation fails
+        console.log("Fix validation errors before submitting.");
+    }
+}
+
+// Function to validate the second report days selection
 function validReportDays2() {
     const select = document.getElementById('frequencySelect2');
     const errorMsg = document.getElementById('selectError2');
@@ -383,84 +460,73 @@ function validReportDays2() {
     if (select.selectedOptions.length === 0) {
         errorMsg.textContent = 'Please select at least one option.';
         return false;
-    } else if (select.selectedOptions.length > 1) {
-        errorMsg.textContent = 'Please select only one option.';
+    } else if (select.selectedOptions.length > 2) {
+        errorMsg.textContent = 'Please select only two options.';
         return false;
-    } 
-    else {
-        errorMsg.textContent = '';
+    } else {
+        errorMsg.textContent = ''; // Clear error message
         return true;
     }
 }
 
+// Function to handle updating report details
 function updateReportdetails() {
     const isValidRdays = validReportDays2();
 
     if (isValidRdays) {
-        const reportUpdateid = document.getElementById("savebtn2").value;
         const reportSelect = document.getElementById("frequencySelect2");
         const selectedValues = Array.from(reportSelect.selectedOptions).map(option => option.value);
         const company_id = localStorage.getItem('companyID');
 
-        
         const apiUrl = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/admin-report-type/update/${company_id}`;
-    
 
-            const reportObject = {
-                CID: company_id,
-                ReportType: selectedValues[0]
-            };
-            console.log(reportObject)
+        const reportObject = {
+            CID: company_id,
+            ReportType: selectedValues[0]
+        };
+        console.log(reportObject);
 
-            fetch(apiUrl, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(reportObject)
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Error: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.error) {
-                        $(".error-msg").show();
-                        setTimeout(function () {
-                            $(".error-msg").hide();
-                            window.location.href = "report_setting.html";
-                        }, 1000);
-                    } else {
-                        localStorage.setItem("reportType", selectedValues[0]);
-                        console.log(selectedValues[0]);
-                        $(".success-msg").show();
-                        setTimeout(function () {
-                            $(".success-msg").hide();
-                            window.location.href = "report_setting.html";
-                        }, 1000);
-                    }
-
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        
-
-    }
-    else {
-        
-        alert('Please fix the errors in the form');
-        document.getElementById('selectError2').textContent = null;
+        fetch(apiUrl, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(reportObject)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.error) {
+                $(".error-msg").show();
+                setTimeout(function () {
+                    $(".error-msg").hide();
+                    window.location.href = "report_setting.html";
+                }, 1000);
+            } else {
+                localStorage.setItem("reportType", selectedValues[0]);
+                console.log(selectedValues[0]);
+                $(".success-msg").show();
+                setTimeout(function () {
+                    $(".success-msg").hide();
+                    window.location.href = "report_setting.html";
+                }, 1000);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    } else {
+        document.getElementById('selectError2').textContent = '';
     }
 }
 
-
-
-
+// Function to show logout confirmation modal
 function showLogoutModal(empId) {
-        const modalHTML = `
+    const modalHTML = `
         <div class="modal fade" id="addEntryModal2" tabindex="-1" aria-labelledby="addEntryModalLabel2" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -478,13 +544,18 @@ function showLogoutModal(empId) {
                 </div>
             </div>
         </div>
-        `;
-    
-        // Append the modal to the body
-        document.body.innerHTML += modalHTML;
-    
-        // Show the modal using Bootstrap's modal plugin
-        const modalElement = document.getElementById('addEntryModal2');
-        const modalInstance = new bootstrap.Modal(modalElement);
-        modalInstance.show();
-    }
+    `;
+
+    // Append the modal to the body
+    document.body.innerHTML += modalHTML;
+
+    // Show the modal using Bootstrap's modal plugin
+    const modalElement = document.getElementById('addEntryModal2');
+    const modalInstance = new bootstrap.Modal(modalElement);
+    modalInstance.show();
+}
+
+// Attach the reset function to the 'Add Entry' button click event
+ document.getElementById('add-entry').addEventListener('click', resetFormAndErrors);
+ 
+

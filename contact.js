@@ -125,12 +125,9 @@ function validateForm() {
 
     if (isNameValid && isEmailValid && isValidMessage && isPhoneNumberValid) {
         callContactUsCreateAPiData();
-        alert('Your contact information is sent to our support team.');
-    } else {
-        alert('Please fix the errors in the form');
+        showAlert('Your contact information is sent to our support team.');
     }
 }
-
 async function callContactUsCreateAPiData() {
     const apiLink = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/contact-us/create`;
 

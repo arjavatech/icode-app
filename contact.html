@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,6 +33,7 @@
         padding: 5px 30px;
 
     }
+
     .btn-outline-green:hover {
         color: #02066F;
         background-color: #02066F;
@@ -179,21 +181,21 @@
     }
 
     .sidebar button {
-        background-color: #02066F;
-        color: white;
-        padding: 10px 20px;
+        background-color: white;
+        color: #02066F;
+        margin: 20px;
         font-size: 18px;
-        border: none;
-        border-radius: 5px;
+        border-radius: 6px;
         cursor: pointer;
         transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .sidebar button:hover {
-        background-color: white;
+        background-color: gray;
         color: #02066F;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     }
+
 
     .footer {
         overflow: hidden !important;
@@ -204,7 +206,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;border-bottom: 2px solid #02066F;">
         <div class="container-fluid">
-            <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="app_logo">
+                <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="app_logo">
 
             <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -235,7 +237,9 @@
     </nav>
 
     <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
+    <div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;">
+        <img src="Image/Group 91.png" alt="Tap Time Logo" class="app_logo"
+            style="width: 100%; height: auto; margin-bottom: 20px;">
         <a href="device.html"> Device</a>
         <a href="employee_list.html"> Employee Management</a>
         <a href="report_summary.html">Report Summary</a>
@@ -244,6 +248,7 @@
         <a href="contact.html">Contact Us</a>
         <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
     </div>
+
     <section>
         <div class="container box-sty mt-5">
             <h3 class="modal-title text-center fw-bold mb-3" id="myModalLabel">Contact Us</h3>
@@ -290,6 +295,7 @@
             </div>
         </div>
     </section>
+
 
     <!-- Logout Confirmation Modal -->
     <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
