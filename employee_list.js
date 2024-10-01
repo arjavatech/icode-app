@@ -223,8 +223,12 @@ function viewEmpdetails() {
                     <td class="phone-column">${element.PhoneNumber}</td>
                     <td class="isAdmin">${element.IsAdmin == 0 ? false : true}</td>
                     <td class="action-column">
-                        <button class="btn icon-button btn-green" onclick="editEmpdetails('${element.EmpID}')" data-bs-toggle="modal" data-bs-target="#myModal">Edit</button>
-                        <button class="btn icon-button btn-outline-green" onclick="showLogoutModal('${element.EmpID}')">Delete</button>
+                    <button class="btn icon-button" style="color: #02066F;" onclick="editEmpdetails('${element.EmpID}')" data-bs-toggle="modal" data-bs-target="#myModal">
+                    <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button class="btn icon-button" style="color: #02066F;" onclick="showLogoutModal('${element.EmpID}')">
+                    <i class="fas fa-trash"></i>
+                    </button>
                     </td>
                 `;
                 tableBody.appendChild(newRow);

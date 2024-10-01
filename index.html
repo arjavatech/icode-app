@@ -63,6 +63,9 @@
 
     <!-- Body content -->
     <div class="container-fluid">
+        <div class="overlay" id="overlaying">
+            <div class="spinner"></div>
+        </div>
         <h2 class="head-sty text-center">Employee Time Tracking</h2>
         <p class="inside-head text-center">One tap solution for simplifying and streamlining employee time logging and
             reporting.</p>
@@ -194,10 +197,9 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="material-textfield">
-                        <input id="whatsapp" placeholder=" " type="text" class="input-sty form-control"
-                            oninput="formatPhoneNumber(this.id)">
+                        <input id="street" placeholder=" " type="text" class="input-sty form-control">
                         <label class="label-sty">Street</label>
-                        <div id="whatsAppError" class="text-danger text-center"></div>
+                        <div id="streetError" class="text-danger text-center"></div>
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -300,10 +302,13 @@
 
                 </div>
                 <div class="modal-body">
-                    <h5 class="fw-bold mb-3 text-center"> Thank you for reaching out! We have received your message and will get back to you shortly.</h5>
+                    <h5 class="fw-bold mb-3 text-center"> We have received your message and will get back to you shortly.</h5>
                     <p class="d-flex justify-content-center">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfz3upZJUzgki4bn27faJf6gPIIo7Yo5HxZg&s"
+                        <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfz3upZJUzgki4bn27faJf6gPIIo7Yo5HxZg&s"
+                            style="width: 100px;" alt=""> -->
+                            <img src="https://www.shutterstock.com/image-vector/blue-check-mark-icon-tick-260nw-787016416.jpg"
                             style="width: 100px;" alt="">
+                            
                     </p>
                 </div>
             </div>

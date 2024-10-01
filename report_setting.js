@@ -28,6 +28,7 @@ document.addEventListener('click', function (event) {
     }
 });
 
+
 document.addEventListener('DOMContentLoaded', () => {
     const currentLocation = location.href; 
     const menuItems = document.querySelectorAll('.sidebar a');
@@ -215,9 +216,14 @@ function viewReportdetails() {
                 <td class="ReporterEmail">${element.CompanyReporterEmail}</td>
                 <td class="ReportActive">${Frequency}</td>
                 <td>
-                <button class="btn icon-button btn-green" onclick="editEmpdetails('${element.CompanyReporterEmail}')" data-bs-toggle="modal" data-bs-target="#myModal"> Edit </button>
-                <button class="btn icon-button btn-outline-green" id="buttonClick" onclick="showLogoutModal('${element.CompanyReporterEmail}')"> Delete </button>
-                </td>
+    <button class="btn icon-button" style="color: #02066F;" onclick="editEmpdetails('${element.CompanyReporterEmail}')" data-bs-toggle="modal" data-bs-target="#myModal">
+        <i class="fas fa-pencil-alt"></i>
+    </button>
+    <button class="btn icon-button" style="color: #02066F;" id="buttonClick" onclick="showLogoutModal('${element.CompanyReporterEmail}')">
+        <i class="fas fa-trash"></i>
+    </button>
+</td>
+
             `;
                 tableBody.appendChild(newRow);
                 document.getElementById('overlay').style.display = 'none';
@@ -468,6 +474,7 @@ function validReportDays2() {
         return true;
     }
 }
+
 
 // Function to handle updating report details
 function updateReportdetails() {

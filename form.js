@@ -1,32 +1,34 @@
+
 let firstName = document.getElementById("fname");
 let lastName = document.getElementById("lname");
 let email = document.getElementById("email");
 let phoneNumber = document.getElementById("phone");
-let whatsApp = document.getElementById("whatsapp");
+let street = document.getElementById("street");
 let address = document.getElementById("address");
 let subject = document.getElementById("sub");
 let message = document.getElementById("msg");
 
 async function actionFun() {
+    document.getElementById('overlaying').style.display = 'flex';
     let isFirstNameValid = validName(document.getElementById("errorMsgFName"), firstName);
     let isLastNameValid = validName(document.getElementById("errorMsgLName"), lastName);
     let isValidEmail = validateEmail();
     let isValidatePhone = validatePhone(phoneNumber, document.getElementById("phoneError"));
-    let isValidateWhatsApp = validatePhone(whatsApp, document.getElementById("whatsAppError"));
+    let isValidatestreet = checkRequired(document.getElementById("streetError"),street);
     let addressField = checkRequired(document.getElementById("addErr"), address);
     let subjectField = checkRequired(document.getElementById("subErr"), subject)
     let msgField = checkRequired(document.getElementById("msgErr"), message)
 
     if (isFirstNameValid && isLastNameValid
         && isValidEmail && isValidatePhone
-        && isValidateWhatsApp && addressField && subjectField && msgField) {
+        && isValidatestreet && addressField && subjectField && msgField) {
             const apiLink = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/web_contact_us/create`;
 
             const userData = {
                 FirstName: firstName.value, 
                 LastName: lastName.value, 
                 Email: email.value,
-                WhatsappNumber: whatsApp.value, 
+                WhatsappNumber: null, 
                 Subject: subject.value, 
                 PhoneNumber: phoneNumber.value, 
                 Address: address.value,
@@ -47,7 +49,7 @@ async function actionFun() {
                 }
         
                 const data = await response.json();
-
+                document.getElementById('overlaying').style.display = 'none';
                 const modalElement = document.getElementById('addEntryModal');
                 const modalInstance = new bootstrap.Modal(modalElement);
                 modalInstance.show();
@@ -57,7 +59,7 @@ async function actionFun() {
                     lastName.value = "";
                     email.value = "";
                     phoneNumber.value = "";
-                    whatsApp.value = "";
+                    street.value = "";
                     subject.value = "";
                     address.value = "";
                     message.value = "";
@@ -65,6 +67,9 @@ async function actionFun() {
             } catch (error) {
                 console.error('Error:', error);
             }
+    }
+    else{
+        document.getElementById('overlaying').style.display = 'none';
     }
 }
 
