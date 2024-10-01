@@ -47,6 +47,10 @@ async function actionFun() {
                 }
         
                 const data = await response.json();
+
+                const modalElement = document.getElementById('addEntryModal');
+                const modalInstance = new bootstrap.Modal(modalElement);
+                modalInstance.show();
         
                 if (!data.error) {
                     firstName.value = "";
