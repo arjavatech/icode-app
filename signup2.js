@@ -106,9 +106,14 @@ async function validateForm() {
         custpZip && isPhoneNumberValid && isEmailValid) {
         document.querySelector('.progress-bar').style.width = '100%';
 
+        const companyStreet = localStorage.getItem('companyStreet');
+        const companyCity =localStorage.getItem('companyCity');
+        const companyState =localStorage.getItem('companyState');
+        const companyZip =localStorage.getItem('companyZip');
+
         const firstName = document.getElementById('firstName').value;
         const lastName = document.getElementById('lastName').value;
-        const address = document.getElementById('address').value;
+        const address = `${companyStreet}--${companyCity}--${companyState}--${companyZip}`;
         const phone = document.getElementById('phoneNumber').value;
         const email = document.getElementById('email').value;
 
@@ -122,8 +127,6 @@ async function validateForm() {
         document.getElementById('overlay').style.display = 'none';
         const passwordEncrypted = await checkPassword();
         localStorage.setItem("passwordEncrypted",passwordEncrypted);
-        console.log(passwordEncrypted);
-        console.log("***************************************************************")
         await createCheckoutSession();
     } else {
         document.getElementById('totalError').textContent = 'Please fix the errors';
