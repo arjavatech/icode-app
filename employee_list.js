@@ -9,6 +9,8 @@ let adminCount = 0;
 //     document.getElementById('overlay').style.display = 'none';
 // }
 
+
+
 // Remove Data
 
 function dataRemove(e) {
@@ -72,8 +74,8 @@ function addEmpdetails() {
                 IsActive: empactive,
                 PhoneNumber: empphoneno,
                 Pin: empinst,
-                IsAdmin: admin
-
+                IsAdmin: admin,
+                LastModifiedBy:'Admin'
             };
 
             fetch(apiUrl, {
@@ -121,7 +123,8 @@ function addEmpdetails() {
                 IsActive: empactive,
                 PhoneNumber: empphoneno,
                 Pin: empinst,
-                IsAdmin: admin
+                IsAdmin: admin,
+                LastModifiedBy:'Admin'
             };
 
             fetch(apiUrl, {
@@ -162,7 +165,8 @@ function addEmpdetails() {
 
     }
     else {
-        alert('Please fix the errors in the form');
+        // alert('Please fix the errors in the form');
+        document.getElementById('selectError').textContent = null;
     }
 }
 
@@ -178,6 +182,7 @@ let employeesData = [];  // Variable to store fetched employee data
 function viewEmpdetails() {
     // document.getElementById("footer_id").style.position = "fixed";
     const tableBody = document.getElementById("tBody");
+    const tableBody2 = document.getElementById("tBody2");
     const company_id = localStorage.getItem('companyID');
     const apiUrl = `${apiUrlBase}/getall/${company_id}`;
     
@@ -189,6 +194,7 @@ function viewEmpdetails() {
             return response.json();
         })
         .then(data => {
+            
             let index = 1;
             // Store the fetched data
             employeesData = data;
@@ -200,13 +206,11 @@ function viewEmpdetails() {
 
             // Clear the existing table body content
             tableBody.innerHTML = '';
+            tableBody2.innerHTML = '';
             adminCount = 0;
             // Populate the table body with fetched data
             employeesData.forEach(element => {
-                if(element.IsAdmin==1){
-                    adminCount+=1;
-                }
-
+                
 
                 if(adminCount >= 3){
                     document.getElementById("Dropdown").disabled = true;
@@ -216,12 +220,12 @@ function viewEmpdetails() {
                     document.getElementById("Dropdown").disabled = false;
                     document.getElementById("Dropdown").value = "false";
                 }
+
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
                     <td class="pin-column">${element.Pin}</td>
                     <td class="name-column">${element.FName}</td>
                     <td class="phone-column">${element.PhoneNumber}</td>
-                    <td class="isAdmin">${element.IsAdmin == 0 ? false : true}</td>
                     <td class="action-column">
                     <button class="btn icon-button" style="color: #02066F;" onclick="editEmpdetails('${element.EmpID}')" data-bs-toggle="modal" data-bs-target="#myModal">
                     <i class="fas fa-pencil-alt"></i>
@@ -231,7 +235,16 @@ function viewEmpdetails() {
                     </button>
                     </td>
                 `;
-                tableBody.appendChild(newRow);
+                // tableBody.appendChild(newRow);
+                if(element.IsAdmin == 0){
+                    tableBody.appendChild(newRow);
+                }
+                else{
+                    if(adminCount<3){
+                    tableBody2.appendChild(newRow); 
+                    }
+                    adminCount+=1;
+                }
                 index++;
                 if(index===5){
                 //   document.getElementById("footer_id").style.position = "unset";
@@ -293,10 +306,10 @@ function editEmpdetails(emId) {
 // Delete Data
 
 function deleteEmpdetails(emId) {
-    const apiUrl = `${apiUrlBase}/delete/${emId}`;
+    const apiUrl = `${apiUrlBase}/delete/${emId}/Admin`;
 
     fetch(apiUrl, {
-        method: 'DELETE'
+        method: 'PUT'
     })
         .then(response => {
             if (!response.ok) {
@@ -417,7 +430,7 @@ function formatPhoneNumber() {
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addEntryModalLabel2">Delete</h5>
+                        <h5 class="modal-title" id="addEntryModalLabel2" style="text-align: center; width: 100%;">Delete</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -441,4 +454,46 @@ function formatPhoneNumber() {
         modalInstance.show();
     }
     
+// When I click Logo go to home page
+function homePage(){
+    const modalElement = document.getElementById('homePageModal');
+    const modalInstance = new bootstrap.Modal(modalElement);
+    modalInstance.show();
+}
 
+document.getElementById('homePageYes').addEventListener('click',function (){
+    window.open('index.html', 'noopener, noreferrer');
+})
+function filterAdmin() {
+    const searchInput = document.getElementById('searchAdmin').value.toLowerCase();
+    const rows = document.querySelectorAll('#tBody2 tr');
+    rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        const nameCell = cells[1].textContent.toLowerCase(); // Assuming the name is in the second column
+        if (nameCell.includes(searchInput)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+
+// Dummy functions for modal actions
+function addEmpdetails(event) {
+    // Logic to save employee details
+    console.log("Employee details added");
+}
+
+function addAdminDetails(event) {
+    // Logic to save admin details
+    console.log("Admin details added");
+}
+
+function validFName() { /* Validation Logic */ }
+function validLName() { /* Validation Logic */ }
+function validAdminFName() { /* Validation Logic */ }
+function validAdminLName() { /* Validation Logic */ }
+function formatPhoneNumber() { /* Phone Number Formatting */ }
+function formatAdminPhoneNumber() { /* Admin Phone Number Formatting */ }
+function validateInstructerPin() { /* Validation Logic */ }
+function validateAdminInstructerPin() { /* Validation Logic */ }

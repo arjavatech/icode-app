@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
 var isAlpha = /^[a-zA-Z\s]+$/;
 
 function validCName() {
@@ -116,7 +115,6 @@ function validatePhoneNumber() {
     }
 }
 
-// Function to validate the entire form
 function validateForm() {
     const isNameValid = validCName();
     const isEmailValid = validCEmail();
@@ -124,10 +122,16 @@ function validateForm() {
     const isPhoneNumberValid = validatePhoneNumber();
 
     if (isNameValid && isEmailValid && isValidMessage && isPhoneNumberValid) {
+        // Simulate API call
         callContactUsCreateAPiData();
-        showAlert('Your contact information is sent to our support team.');
+
+        // Show modal
+        const modalElement = document.getElementById('addEntryModal');
+        const modalInstance = new bootstrap.Modal(modalElement);
+        modalInstance.show();
     }
 }
+
 async function callContactUsCreateAPiData() {
     const apiLink = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/contact-us/create`;
 
@@ -146,7 +150,8 @@ async function callContactUsCreateAPiData() {
         RequestorEmail: requestorEmail,
         ConcernsQuestions: concernsQuestions,
         PhoneNumber: phoneNumber,
-        Status: status
+        Status: status,
+        LastModifiedBy:'Admin'
     };
 
     try {
@@ -165,6 +170,7 @@ async function callContactUsCreateAPiData() {
         const data = await response.json();
 
         if (!data.error) {
+            // Clear form fields
             document.getElementById("cname").value = "";
             document.getElementById("cemail").value = "";
             document.getElementById("question").value = "";
@@ -177,35 +183,14 @@ async function callContactUsCreateAPiData() {
     }
 }
 
+// When I click Logo go to home page 
 
-
-
-function logoutCall() {
-    localStorage.removeItem("username");
-    localStorage.removeItem("companyID");
-    localStorage.removeItem("customId");
-    localStorage.removeItem("password");
-
-    setTimeout(() => {
-        window.location.href = "login.html";
-    }, 10);
+function homePage(){
+    const modalElement = document.getElementById('homePageModal');
+    const modalInstance = new bootstrap.Modal(modalElement);
+    modalInstance.show();
 }
 
-    document.getElementById("logBtn").addEventListener("click", logoutCall);
-
-function logOutACtion(){
-    let myModal = new bootstrap.Modal(document.getElementById('addEntryModal'));
-    myModal.show();
-}
-
-// Restrict the inspect element 
-
-// document.addEventListener('contextmenu', function(e) {
-//     e.preventDefault();
-//   });
-
-//   document.onkeydown = function(e) {
-//     if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-//       e.preventDefault();
-//     }
-//   };
+document.getElementById('homePageYes').addEventListener('click',function (){
+    window.open('index.html', 'noopener, noreferrer');
+})

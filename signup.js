@@ -157,3 +157,20 @@ function requriedCheck(id,msg){
   msg.textContent = '';
   return true;
 }
+
+ // Side BAR 
+
+ const sidebar = document.getElementById('sidebar');
+ const toggler = document.querySelector('.navbar-toggler');
+
+ // Toggle sidebar open/close
+ toggler.addEventListener('click', function () {
+     sidebar.classList.toggle('open');
+ });
+
+ document.addEventListener('click', function (event) {
+     const isClickInside = sidebar.contains(event.target) || toggler.contains(event.target);
+     if (!isClickInside) {
+         sidebar.classList.remove('open');
+     }
+ });

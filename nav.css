@@ -98,12 +98,6 @@
     opacity: 1 !important;
 }
 
-.app_logo {
-    width: 8%;
-    padding: 10px;
-    margin-left: 20px;
-}
-
 .logoutButton {
     /* border: 1px solid white; */
     font-size: 18px;
@@ -306,10 +300,6 @@
         color: white;
         /* Sets the color of the text on hover */
     }
-
-    .app_logo {
-        width: 10% !important;
-    }
 }
 
 @media (max-width:1115px) {
@@ -345,22 +335,152 @@
         font-weight: normal;
     }
 }
-@media (max-width:860px) {
-    .app_logo {
-        width: 15% !important;
+
+
+/* side nav bar  */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 250px;
+    height: 100%;
+    background-color: #02066f;
+    transition: left 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+.sidebar a {
+    position: relative;
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+    width: 80%;
+    padding-left: 10%;
+    border-radius: 20px;
+    background: none;
+    margin-left: 8%;
+    overflow: hidden;
+}
+
+.sidebar a.active {
+    color: #f1f1f1;
+}
+
+.sidebar a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background: #f1f1f1;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.sidebar a:hover::before,
+.sidebar a.active::before {
+    transform: translateX(0);
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+    box-shadow: #fff;
+    transform: scale(1.05);
+    background: rgba(0, 0, 0, 0.5);
+
+}
+
+.app_logo {
+    width: 60%;
+    margin-left: 18%;
+}
+
+.sidebar a i {
+    margin-right: 15px;
+}
+
+.sidebar button {
+    background-color: white;
+    color: #02066F;
+    margin: 20px;
+    font-size: 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar button:hover {
+    background-color: gray;
+    color: #02066F;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 480px) {
+    .sidebar {
+        width: 250px;
+        padding-top: 30px;
+        
+    }
+
+    .sidebar a {
+        font-size: 18px;
+        padding: 8px 15px;
+    }
+
+    .sidebar .closebtn {
+        font-size: 24px;
+        right: 10px;
     }
 }
 
-@media (max-width:500px) {
+
+@media (max-width:478px) {
     .app_logo {
-        width: 25% !important;
-        margin-left: 0;
+        width: 30%;
+        margin: 0;
+        /* border-bottom: solid 2px white; */
+    }
+}
+@media (max-width:251px) {
+    .sidebar{
+        width: 70% !important;
+    }
+    .logoutButton{
+        width: 70% !important;
+        font-size: 10px !important;
+    }
+    .sidebar a{
+        font-size: 10px !important;
     }
 }
 
-@media (max-width:300px) {
-    .app_logo {
-        width: 40% !important;
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 300px;
+        padding-top: 40px;
+        margin-top: 10%;
+    }
+
+    .sidebar a {
+        font-size: 13px;
+        padding: 10px 20px;
+    }
+
+    .sidebar .closebtn {
+        font-size: 30px;
+        right: 15px;
+    }
+
+    #main {
         margin-left: 0;
     }
 }

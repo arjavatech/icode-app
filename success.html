@@ -88,7 +88,8 @@
                 CAddress: caddress,
                 UserName: username,
                 Password: passwordEncrypted,
-                ReportType: "Weekly"
+                ReportType: "Weekly",
+                LastModifiedBy:'Admin'
             };
             try {
                 const response = await fetch(firstSignupPageapiUrl, {
@@ -178,7 +179,8 @@
                 Address: address,
                 PhoneNumber: phone,
                 Email: email,
-                IsActive: true
+                IsActive: true,
+                LastModifiedBy:'Admin'
             };
 
             fetch(apiUrl, {

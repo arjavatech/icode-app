@@ -300,7 +300,8 @@ function updateApiData() {
         Address: `${document.getElementById('customerStreet').value}--${document.getElementById('customerCity').value}--${document.getElementById('customerState').value}--${document.getElementById('customerZip').value}--`,
         PhoneNumber: document.getElementById('phone').value,
         Email: document.getElementById('email').value,
-        IsActive: true
+        IsActive: true,
+        LastModifiedBy:'Admin'
     };
     console.log('--------------------');
     console.log(document.getElementById('username').value);
@@ -311,7 +312,8 @@ function updateApiData() {
         CAddress: `${document.getElementById('companyStreet').value}--${document.getElementById('companyCity').value}--${document.getElementById('companyState').value}--${document.getElementById('companyZip').value}--`,
         CLogo: localStorage.getItem("imageFile"),
         Password: localStorage.getItem("password"),
-        ReportType: "Weekly"
+        ReportType: "Weekly",
+        LastModifiedBy:'Admin'
     };
 
     Promise.all([
@@ -356,3 +358,16 @@ function updateApiData() {
             return response.json();
         })));
 }
+
+
+// When I click Logo go to home page 
+
+function homePage(){
+    const modalElement = document.getElementById('homePageModal');
+    const modalInstance = new bootstrap.Modal(modalElement);
+    modalInstance.show();
+}
+
+document.getElementById('homePageYes').addEventListener('click',function (){
+    window.open('index.html', 'noopener, noreferrer');
+})

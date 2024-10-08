@@ -83,7 +83,8 @@ function addreportdetails() {
                 IsWeeklyReportActive: WeeklyReportActive,
                 IsBiWeeklyReportActive: BiWeeklyReportActive,
                 IsMonthlyReportActive: MonthlyReportActive,
-                IsBiMonthlyReportActive: BiMonthlyReportActive
+                IsBiMonthlyReportActive: BiMonthlyReportActive,
+                LastModifiedBy:'Admin'
             };
 
             fetch(apiUrl, {
@@ -128,7 +129,8 @@ function addreportdetails() {
                 IsWeeklyReportActive: WeeklyReportActive,
                 IsBiWeeklyReportActive: BiWeeklyReportActive,
                 IsMonthlyReportActive: MonthlyReportActive,
-                IsBiMonthlyReportActive: BiMonthlyReportActive
+                IsBiMonthlyReportActive: BiMonthlyReportActive,
+            LastModifiedBy:'Admin'
             };
 
             fetch(apiUrl, {
@@ -168,7 +170,7 @@ function addreportdetails() {
     }
     else {
         // alert('Please fix the errors in the form');
-        document.getElementById('selectError').textContent = null;
+       
     }
 }
 
@@ -216,13 +218,13 @@ function viewReportdetails() {
                 <td class="ReporterEmail">${element.CompanyReporterEmail}</td>
                 <td class="ReportActive">${Frequency}</td>
                 <td>
-    <button class="btn icon-button" style="color: #02066F;" onclick="editEmpdetails('${element.CompanyReporterEmail}')" data-bs-toggle="modal" data-bs-target="#myModal">
-        <i class="fas fa-pencil-alt"></i>
-    </button>
-    <button class="btn icon-button" style="color: #02066F;" id="buttonClick" onclick="showLogoutModal('${element.CompanyReporterEmail}')">
-        <i class="fas fa-trash"></i>
-    </button>
-</td>
+                <button class="btn icon-button" style="color: #02066F;" onclick="editEmpdetails('${element.CompanyReporterEmail}')" data-bs-toggle="modal" data-bs-target="#myModal">
+                <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button class="btn icon-button" style="color: #02066F;" id="buttonClick" onclick="showLogoutModal ('${element.CompanyReporterEmail}')">
+                <i class="fas fa-trash"></i>
+                </button>
+                </td>
 
             `;
                 tableBody.appendChild(newRow);
@@ -245,9 +247,12 @@ function viewSecondReportdetails() {
 
                 newRow.innerHTML = `
                 <td class="ReportActive">${reportType}</td>
-                <td>
-                <button class="btn icon-button btn-outline-green" onclick="editReportdetails('${reportType}')" data-bs-toggle="modal" data-bs-target="#myModal2"> Edit </button>
-                </td>
+<td>
+    <button class="btn icon-button" onclick="editReportdetails('${reportType}')" data-bs-toggle="modal" data-bs-target="#myModal2" style="background: none; border: none; padding: 0;">
+        <i class="fas fa-pencil-alt" style="color: #02066F;"></i>
+    </button>
+</td>
+
             `;
                 tableBody.appendChild(newRow);
 
@@ -307,10 +312,10 @@ function editReportdetails(reportType) {
 
 function deleteEmpdetails(companyEmail) {
     const company_id = localStorage.getItem('companyID');
-    const apiUrl = `${apiUrlBase}/delete/${companyEmail}/${company_id}`;
+    const apiUrl = `${apiUrlBase}/delete/${companyEmail}/${company_id}/Admin`;
 
     fetch(apiUrl, {
-        method: 'DELETE'
+        method: 'PUT'
     })
         .then(response => {
             if (!response.ok) {
@@ -538,7 +543,7 @@ function showLogoutModal(empId) {
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addEntryModalLabel2">Delete</h5>
+                        <h5 class="modal-title" id="addEntryModalLabel2" style="text-align: center; width: 100%;">Delete</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -566,3 +571,13 @@ function showLogoutModal(empId) {
  document.getElementById('add-entry').addEventListener('click', resetFormAndErrors);
  
 
+// When I click Logo go to home page 
+function homePage(){
+    const modalElement = document.getElementById('homePageModal');
+    const modalInstance = new bootstrap.Modal(modalElement);
+    modalInstance.show();
+}
+
+document.getElementById('homePageYes').addEventListener('click',function (){
+    window.open('index.html', 'noopener, noreferrer');
+})

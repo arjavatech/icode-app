@@ -331,7 +331,8 @@ async function updateDailyReportAPiData(emp_id, cid, date, type, checkin_snap, c
     CheckInTime: checkin_time,
     CheckOutSnap: checkout_snap,
     CheckOutTime: checkout_time,
-    TimeWorked: time_worked
+    TimeWorked: time_worked,
+    LastModifiedBy:'Admin'
   }
 
   var apiBaseUrl = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/update/${emp_id}/${cid}/${checkin_time}`;
@@ -653,8 +654,8 @@ document.addEventListener('DOMContentLoaded', function () {
         CheckInTime: startDateTime,
         CheckOutSnap: null,
         CheckOutTime: endDateTimeValue,
-        TimeWorked: timeWorkedHours
-
+        TimeWorked: timeWorkedHours,
+        LastModifiedBy:'Admin'
       };
  console.log(data);
       // Send Post request
@@ -718,3 +719,15 @@ function getCurrentLocalTime() {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+
+// When I click Logo go to home page 
+
+function homePage(){
+  const modalElement = document.getElementById('homePageModal');
+  const modalInstance = new bootstrap.Modal(modalElement);
+  modalInstance.show();
+}
+
+document.getElementById('homePageYes').addEventListener('click',function (){
+  window.open('index.html', 'noopener, noreferrer');
+})

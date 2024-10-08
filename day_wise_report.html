@@ -23,7 +23,6 @@
     <link rel="stylesheet" href="nav.css">
 
     <link rel="stylesheet" href="footer.css">
-
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -281,82 +280,17 @@
     }
 
     .navbar-toggler {
-        background-color: white;
+        background-color: #02066F;
         color: white;
-        border: 2px solid #02066F;
+        border: 2px solid white;
         padding: 10px;
         border-radius: 5px;
         transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
 
-    .navbar-toggler:hover {
-        background-color: gainsboro;
-        color: white;
-        border-color: gray;
+    .navbar-toggler-icon {
+        background-color: white;
     }
-
-
-
-    .sidebar {
-        position: fixed;
-        top: 0;
-        left: -300px;
-        width: 250px;
-        height: 100%;
-        background-color: #02066f;
-        transition: left 0.3s ease;
-        z-index: 1000;
-    }
-
-    .sidebar.open {
-        left: 0;
-    }
-
-    .sidebar a {
-        position: relative;
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 25px;
-        color: white;
-        display: block;
-        transition: 0.3s;
-        width: 80%;
-        padding-left: 10%;
-        border-radius: 20px;
-        background: none;
-        margin-left: 8%;
-        overflow: hidden;
-    }
-
-    .sidebar a.active {
-        color: #f1f1f1;
-    }
-
-    .sidebar a::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        height: 2px;
-        width: 100%;
-        background: #f1f1f1;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-    }
-
-    .sidebar a:hover::before,
-    .sidebar a.active::before {
-        transform: translateX(0);
-    }
-
-    .sidebar a:hover {
-        color: #f1f1f1;
-        box-shadow: #fff;
-        transform: scale(1.05);
-        background: rgba(0, 0, 0, 0.5);
-
-    }
-
 
 
     #main {
@@ -364,52 +298,64 @@
         padding: 16px;
     }
 
+    
+    /* @media (max-width:570px) {
+        footer {
+            position: unset !important;
+        }
+    }
+
+    @media (max-width:850px) {
+        footer {
+            position: unset;
+        }
+    } */
     @media screen and (max-width: 768px) {
-        .sidebar {
-            width: 300px;
-            padding-top: 40px;
-            margin-top: 10%;
+            .sidebar {
+                width: 300px;
+                padding-top: 40px;
+                margin-top: 10%;
+            }
+
+            .sidebar a {
+                font-size: 20px;
+                padding: 10px 20px;
+            }
+
+            .sidebar .closebtn {
+                font-size: 30px;
+                right: 15px;
+            }
+
+            #main {
+                margin-left: 0;
+            }
         }
 
-        .sidebar a {
-            font-size: 20px;
-            padding: 10px 20px;
+
+        @media screen and (max-width: 480px) {
+            .sidebar {
+                width: 250px;
+                padding-top: 30px;
+                margin-top: 2%;
+            }
+
+            .sidebar a {
+                font-size: 13px;
+                padding: 8px 15px;
+            }
+
+            .sidebar .closebtn {
+                font-size: 24px;
+                right: 10px;
+            }
         }
 
-        .sidebar .closebtn {
-            font-size: 30px;
-            right: 15px;
+        .sidebar a i {
+            margin-right: 15px;
         }
 
-        #main {
-            margin-left: 0;
-        }
-    }
-
-
-    @media screen and (max-width: 480px) {
-        .sidebar {
-            width: 250px;
-            padding-top: 30px;
-            margin-top: 2%;
-        }
-
-        .sidebar a {
-            font-size: 18px;
-            padding: 8px 15px;
-        }
-
-        .sidebar .closebtn {
-            font-size: 24px;
-            right: 10px;
-        }
-    }
-
-    .sidebar a i {
-        margin-right: 15px;
-    }
-
-    .sidebar button {
+        .sidebar button {
             background-color: white;
             color: #02066F;
             margin: 20px;
@@ -424,55 +370,47 @@
             color: #02066F;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         }
-        
 
-
-    /* @media (max-width:570px) {
-        footer {
-            position: unset !important;
-        }
+    .logo {
+        width: 101px;
+        height: 73.53px;
+        margin-right: 20px;
     }
 
-    @media (max-width:850px) {
-        footer {
-            position: unset;
-        }
-    } */
 </style>
 
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;border-bottom: 2px solid #02066F;">
+    <!-- Nav bar  -->
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white; border-bottom: 1px solid #02066F; padding: 5px 15px; height: 70px;">
         <div class="container-fluid">
-            <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="app_logo">
-
-            <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
+            <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="logo" id="web_logo" onclick="homePage()" style="height: 50px; width: auto; padding: 0; margin-top: -5px;">
+    
+            <button class="navbar-toggler" type="button" aria-label="Toggle navigation" style="padding: 0;">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
+    
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
                 <div class="navbar-nav">
-                    <a class="nav-link" href="device.html" style="color: #02066F;">Device</a>
-                    <a class="nav-link" href="employee_list.html" style="color: #02066F;">Employee Management</a>
-
-
+                    <a class="nav-link" href="device.html" style="color: #02066F; padding: 5px 10px;">Device</a>
+                    <a class="nav-link" href="employee_list.html" style="color: #02066F; padding: 5px 10px;">Employee Management</a>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active" href="#service" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false" style="color: #02066F;">
+                            data-bs-toggle="dropdown" aria-expanded="false" style="color: #02066F; padding: 5px 10px;">
                             Report
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="report_summary.html">Report Summary</a></li>
-                            <li><a class="dropdown-item" href="report_setting.html">Report Settings</a></li>
+                            <li><a class="dropdown-item" href="report_summary.html" style="padding: 5px;">Report Summary</a></li>
+                            <li><a class="dropdown-item" href="report_setting.html" style="padding: 5px;">Report Settings</a></li>
                         </ul>
                     </li>
-                    <a class="nav-link" href="profile.html" style="color: #02066F;">Profile</a>
-                    <a class="nav-link" href="contact.html" style="color: #02066F;">Contact Us</a>
-                    <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
+                    <a class="nav-link" href="profile.html" style="color: #02066F; padding: 5px 10px;">Profile</a>
+                    <a class="nav-link" href="contact.html" style="color: #02066F; padding: 5px 10px;">Contact Us</a>
+                    <button class="btn logoutButton" onclick="logOutACtion()" style="padding: 5px 10px;">Logout</button>
                 </div>
             </div>
         </div>
     </nav>
+    
 
     <!-- <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
@@ -513,7 +451,8 @@
 
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;">
-        <img src="Image/Group 91.png" alt="Tap Time Logo" class="app_logo" style="width: 100%; height: auto; margin-bottom: 20px;">
+        <img src="Image/Group 91.png" alt="Tap Time Logo" class="app_logo"
+            >
         <a href="device.html"> Device</a>
         <a href="employee_list.html"> Employee Management</a>
         <a href="report_summary.html">Report Summary</a>
@@ -523,12 +462,33 @@
         <button class="btn logoutButton" onclick="logOutACtion()">Logout</button>
     </div>
 
-
     <section>
-
+        <!-- Loading indicater  -->
         <div class="overlay" id="overlay">
             <div class="spinner"></div>
         </div>
+
+        <!-- Go to home page modal -->
+    <div class="modal fade" id="homePageModal" tabindex="-1" aria-labelledby="homePageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="homePageModalLabel" style="text-align: center; width: 100%;">Home</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="fw-bold mb-3 text-center">Are you sure you want to go home?</h5>
+                    <p class="d-flex justify-content-center">
+                        <button class="btn yes" id="homePageYes">Yes</button>
+                        <button class="btn no" data-bs-dismiss="modal" style="margin-left: 2%;">No</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Go to home page modal -->
+
         <div class="container-fluid pt-2 pb-2 bg-white">
             <div class="row">
                 <div class="container">
@@ -675,7 +635,8 @@
             localStorage.removeItem("password");
 
             setTimeout(() => {
-                window.location.href = "login.html";
+                // window.location.href = "login.html";
+                window.open('login.html', 'noopener, noreferrer');
             }, 10);
         }
 

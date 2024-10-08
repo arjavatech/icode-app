@@ -67,3 +67,9 @@
     }
 }
 
+@media (max-width:767px) {
+    .quick-explore{
+        text-align: left;
+        margin-left: 37%;
+    }
+}

@@ -282,7 +282,14 @@ function calculateTotalTimeWorked(data) {
   return employeeTimes;
 }
 
+// When I click Logo go to home page 
 
+function homePage(){
+  const modalElement = document.getElementById('homePageModal');
+  const modalInstance = new bootstrap.Modal(modalElement);
+  modalInstance.show();
+}
 
-
-
+document.getElementById('homePageYes').addEventListener('click',function (){
+  window.open('index.html', 'noopener, noreferrer');
+})

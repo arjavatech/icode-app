@@ -161,7 +161,8 @@ async function craeteFirstPageSignupAPiData() {
         `,
         UserName: username,
         Password: passwordEncrypted,
-        ReportType: "Weekly"
+        ReportType: "Weekly",
+        LastModifiedBy:'Admin'
     };
     console.log(userData);
 
@@ -290,7 +291,8 @@ function createApiData() {
         `,
         PhoneNumber: phone,
         Email: email,
-        IsActive: true // Assuming this field is required and should be set to true
+        IsActive: true, // Assuming this field is required and should be set to true
+        LastModifiedBy:'Admin'
     };
 
     fetch(apiUrl, {
@@ -391,3 +393,20 @@ function requriedCheck(id,msg){
     msg.textContent = '';
     return true;
 }
+
+ // Side BAR 
+
+ const sidebar = document.getElementById('sidebar');
+ const toggler = document.querySelector('.navbar-toggler');
+
+ // Toggle sidebar open/close
+ toggler.addEventListener('click', function () {
+     sidebar.classList.toggle('open');
+ });
+
+ document.addEventListener('click', function (event) {
+     const isClickInside = sidebar.contains(event.target) || toggler.contains(event.target);
+     if (!isClickInside) {
+         sidebar.classList.remove('open');
+     }
+ });
