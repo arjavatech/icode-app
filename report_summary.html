@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="nav.css">
     <link rel="stylesheet" href="report_summary.css">
     <link rel="stylesheet" href="employee_list.css">
+    <link rel="stylesheet" href="inputs.css">
     <script defer src="report_summary.js"></script>
 
     <!-- <script defer src="logout.js"></script> -->
@@ -37,13 +38,17 @@
 </head>
 
 <style>
+    
+    .all-input-style {
+        color: #02066F;
+    }
 
-    .current-day-head-sty{
+    .current-day-head-sty {
         margin-left: 24%;
     }
 
-    .Date{
-        margin-left: 12%;
+    .Date {
+        margin-left: 24%;
     }
 
     /* Loading  */
@@ -254,72 +259,65 @@
     .navbar-toggler-icon {
         background-color: white;
     }
-    @media screen and (max-width: 768px) {
-            .sidebar {
-                width: 300px;
-                padding-top: 40px;
-                margin-top: 10%;
-            }
 
-            .sidebar a {
-                font-size: 20px;
-                padding: 10px 20px;
-            }
+    @media screen and (max-width: 1000px) {
+    .sidebar {
+        width: 200px;
+        padding-top: 40px;
+        margin-top: 0;
+    }
 
-            .sidebar .closebtn {
-                font-size: 30px;
-                right: 15px;
-            }
+    .sidebar a {
+        font-size: 10px;
+        padding: 10px 20px;
+    }
 
-            #main {
-                margin-left: 0;
-            }
-        }
+    
+    .sidebar button {
+        font-size: 11px; 
+        padding: 6px 6px;
+        margin: 6px; 
+    }
 
+    .sidebar .closebtn {
+        font-size: 30px;
+        right: 15px;
+    }
 
-        @media screen and (max-width: 480px) {
-            .sidebar {
-                width: 250px;
-                padding-top: 30px;
-                margin-top: 2%;
-            }
+    #main {
+        margin-left: 0;
+    }
 
-            .sidebar a {
-                font-size: 13px;
-                padding: 8px 15px;
-            }
-
-            .sidebar .closebtn {
-                font-size: 24px;
-                right: 10px;
-            }
-        }
-
-        .sidebar a i {
-            margin-right: 15px;
-        }
-
-        .sidebar button {
-            background-color: white;
-            color: #02066F;
-            margin: 20px;
-            font-size: 18px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .sidebar button:hover {
-            background-color: gray;
-            color: #02066F;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-        }
+   
+    .app_logo {
+        width: 60px; 
+        height: auto;
+        margin-left: 1px; 
+        margin-right: auto; 
+    }
+}
 
 
 
+    .sidebar a i {
+        margin-right: 15px;
+    }
 
+    .sidebar button {
+        background-color: white;
+        color: #02066F;
+        margin: 20px;
+        /* font-size: 18px; */
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-
+    .sidebar button:hover {
+        background-color: gray;
+        color: #02066F;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
 
     #main {
         transition: margin-left .5s;
@@ -341,26 +339,31 @@
 
 <body>
     <!-- Nav bar  -->
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white; border-bottom: 1px solid #02066F; padding: 5px 15px; height: 70px;">
+    <nav class="navbar navbar-expand-lg navbar-light"
+        style="background-color: white; border-bottom: 1px solid #02066F; padding: 5px 15px; height: 70px;">
         <div class="container-fluid">
-            <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="logo" id="web_logo" onclick="homePage()" style="height: 50px; width: auto; padding: 0; margin-top: -5px;">
-    
+            <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="logo" id="web_logo" onclick="homePage()"
+                style="height: 50px; width: auto; padding: 0; margin-top: -5px;">
+
             <button class="navbar-toggler" type="button" aria-label="Toggle navigation" style="padding: 0;">
                 <span class="navbar-toggler-icon"></span>
             </button>
-    
+
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
                 <div class="navbar-nav">
                     <a class="nav-link" href="device.html" style="color: #02066F; padding: 5px 10px;">Device</a>
-                    <a class="nav-link" href="employee_list.html" style="color: #02066F; padding: 5px 10px;">Employee Management</a>
+                    <a class="nav-link" href="employee_list.html" style="color: #02066F; padding: 5px 10px;">Employee
+                        Management</a>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active" href="#service" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false" style="color: #02066F; padding: 5px 10px;">
                             Report
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="report_summary.html" style="padding: 5px;">Report Summary</a></li>
-                            <li><a class="dropdown-item" href="report_setting.html" style="padding: 5px;">Report Settings</a></li>
+                            <li><a class="dropdown-item" href="report_summary.html" style="padding: 5px;">Report
+                                    Summary</a></li>
+                            <li><a class="dropdown-item" href="report_setting.html" style="padding: 5px;">Report
+                                    Settings</a></li>
                         </ul>
                     </li>
                     <a class="nav-link" href="profile.html" style="color: #02066F; padding: 5px 10px;">Profile</a>
@@ -370,7 +373,7 @@
             </div>
         </div>
     </nav>
-    
+
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;">
         <img src="Image/Group 91.png" alt="Tap Time Logo" class="app_logo">
@@ -430,20 +433,29 @@
             </div>
         </div>
 
-
         <div class="container mt-5">
-            <h5 class="Date" id="Date">Date: <span id="current-checkin-header"></span></h5>
-                <div class="row">
-                    <div class="col-6">
-                        <h5 class="fw-bold current-day-head-sty">Current Day Report</h5>
-                    </div>
-                    <div class="col-6">
-                        <button class="btn float-end" id="add-entry">Add Entry</button>
-                    </div>
+            <!-- Title centered at the top -->
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h5 class="fw-bold current-day-head-sty" style="margin-left: 20px;">
+                        Current Day Report</h5>
                 </div>
+            </div>
         </div>
 
+
         <div class="emp-table table-responsive">
+            <div class="container">
+                <div class="row mt-3">
+                    <div class="col-6 text-left">
+                        <h5 class="Date" id="Date">Date: <span id="current-checkin-header"></span></h5>
+                    </div>
+                    <div class="col-6 text-right">
+                        <button class="btn float-end addEntryBtnStyle" id="add-entry">Add Entry</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="custom-table-container">
                 <table id="employeeTable" class="table custom-table table-bordered">
                     <thead>
@@ -476,49 +488,43 @@
                     </div>
                     <div class="modal-body">
                         <form id="entryForm">
-                            <div class="material-textfield m-2">
-                                <select id="dynamicDropdown" class="input-sty form-control mt-3">
-                                </select>
-                                <label for="datePicker">Select Employee</label>
-                                <div id="EmpNameError" class="error"></div>
-                            </div>
+                            <!-- <div class="material-textfield m-2"> -->
+                            <select id="dynamicDropdown" class="all-input-style mb-3">
+                            </select>
+                            <!-- <label for="datePicker">Select Employee</label> -->
+                            <div id="EmpNameError" class="error text-center"></div>
+                            <!-- </div> -->
 
-                            <div class="material-textfield m-2 mt-3">
-                                <div class="form-group">
-                                    <select id="type" class="input-sty form-control">
-                                        <option value="">Select a option</option>
-                                        <option value="Belt">Belt</option>
-                                        <option value="Path">Path</option>
-                                        <option value="Camp">Camp</option>
-                                        <option value="External">External</option>
-                                        <option value="Trial">Trial</option>
-                                        <option value="Reception">Reception</option>
-                                    </select>
-                                    <label for="datePicker">Select Type</label>
-                                    <div id="EmpTypeError" class="error"></div>
-                                </div>
+                            <!-- <div class="material-textfield m-2 mt-3"> -->
+                            <div class="form-group">
+                                <!-- <label for="datePicker">Select Type</label> -->
+                                <select id="type" class="all-input-style mb-3">
+                                    <option value="">Select Type</option>
+                                    <option value="Belt">Belt</option>
+                                    <option value="Path">Path</option>
+                                    <option value="Camp">Camp</option>
+                                    <option value="External">External</option>
+                                    <option value="Trial">Trial</option>
+                                    <option value="Reception">Reception</option>
+                                </select>
+                                <div id="EmpTypeError" class="error text-center"></div>
                             </div>
-                            <div class="material-textfield m-2 mt-3">
-                                <input type="date" class="input-sty form-control" id="datePicker" name="date"
-                                    placeholder=" " max="" required>
-                                <label for="datePicker">Check-in Date (yyyy-mm-dd):</label>
-                                <div id="dateError" class="error"></div>
-                            </div>
-                            <div class="material-textfield m-2 mt-3">
-                                <input type="time" class="input-sty form-control" id="checkinTime" name="checkinTime"
-                                    placeholder=" " required>
-                                <label for="checkinTime">Check-in Time:</label>
-                                <div id="startTimeError" class="error"></div>
-                            </div>
-                            <div class="material-textfield m-2 mt-3">
-                                <input type="time" class="input-sty form-control" id="checkoutTime" name="checkoutTime"
-                                    placeholder=" " disabled required>
-                                <label for="checkoutTime">Check-out Time:</label>
-                                <div id="endTimeError" class="error"></div>
-                            </div>
+                          
+                            <input type="date" id="datePicker" placeholder="Check-in Date (yyyy-mm-dd):" max=""
+                                class="all-input-style mb-3" required>
+                            <div id="dateError" class="error text-center"></div>
+                        
+                            <input type="time" id="checkinTime" placeholder="Check-in Time:"
+                                class="all-input-style mb-3" required>
+                            <div id="startTimeError" class="error text-center"></div>
+                       
+                            <input type="time" id="checkoutTime" placeholder="Check-out Time:"
+                                class="all-input-style mb-3" disabled required>
+                            <div id="endTimeError" class="error text-center"></div>
+                        
 
                             <div class="text-center">
-                                <button type="button" class="btn btn-green mt-3" id="AddEmployee" disabled>Add</button>
+                                <button type="button" class="btn btn-green mt-2" id="AddEmployee" disabled>Add</button>
                             </div>
                         </form>
                     </div>
@@ -531,7 +537,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content" id="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addEntryModalLabel1">Logout</h5>
+                        <h5 class="modal-title" id="addEntryModalLabel1" style="text-align: center; width: 100%;">Logout</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>

@@ -27,24 +27,68 @@
     <!-- <script defer src="logout.js"></script> -->
     <link rel="stylesheet" href="employee_list.css">
     <link rel="stylesheet" href="report_summary.css">
+    <link rel="stylesheet" href="inputs.css">
     <link rel="stylesheet" href="nav.css">
     <link rel="stylesheet" href="footer.css">
     <link rel="icon" href="Image/app_logo.png">
+
     <style>
-        /* Add Entry dropdown style  */
-        .bootstrap-select>.dropdown-toggle.bs-placeholder,
-        .bootstrap-select>.dropdown-toggle.bs-placeholder:active,
-        .bootstrap-select>.dropdown-toggle.bs-placeholder:focus,
-        .bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
-            border: 1px solid #02066F;
-            border-radius: 10px !important;
-            box-sizing: border-box;
-            width: 100%;
-            padding: 0.5rem;
-            padding-top: 1rem;
-            font-size: 1rem;
+        @media (max-width:1189px) {
+            .report-view-style {
+                margin: 10px !important;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .modal-content-style {
+                width: 100% !important;
+                /* Adjust width to fit small screens */
+                max-width: 400px;
+                /* Ensure modal doesn’t grow too large */
+                margin: auto !important;
+                /* Center the modal */
+            }
+
+            .bootstrap-select>.dropdown-toggle {
+                width: 60% !important;
+                float: left !important;
+            }
+
+            .all-input-style::placeholder {
+                float: left !important;
+            }
+
+            .all-input-style {
+                text-align: left !important;
+            }
+
+        }
+
+        @media (max-width:250px) {
+            .modal-content-style {
+                width: 75% !important;
+            }
+
+            .bootstrap-select>.dropdown-toggle {
+                width: 50% !important;
+            }
+
+            .bootstrap-select .dropdown-menu {
+                min-width: 30% !important;
+            }
+        }
+
+        .all-input-style::placeholder {
+            text-align: center;
+        }
+
+        .all-input-style {
+            text-align: center;
+        }
+
+        .all-input-style .selectpicker {
+            text-align: center;
             color: #02066F;
-            font-weight: bold;
         }
 
         /* Loading  */
@@ -179,27 +223,28 @@
             background-color: white;
         }
 
-
-
-
-
-
-
         #main {
             transition: margin-left .5s;
             padding: 16px;
         }
 
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: 1000px) {
             .sidebar {
-                width: 300px;
+                width: 200px;
                 padding-top: 40px;
-                margin-top: 10%;
+                margin-top: 0;
             }
 
             .sidebar a {
-                font-size: 20px;
+                font-size: 10px;
                 padding: 10px 20px;
+            }
+
+
+            .sidebar button {
+                font-size: 11px;
+                padding: 6px 6px;
+                margin: 6px;
             }
 
             .sidebar .closebtn {
@@ -210,24 +255,13 @@
             #main {
                 margin-left: 0;
             }
-        }
 
 
-        @media screen and (max-width: 480px) {
-            .sidebar {
-                width: 250px;
-                padding-top: 30px;
-                margin-top: 2%;
-            }
-
-            .sidebar a {
-                font-size: 13px;
-                padding: 8px 15px;
-            }
-
-            .sidebar .closebtn {
-                font-size: 24px;
-                right: 10px;
+            .app_logo {
+                width: 60px;
+                height: auto;
+                margin-left: 1px;
+                margin-right: auto;
             }
         }
 
@@ -239,7 +273,7 @@
             background-color: white;
             color: #02066F;
             margin: 20px;
-            font-size: 18px;
+            /* font-size: 18px; */
             border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
@@ -261,32 +295,47 @@
             height: 73.53px;
             margin-right: 20px;
         }
+        .report-setting-head{
+            margin-left: 23%;
+        }
+
+        @media (max-width:1190px) {
+            .report-setting-head{
+                margin-left: 0% !important;
+            }
+        }
     </style>
+
     <script defer src="report_setting.js"></script>
 </head>
 
 <body>
     <!-- Nav bar  -->
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white; border-bottom: 1px solid #02066F; padding: 5px 15px; height: 70px;">
+    <nav class="navbar navbar-expand-lg navbar-light"
+        style="background-color: white; border-bottom: 1px solid #02066F; padding: 5px 15px; height: 70px;">
         <div class="container-fluid">
-            <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="logo" id="web_logo" onclick="homePage()" style="height: 50px; width: auto; padding: 0; margin-top: -5px;">
-    
+            <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="logo" id="web_logo" onclick="homePage()"
+                style="height: 50px; width: auto; padding: 0; margin-top: -5px;">
+
             <button class="navbar-toggler" type="button" aria-label="Toggle navigation" style="padding: 0;">
                 <span class="navbar-toggler-icon"></span>
             </button>
-    
+
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
                 <div class="navbar-nav">
                     <a class="nav-link" href="device.html" style="color: #02066F; padding: 5px 10px;">Device</a>
-                    <a class="nav-link" href="employee_list.html" style="color: #02066F; padding: 5px 10px;">Employee Management</a>
+                    <a class="nav-link" href="employee_list.html" style="color: #02066F; padding: 5px 10px;">Employee
+                        Management</a>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle active" href="#service" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false" style="color: #02066F; padding: 5px 10px;">
                             Report
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="report_summary.html" style="padding: 5px;">Report Summary</a></li>
-                            <li><a class="dropdown-item" href="report_setting.html" style="padding: 5px;">Report Settings</a></li>
+                            <li><a class="dropdown-item" href="report_summary.html" style="padding: 5px;">Report
+                                    Summary</a></li>
+                            <li><a class="dropdown-item" href="report_setting.html" style="padding: 5px;">Report
+                                    Settings</a></li>
                         </ul>
                     </li>
                     <a class="nav-link " href="profile.html" style="color: #02066F; padding: 5px 10px;">Profile</a>
@@ -296,7 +345,7 @@
             </div>
         </div>
     </nav>
-    
+
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;">
         <img src="Image/Group 91.png" alt="Tap Time Logo" class="app_logo">
@@ -336,16 +385,17 @@
         <div class="overlay" id="overlay">
             <div class="spinner"></div>
         </div>
+
         <div class="container mt-5">
             <div class="emp-list">
                 <div class="row">
                     <div class="col-6">
-                        <h3 class="text-center fw-bold mb-3">Report Settings</h3>
+                        <h3 class="fw-bold mb-3 report-setting-head">Report Settings</h3>
                     </div>
                     <div class="col-6">
-                        <span style="float:right;"><button class="btn float-end" onclick="dataRemove()" data-bs-toggle="modal"
-                            data-bs-target="#myModal" id="add-entry">Add
-                            Entry</button></span>
+                        <span style="float:right;"><button class="btn float-end addEntryBtnStyle" onclick="dataRemove()"
+                                data-bs-toggle="modal" data-bs-target="#myModal" id="add-entry">Add
+                                Entry</button></span>
                     </div>
                 </div>
 
@@ -367,14 +417,14 @@
                         <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel"
                             aria-hidden="true">
                             <div class="modal-dialog">
-                                <div class="modal-content" style="width:500px;">
+                                <div class="modal-content modal-content-style" style="width: 350px;">
                                     <!-- <div class="modal-header">
                                         <h5 class="modal-title fw-bold" id="myModalLabel" style="margin: 0 auto; text-align: center;">Report Details</h5>
                                         <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close" ></button>
                                     </div> -->
                                     <div class="modal-header">
-                                        <h5 class="modal-title fw-bold" id="myModalLabel"
-                                            style="text-align: center; width: 100%;">Report Details</h5>
+                                        <h5 class="modal-title fw-bold" id="myModalLabel" style="text-align: center">
+                                            Report Details</h5>
 
                                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -383,15 +433,20 @@
 
                                     <div class="modal-body">
                                         <form id="emp_form" class="p-2 text-center">
-                                            <div class="material-textfield mb-3">
-                                                <input id="remail" placeholder="" type="email" required
+                                            <!-- <div class="material-textfield mb-3"> -->
+                                            <!-- <input id="remail" placeholder="" type="email" required
                                                     style="width: 100%; padding: 10px; font-size: 16px; margin: 5px;"
                                                     onblur="validREmail()">
-                                                <label class="cemail">Email</label>
-                                                <span id="error-email" class="text-danger"
-                                                    style="width: 100% !important;"></span>
-                                            </div>
-                                            <div class="material-textfield mb-3">
+                                                <label class="cemail">Email</label> -->
+
+                                            <input type="email" id="remail" placeholder="Email"
+                                                class="all-input-style mb-3" required>
+
+                                            <span id="error-email" class="text-danger"
+                                                style="width: 100% !important;"></span>
+                                            <!-- </div> -->
+                                            <!-- <div class="material-textfield mb-3"> -->
+                                            <div class="all-input-style">
                                                 <select id="frequencySelect" class="selectpicker" multiple
                                                     aria-label="size 3 select example" onchange="validReportDays()">
                                                     <option value="Daily">Daily</option>
@@ -404,8 +459,10 @@
                                                 <br>
                                                 <span id="selectError" class="error text-danger"></span>
                                             </div>
+                                            <!-- </div> -->
 
-                                            <button type="button" id="savebtn" class="settings-btn-sty btn btn-green"
+                                            <button type="button" id="savebtn"
+                                                class="settings-btn-sty btn btn-green mt-2"
                                                 onclick="addreportdetails(event)" data-bs-toggle="modal"
                                                 data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
                                                 Save
@@ -418,7 +475,7 @@
                         </div>
                     </div>
                 </div>
-                <h3 class="fw-bold mb-4 mt-5" style="margin-left: 155px;">Report View Settings</h3>
+                <h3 class="fw-bold mb-4 mt-5 report-view-style" style="margin-left: 155px;">Report View Settings</h3>
 
 
                 <div class="emp-table table-responsive">
@@ -448,18 +505,18 @@
                                     <div class="modal-body">
                                         <form id="emp_form" class="p-2 text-center">
 
-                                            <div class="material-textfield mb-3">
-                                                <select id="frequencySelect2" class="selectpicker" multiple
-                                                    aria-label="size 3 select example" onchange="validReportDays2()">
-                                                    <option value="Weekly">Weekly</option>
-                                                    <option value="Biweekly">Biweekly</option>
-                                                    <option value="Monthly">Monthly</option>
-                                                    <option value="Bimonthly">Bimonthly</option>
-                                                </select>
-                                                <label class="cfrequency"></label>
-                                                <br>
-                                                <span id="selectError2" class="error text-danger"></span>
-                                            </div>
+                                            <!-- <div class="material-textfield mb-3"> -->
+                                            <select id="frequencySelect2" class="selectpicker" multiple
+                                                aria-label="size 3 select example" onchange="validReportDays2()">
+                                                <option value="Weekly">Weekly</option>
+                                                <option value="Biweekly">Biweekly</option>
+                                                <option value="Monthly">Monthly</option>
+                                                <option value="Bimonthly">Bimonthly</option>
+                                            </select>
+                                            <label class="cfrequency"></label>
+                                            <br>
+                                            <span id="selectError2" class="error text-danger"></span>
+                                            <!-- </div> -->
                                             <button type="button" id="savebtn2" class="settings-btn-sty btn btn-green"
                                                 onclick="updateReportdetails(event)" data-bs-toggle="modal"
                                                 data-bs-target="#staticBackdrop" data-bs-dismiss="modal">

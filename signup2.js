@@ -5,7 +5,7 @@ function validateFirstName() {
     const firstName = document.getElementById('firstName').value;
     const errorFirstName = document.getElementById('errorFirstName');
     if (firstName.trim() === '') {
-        errorFirstName.textContent = 'First name is required';
+        errorFirstName.textContent = '';
         return false;
     } else if (!isAlpha.test(firstName)) {
         errorFirstName.textContent = 'Only use letters and spaces';
@@ -19,7 +19,7 @@ function validateLastName() {
     const lastName = document.getElementById('lastName').value;
     const errorLastName = document.getElementById('errorLastName');
     if (lastName.trim() === '') {
-        errorLastName.textContent = 'Last name is required';
+        errorLastName.textContent = '';
         return false;
     } else if (!isAlpha.test(lastName)) {
         errorLastName.textContent = 'Only use letters and spaces';
@@ -29,16 +29,16 @@ function validateLastName() {
     return true;
 }
 
-function validateAddress() {
-    const address = document.getElementById('address').value;
-    const errorAddress = document.getElementById('errorAddress');
-    if (address.trim() === '') {
-        errorAddress.textContent = 'Address is required';
-        return false;
-    }
-    errorAddress.textContent = '';
-    return true;
-}
+// function validateAddress() {
+//     const address = document.getElementById('address').value;
+//     const errorAddress = document.getElementById('errorAddress');
+//     if (address.trim() === '') {
+//         errorAddress.textContent = 'Address is required';
+//         return false;
+//     }
+//     errorAddress.textContent = '';
+//     return true;
+// }
 
 function validatePhoneNumber() {
     const countryCode = iti.getSelectedCountryData().dialCode;
@@ -56,54 +56,62 @@ function validatePhoneNumber() {
     return true;
 }
 
-function validateEmail() {
-    const email = document.getElementById('email').value;
-    const errorEmail = document.getElementById('errorEmail');
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (email.trim() === '') {
-        errorEmail.textContent = 'Email is required';
-        return false;
-    } else if (!emailPattern.test(email)) {
-        errorEmail.textContent = 'Invalid email format';
-        return false;
-    }
-    errorEmail.textContent = '';
-    return true;
-}
+// function validateEmail() {
+//     const email = document.getElementById('email').value;
+//     const errorEmail = document.getElementById('errorEmail');
+//     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//     if (email.trim() === '') {
+//         errorEmail.textContent = 'Email is required';
+//         return false;
+//     } else if (!emailPattern.test(email)) {
+//         errorEmail.textContent = 'Invalid email format';
+//         return false;
+//     }
+//     errorEmail.textContent = '';
+//     return true;
+// }
 
 // API link 
 // Signup second page link
+
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/customer';
 const cid = uuid.v4();
 const firstSignupPageapiUrlBase = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company`;
 
-async function validateForm() {
+async function validateForm(event) {
+    event.preventDefault();
     document.getElementById('overlay').style.display = 'flex';
     const isFirstNameValid = validateFirstName();
     const isLastNameValid = validateLastName();
+    let isRequiredFieldsValid = true;
+    let inputs = document.querySelectorAll('.all-input-style');
 
-    const custStreet =
-   requriedCheck(document.getElementById('customerStreet'),
-   document.getElementById('errorStreet'));
-   const custCity =
-   requriedCheck(document.getElementById('customerCity'),
-   document.getElementById('errorCity'));
-   const custState =
-   requriedCheck(document.getElementById('customerState'),
-   document.getElementById('errorState'));
-   const custpZip =
-   requriedCheck(document.getElementById('customerZip'),
-   document.getElementById('errorZip'));
+    // Required atribute validation check 
+    inputs.forEach(input => {
+        if (input.hasAttribute('required') && input.value.trim() === "") {
+            isRequiredFieldsValid = false;
+        }
+    });
+
+//     const custStreet =
+//    requriedCheck(document.getElementById('customerStreet'),
+//    document.getElementById('errorStreet'));
+//    const custCity =
+//    requriedCheck(document.getElementById('customerCity'),
+//    document.getElementById('errorCity'));
+//    const custState =
+//    requriedCheck(document.getElementById('customerState'),
+//    document.getElementById('errorState'));
+//    const custpZip =
+//    requriedCheck(document.getElementById('customerZip'),
+//    document.getElementById('errorZip'));
 
     const isPhoneNumberValid = validPhoneno();
     // const isCentreNameValid = validateCentreName();
-    const isEmailValid = validateEmail();
+    // const isEmailValid = validateEmail();
 
     if (isFirstNameValid && isLastNameValid && 
-        custState &&
-        custCity &&
-        custStreet &&
-        custpZip && isPhoneNumberValid && isEmailValid) {
+         isPhoneNumberValid && isRequiredFieldsValid ) {
         document.querySelector('.progress-bar').style.width = '100%';
 
         const companyStreet = localStorage.getItem('companyStreet');
@@ -164,7 +172,7 @@ async function craeteFirstPageSignupAPiData() {
         ReportType: "Weekly",
         LastModifiedBy:'Admin'
     };
-    console.log(userData);
+  
 
     try {
         const response = await fetch(firstSignupPageapiUrl, {
@@ -193,9 +201,9 @@ async function craeteFirstPageSignupAPiData() {
                 }, 100);
             }
         }
-        //   console.log(data);
+        //   .log(data);
     } catch (error) {
-        console.error('Error:', error);
+        
     }
 }
 
@@ -250,7 +258,7 @@ async function checkPassword() {
 
         return encryptedPassword.toString();
     } catch (error) {
-        console.error('Error:', error);
+    
     }
 }
 
@@ -278,6 +286,7 @@ function createApiData() {
 
     localStorage.setItem('phone', phone);
     localStorage.setItem('email', email);
+    localStorage.setItem('customerID',customerId);
 
     const userData = {
         CustomerID: customerId.toString(), // Example value
@@ -309,11 +318,11 @@ function createApiData() {
             return response.json();
         })
         .then(data => {
-            console.log(data);
+      
             window.location.href = "login.html";
         })
         .catch(error => {
-            console.error('Error:', error);
+           
         });
 }
 
@@ -326,7 +335,7 @@ function validPhoneno() {
     const phoneRegex = /^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/;
 
     if (phoneNumber === "") {
-        phoneError.textContent = 'Enter phone number.';
+        phoneError.textContent = '';
         return false;
     } else if (!phoneRegex.test(phoneNumber)) {
         phoneError.textContent = 'Invalid phone number.';
@@ -375,24 +384,24 @@ async function createCheckoutSession() {
             throw new Error(errorDetails.error);
         }
         const session = await response.json();
-        console.log('Checkout session:', session);
+        
         const stripe = Stripe('pk_test_51OB8JlIPoM7JHRT2DlaE8KmPRFkgeSXkqf4eQZxEahu0Lbno3vHzCTH5J4rDAfw53PjdWlLteNJNzPVdahkzTb8100DA6sqAp4');
         await stripe.redirectToCheckout({ sessionId: session.id });
     } catch (error) {
-        console.error('Error creating checkout session:', error);
+      
     }
 }
 
 // required filed 
-function requriedCheck(id,msg){
-    const getId = id.value;
-    if(getId.trim() === ''){
-      msg.textContent = 'This field is required';
-        return false;
-    }
-    msg.textContent = '';
-    return true;
-}
+// function requriedCheck(id,msg){
+//     const getId = id.value;
+//     if(getId.trim() === ''){
+//       msg.textContent = 'This field is required';
+//         return false;
+//     }
+//     msg.textContent = '';
+//     return true;
+// }
 
  // Side BAR 
 

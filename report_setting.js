@@ -163,7 +163,7 @@ function addreportdetails() {
 
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                   
                 });
         }
 
@@ -340,7 +340,7 @@ function deleteEmpdetails(companyEmail) {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+           
             ;
         });
 }
@@ -456,10 +456,10 @@ function addreportdetails(event) {
 
     if (isEmailValid && isDaysValid) {
         // Proceed with saving the details
-        console.log("Report details saved successfully.");
+       
     } else {
         event.preventDefault(); // Prevent modal close if validation fails
-        console.log("Fix validation errors before submitting.");
+        
     }
 }
 
@@ -496,7 +496,7 @@ function updateReportdetails() {
             CID: company_id,
             ReportType: selectedValues[0]
         };
-        console.log(reportObject);
+        
 
         fetch(apiUrl, {
             method: 'PUT',
@@ -520,7 +520,7 @@ function updateReportdetails() {
                 }, 1000);
             } else {
                 localStorage.setItem("reportType", selectedValues[0]);
-                console.log(selectedValues[0]);
+              
                 $(".success-msg").show();
                 setTimeout(function () {
                     $(".success-msg").hide();
@@ -529,7 +529,7 @@ function updateReportdetails() {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+           
         });
     } else {
         document.getElementById('selectError2').textContent = '';

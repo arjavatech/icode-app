@@ -1,23 +1,24 @@
-<!DOCTYPE html>  
-<html lang="en">  
-  
-<head>  
- <meta charset="UTF-8">  
- <meta name="viewport" content="width=device-width, initial-scale=1.0">  
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"  
-  integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">  
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"  
-   integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"  
-   crossorigin="anonymous"></script>  
- <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>  
- <script defer src="signup.js"></script>  
- <link rel="stylesheet" href="employee_list.css">  
- <link rel="icon" href="Image/app_logo.png">  
- <link rel="stylesheet" href="web_nav.css">
- <!-- <link rel="stylesheet" href="nav.css"> -->
- <title>Tap time</title>  
-  <style>  
-    body {
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+    <script defer src="signup.js"></script>
+    <link rel="stylesheet" href="employee_list.css">
+    <link rel="icon" href="Image/app_logo.png">
+    <link rel="stylesheet" href="web_nav.css">
+    <link rel="stylesheet" href="inputs.css">
+    <!-- <link rel="stylesheet" href="nav.css"> -->
+    <title>Tap time</title>
+    <style>
+        body {
             /* overflow-y: hidden !important; */
             overflow-x: hidden !important;
         }
@@ -54,18 +55,20 @@
                 transform: rotate(360deg);
             }
         }
-        .navbar-toggler {
-        background-color: #02066F;
-        color: white;
-        border: 2px solid white;
-        padding: 10px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    }
 
-    .navbar-toggler-icon {
-        background-color: white;
-    }
+        .navbar-toggler {
+            background-color: #02066F;
+            color: white;
+            border: 2px solid white;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .navbar-toggler-icon {
+            background-color: white;
+        }
+
         .nav-link {
             position: relative;
             display: inline-block;
@@ -74,7 +77,7 @@
             /* Removes underline from links */
             color: gray !important;
             /* Sets the text color */
-            margin: 0 25px;
+            margin: 0 28px;
             /* Adds horizontal margin */
             font-size: 17px;
             /* Sets the font size */
@@ -139,14 +142,14 @@
             font-weight: bold;
         }
 
-        .col-sty {  
- min-height: 100vh;  
- background-color: #D9E9FB;  
- display: flex;  
- flex-direction: column;  
- justify-content: center;  
- align-items: center;  
-}
+        .col-sty {
+            min-height: 100vh;
+            background-color: #D9E9FB;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
         .btn-green {
             background-color: #02066F;
@@ -206,7 +209,7 @@
             #logo {
                 width: 40% !important;
             }
-            
+
 
             .forget-password {
                 flex-direction: column;
@@ -254,7 +257,7 @@
             /* nav {
                 display: block !important;
             } */
-            body{
+            body {
                 overflow-x: hidden !important;
             }
         }
@@ -271,7 +274,8 @@
             .span-content {
                 font-size: 1rem;
             }
-            body{
+
+            body {
                 overflow-x: hidden !important;
             }
         }
@@ -302,11 +306,11 @@
             #logo {
                 width: 50% !important;
             }
-            
+
         }
 
         @media (max-width:350px) {
-            h4{
+            h4 {
                 font-size: 14px;
             }
         }
@@ -329,32 +333,34 @@
 
         /* address box  */
 
-        .caddsty{
-            border: 1px solid #02066F;
+        .caddsty {
+            border: 2px solid #02066F;
             border-radius: 10px;
 
         }
 
-        .caddHeadSty{
+        .caddHeadSty {
             color: #02066F;
+            font-weight: bold;
         }
 
         @media (max-width:800px) {
-            .p-3{
+            .p-3 {
                 padding: 4px !important;
             }
         }
 
         @media (max-width:767px) {
-            body{
+            body {
                 overflow-y: scroll !important;
             }
         }
 
         @media (max-width:245px) {
-            .container-sty{
+            .container-sty {
                 margin-left: 100px !important;
             }
+
             .material-textfield input {
                 padding-left: 100px !important;
                 padding-right: 100px !important;
@@ -367,15 +373,18 @@
                 padding-right: 70px !important;
             }
         }
-  </style>  
-</head>  
-<body>  
+    </style>
+</head>
 
-     <!-- NAV BAR  -->
-     <nav class="navbar navbar-expand-lg" id="navbar" style="background-color: white; padding: 5px 15px; height: 70px; border-bottom: 1px solid #02066F;">
+<body>
+
+    <!-- NAV BAR  -->
+    <nav class="navbar navbar-expand-lg" id="navbar"
+        style="background-color: white; padding: 5px 15px; height: 70px; border-bottom: 1px solid #02066F;">
         <!-- Hamburger menu -->
         <a class="logo" href="index.html">
-            <img src="web_Image/app_logo.png" alt="arjava_logo" class="logo" style="height: 50px; width: auto; padding: 0; margin-top: -5px;">
+            <img src="web_Image/app_logo.png" alt="arjava_logo" class="logo"
+                style="height: 50px; width: auto; padding: 0; margin-top: -5px;">
         </a>
         <button class="navbar-toggler" type="button" aria-label="Toggle navigation" style="padding: 0;">
             <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span>
@@ -383,139 +392,167 @@
         <div class="collapse navbar-collapse justify-content-end" id="menu">
             <ul class="navbar-nav">
                 <li class="nav-item mr-5">
-                    <a class="nav-link nav-links" href="index.html" style="color: #02066F; padding: 5px 10px;">Home</a>
+                    <a class="nav-link nav-links" href="index.html">Home</a>
                 </li>
                 <li class="nav-item mr-5">
-                    
-                        <a class="nav-link nav-links" href="login.html" style="color: #02066F; padding: 5px 10px;">login</a>
-                    
+                    <a class="nav-link nav-links" href="login.html">Login</a>
                 </li>
                 <li class="nav-item mr-5">
                     <div class="active">
-                    <a class="nav-link nav-links" href="#" style="color: #02066F; padding: 5px 10px;">Register</a>
+                        <a class="nav-link nav-links" href="#">Register</a>
                     </div>
                 </li>
                 <li class="nav-item mr-5">
-                    <a class="nav-link nav-links" href="index.html#contact" style="color: #02066F; padding: 5px 10px;">Contact Us</a>
+                    <a class="nav-link nav-links" href="index.html#contact">Contact Us</a>
                 </li>
                 <li class="nav-item mr-5">
-                    <a class="nav-link nav-links" href="web_privacy_policy.html" style="color: #02066F; padding: 5px 10px;">Privacy Policy</a>
-                    
+                    <a class="nav-link nav-links" href="web_privacy_policy.html">Privacy Policy</a>
+
                 </li>
             </ul>
         </div>
     </nav>
-  
- <!-- SIDE BAR -->  
- <div id="sidebar" class="sidebar">  
-  <img src="Image/Group 91.png" alt="Tap Time Logo" class="app_logo">  
-   <a href="index.html">Home</a>  
-   <a href="login.html">Login</a>  
-  <a href="#">Register</a>  
-   <a href="index.html#contact">Contact Us</a>  
-  <a href="web_privacy_policy.html">Privacy Policy</a>  
-  </div>  
-  
- <!-- Rest of the signup page content here -->  
- <div class="row" style="height: auto;">
-    <div
-    class="col-sm-12 col-xl-6 col-md-6 col-lg-6 col-sty d-flex flex-column justify-content-center align-items-center">
-        <img src="Image/icode logo 2 (1).png" alt="" class=" p-5 img-fluid login-img-sty">
-        <h3 class="text-center">Join Us Today</h3>
-        <p class="text-center">Create an account to unlock seamless time tracking and boost <br> your team's
-            efficiency.</p>
+
+    <!-- SIDE BAR -->
+    <div id="sidebar" class="sidebar">
+        <img src="Image/Group 91.png" alt="Tap Time Logo" class="app_logo">
+        <a href="index.html">Home</a>
+        <a href="login.html">Login</a>
+        <a href="#">Register</a>
+        <a href="index.html#contact">Contact Us</a>
+        <a href="web_privacy_policy.html">Privacy Policy</a>
     </div>
-    <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6 example d-flex justify-content-center align-items-center">
-        <div class="container container-sty p-4 text-center">
-            <h2 class="text-center m-3">Signup</h2>
-            <div class="progress-container">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
-                        aria-valuemax="100" style="width:0%">
-                    </div>
-                </div>
+
+    <!-- Rest of the signup page content here -->
+    <div class="row" style="height: auto;">
+        <div
+            class="col-sm-12 col-xl-6 col-md-6 col-lg-6 col-sty d-flex flex-column justify-content-center align-items-center">
+            <img src="Image/icode logo 2 (1).png" alt="" class=" p-5 img-fluid login-img-sty">
+            <h3 class="text-center">Join Us Today</h3>
+            <p class="text-center">Create an account to unlock seamless time tracking and boost <br> your team's
+                efficiency.</p>
+        </div>
+        <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6 example d-flex justify-content-center align-items-center">
+            <div class="overlay" id="overlaying">
+                <div class="spinner"></div>
             </div>
-            <div class="material-textfield mt-4">
-                <div class="text-danger" id="totalError"></div>
-                <input id="companyName" placeholder=" " type="text" onblur="validateCompanyName()"
+            <div class="container container-sty p-4 text-center">
+                <form id="signupForm">
+                    <h2 class="text-center m-3">Signup</h2>
+                    <div class="progress-container mb-3">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                aria-valuemax="100" style="width:0%">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="material-textfield mt-4"> -->
+                    <div class="text-danger" id="totalError"></div>
+                    <!-- <input id="companyName" placeholder=" " type="text" onblur="validateCompanyName()"
                     class="input-sty">
                 <label class="label-sty">Company Name</label>
-                <br>
-                <span class="text-danger d-flex justify-content-center" id="errorCompanyName"></span>
-            </div>
-            <div class="material-textfield mt-4">
+                <br> -->
+                    <input type="text" id="companyName" onblur="validateCompanyName()" placeholder="Company Name"
+                        class="all-input-style mb-3" required>
+                    <span class="text-danger d-flex justify-content-center" id="errorCompanyName"></span>
+                    <!-- </div> -->
+                    <!-- <div class="material-textfield mt-4">
                 <input id="companyLogo" placeholder=" " type="file" onblur="validateCompanyLogo()" accept="image/png,image/jpeg,image/jpg"
                     class="input-sty">
                 <label class="label-sty">Upload Company Logo</label>
                 <br>
                 <span class="text-danger d-flex justify-content-center" id="errorCompanyLogo"></span>
-            </div>
-            <div class="caddsty p-3">
-                <p class="text-center caddHeadSty">Company Address</p>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="material-textfield mt-4">
+            </div> -->
+                    <input type="file" id="companyLogo" placeholder="Upload Company Logo" class="all-input-style mb-3"
+                        accept="image/png,image/jpeg,image/jpg" required>
+
+                    <div class="caddsty p-3 mb-3">
+                        <p class="text-center caddHeadSty">Company Address</p>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- <div class="material-textfield mt-4">
                             <input id="companyStreet" placeholder=" " class="input-sty">
                             <label class="label-sty">Company Street</label>
                             <br>
                             <span class="text-danger d-flex justify-content-center" id="errorStreetAddress"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="material-textfield mt-4">
+                        </div> -->
+                                <input type="text" id="companyStreet" placeholder="Company Street"
+                                    class="all-input-style mb-3" required>
+                            </div>
+                            <div class="col-sm-6">
+                                <!-- <div class="material-textfield mt-4">
                             <input id="companyCity" placeholder=" " class="input-sty"
                             >
                             <label class="label-sty">Company City</label>
                             <br>
                             <span class="text-danger d-flex justify-content-center" id="errorCityAddress"></span>
-                        </div>
-                    </div>
-                </div>
+                        </div> -->
+                                <input type="text" id="companyCity" placeholder="Company City"
+                                    class="all-input-style mb-3" required>
 
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="material-textfield mt-4">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- <div class="material-textfield mt-4">
                             <input id="companyState" placeholder=" " class="input-sty">
                             <label class="label-sty">Company State</label>
                             <br>
                             <span class="text-danger d-flex justify-content-center" id="errorStateAddress"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="material-textfield mt-4">
+                        </div> -->
+                                <input type="text" id="companyState" placeholder="Company State"
+                                    class="all-input-style mb-3" required>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <!-- <div class="material-textfield mt-4">
                             <input id="companyZip" placeholder=" " class="input-sty"
                             >
                             <label class="label-sty">Company Zip</label>
                             <br>
                             <span class="text-danger d-flex justify-content-center" id="errorZipAddress"></span>
+                        </div> -->
+                                <input type="text" id="companyZip" placeholder="Company Zip"
+                                    class="all-input-style mb-3" required>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="material-textfield mt-4">
+                    <!-- <div class="material-textfield mt-4">
                 <input id="username" placeholder=" " type="text" onblur="validateUsername()" class="input-sty">
                 <label class="label-sty">Username</label>
                 <br>
                 <span class="text-danger d-flex justify-content-center" id="errorUsername"></span>
-            </div>
-            <div class="material-textfield mt-4">
+            </div> -->
+                    <input type="text" id="username" placeholder="Username" class="all-input-style mb-3"
+                        onblur="validateUsername()" required>
+                    <span class="text-danger d-flex justify-content-center" id="errorUsername"></span>
+
+                    <!-- <div class="material-textfield mt-4">
                 <input id="password" placeholder=" " type="password" onblur="validatePassword()" class="input-sty">
                 <label class="label-sty">Password</label>
                 <br>
                 <span class="text-danger d-flex justify-content-center" id="errorPassword"></span>
+            </div> -->
+                    <input type="password" id="password" placeholder="Password" class="all-input-style mb-3"
+                        onblur="validatePassword()" required>
+                    <span class="text-danger d-flex justify-content-center" id="errorPassword"></span>
+
+                    <input type="submit" class="btn btn-green mt-3" id="submitButton" value="Next"
+                        onclick="validateForm(event)" />
+
+                </form>
             </div>
-            <button type="button" class="btn btn-green mt-3" onclick="validateForm()">Next</button>
         </div>
     </div>
-</div>
 </body>
 
 </html>
 
 
 
-    <!-- <style>
+<!-- <style>
         /* Loading  */
         .overlay {
             display: none;
@@ -822,5 +859,3 @@
         }
 
     </style> -->
-    
-

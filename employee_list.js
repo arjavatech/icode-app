@@ -1,19 +1,42 @@
 
 const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/employee';
-let adminCount = 0;
-// function showProgressIndicator() {
-//     document.getElementById('overlay').style.display = 'flex';
-// }
+var adminCount = 0;
 
-// function hideProgressIndicator() {
-//     document.getElementById('overlay').style.display = 'none';
-// }
+// When I click close modal with have any error in this form we need to clear all error msg 
+$('#myModal').on('hidden.bs.modal', function () {
+    // Clear error messages
+    $('#showMsg1').text(''); // Clear First Name error
+    $('#showMsg2').text(''); // Clear Last Name error
+    $('#showMsg3').text(''); // Clear Phone Number error
 
+});
 
+document.getElementById('emp_form').addEventListener('submit', function(event) {
+    // Check if the form is valid before running custom code
+    if (this.checkValidity()) {
+        event.preventDefault(); // Prevent form from submitting immediately
+        addEmpdetails(event); // Call your custom function
+    } else {
+        // Allow HTML5 validation messages to appear
+        event.preventDefault(); // Prevent form from submitting if invalid
+        this.reportValidity(); // Show the default browser validation messages
+    }
+});
 
 // Remove Data
 
-function dataRemove(e) {
+function dataRemove(getid) {
+    if(getid == 'empDetail'){
+        document.getElementById('Dropdown').classList.add('none');
+    }
+    else{
+        document.getElementById('myModalLabel').textContent = 'Admin Details';
+        document.getElementById('Dropdown').classList.remove('none');
+    }
+    document.getElementById('mainBtn').value = 'Submit';
+    const formModalElement = document.getElementById('myModal');
+    const formModalInstance = new bootstrap.Modal(formModalElement);
+    formModalInstance.show();
     document.getElementById("instructor").value = "";
     document.getElementById("fName").value = "";
     document.getElementById("lName").value = "";
@@ -48,11 +71,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Create Data
 
-function addEmpdetails() {
+function addEmpdetails(event) {
+    event.preventDefault();
+
     const isValidFName = validFName();
     const isValidLName = validLName();
     const isValidPhoneNumber = formatPhoneNumber();
-    if (isValidFName && isValidLName && isValidPhoneNumber) {
+    let isRequiredFieldsValid = true;
+    let inputs = document.querySelectorAll('.all-input-style');
+
+    // Required atribute validation check 
+    inputs.forEach(input => {
+        if (input.hasAttribute('required') && input.value.trim() === "") {
+            isRequiredFieldsValid = false;
+        }
+    });
+
+    if (isValidFName && isValidLName && isValidPhoneNumber && isRequiredFieldsValid) {
+        $('#myModal').modal('hide');
+
         const empupdateid = document.getElementById("savebtn").value;
         const empfname = document.getElementById("fName").value;
         const emplname = document.getElementById("lName").value;
@@ -110,7 +147,7 @@ function addEmpdetails() {
 
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                
                 });
         } else {
             const apiUrl = `${apiUrlBase}/update/${empupdateid}`;
@@ -159,7 +196,7 @@ function addEmpdetails() {
 
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    
                 });
         }
 
@@ -210,13 +247,23 @@ function viewEmpdetails() {
             adminCount = 0;
             // Populate the table body with fetched data
             employeesData.forEach(element => {
+                    document.getElementById("Dropdown").disabled = false;
+                    document.getElementById("Dropdown").value = "false";
                 
-
-                if(adminCount >= 3){
+                console.log("adc= "+adminCount)
+               
+                 if(adminCount > 2)
+                {
+                    
+                    document.getElementById('add-entry-admin').disabled = true;
+                    document.getElementById('add-entry-admin').style.backgroundColor = '#A0A0A0';
+                    document.getElementById('add-entry-admin').style.color = '	#141414';
+                    document.getElementById('add-entry-admin').style.cursor = 'not-allowed';
                     document.getElementById("Dropdown").disabled = true;
                     document.getElementById("Dropdown").value = "false";
                 }
-                else{
+                else
+                {
                     document.getElementById("Dropdown").disabled = false;
                     document.getElementById("Dropdown").value = "false";
                 }
@@ -237,13 +284,17 @@ function viewEmpdetails() {
                 `;
                 // tableBody.appendChild(newRow);
                 if(element.IsAdmin == 0){
+                   
                     tableBody.appendChild(newRow);
                 }
                 else{
                     if(adminCount<3){
-                    tableBody2.appendChild(newRow); 
+                       
+                    tableBody2.appendChild(newRow);
+                    
                     }
-                    adminCount+=1;
+                    adminCount+=1;  
+                    console.log(adminCount);
                 }
                 index++;
                 if(index===5){
@@ -263,7 +314,7 @@ function viewEmpdetails() {
             document.getElementById('overlay').style.display = 'none';
         })
         .catch(error => {
-            console.error('Fetch error:', error);
+        
             document.getElementById('overlay').style.display = 'none';
         });
 }
@@ -280,6 +331,7 @@ document.getElementById('overlay').style.display = 'flex';
 function editEmpdetails(emId) {
     document.getElementById("showMsg1").textContent = "";
     document.getElementById("showMsg2").textContent = "";
+    document.getElementById('mainBtn').value = "Update";
     const apiUrl = `${apiUrlBase}/get/` + emId;
     fetch(apiUrl)
         .then(response => {
@@ -299,7 +351,7 @@ function editEmpdetails(emId) {
             });
         })
         .catch(error => {
-            console.error('Error:', error);
+       
         });
 }
 
@@ -307,7 +359,6 @@ function editEmpdetails(emId) {
 
 function deleteEmpdetails(emId) {
     const apiUrl = `${apiUrlBase}/delete/${emId}/Admin`;
-
     fetch(apiUrl, {
         method: 'PUT'
     })
@@ -335,8 +386,8 @@ function deleteEmpdetails(emId) {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
-            ;
+      
+            
         });
 }
 
@@ -349,7 +400,7 @@ function validFName() {
     const fname = document.getElementById('fName').value;
     const errorFName = document.getElementById('showMsg1');
     if (fname.trim() === '') {
-        errorFName.textContent = 'First name is required';
+        errorFName.textContent = '';
         return false;
     }
     else if (!isAlpha.test(fname)) {
@@ -364,7 +415,7 @@ function validLName() {
     const lname = document.getElementById('lName').value;
     const errorLName = document.getElementById('showMsg2');
     if (lname.trim() === '') {
-        errorLName.textContent = 'Last name is required';
+        errorLName.textContent = '';
         return false;
     }
     else if (!isAlpha.test(lname)) {
@@ -377,16 +428,16 @@ function validLName() {
 
 
 
-function validateInstructerPin() {
-    const instructerPin = document.getElementById('instructor').value;
-    const errorInstructerPin = document.getElementById('showMsg');
-    if (instructerPin.trim() === '') {
-        errorInstructerPin.textContent = 'Instructer pin is required';
-        return false;
-    }
-    errorInstructerPin.textContent = '';
-    return true;
-}
+// function validateInstructerPin() {
+//     const instructerPin = document.getElementById('instructor').value;
+//     const errorInstructerPin = document.getElementById('showMsg');
+//     if (instructerPin.trim() === '') {
+//         errorInstructerPin.textContent = 'Instructer pin is required';
+//         return false;
+//     }
+//     errorInstructerPin.textContent = '';
+//     return true;
+// }
 
 
 function formatPhoneNumber() {
@@ -413,7 +464,7 @@ function formatPhoneNumber() {
     const phoneRegex = /^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/;
 
     if (phoneNumber === "") {
-        phoneError.textContent = 'Enter phone number.';
+        phoneError.textContent = '';
         return false;
     } else if (!phoneRegex.test(phoneNumber)) {
         phoneError.textContent = 'Invalid phone number.';
@@ -478,22 +529,4 @@ function filterAdmin() {
     });
 }
 
-// Dummy functions for modal actions
-function addEmpdetails(event) {
-    // Logic to save employee details
-    console.log("Employee details added");
-}
 
-function addAdminDetails(event) {
-    // Logic to save admin details
-    console.log("Admin details added");
-}
-
-function validFName() { /* Validation Logic */ }
-function validLName() { /* Validation Logic */ }
-function validAdminFName() { /* Validation Logic */ }
-function validAdminLName() { /* Validation Logic */ }
-function formatPhoneNumber() { /* Phone Number Formatting */ }
-function formatAdminPhoneNumber() { /* Admin Phone Number Formatting */ }
-function validateInstructerPin() { /* Validation Logic */ }
-function validateAdminInstructerPin() { /* Validation Logic */ }

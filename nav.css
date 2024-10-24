@@ -1,3 +1,11 @@
+@media (max-width:991px) {
+    .sidebar button {
+        margin-left: 40px !important;
+    }
+}
+
+
+
 /* Style for the donate button */
 #dnt-btn {
     /* background-color: #fbb801; */
@@ -457,6 +465,9 @@
     .logoutButton{
         width: 70% !important;
         font-size: 10px !important;
+    }
+    .sidebar button{
+        margin-left: 10px !important;
     }
     .sidebar a{
         font-size: 10px !important;

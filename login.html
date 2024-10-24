@@ -13,6 +13,7 @@
     <link rel="icon" href="Image/app_logo.png">
     <!-- <link rel="stylesheet" href="nav.css"> -->
     <link rel="stylesheet" href="web_nav.css">
+    <link rel="stylesheet" href="inputs.css">
     <title>Tap time</title>
     <style>
         body {
@@ -339,21 +340,21 @@
         <div class="collapse navbar-collapse justify-content-end" id="menu">
             <ul class="navbar-nav">
                 <li class="nav-item mr-5">
-                    <a class="nav-link nav-links" href="index.html" style="color: #02066F; padding: 5px 10px;">Home</a>
+                    <a class="nav-link nav-links" href="index.html">Home</a>
                 </li>
                 <li class="nav-item mr-5">
                     <div class="active">
-                        <a class="nav-link nav-links" href="#" style="color: #02066F; padding: 5px 10px;">login</a>
+                        <a class="nav-link nav-links" href="#">Login</a>
                     </div>
                 </li>
                 <li class="nav-item mr-5">
-                    <a class="nav-link nav-links" href="signup.html" style="color: #02066F; padding: 5px 10px;">Register</a>
+                    <a class="nav-link nav-links" href="singup.html">Register</a>
                 </li>
                 <li class="nav-item mr-5">
-                    <a class="nav-link nav-links" href="index.html#contact" style="color: #02066F; padding: 5px 10px;">Contact Us</a>
+                    <a class="nav-link nav-links" href="index.html#contact">Contact Us</a>
                 </li>
                 <li class="nav-item mr-5">
-                    <a class="nav-link nav-links" href="web_privacy_policy.html" style="color: #02066F; padding: 5px 10px;">Privacy Policy</a>
+                    <a class="nav-link nav-links" href="web_privacy_policy.html">Privacy Policy</a>
                 </li>
             </ul>
         </div>
@@ -376,26 +377,23 @@
             <p class="text-center">One tap solution for simplifying and streamlining employee time logging and
                 reporting.</p>
         </div>
+
         <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6 example d-flex justify-content-center align-items-center">
             <div class="container container-sty m-5 p-5 text-center">
                 <!-- <img src="Image/app_logo.png" alt="" class="mb-5 img-fluid" id="logo"> -->
                 <h2 class="text-center mb-5">Login</h2>
-                <div class="material-textfield mt-5">
-                    <input id="username" placeholder=" " type="text" class="input-sty form-control">
-                    <label class="label-sty">Username</label>
-                </div>
-                <div class="material-textfield mt-4">
-                    <input id="password" placeholder=" " type="password" class="input-sty form-control">
-                    <label class="label-sty">Password</label>
+                <input type="text" id="username" placeholder="User Name" class="all-input-style mb-3" style="text-align: center;" required>
+                <input type="password" id="password" placeholder="Password" class="all-input-style mb-3" style="text-align: center;" required>
+                
                     <div class="overlay" id="overlay">
                         <div class="spinner"></div>
                     </div>
                     <div class="forget-password mt-2">
                         <span><a href="forget_password.html" class="span-sty">Forget password</a></span>
                     </div>
-                </div>
+                <!-- </div> -->
                 <button type="button" class="btn btn-green mt-3" id="loginBtn">Submit</button>
-                <div id="errorMsg"></div>
+                <div id="errorMsg" class="font-weight-bold"></div>
                 <h5 class="m-4 text-center span-content fs-5">Don't have an account?<span class="p-2"><a
                             href="singup.html" class="span-colo fs-5">Signup</a></span></h5>
             </div>
@@ -430,10 +428,10 @@
                 const logoImg = document.getElementById('logo-img');
                 logoImg.src = companyLogo; // Set the logo image source
                 logoImg.onload = function () {
-                    console.log('Logo image loaded successfully');
+                   
                 };
                 logoImg.onerror = function () {
-                    console.error('Error loading logo image');
+                   
                 };
             }
         });
@@ -469,7 +467,7 @@
                                 window.location.href = 'employee_list.html';
                             })
                             .catch(error => {
-                                console.error('Error:', error);
+                               
                             });
                     } else {
 
@@ -479,7 +477,7 @@
                     }
                 })
                 .catch(error => {
-                    console.error('Error during authentication:', error);
+                  
                     alert('An error occurred during authentication');
                 });
         });
@@ -509,7 +507,7 @@
                     return user ? true : false;
                 }
             } catch (error) {
-                console.error('Login check error:', error);
+             
                 return false;
             }
         }
@@ -545,8 +543,7 @@
                             return response.json();
                         })
                         .then(data => {
-                            console.log('Data fetched:', data["CustomerID"]);
-                            localStorage.setItem('customId', data["CustomerID"]);
+                            localStorage.setItem('customerID', data["CustomerID"]);
                             localStorage.setItem('firstName', data["FName"]);
                             localStorage.setItem('lastName', data["LName"]);
                             localStorage.setItem('address', data["Address"]);
@@ -556,7 +553,7 @@
 
                         })
                         .catch(error => {
-                            console.error('Error:', error);
+                            
                         });
                 }
             )
@@ -585,12 +582,12 @@
                             });
                         }
                         catch {
-                            console.error('Error:', error);
+                           
                         }
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                  
                 });
         }
 

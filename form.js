@@ -1,27 +1,39 @@
 
+// Get all fields id's
 let firstName = document.getElementById("fname");
 let lastName = document.getElementById("lname");
 let email = document.getElementById("email");
 let phoneNumber = document.getElementById("phone");
 let street = document.getElementById("street");
-let address = document.getElementById("address");
+let state = document.getElementById("state");
+let city = document.getElementById("city");
 let subject = document.getElementById("sub");
-let message = document.getElementById("msg");
+let message = document.getElementById("message");
+let zip = document.getElementById('zipCode');
 
-async function actionFun() {
+// When the submit button click then called this function 
+async function actionFun(event) {
+    event.preventDefault();
+    // Start loading indicator 
     document.getElementById('overlaying').style.display = 'flex';
+    // Checking the validation 
     let isFirstNameValid = validName(document.getElementById("errorMsgFName"), firstName);
     let isLastNameValid = validName(document.getElementById("errorMsgLName"), lastName);
-    let isValidEmail = validateEmail();
+    let isValidateZipCode = validateZipCode(zip, document.getElementById("zipError"));
     let isValidatePhone = validatePhone(phoneNumber, document.getElementById("phoneError"));
-    let isValidatestreet = checkRequired(document.getElementById("streetError"),street);
-    let addressField = checkRequired(document.getElementById("addErr"), address);
-    let subjectField = checkRequired(document.getElementById("subErr"), subject)
-    let msgField = checkRequired(document.getElementById("msgErr"), message)
+    let isRequiredFieldsValid = true;
+    let inputs = document.querySelectorAll('.all-input-style');
+
+    // Required atribute validation check 
+    inputs.forEach(input => {
+        if (input.hasAttribute('required') && input.value.trim() === "") {
+            isRequiredFieldsValid = false;
+        }
+    });
 
     if (isFirstNameValid && isLastNameValid
-        && isValidEmail && isValidatePhone
-        && isValidatestreet && addressField && subjectField && msgField) {
+         && isRequiredFieldsValid && isValidateZipCode 
+         &&  isValidatePhone) {
             const apiLink = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/web_contact_us/create`;
 
             const userData = {
@@ -31,7 +43,7 @@ async function actionFun() {
                 WhatsappNumber: null, 
                 Subject: subject.value, 
                 PhoneNumber: phoneNumber.value, 
-                Address: address.value,
+                Address: `${street.value}--${city.value}--${state.value}--${zip.value}`,
                 Message: message.value,
                 LastModifiedBy:'Admin'
             };
@@ -48,25 +60,26 @@ async function actionFun() {
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status}`);
                 }
-        
                 const data = await response.json();
-                document.getElementById('overlaying').style.display = 'none';
-                const modalElement = document.getElementById('addEntryModal');
-                const modalInstance = new bootstrap.Modal(modalElement);
-                modalInstance.show();
         
                 if (!data.error) {
+                   
+                    const modalElement = document.getElementById('addEntryModal');
+                    const modalInstance = new bootstrap.Modal(modalElement);
+                    modalInstance.show();
+                    document.getElementById('overlaying').style.display = 'none';
                     firstName.value = "";
                     lastName.value = "";
                     email.value = "";
                     phoneNumber.value = "";
                     street.value = "";
                     subject.value = "";
-                    address.value = "";
+                    city.value = "";
+                    zip.value = "";
                     message.value = "";
                 }
             } catch (error) {
-                console.error('Error:', error);
+               
             }
     }
     else{
@@ -74,36 +87,36 @@ async function actionFun() {
     }
 }
 
-var isAlpha = /^[a-zA-Z\s]+$/;
-
 // IsAlpha check
+var isAlpha = /^[a-zA-Z\s]+$/;
 function validName(errorElement, inputElement) {
     if (inputElement.value.trim() === '') {
-        errorElement.textContent = 'Name is required';
+        errorElement.textContent = '';
         return false;
-    } else if (!isAlpha.test(inputElement.value)) {
+    } else if (!isAlpha.test(inputElement.value)) {  // Fix: Only show error if the input contains non-letter characters
         errorElement.textContent = 'Only use letters, don\'t use digits';
         return false;
     }
-    errorElement.textContent = '';
+    errorElement.textContent = '';  // Clear the error if validation passes
     return true;
 }
 
-function validateEmail() {
-    const email = document.getElementById('email').value;
-    const errorEmail = document.getElementById('EmailError');
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (email.trim() === '') {
-        errorEmail.textContent = 'Email is required';
-        return false;
-    } else if (!emailPattern.test(email)) {
-        errorEmail.textContent = 'Invalid email format';
+
+// Zip Code Validation 
+function validateZipCode(zipCodeInput, errorElement) {
+    const zipCodePattern = /^\d{5}(?:[-\s]\d{4})?$/; // US ZIP code format (5 digits or 5+4 digits)
+    const zipCodeValue = zipCodeInput.value.trim();
+
+    if (zipCodePattern.test(zipCodeValue) || zipCodeInput.value == "") {
+        errorElement.textContent = ""; // Clear any error message
+        return true;
+    } else {
+        errorElement.textContent = "Invalid ZIP Code"; // Display error message
         return false;
     }
-    errorEmail.textContent = '';
-    return true;
 }
 
+// Phone number field format 
 function formatPhoneNumber(id) {
     const inputField = document.getElementById(id);
     let value = inputField.value;
@@ -118,14 +131,16 @@ function formatPhoneNumber(id) {
         value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
     }
     inputField.value = value;
+    validatePhone(inputField,document.getElementById("phoneError"));
 }
 
+// Phone number field validation 
 function validatePhone(inputElement, errorElement) {
     const pNumber = inputElement.value;
     const phoneRegex = /^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/;
 
     if (pNumber === "") {
-        errorElement.textContent = 'This is required field';
+        // errorElement.textContent = 'This is required field';
         return false;
     } else if (!phoneRegex.test(pNumber)) {
         errorElement.textContent = 'Invalid phone number format';
@@ -135,16 +150,3 @@ function validatePhone(inputElement, errorElement) {
         return true;
     }
 }
-
-
-function checkRequired(errorElement, inputElement) {
-    if (inputElement.value.trim() === '') {
-        errorElement.textContent = 'This is required field';
-        return false;
-    }
-    errorElement.textContent = '';
-    return true;
-}
-
-
-document.getElementById("subButton").addEventListener('click', actionFun);

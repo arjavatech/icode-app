@@ -12,61 +12,94 @@
         font-weight: bold;
     }
 
+/* First row second column section  */
+.feature-section {
+    margin-bottom: 25px; /* Increase space between sections for desktop */
+}
+
+.inside-col-img-sty {
+    width: 70px; /* Larger icons for desktop */
+    height: auto;
+}
+
+.feature-section h4 {
+    font-size: 1.6em; /* Larger title font size for desktop */
+    margin-bottom: 10px; 
+}
+
+.feature-section p {
+    font-size: 1.1em; /* Larger text size for desktop */
+    line-height: 1.6;
+}
+
+
 /* CONTACT  */
-    .material-textfield {
-        position: relative;
-        margin-bottom: 1.5rem;
-    }
 
-    .material-textfield input {
+#contact {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    /* min-height: 100vh;  */
+}
+
+.box-sty {
+    width: 100%; 
+    max-width: 600px; 
+    padding: 2rem; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#contact {
+    display: flex;
+    justify-content: center; 
+}
+/* .box-sty {
+    width: 80%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+} */
+
+.btn-green {
+        background-color: #02066F;
+        border: none;
+        color: white;
         width: 100%;
-        padding: 0.8rem !important;
-        font-size: 1rem;
+        padding: 0.6rem !important;
+        font-size: 1.2rem;
         border-radius: 10px;
-        border: 1px solid #02066F;
-        transition: border-color 0.3s, box-shadow 0.3s;
-        font-family: "Times New Roman", Times, serif;
     }
 
-    .material-textfield label {
-        position: absolute;
-        top: 0.75rem;
-        left: 1rem;
-        transition: all 0.3s ease;
-        background: white;
-        padding: 0 0.25rem;
-        color: #02066F;
-        pointer-events: none;
+    /* Loading process  */
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay .spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #02066F;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
     }
 
-    .material-textfield input:focus+label,
-    .material-textfield input:not(:placeholder-shown)+label {
-        top: -0.75rem;
-        left: 0.75rem;
-        font-size: 0.75rem;
-        color: #02066F;
+    100% {
+        transform: rotate(360deg);
     }
-
-    .material-textfield input:focus {
-        outline: none;
-        border-color: #02066F;
-    }
-
-    .box-sty {
-        width: 80%;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-green {
-            background-color: #02066F;
-            border: none;
-            color: white;
-            width: 100%;
-            padding: 0.6rem !important;
-            font-size: 1.2rem;
-            border-radius: 10px;
-        }
-
+}
 
 /* PRIVACY POLICY */
 
@@ -99,25 +132,6 @@
     }
 }
 
-/* First row second column section  */
-.feature-section {
-    margin-bottom: 25px; /* Increase space between sections for desktop */
-}
-
-.inside-col-img-sty {
-    width: 70px; /* Larger icons for desktop */
-    height: auto;
-}
-
-.feature-section h4 {
-    font-size: 1.6em; /* Larger title font size for desktop */
-    margin-bottom: 10px; 
-}
-
-.feature-section p {
-    font-size: 1.1em; /* Larger text size for desktop */
-    line-height: 1.6;
-}
 
 /* Responsive adjustments for medium screens */
 @media (max-width: 992px) {
@@ -194,39 +208,5 @@
     }
     .inside-col-img-sty {
         margin-top: 20px !important;
-    }
-}
-
-/* Loading process  */
-
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
-}
-
-.overlay .spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #02066F;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
     }
 }

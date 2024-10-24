@@ -125,6 +125,7 @@ function viewDatewiseReport(dateValue) {
   document.getElementById("noDateSelect").style.display = "none";
   const tableBody = document.getElementById("tbody");
   tableBody.innerHTML = '';
+ 
 
   if ($.fn.DataTable.isDataTable('#employeeTable')) {
       $('#employeeTable').DataTable().destroy();
@@ -188,7 +189,7 @@ function viewDatewiseReport(dateValue) {
               document.getElementById('overlay').style.display = 'none';
           })
           .catch(error => {
-              console.error('Error:', error);
+            
           });
   } else {
       const newRow = document.createElement('tr');

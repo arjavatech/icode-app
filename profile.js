@@ -1,5 +1,15 @@
 
-
+document.getElementById('settingsForm').addEventListener('submit', function (event) {
+    // Check if the form is valid before running custom code
+    if (this.checkValidity()) {
+        event.preventDefault(); // Prevent form from submitting immediately
+        initializeFormSubmission(event); // Call your custom function
+    } else {
+        // Allow HTML5 validation messages to appear
+        event.preventDefault(); // Prevent form from submitting if invalid
+        this.reportValidity(); // Show the default browser validation messages
+    }
+});
 
 const sidebar = document.getElementById('sidebar');
 const toggler = document.querySelector('.navbar-toggler');
@@ -17,20 +27,27 @@ document.addEventListener('click', function (event) {
 });
 
 
-
+let profileData; // Variable to hold the profile data
+let getCustomerDatasFromDb;
+const cid = localStorage.getItem('companyID');
+let customerId = localStorage.getItem('customerId');
 
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('overlay').style.display = 'flex';
-    loadImage();
-    loadLocalStorageData();
-    initializeFormSubmission();
+
+    // Check if profile data is already loaded
+    if (profileData) {
+        // Use the already loaded data
+        populateProfileData(profileData);
+        document.getElementById('overlay').style.display = 'none';
+    } else {
+        // Load data from API
+        loadProfileDataFromAPI();
+    }
 });
 
-const cid = localStorage.getItem('companyID');
-const customerId1 = localStorage.getItem('customId');
-const phone = localStorage.getItem("phone")
-
-async function loadImage() {
+// Function to load profile data from the API
+async function loadProfileDataFromAPI() {
     const url = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company/get/${cid}`;
 
     try {
@@ -38,109 +55,122 @@ async function loadImage() {
         if (!response.ok) {
             throw new Error(`Error fetching data: ${response.statusText}`);
         }
+        profileData = await response.json(); // Store data in the global variable
 
-        const responseData = await response.json();
-
-
-        const comLoDataUrl = responseData.CLogo; // This is a data URL
-        const image = document.getElementById("logo-img");
-
-
-        if (comLoDataUrl.startsWith('data:image/')) {
-            image.src = comLoDataUrl; // Set the image source to the data URL
-            // image.onload = function () {
-            //     console.log('Logo image loaded successfully');
-            // };
-            image.onerror = function () {
-                console.error('Error loading logo image');
-            };
-        } else {
-            console.error('Invalid data URL:', comLoDataUrl);
-        }
+        // Process and populate the response data
+        populateProfileData(profileData);
 
         document.getElementById('overlay').style.display = 'none';
-
     } catch (error) {
         document.getElementById('overlay').style.display = 'none';
-        console.error('Error in loadImage function:', error.message);
+    
     }
+
+    try {
+        const customerResponse = await fetch(`${customerAPIUrlBase}/getUsingCID/${cid}`);
+        if (!customerResponse.ok) {
+            throw new Error(`Error fetching data: ${customerResponse.statusText}`);
+        }
+        getCustomerDatasFromDb = await customerResponse.json(); // Store data in the global variable
+
+
+        // Process and populate the response data
+        customerDatasPopulate(getCustomerDatasFromDb);
+
+        document.getElementById('overlay').style.display = 'none';
+    } catch (error) {
+        document.getElementById('overlay').style.display = 'none';
+       
+    }
+
 }
 
-function loadLocalStorageData() {
+function customerDatasPopulate(data){
+
+    customerId = data.CustomerID || '';
+     // Customer datas 
+     document.getElementById('firstName').value = data.FName || '';
+     document.getElementById('lastName').value = data.LName || '';
+     document.getElementById('email').value = data.Email || '';
+     document.getElementById('phone').value = data.PhoneNumber || '';
+ 
+     let customerDatas = data.Address.split("--");
+     document.getElementById('customerStreet').value = customerDatas[0] || '';
+     document.getElementById('customerCity').value = customerDatas[1] || '';
+     document.getElementById('customerState').value = customerDatas[2] || '';
+     document.getElementById('customerZip').value = customerDatas[3] || '';
+}
+// Function to populate profile data into the form fields
+function populateProfileData(data) {
+    const comLoDataUrl = data.CLogo; // Assume this is the logo URL
+    const image = document.getElementById("logo-img");
+
+    if (comLoDataUrl.startsWith('data:image/')) {
+        image.src = comLoDataUrl; // Set the image source to the data URL
+        localStorage.setItem("imageFile", comLoDataUrl); // Save logo to localStorage
+    } else {
+      
+    }
+
+    // Set other form fields with data
+    // Company datas 
+    document.getElementById('companyName').value = data.CName || '';
+    document.getElementById('username').value = data.UserName || '';
+    // Add other fields similarly...
+
+    // Example for address
+    const address = data.CAddress.split("--");
+    document.getElementById('companyStreet').value = address[0] || '';
+    document.getElementById('companyCity').value = address[1] || '';
+    document.getElementById('companyState').value = address[2] || '';
+    document.getElementById('companyZip').value = address[3] || '';
+}
+
+
+// Function to save form data to localStorage on submission
+function saveFormDataToLocalStorage() {
     const fields = [
-        'companyName', 'companyAddress', 'username',
-        'firstName', 'lastName', 'address', 'phone', 'email'
+        'companyName', 'username', 'firstName', 'lastName', 'phone', 'email'
     ];
 
     fields.forEach(field => {
-        console.log(field);
-        if(field == 'companyAddress'){
-            console.log(localStorage.getItem(field));
-            let val = localStorage.getItem(field).split("--");
-
-            console.log(val);
-
-            document.getElementById('companyStreet').value = val[0];
-            document.getElementById('companyCity').value = val[1]; 
-            document.getElementById('companyState').value = val[2]; 
-            document.getElementById('companyZip').value = val[3]; 
-        }
-        if(field == 'address'){
-            console.log(localStorage.getItem(field));
-            let val2 = localStorage.getItem(field).split("--");
-
-            document.getElementById('customerStreet').value = val2[0];
-            document.getElementById('customerCity').value = val2[1]; 
-            document.getElementById('customerState').value = val2[2]; 
-            document.getElementById('customerZip').value = val2[3]; 
-        }
-        if (field === "phone") {
-            // Phone format 
-            const value = localStorage.getItem(field);
-            if (value) {
-                const element = document.getElementById(field);
-                if (element) {
-                    element.value = formatPhoneNumber2(value);
-                } else {
-                    console.error(`Element with id ${field} not found`);
-                }
-            }
-        }
-        else {
-            // all fileds expect phone 
-            const value = localStorage.getItem(field);
-            if (value) {
-                const element = document.getElementById(field);
-                if (element) {
-                    element.value = value;
-                }
-            }
-        }
-    });
-}
-
-function triggerFileUpload() {
-    document.getElementById('fileInput').click();
-}
-
-function initializeFormSubmission() {
-    document.getElementById('settingsForm').addEventListener('submit', function (event) {
-        let button = document.getElementById("submit");
-        event.preventDefault();
-        if (button.textContent === "Edit") {
-            document.querySelectorAll('.disabledData').forEach(function (input) {
-                input.disabled = false;
-            });           
-            button.textContent = "Save"
+        if (field === 'companyAddress') {
+            localStorage.setItem(field, `${document.getElementById('companyStreet').value}--${document.getElementById('companyCity').value}--${document.getElementById('companyState').value}--${document.getElementById('companyZip').value}`);
         } else {
-            saveFormDataToLocalStorage();
-            // console.log("ABCD");
-            updateApiData();
-            // console.log("AK");
+            localStorage.setItem(field, document.getElementById(field).value);
         }
-
-
     });
+}
+
+
+function initializeFormSubmission(event) {
+    event.preventDefault();
+    let button = document.getElementById("submiting");
+    event.preventDefault();
+    if (button.value === "Edit") {
+        document.querySelectorAll('.disabledData').forEach(function (input) {
+            input.disabled = false;
+        });
+        button.value = "Save"
+    } else {
+        let isPhone = validPhoneno();
+        let isRequiredFieldsValid = true;
+        let inputs = document.querySelectorAll('.all-input-style');
+
+        // Required atribute validation check 
+        inputs.forEach(input => {
+            if (input.hasAttribute('required') && input.value.trim() === "") {
+                isRequiredFieldsValid = false;
+            }
+        });
+
+        if (isPhone && isRequiredFieldsValid) {
+            saveFormDataToLocalStorage();
+            updateApiData();
+        }
+    }
+
+
 }
 
 
@@ -177,7 +207,7 @@ function validPhoneno() {
     const phoneRegex = /^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/;
 
     if (phoneNumber === "") {
-        phoneError.textContent = 'Enter phone number.';
+        phoneError.textContent = '';
         return false;
     } else if (!phoneRegex.test(phoneNumber)) {
         phoneError.textContent = 'Invalid phone number.';
@@ -202,6 +232,7 @@ function formatPhoneNumber() {
         value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
     }
     inputField.value = value;
+    validPhoneno();
 }
 
 function formatPhoneNumber2(phoneNumber) {
@@ -266,14 +297,14 @@ function saveFormDataToLocalStorage() {
     ];
 
     fields.forEach(field => {
-        if(field == 'companyAddress'){
-            localStorage.setItem(field,`${document.getElementById('companyStreet').value}--${document.getElementById('companyCity').value}--${document.getElementById('companyState').value}--${document.getElementById('companyZip').value}--`);
+        if (field == 'companyAddress') {
+            localStorage.setItem(field, `${document.getElementById('companyStreet').value}--${document.getElementById('companyCity').value}--${document.getElementById('companyState').value}--${document.getElementById('companyZip').value}--`);
         }
-        else if(field == 'address'){
-            localStorage.setItem(field,`${document.getElementById('customerStreet').value}--${document.getElementById('customerCity').value}--${document.getElementById('customerState').value}--${document.getElementById('customerZip').value}--`); 
+        else if (field == 'address') {
+            localStorage.setItem(field, `${document.getElementById('customerStreet').value}--${document.getElementById('customerCity').value}--${document.getElementById('customerState').value}--${document.getElementById('customerZip').value}--`);
         }
-        else{
-            console.log(field);
+        else {
+           
             localStorage.setItem(field, document.getElementById(field).value);
         }
     });
@@ -283,28 +314,27 @@ const customerAPIUrlBase = `https://397vncv6uh.execute-api.us-west-2.amazonaws.c
 const companyAPIUrlBase = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company`;
 
 function updateApiData() {
-    if (!cid || !customerId1) {
-        console.error("UUID or CustomerID is missing in localStorage");
+
+    if (!cid || !customerId) {
         return;
     }
 
-    const customerApiUrl = `${customerAPIUrlBase}/update/${customerId1}`;
+    const customerApiUrl = `${customerAPIUrlBase}/update/${customerId}`;
     const companyApiUrl = `${companyAPIUrlBase}/update/${cid}`;
 
     const customerData = {
         // Customer details 
-        CustomerID: customerId1,
+        CustomerID: customerId,
         CID: cid,
         FName: document.getElementById('firstName').value,
         LName: document.getElementById('lastName').value,
-        Address: `${document.getElementById('customerStreet').value}--${document.getElementById('customerCity').value}--${document.getElementById('customerState').value}--${document.getElementById('customerZip').value}--`,
+        Address: `${document.getElementById('customerStreet').value}--${document.getElementById('customerCity').value}--${document.getElementById('customerState').value}--${document.getElementById('customerZip').value}`,
         PhoneNumber: document.getElementById('phone').value,
         Email: document.getElementById('email').value,
         IsActive: true,
-        LastModifiedBy:'Admin'
+        LastModifiedBy: 'Admin'
     };
-    console.log('--------------------');
-    console.log(document.getElementById('username').value);
+
     const companyData = {
         CID: cid,
         UserName: document.getElementById('username').value,
@@ -313,7 +343,7 @@ function updateApiData() {
         CLogo: localStorage.getItem("imageFile"),
         Password: localStorage.getItem("password"),
         ReportType: "Weekly",
-        LastModifiedBy:'Admin'
+        LastModifiedBy: 'Admin'
     };
 
     Promise.all([
@@ -342,7 +372,7 @@ function updateApiData() {
                 const modalElement = document.getElementById('successModal');
                 const modalInstance = new bootstrap.Modal(modalElement);
                 modalInstance.show();
-                document.getElementById("submit").textContent = "Edit";
+                document.getElementById("submiting").value = "Edit";
 
                 setTimeout(() => {
                     modalInstance.hide();
@@ -352,7 +382,7 @@ function updateApiData() {
                 document.querySelectorAll('.disabledData').forEach(function (input) {
                     input.disabled = true;
                 });
-                console.log("update");
+             
             }
 
             return response.json();
@@ -362,12 +392,12 @@ function updateApiData() {
 
 // When I click Logo go to home page 
 
-function homePage(){
+function homePage() {
     const modalElement = document.getElementById('homePageModal');
     const modalInstance = new bootstrap.Modal(modalElement);
     modalInstance.show();
 }
 
-document.getElementById('homePageYes').addEventListener('click',function (){
+document.getElementById('homePageYes').addEventListener('click', function () {
     window.open('index.html', 'noopener, noreferrer');
 })

@@ -1,3 +1,16 @@
+// When I click close modal with have any error in this form we need to clear all error msg 
+$('#addEntryModal').on('hidden.bs.modal', function () {
+  // Clear error messages
+  $('#EmpNameError').text(''); 
+  $('#EmpTypeError').text(''); 
+  $('#dateError').text(''); 
+  $('#startTimeError').text(''); 
+  $('#endTimeError').text(''); 
+  $('#AddEmployee').prop('disabled', true);
+  $('#datePicker').prop('value',"");
+
+});
+
 const sidebar = document.getElementById('sidebar');
 const toggler = document.querySelector('.navbar-toggler');
 
@@ -172,7 +185,7 @@ function viewCurrentDateReport() {
 
   // Check employee API URL
   const employeeApiURL = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/employee/getall/${cid}`;
-  console.log('Fetching employee data from:', employeeApiURL); // Debugging
+  
 
   fetch(employeeApiURL)
     .then(response => {
@@ -182,7 +195,7 @@ function viewCurrentDateReport() {
       return response.json();
     })
     .then(data => {
-      console.log('Employee data:', data); // Log data for debugging
+      
 
       // Populate dropdown with employee names
       let optionsList = [];
@@ -193,7 +206,7 @@ function viewCurrentDateReport() {
       });
 
       const dropdown = document.getElementById("dynamicDropdown");
-      dropdown.innerHTML = '<option value="">Select an option</option>';
+      dropdown.innerHTML = '<option value="">Select Employee</option>';
       optionsList.forEach(option => {
         const newOption = document.createElement("option");
         newOption.value = option;
@@ -202,13 +215,13 @@ function viewCurrentDateReport() {
       });
     })
     .catch(error => {
-      console.error('Error fetching employee data:', error);
+      
     });
 
   // Check current date report API
   var date = getCurrentLocalTime().substring(0, 10);
   const apiUrl = `${apiUrlBase}/${cid}/${date}`;
-  console.log('Fetching report data from:', apiUrl); // Debugging
+
 
   heading.innerHTML = date;
 
@@ -220,7 +233,7 @@ function viewCurrentDateReport() {
       return response.json();
     })
     .then(data => {
-      console.log('Report data:', data); // Log report data for debugging
+
 
       if (!data.length) {
         const newRow = document.createElement('tr');
@@ -313,7 +326,7 @@ function viewCurrentDateReport() {
       document.getElementById('overlay').style.display = 'none';
     })
     .catch(error => {
-      console.error('Error fetching report data:', error);
+    
       document.getElementById('overlay').style.display = 'none';
     });
 }
@@ -657,7 +670,7 @@ document.addEventListener('DOMContentLoaded', function () {
         TimeWorked: timeWorkedHours,
         LastModifiedBy:'Admin'
       };
- console.log(data);
+
       // Send Post request
       fetch('https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/dailyreport/create', {
         method: 'POST',
@@ -676,7 +689,7 @@ document.addEventListener('DOMContentLoaded', function () {
           // Optionally, you can refresh data or provide a success message
         })
         .catch((error) => {
-          console.error('Error:', error);
+         
         });
     }
   });

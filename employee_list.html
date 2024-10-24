@@ -27,6 +27,7 @@
     <link rel="icon" href="Image/app_logo.png">
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="nav.css">
+    <link rel="stylesheet" href="inputs.css">
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -95,7 +96,7 @@
                 max-width: 100%;
             }
 
-            #add-entry {
+            .employee-add-entry {
                 border: 1px solid #02066F;
                 color: #02066F;
                 background-color: white;
@@ -104,6 +105,7 @@
                 top: 0;
                 right: 0;
             }
+
 
             .emp-list-header {
                 position: relative;
@@ -321,77 +323,73 @@
 
 
 
-         .navbar-toggler {
+        .navbar-toggler {
             background-color: #02066F;
             color: white;
-             border: 2px solid white; 
+            border: 2px solid white;
             padding: 10px;
             border-radius: 5px;
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-        } 
+        }
 
-         .navbar-toggler-icon {
+        .navbar-toggler-icon {
             background-color: white;
-        } 
+        }
 
 
-    
+
         #main {
             transition: margin-left .5s;
             padding: 16px;
         }
 
-      
-        #Dropdown {
-            color: #02066F;
-            border: 1px solid #02066F;
-        }
 
+        
         .logo {
             width: 101px;
             height: 73.53px;
             margin-right: 20px;
         }
-        @media screen and (max-width: 768px) {
-            .sidebar {
-                width: 300px;
-                padding-top: 40px;
-                margin-top: 10%;
-            }
 
-            .sidebar a {
-                font-size: 20px;
-                padding: 10px 20px;
-            }
+        @media screen and (max-width: 1000px) {
+    .sidebar {
+        width: 200px;
+        padding-top: 40px;
+        margin-top: 0;
+    }
 
-            .sidebar .closebtn {
-                font-size: 30px;
-                right: 15px;
-            }
+    .sidebar a {
+        font-size: 10px;
+        padding: 10px 20px;
+    }
 
-            #main {
-                margin-left: 0;
-            }
-        }
+    
+    .sidebar button {
+        font-size: 11px; 
+        padding: 6px 6px;
+        margin: 6px; 
+    }
+
+    .sidebar .closebtn {
+        font-size: 30px;
+        right: 15px;
+    }
+
+    #main {
+        margin-left: 0;
+    }
+
+   
+    .app_logo {
+        width: 60px; 
+        height: auto;
+        margin-left: 1px; 
+        margin-right: auto; 
+    }
+}
 
 
-        @media screen and (max-width: 480px) {
-            .sidebar {
-                width: 250px;
-                padding-top: 30px;
-                margin-top: 2%;
-            }
 
-            .sidebar a {
-                font-size: 13px;
-                padding: 8px 15px;
-            }
-
-            .sidebar .closebtn {
-                font-size: 24px;
-                right: 10px;
-            }
-        }
 
         .sidebar a i {
             margin-right: 15px;
@@ -401,7 +399,7 @@
             background-color: white;
             color: #02066F;
             margin: 20px;
-            font-size: 18px;
+            /* font-size: 18px; */
             border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
@@ -412,59 +410,77 @@
             color: #02066F;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         }
+
+        .custom-search-box {
+
+            float: right;
+            text-align: right;
+            align-items: end;
+            margin-bottom: 20px;
+            margin-right: 8px;
+
+        }
+
+        input {
+            border: 1px solid #aaa;
+            border-radius: 3px;
+            padding: 4px;
+            background-color: transparent;
+            margin-left: 3px;
+
+        }
+       
+
+        label {
+            display: inline-block;
+            cursor: default;
+        }
+
+        #instructor {
+            background-color: rgb(208, 206, 206);
+        }
+
+        #Dropdown:disabled {
+            background-color: rgb(208, 206, 206);
+        }
+
+        .admin-head {
+            margin-right: 20%;
+        }
+        .none{
+            display: none;
+        }
         
-.custom-search-box {
-    
-    float: right; 
-    text-align: right;
-    align-items: end;
-    margin-bottom: 20px;
-    margin-right: 8px; 
-    
-}
-
-input{
-    border: 1px solid #aaa;
-    border-radius: 3px;
-    padding: 4px;
-    background-color: transparent;
-    margin-left: 3px;
-    
-}
-label {
-    display: inline-block;
-    cursor: default;
-}
-
-
-
-
-
     </style>
 </head>
 
 <body>
     <!-- Nav bar  -->
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white; border-bottom: 1px solid #02066F; padding: 5px 15px; height: 70px;">
+    <nav class="navbar navbar-expand-lg navbar-light"
+        style="background-color: white; border-bottom: 1px solid #02066F; padding: 5px 15px; height: 70px;">
         <div class="container-fluid">
-            <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="logo" id="web_logo" onclick="homePage()" style="height: 50px; width: auto; padding: 0; margin-top: -5px;">
-    
+            <img src="Image/icode logo 2 (1).png" alt="Tap Time Logo" class="logo" id="web_logo" onclick="homePage()"
+                style="height: 50px; width: auto; padding: 0; margin-top: -5px;">
+
             <button class="navbar-toggler" type="button" aria-label="Toggle navigation" style="padding: 0;">
                 <span class="navbar-toggler-icon"></span>
             </button>
-    
+
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
                 <div class="navbar-nav">
                     <a class="nav-link" href="device.html" style="color: #02066F; padding: 5px 10px;">Device</a>
-                    <a class="nav-link active" href="#" style="color: #02066F; padding: 5px 10px;">Employee Management</a>
+                    <a class="nav-link active" href="#" style="color: #02066F; padding: 5px 10px;">Employee
+                        Management</a>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#service" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false" style="color: #02066F; padding: 5px 10px;">
                             Report
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="report_summary.html" style="padding: 5px;">Report Summary</a></li>
-                            <li><a class="dropdown-item" href="report_setting.html" style="padding: 5px;">Report Settings</a></li>
+                            <li><a class="dropdown-item" href="report_summary.html" style="padding: 5px;">Report
+                                    Summary</a></li>
+                            <li><a class="dropdown-item" href="report_setting.html" style="padding: 5px;">Report
+                                    Settings</a></li>
                         </ul>
                     </li>
                     <a class="nav-link" href="profile.html" style="color: #02066F; padding: 5px 10px;">Profile</a>
@@ -474,7 +490,7 @@ label {
             </div>
         </div>
     </nav>
-    
+
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;">
         <img src="Image/Group 91.png" alt="Tap Time Logo" class="app_logo">
@@ -492,7 +508,7 @@ label {
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="homePageModalLabel"style="text-align: center; width: 100%;">Home</h5>
+                    <h5 class="modal-title" id="homePageModalLabel" style="text-align: center; width: 100%;">Home</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
@@ -509,10 +525,11 @@ label {
     <!--End Go to home page modal -->
 
     <section class="mb-5">
-        <!-- Loading process  -->
+        <!-- Loading process -->
         <div class="overlay" id="overlay">
             <div class="spinner"></div>
         </div>
+
         <div class="container mt-5">
             <div id="resmsg">
                 <div class="success-msg alert alert-success">
@@ -524,183 +541,184 @@ label {
                     <strong>Oops!</strong> <span class="e-msg"></span>
                 </div>
             </div>
-    
-            <div class="emp-table table-responsive">
-                <div class="emp-list-header">
-                    <div class="row">
-                        <div class="col-6 text-center">
-                            <h3 class=" fw-bold mb-1 emp-head" >Employee Details</h3>
-                        </div>
-                        <!-- Add Employee -->
-                        <div class="col-6">
-                            <span id="current-checkin-header"></span>
-                            <span style="float:right;">
-                                <button class="btn float-end" id="add-entry" onclick="dataRemove()" data-bs-toggle="modal"
-                                    data-bs-target="#myModal">Add Entry</button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="custom-table-container">
-                    <table class="table custom-table table-bordered" id="employeeTable">
-                        <thead>
-                            <tr>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Pin</th>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Name</th>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Phone Number</th>
-                                <th style="border-bottom: 1px solid #cdcdcd;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tBody">
-                            <!-- Table rows will be dynamically inserted here -->
-                        </tbody>
-                    </table>
-    
-                    <!-- Employee Modal -->
-                    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content" style="width: 300px; text-align: center;">
-                                <div class="modal-header">
-                                    <h5 class="modal-title fw-bold" id="myModalLabel"
-                                        style="text-align: center; width: 100%;">Employee Details</h5>
-                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="emp_form" class="p-2 text-center">
-                                        <div class="material-textfield mb-3">
-                                            <input type="text" id="fName" name="fName" placeholder=" " required
-                                                onblur="validFName()">
-                                            <label>First Name</label><br>
-                                            <span class="text-danger" id="showMsg1"></span>
-                                        </div>
-                                        <div class="material-textfield mb-3">
-                                            <input type="text" id="lName" name="lName" placeholder=" "
-                                                onblur="validLName()">
-                                            <label>Last Name</label><br>
-                                            <span class="text-danger" id="showMsg2"></span>
-                                        </div>
-                                        <div class="material-textfield mb-3">
-                                            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" "
-                                                oninput="formatPhoneNumber()">
-                                            <label>Phone Number</label><br>
-                                            <span class="text-danger" id="showMsg3"></span>
-                                        </div>
-                                        <div class="material-textfield mb-3">
-                                            <input id="instructor" placeholder=" " type="text"
-                                                onblur="validateInstructerPin()" disabled>
-                                            <label>Instructor Pin</label><br>
-                                            <span class="text-danger" id="showMsg"></span>
-                                        </div>
-                                        <div class="material-textfield mb-3">
-                                            <select id="Dropdown" class="input-sty form-control mt-3">
-                                                <option value="true">true</option>
-                                                <option value="false">false</option>
-                                            </select>
-                                        </div>
-                                        <button type="button" id="savebtn" class="settings-btn-sty btn btn-green"
-                                            onclick="addEmpdetails(event)" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
-                                            Save
-                                        </button>
-                                    </form>
-                                </div>
+
+            <!-- Employee Section -->
+            <section id="employee-section">
+                <div class="emp-table table-responsive">
+                    <div class="emp-list-header">
+                        <div class="row">
+                            <div class="col-6 text-center">
+                                <h3 class="fw-bold mb-1 emp-head">Employee Details</h3>
+                            </div>
+                            <!-- Add Employee -->
+                            <div class="col-6">
+                                <span id="current-checkin-header"></span>
+                                <span style="float:right;">
+                                    <button class="btn float-end addEntryBtnStyle employee-add-entry" id="add-entry" onclick="dataRemove('empDetail')"
+                                        >Add Entry</button>
+                                        
+                                        <!-- data-bs-toggle="modal" data-bs-target="#myModal"  -->
+                                </span>
                             </div>
                         </div>
                     </div>
-    
-                    <!-- Admin Details Section -->
-                      <h3 class=" fw-bold mb-1 emp-head" style="margin-left: 40px;">Admin Details</h3>
-                            <div class="custom-table-container">
-                                <div class="custom-search-box">
-                                        <label>Search:</label>
-                                        <input type="text" id="searchAdmin" placeholder="" class="search-input" oninput="filterAdmin()">
-                                 </div>
-                                            <table class="table custom-table table-bordered" id="adminTable">
-                                        <thead>
-                                        <tr>
-                                        <th style="border-bottom: 1px solid #cdcdcd;">Pin</th>
-                                        <th style="border-bottom: 1px solid #cdcdcd;">Name</th>
-                                        <th style="border-bottom: 1px solid #cdcdcd;">Phone Number</th>
-                                        <th style="border-bottom: 1px solid #cdcdcd;">Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="tBody2">
-                                                 <!-- Table rows will be dynamically inserted here -->
-                                       </tbody>
-                                 </table>
-                                </div>
 
-    
-                        <!-- Admin Modal -->
-                        <div class="modal fade" id="myModal2" tabindex="-1" aria-labelledby="myModalLabel"
+                    <div class="custom-table-container">
+                        <table class="table custom-table table-bordered" id="employeeTable">
+                            <thead>
+                                <tr>
+                                    <th>Pin</th>
+                                    <th>Name</th>
+                                    <th>Phone Number</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tBody">
+                                <!-- Table rows will be dynamically inserted here -->
+                            </tbody>
+                        </table>
+
+                        <!-- Employee Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel"
                             aria-hidden="true">
                             <div class="modal-dialog">
-                                <div class="modal-content" style="width: 350px;">
+                                <div class="modal-content" style="width: 300px; text-align: center; ">
                                     <div class="modal-header">
-                                        <h5 class="modal-title fw-bold" id="myModalLabel"
-                                            style="text-align: center; width: 100%;">Admin Details</h5>
+                                        <h5 class=" CenterAlign modal-title fw-bold " id="myModalLabel" style="text-align: center; width: 100%;">Employee Details</h5>
                                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form id="admin_form" class="p-2 text-center">
-                                            <div class="material-textfield mb-3">
-                                                <input type="text" id="adminFName" name="adminFName" placeholder=" " required
-                                                    onblur="validAdminFName()">
-                                                <label>First Name</label><br>
-                                                <span class="text-danger" id="showAdminMsg1"></span>
-                                            </div>
-                                            <div class="material-textfield mb-3">
-                                                <input type="text" id="adminLName" name="adminLName" placeholder=" "
-                                                    onblur="validAdminLName()">
-                                                <label>Last Name</label><br>
-                                                <span class="text-danger" id="showAdminMsg2"></span>
-                                            </div>
-                                            <div class="material-textfield mb-3">
-                                                <input type="tel" id="adminPhoneNumber" name="adminPhoneNumber" placeholder=" "
-                                                    oninput="formatAdminPhoneNumber()">
-                                                <label>Phone Number</label><br>
-                                                <span class="text-danger" id="showAdminMsg3"></span>
-                                            </div>
-                                            <div class="material-textfield mb-3">
-                                                <input id="adminInstructor" placeholder=" " type="text"
-                                                    onblur="validateAdminInstructerPin()" disabled>
-                                                <label>Instructor Pin</label><br>
-                                                <span class="text-danger" id="showAdminMsg"></span>
-                                            </div>
-                                            <div class="material-textfield mb-3">
-                                                <select id="adminDropdown" class="input-sty form-control mt-3">
-                                                    <option value="true">true</option>
-                                                    <option value="false">false</option>
-                                                </select>
-                                            </div>
-                                            <button type="button" id="saveAdminBtn" class="settings-btn-sty btn btn-green"
-                                                onclick="addAdminDetails(event)" data-bs-toggle="modal"
-                                                data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
-                                                Save
-                                            </button>
+                                        <form id="emp_form" class="p-2 text-center">
+                                            <input type="text" id="fName" placeholder="First Name"
+                                                class="all-input-style mb-3" onblur="validFName()" required>
+                                            <span class="text-danger" id="showMsg1"></span>
+                                            <input type="text" id="lName" placeholder="Last Name"
+                                                class="all-input-style mb-3" onblur="validLName()" required>
+                                            <span class="text-danger" id="showMsg2"></span>
+                                            <input type="tel" id="phoneNumber" placeholder="Phone Number"
+                                                oninput="formatPhoneNumber()" class="all-input-style mb-3" required>
+                                            <span class="text-danger" id="showMsg3"></span>
+                                            <input type="text" id="instructor" placeholder="Instructor Pin"
+                                                onblur="validateInstructerPin()" class="all-input-style mb-3" disabled
+                                                required>
+                                            <span class="text-danger" id="showMsg"></span>
+                                            <select id="Dropdown" class="all-input-style mb-3">
+                                                <option value="true">true</option>
+                                                <option value="false">false</option>
+                                            </select>
+                                            <button id="savebtn" class="d-none"></button>
+
+                                            <input type="submit" value="Submit" id="mainBtn"
+                                                class="settings-btn-sty btn-green" />
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
-    
-            </div>
+            </section>
+
+            <!-- Admin Section -->
+            <section id="admin-section" class="mt-5">
+                <div class="row">
+                    <div class="col-6 text-center">
+                        <h3 class="fw-bold mb-1 admin-head">Admin Details</h3>
+                    </div>
+                    <!-- Add Employee -->
+                    <div class="col-6">
+                        <span id="current-checkin-header"></span>
+                        <span style="float:right;">
+                            <button class="btn float-end addEntryBtnStyle" id="add-entry-admin" onclick="dataRemove('adminDetail')"
+                                >Add Entry</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="custom-table-container">
+                    <div class="custom-search-box">
+                        <label>Search:</label>
+                        <input type="text" id="searchAdmin" placeholder="" class="search-input" oninput="filterAdmin()">
+                    </div>
+                    <table class="table custom-table table-bordered" id="adminTable">
+                        <thead>
+                            <tr>
+                                <th>Pin</th>
+                                <th>Name</th>
+                                <th>Phone Number</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tBody2">
+                            <!-- Table rows will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+
+                    <!-- Admin Modal -->
+                    <div class="modal fade" id="myModal2" tabindex="-1" aria-labelledby="myModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="width: 350px;">
+                                <div class="modal-header">
+                                    <h5 class="modal-title fw-bold" id="myModalLabel" style="text-align: center; width: 100%;">Admin Details</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="admin_form" class="p-2 text-center">
+                                        <div class="material-textfield mb-3">
+                                            <input type="text" id="adminFName" name="adminFName" placeholder=" "
+                                                required onblur="validAdminFName()">
+                                            <label>First Name</label><br>
+                                            <span class="text-danger" id="showAdminMsg1"></span>
+                                        </div>
+                                        <div class="material-textfield mb-3">
+                                            <input type="text" id="adminLName" name="adminLName" placeholder=" "
+                                                onblur="validAdminLName()">
+                                            <label>Last Name</label><br>
+                                            <span class="text-danger" id="showAdminMsg2"></span>
+                                        </div>
+                                        <div class="material-textfield mb-3">
+                                            <input type="tel" id="adminPhoneNumber" name="adminPhoneNumber"
+                                                placeholder=" " oninput="formatAdminPhoneNumber()">
+                                            <label>Phone Number</label><br>
+                                            <span class="text-danger" id="showAdminMsg3"></span>
+                                        </div>
+                                        <div class="material-textfield mb-3">
+                                            <input id="adminInstructor" placeholder=" " type="text"
+                                                onblur="validateAdminInstructerPin()" disabled>
+                                            <label>Instructor Pin</label><br>
+                                            <span class="text-danger" id="showAdminMsg"></span>
+                                        </div>
+                                        <div class="material-textfield mb-3">
+                                            <select id="adminDropdown" class="input-sty form-control mt-3" value="true">
+                                                <option value="true">true</option>
+                                                <option value="false">false</option>
+                                            </select>
+                                        </div>
+                                        <button type="button" id="saveAdminBtn" class="settings-btn-sty btn btn-green"
+                                            onclick="addAdminDetails(event)" data-bs-toggle="modal"
+                                            data-bs-dismiss="modal">Save</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
         </div>
     </section>
-    
-   
+
+
+
     <!-- Log out  -->
     <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" id="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addEntryModalLabel">Logout</h5>
+                    <h5 class="modal-title" id="addEntryModalLabel" style="text-align: center; width: 100%;" >Logout</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
