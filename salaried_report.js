@@ -1,4 +1,4 @@
-const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/report/dateRangeReportGet';
+const apiUrlBase = 'https://9acq58mqkb.execute-api.us-west-2.amazonaws.com/prod/report/dateRangeReportGet';
 
 const sidebar = document.getElementById('sidebar');
 const toggler = document.querySelector('.navbar-toggler');

@@ -487,7 +487,7 @@
 
         async function loginCheck(username, password) {
             try {
-                const response = await fetch(`https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company/getuser/${username}`);
+                const response = await fetch(`https://9acq58mqkb.execute-api.us-west-2.amazonaws.com/prod/company/getuser/${username}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 } else {
@@ -530,7 +530,7 @@
         }
 
         function getCustmData(cid1) {
-            const apiUrlBase2 = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/customer';
+            const apiUrlBase2 = 'https://9acq58mqkb.execute-api.us-west-2.amazonaws.com/prod/customer';
             const apiUrl2 = `${apiUrlBase2}/getUsingCID/${cid1}`;
 
             getTimeZone(cid1).then(
@@ -562,7 +562,7 @@
 
 
         async function getTimeZone(cid1) {
-            const apiUrl = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/device/getAll/${cid1}`;
+            const apiUrl = `https://9acq58mqkb.execute-api.us-west-2.amazonaws.com/prod/device/getAll/${cid1}`;
 
             fetch(apiUrl)
                 .then(response => {

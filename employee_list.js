@@ -1,5 +1,5 @@
 
-const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/employee';
+const apiUrlBase = 'https://9acq58mqkb.execute-api.us-west-2.amazonaws.com/prod/employee';
 var adminCount = 0;
 
 // When I click close modal with have any error in this form we need to clear all error msg 

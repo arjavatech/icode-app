@@ -58,11 +58,11 @@
             }, 300);
         })
         // API link 
-        const apiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/customer';
+        const apiUrlBase = 'https://9acq58mqkb.execute-api.us-west-2.amazonaws.com/prod/customer';
         const cid = uuid.v4(); // Use uuid.v4 to generate a UUID
         localStorage.setItem('companyID', cid);
 
-        const firstSignupPageapiUrlBase = 'https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/company';
+        const firstSignupPageapiUrlBase = 'https://9acq58mqkb.execute-api.us-west-2.amazonaws.com/prod/company';
 
         async function createFirstPageSignupAPiData() {
             const firstSignupPageapiUrl = `${firstSignupPageapiUrlBase}/create`;

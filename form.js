@@ -34,7 +34,7 @@ async function actionFun(event) {
     if (isFirstNameValid && isLastNameValid
          && isRequiredFieldsValid && isValidateZipCode 
          &&  isValidatePhone) {
-            const apiLink = `https://397vncv6uh.execute-api.us-west-2.amazonaws.com/test/web_contact_us/create`;
+            const apiLink = `https://9acq58mqkb.execute-api.us-west-2.amazonaws.com/prod/web_contact_us/create`;
 
             const userData = {
                 FirstName: firstName.value, 
