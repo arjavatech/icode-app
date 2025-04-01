@@ -38,12 +38,12 @@
             };
 
             try {
-                let response = await fetch("http://localhost:8000/api/validate", {
-                    method: "POST",
+                let response = await fetch("http://localhost:8000/hs_marks/get/1", {
+                    method: "GET",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify(recaptchaResponse)
                 });
 
                 let result = await response.json();
