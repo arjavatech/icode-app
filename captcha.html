@@ -38,12 +38,13 @@
             };
 
             try {
-                let response = await fetch("http://localhost:8000/hs_marks/get/1", {
+               // Fetch the data with the reCAPTCHA token in headers
+                let response = await fetch(`http://localhost:8000/hs_marks/get/1`, {
                     method: "GET",
                     headers: {
+                        "reCAPTCHA-Token": recaptchaResponse,  // Pass token in headers
                         "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(recaptchaResponse)
+                    }
                 });
 
                 let result = await response.json();
