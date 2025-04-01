@@ -47,7 +47,11 @@
                     }
                 });
 
+                console.log(recaptchaResponse)
+
                 let result = await response.json();
+
+                console.log(result);
                 alert(result.message);
             } catch (error) {
                 console.error("Error:", error);
