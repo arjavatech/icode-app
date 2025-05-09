@@ -1,0 +1,35 @@
+nav{
+    /* background-color: #0086E0; */
+    border-bottom: 2px solid #02066F;
+}
+
+.nav-link{
+    color:gray ;
+}
+
+.nav-link:hover{
+    color: #02066F;
+    border-bottom: 2px solid #02066F;
+}
+
+.active .nav-link{
+    color: #02066F !important;
+    border-bottom: 2px solid #02066F;
+}
+
+.logo{
+    width: 30%;
+    
+}
+
+@media (max-width:967px) {
+    .logo{
+        width: 40%;
+    }
+}
+
+@media (max-width:500px) {
+    .logo{
+        width: 50%;
+    }
+}
