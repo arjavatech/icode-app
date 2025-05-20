@@ -171,7 +171,7 @@ function validateForm(event) {
 // All fields datas get successfully then these datas go to db 
 async function callContactUsCreateAPiData() {
     // Get contact db api link 
-    const apiLink = `https://9acq58mqkb.execute-api.us-west-2.amazonaws.com/prod/contact-us/create`;
+    const apiLink = `https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/contact-us/create`;
 
     const requestID = uuid.v4();
     const cid = localStorage.getItem('companyID');
