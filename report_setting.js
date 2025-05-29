@@ -1,13 +1,6 @@
 
 const apiUrlBase = 'https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/company-report-type';
 
-document.addEventListener("DOMContentLoaded", function () {
-    selectedValue = localStorage.getItem('reportType');
-    document.getElementById("reportViewType").textContent = selectedValue;
-});
-
-// Remove Data
-
 function dataRemove(e) {
     document.getElementById("remail").value = "";
     document.getElementById("frequencySelect").value = "";
@@ -449,19 +442,6 @@ function resetFormAndErrors() {
     document.getElementById('selectError').textContent = ''; // Clear frequency select error
 }
 
-// Function to handle adding report details
-function addreportdetails(event) {
-    const isEmailValid = validREmail();
-    const isDaysValid = validReportDays();
-
-    if (isEmailValid && isDaysValid) {
-        // Proceed with saving the details
-       
-    } else {
-        event.preventDefault(); // Prevent modal close if validation fails
-        
-    }
-}
 
 // Function to validate the second report days selection
 function validReportDays2() {

@@ -250,7 +250,6 @@ function viewEmpdetails() {
                     document.getElementById("Dropdown").disabled = false;
                     document.getElementById("Dropdown").value = "false";
                 
-                console.log("adc= "+adminCount)
                
                  if(adminCount > 2)
                 {
@@ -294,7 +293,6 @@ function viewEmpdetails() {
                     
                     }
                     adminCount+=1;  
-                    console.log(adminCount);
                 }
                 index++;
                 if(index===5){
