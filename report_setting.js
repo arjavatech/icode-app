@@ -1,5 +1,5 @@
 
-const apiUrlBase = 'https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/company-report-type';
+const apiUrlBase = 'https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/company-report-type';
 
 function dataRemove(e) {
     document.getElementById("remail").value = "";
@@ -291,7 +291,7 @@ function editEmpdetails(companyEmail) {
 
 function editReportdetails(reportType) {
     const company_id = localStorage.getItem('companyID');
-    const apiUrl = `https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/admin-report-type/update/${company_id}`;
+    const apiUrl = `https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/admin-report-type/update/${company_id}`;
     const freqselect = document.getElementById('frequencySelect2');
     const freqselectedValues = [];
     
@@ -470,7 +470,7 @@ function updateReportdetails() {
         const selectedValues = Array.from(reportSelect.selectedOptions).map(option => option.value);
         const company_id = localStorage.getItem('companyID');
 
-        const apiUrl = `https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/admin-report-type/update/${company_id}`;
+        const apiUrl = `https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/admin-report-type/update/${company_id}`;
 
         const reportObject = {
             CID: company_id,

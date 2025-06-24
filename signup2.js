@@ -74,9 +74,9 @@ function validatePhoneNumber() {
 // API link 
 // Signup second page link
 
-const apiUrlBase = 'https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/customer';
+const apiUrlBase = 'https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/customer';
 const cid = uuid.v4();
-const firstSignupPageapiUrlBase = `https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/company`;
+const firstSignupPageapiUrlBase = `https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/company`;
 
 async function validateForm(event) {
     event.preventDefault();
@@ -368,7 +368,7 @@ async function createCheckoutSession() {
         const link = "http://127.0.0.1:5504";
         const link2 = "https://tap-time.com";
         const link3 = "https://arunkavitha1982.github.io/icode"
-        const response = await fetch(`https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/create-checkout-session`, {
+        const response = await fetch(`https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/create-checkout-session`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
