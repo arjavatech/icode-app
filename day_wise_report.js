@@ -123,6 +123,7 @@ function viewDatewiseReport(dateValue) {
   document.getElementById('overlay').style.display = 'flex';
   document.querySelector(".custom-table-container").style.display = "block";
   document.getElementById("noDateSelect").style.display = "none";
+  document.getElementById("download-pdf").style.display = "none";
   const tableBody = document.getElementById("tbody");
   tableBody.innerHTML = '';
  
@@ -145,6 +146,9 @@ function viewDatewiseReport(dateValue) {
               try {
                   tableBody.innerHTML = "";
                   let index = 1;
+                  // Store data globally for PDF download
+                  window.reportData = data.filter(element => element.CheckOutTime != null);
+                  
                   data.forEach(element => {
                       const newRow = document.createElement('tr');
                       if (element.CheckOutTime != null) {
@@ -177,6 +181,9 @@ function viewDatewiseReport(dateValue) {
                       "ordering": true,
                       "info": true
                   });
+                  
+                  // Show download button when data is loaded
+                  document.getElementById("download-pdf").style.display = "block";
 
               } catch {
                   const newRow = document.createElement('tr');
@@ -269,3 +276,39 @@ function homePage(){
 document.getElementById('homePageYes').addEventListener('click',function (){
   window.open('index.html', 'noopener, noreferrer');
 })
+
+function downloadPdf() {
+  if (!window.reportData || window.reportData.length === 0) {
+    alert('No data to download.');
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const selectedDate = document.getElementById('dailyReportDate').value;
+  const formattedDate = selectedDate ? new Date(selectedDate).toLocaleDateString() : 'Selected Date';
+  
+  doc.setFontSize(16);
+  doc.text(`Day Wise Report - ${formattedDate}`, 14, 20);
+
+  const columns = ['Employee Name', 'Employee ID', 'Check-in Time', 'Check-out Time', 'Time Worked Hours (HH:MM)'];
+
+  const data = window.reportData.map(element => [
+    (element.Name).split(" ")[0],
+    element.Pin,
+    convertToAmPm(new Date(element.CheckInTime)),
+    convertToAmPm(new Date(element.CheckOutTime)),
+    element.TimeWorked
+  ]);
+
+  doc.autoTable({
+    head: [columns],
+    body: data,
+    startY: 30,
+    styles: { fontSize: 10 },
+    headStyles: { fillColor: [2, 6, 111] }
+  });
+
+  doc.save(`day_wise_report_${selectedDate || 'report'}.pdf`);
+}
