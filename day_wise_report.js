@@ -123,7 +123,7 @@ function viewDatewiseReport(dateValue) {
   document.getElementById('overlay').style.display = 'flex';
   document.querySelector(".custom-table-container").style.display = "block";
   document.getElementById("noDateSelect").style.display = "none";
-  document.getElementById("download-pdf").style.display = "none";
+  document.getElementById("download-buttons").style.display = "none";
   const tableBody = document.getElementById("tbody");
   tableBody.innerHTML = '';
  
@@ -167,23 +167,22 @@ function viewDatewiseReport(dateValue) {
                               <td class="TimeWorked">${element.TimeWorked}</td>
                           `;
                           tableBody.appendChild(newRow);
-                          // index++;
-                          // if(index===5){
-                          //   document.getElementById("footer_id").style.position = "unset";
-                          // }
                       }
                   });
 
-                  // Initialize DataTable after populating the table
-                  $('#employeeTable').DataTable({
-                      "paging": true,
-                      "searching": true,
-                      "ordering": true,
-                      "info": true
-                  });
-                  
-                  // Show download button when data is loaded
-                  document.getElementById("download-pdf").style.display = "block";
+                  // Only show download buttons if there's actual data
+                  if (window.reportData && window.reportData.length > 0) {
+                      // Initialize DataTable after populating the table
+                      $('#employeeTable').DataTable({
+                          "paging": true,
+                          "searching": true,
+                          "ordering": true,
+                          "info": true
+                      });
+                      
+                      // Show download buttons when data is loaded
+                      document.getElementById("download-buttons").style.display = "flex";
+                  }
 
               } catch {
                   const newRow = document.createElement('tr');
@@ -311,4 +310,35 @@ function downloadPdf() {
   });
 
   doc.save(`day_wise_report_${selectedDate || 'report'}.pdf`);
+}
+
+function downloadCsv() {
+  if (!window.reportData || window.reportData.length === 0) {
+    alert('No data to download.');
+    return;
+  }
+
+  const selectedDate = document.getElementById('dailyReportDate').value;
+  const headers = ['Employee Name', 'Employee ID', 'Check-in Time', 'Check-out Time', 'Time Worked Hours (HH:MM)'];
+  
+  const csvData = window.reportData.map(element => [
+    (element.Name).split(" ")[0],
+    element.Pin,
+    convertToAmPm(new Date(element.CheckInTime)),
+    convertToAmPm(new Date(element.CheckOutTime)),
+    element.TimeWorked
+  ]);
+
+  let csvContent = headers.join(',') + '\n';
+  csvData.forEach(row => {
+    csvContent += row.join(',') + '\n';
+  });
+
+  const blob = new Blob([csvContent], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `day_wise_report_${selectedDate || 'report'}.csv`;
+  a.click();
+  window.URL.revokeObjectURL(url);
 }

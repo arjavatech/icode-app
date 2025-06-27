@@ -517,7 +517,10 @@
             </div>
             <div class="emp-table table-responsive mt-5">
                 <p id="noDateSelect" style="text-align: center;">Please select a date to show report.</p>
-                <button class="btn float-end addEntryBtnStyle employee-add-entry" id="download-pdf" onclick="downloadPdf()" style="display: none;">Download PDF</button>
+                <div class="d-flex justify-content-center gap-3 mb-3" id="download-buttons" style="display: none;">
+                    <button class="btn addEntryBtnStyle employee-add-entry" id="download-pdf" onclick="downloadPdf()">Download PDF</button>
+                    <button class="btn addEntryBtnStyle employee-add-entry" id="download-csv" onclick="downloadCsv()">Download CSV</button>
+                </div>
                 <div class="custom-table-container mt-15">
 
                     <table id="employeeTable" class="table custom-table table-bordered mt-15">
