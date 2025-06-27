@@ -160,7 +160,7 @@ function viewDatewiseReport(dateValue) {
                           const checkOutTimeFormatted = convertToAmPm(checkOutTimeUTC);
 
                           newRow.innerHTML = `
-                              <td class="Name">${(element.Name).split(" ")[0]}</td>
+                              <td class="Name">${element.Name}</td>
                               <td class="Pin">${element.Pin}</td>
                               <td class="CheckInTime">${checkInTimeFormatted}</td>
                               <td class="CheckOutTime">${checkOutTimeFormatted}</td>
