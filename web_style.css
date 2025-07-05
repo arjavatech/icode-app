@@ -12,6 +12,10 @@
         font-weight: bold;
     }
 
+    .sec-img{
+        height: 500px;
+    }
+
 /* First row second column section  */
 .feature-section {
     margin-bottom: 25px; /* Increase space between sections for desktop */
@@ -44,7 +48,7 @@
 
 .box-sty {
     width: 100%; 
-    max-width: 600px; 
+    max-width: 900px; 
     padding: 2rem; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

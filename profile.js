@@ -11,6 +11,38 @@ document.getElementById('settingsForm').addEventListener('submit', function (eve
     }
 });
 
+function changeThePassword(){   
+    document.getElementById('password').disabled = false;
+}
+
+function encryptPasswordInput() {
+  const password = document.getElementById("password").value;
+  const secretKey = "mySecretKey123"; // You can store securely on server
+
+  const encrypted = CryptoJS.AES.encrypt(password, secretKey).toString();
+
+  // Optionally store or use it
+  localStorage.setItem("encryptedPassword", encrypted);
+  consolesole.log("Encrypted Password:", encrypted);
+  return encrypted;
+}
+
+
+function showSection(sectionId) {
+    if(sectionId === 'company') {
+        document.getElementById('company').style.display = 'block';
+        document.getElementById('customer').style.display = 'none';
+        document.getElementById('customerBtn').classList.remove('activate');
+        document.getElementById('companyBtn').classList.add('activate');
+    }
+    else{
+        document.getElementById('company').style.display = 'none';
+        document.getElementById('customer').style.display = 'block';
+        document.getElementById('customerBtn').classList.add('activate');
+        document.getElementById('companyBtn').classList.remove('activate');
+    }
+}
+
 const sidebar = document.getElementById('sidebar');
 const toggler = document.querySelector('.navbar-toggler');
 
@@ -116,6 +148,7 @@ function populateProfileData(data) {
     // Company datas 
     document.getElementById('companyName').value = data.CName || '';
     document.getElementById('username').value = data.UserName || '';
+    document.getElementById('password').value = localStorage.getItem('passwordDecryptedValue') || '';
     // Add other fields similarly...
 
     // Example for address
@@ -321,6 +354,7 @@ function updateApiData() {
 
     const customerApiUrl = `${customerAPIUrlBase}/update/${customerId}`;
     const companyApiUrl = `${companyAPIUrlBase}/update/${cid}`;
+    const getTheEncryptedPassword = encryptPasswordInput();
 
     const customerData = {
         // Customer details 
@@ -341,7 +375,7 @@ function updateApiData() {
         CName: document.getElementById('companyName').value,
         CAddress: `${document.getElementById('companyStreet').value}--${document.getElementById('companyCity').value}--${document.getElementById('companyState').value}--${document.getElementById('companyZip').value}--`,
         CLogo: localStorage.getItem("imageFile"),
-        Password: localStorage.getItem("password"),
+        Password: getTheEncryptedPassword,
         ReportType: "Weekly",
         LastModifiedBy: 'Admin'
     };
@@ -381,6 +415,7 @@ function updateApiData() {
 
                 document.querySelectorAll('.disabledData').forEach(function (input) {
                     input.disabled = true;
+                    document.getElementById('password').disabled = true;
                 });
              
             }

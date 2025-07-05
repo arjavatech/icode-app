@@ -66,9 +66,12 @@ datePicker.setAttribute('max', formattedToday);
 
 // Enable end time only after start time is selected
 checkinTimeButton.addEventListener('change', () => {
+  document.querySelector('.placeholder-time-wrapper').classList.remove('placeholder-time-wrapper');
   if (checkinTimeButton.value) {
     checkoutTimeButton.disabled = false;
     startTimeError.textContent = ''; // Clear any previous error
+    AddEmployee.disabled = false;
+
   } else {
     checkoutTimeButton.disabled = true;
     startTimeError.textContent = 'Please select a valid start time.';
@@ -76,8 +79,8 @@ checkinTimeButton.addEventListener('change', () => {
 });
 // Enable the button only if end time is greater than start time
 checkoutTimeButton.addEventListener('change', () => {
-  if (checkinTimeButton.value && checkoutTimeButton.value > checkinTimeButton.value) {
-    AddEmployee.disabled = false;
+  document.querySelector('.placeholder-time-wrapper').classList.remove('placeholder-time-wrapper');
+  if (checkinTimeButton.value && checkinTimeButton.value && checkoutTimeButton.value > checkinTimeButton.value) {
     endTimeError.textContent = ''; // Clear any previous error
   } else {
     endTimeError.textContent = 'End time must be greater than start time.';
@@ -616,7 +619,7 @@ document.addEventListener('DOMContentLoaded', function () {
       endTimeError.textContent = "";
     }
     // Check if end time is valid
-    if (!checkoutTimeButton.value || checkoutTimeButton.value <= checkinTimeButton.value) {
+    if (checkoutTimeButton.value == ' ' && checkoutTimeButton.value <= checkinTimeButton.value) {
       endTimeError.textContent = 'Checkout time must be greater than check in time.';
       isValid = false;
       dateError.textContent = '';
@@ -629,7 +632,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const checkinTimeValue = checkinTimeButton.value;
       const checkoutTimeValue = checkoutTimeButton.value;
       const startDateTime = datePickerValue + ' ' + checkinTimeValue + ":00";
-      const endDateTimeValue = datePickerValue + ' ' + checkoutTimeValue + ":00";
+      const endDateTimeValue = checkoutTimeButton.value == ' ' ? null : datePickerValue + ' ' + checkoutTimeValue + ":00";
 
 
       document.getElementById('overlay').style.display = 'flex';
