@@ -18,6 +18,9 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- Encrypted password link  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <link rel="stylesheet" href="profile.css">
     <link rel="stylesheet" href="nav.css">
     <link rel="stylesheet" href="footer.css">
@@ -31,7 +34,9 @@
         }
 
         .all-input-style {
-            color: #02066F;
+            /* color: #02066F; */
+            color: gray;
+            background-color: rgb(234, 231, 231);
         }
 
         body {
@@ -535,7 +540,7 @@
                                 <label class="label-sty">Company Name</label> -->
                             <label class="mb-2 label-style">Company Name:</label>
                             <input type="text" id="companyName" placeholder="Company Name"
-                                class="all-input-style mb-3 disabledData" required disabled>
+                                class="all-input-style mb-3 disabledData" required readonly>
                         </div>
                         <div class="col-sm-6">
                             <!-- <div class="material-textfield mb-4">
@@ -544,7 +549,7 @@
                         </div> -->
                             <label class="mb-2 label-style">Company Street:</label>
                             <input type="text" id="companyStreet" placeholder="Company Street"
-                                class="all-input-style mb-3 disabledData" required disabled>
+                                class="all-input-style mb-3 disabledData" required readonly>
                         </div>
                     </div>
 
@@ -557,7 +562,7 @@
                     </div> -->
                             <label class="mb-2 label-style">Company State:</label>
                             <input type="text" id="companyState" placeholder="Company State"
-                                class="all-input-style mb-3 disabledData" required disabled>
+                                class="all-input-style mb-3 disabledData" required readonly>
                         </div>
 
                         <div class="col-sm-6">
@@ -567,7 +572,7 @@
                     </div> -->
                             <label class="mb-2 label-style">Company City:</label>
                             <input type="text" id="companyCity" placeholder="Company City"
-                                class="all-input-style mb-3 disabledData" required disabled>
+                                class="all-input-style mb-3 disabledData" required readonly>
                         </div>
                     </div>
 
@@ -579,7 +584,7 @@
                     </div> -->
                             <label class="mb-2 label-style">Company Zip Code:</label>
                             <input type="text" id="companyZip" placeholder="Company Zip"
-                                class="all-input-style mb-3 disabledData" required disabled>
+                                class="all-input-style mb-3 disabledData" required readonly>
                         </div>
                         <div class="col-sm-6">
                             <!-- <div class="material-textfield mb-4">
@@ -588,7 +593,7 @@
                         </div> -->
                             <label class="mb-2 label-style">Username:</label>
                             <input type="text" id="username" placeholder="Username"
-                                class="all-input-style mb-3 disabledData" required disabled>
+                                class="all-input-style mb-3 disabledData" required readonly>
                         </div>
                     </div>
 
@@ -596,116 +601,200 @@
                         <div class="col-sm-6">
                             <label class="mb-2 label-style">Password:</label>
                             <input type="password" id="password" placeholder="Password" class="all-input-style mb-3"
-                                required disabled>
+                                required readonly>
                         </div>
                         <div class="col-sm-6">
-                            <button type="button" class="activate mt-3" id="changePass" onclick="changeThePassword()" >Change Password</button>
+                            <button type="button" class="activate mt-3" id="changePass"
+                                onclick="changeThePassword()">Change Password</button>
                         </div>
                     </div>
+
+                    <div class="d-flex justify-content-center mt-5">
+                    <input type="submit" class="btn-green" onclick="initializeFormSubmission('companyEditBtn',event)"
+                        id="companyEditBtn" value="Edit">
+                    <!-- <button class="btn-green" id="submiting" value="Edit">Edit</button> -->
+                </div>
                 </div>
             </div>
 
-            <div class="container box-sty mt-3" style="display: none;" id="customer">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <!-- <div class="material-textfield mb-4">
+            <div id="customerOrAdminDetails" style="display: none;">
+                <div class="container box-sty mt-3" id="customer">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- <div class="material-textfield mb-4">
                         <input id="firstName" placeholder=" " type="text" class="input-sty disabledData" disabled>
                         <label class="label-sty">First Name</label>
                     </div> -->
-                        <label class="mb-2 label-style">First Name:</label>
-                        <input type="text" id="firstName" placeholder="First Name"
-                            class="all-input-style mb-3 disabledData" required disabled>
-                    </div>
-                    <div class="col-sm-6">
-                        <!-- <div class="material-textfield mb-4">
-                        <input id="lastName" placeholder=" " type="text" class="input-sty disabledData" disabled>
+                            <label class="mb-2 label-style">First Name:</label>
+                            <input type="text" id="firstName" placeholder="First Name"
+                                class="all-input-style mb-3 customerDisablefield" required readonly>
+                        </div>
+                        <div class="col-sm-6">
+                            <!-- <div class="material-textfield mb-4">
+                        <input id="lastName" placeholder=" " type="text" class="input-sty customerDisablefield" disabled>
                         <label class="label-sty">Last Name</label>
                         <span class="text-danger" id="errorLName"></span>
                     </div> -->
-                        <label class="mb-2 label-style">Last Name:</label>
-                        <input type="text" id="lastName" placeholder="Last Name"
-                            class="all-input-style mb-3 disabledData" required disabled>
+                            <label class="mb-2 label-style">Last Name:</label>
+                            <input type="text" id="lastName" placeholder="Last Name"
+                                class="all-input-style mb-3 customerDisablefield" required readonly>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-sm-6">
-                        <!-- <div class="material-textfield">
-                        <input id="email" placeholder=" " type="email" class="input-sty disabledData" disabled>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- <div class="material-textfield">
+                        <input id="email" placeholder=" " type="email" class="input-sty customerDisablefield" disabled>
                         <label class="label-sty">Email</label>
                     </div> -->
-                        <label class="mb-2 label-style">Email:</label>
-                        <input type="email" id="email" placeholder="Email" class="all-input-style mb-3 disabledData"
-                            required disabled>
-                    </div>
+                            <label class="mb-2 label-style">Email:</label>
+                            <input type="email" id="email" placeholder="Email"
+                                class="all-input-style mb-3 customerDisablefield" required readonly>
+                        </div>
 
-                    <div class="col-sm-6">
-                        <!-- <div class="material-textfield">
-                        <input type="tel" id="phone" name="phoneNumber" placeholder=" " class="input-sty disabledData"
+                        <div class="col-sm-6">
+                            <!-- <div class="material-textfield">
+                        <input type="tel" id="phone" name="phoneNumber" placeholder=" " class="input-sty customerDisablefield"
                             disabled>
                         <label class="label-sty">Phone Number</label>
                     </div> -->
-                        <label class="mb-2 label-style">Phone Number:</label>
-                        <input type="tel" id="phone" placeholder="Phone Number" oninput="formatPhoneNumber()"
-                            class="all-input-style mb-3 disabledData" required disabled>
-                        <div id="showMsg3" class="text-danger"></div>
+                            <label class="mb-2 label-style">Phone Number:</label>
+                            <input type="tel" id="phone" placeholder="Phone Number" oninput="formatPhoneNumber()"
+                                class="all-input-style mb-3 customerDisablefield" required readonly>
+                            <div id="showMsg3" class="text-danger"></div>
+                        </div>
+
                     </div>
 
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-6">
-                        <!-- <div class="material-textfield mb-4">
-                        <input id="customerStreet" placeholder=" " type="text" class="input-sty disabledData" disabled>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- <div class="material-textfield mb-4">
+                        <input id="customerStreet" placeholder=" " type="text" class="input-sty customerDisablefield" disabled>
                         <label class="label-sty">Customer Street</label>
                     </div> -->
-                        <label class="mb-2 label-style">Customer Street:</label>
-                        <input type="text" id="customerStreet" placeholder="Customer Street"
-                            class="all-input-style mb-3 disabledData" required disabled>
-                    </div>
+                            <label class="mb-2 label-style">Customer Street:</label>
+                            <input type="text" id="customerStreet" placeholder="Customer Street"
+                                class="all-input-style mb-3 customerDisablefield" required readonly>
+                        </div>
 
-                    <div class="col-sm-6">
-                        <!-- <div class="material-textfield mb-4">
-                        <input id="customerState" placeholder=" " type="text" class="input-sty disabledData" disabled>
+                        <div class="col-sm-6">
+                            <!-- <div class="material-textfield mb-4">
+                        <input id="customerState" placeholder=" " type="text" class="input-sty customerDisablefield" disabled>
                         <label class="label-sty">Customer State</label>
                     </div> -->
-                        <label class="mb-2 label-style">Customer State:</label>
-                        <input type="text" id="customerState" placeholder="Customer State"
-                            class="all-input-style mb-3 disabledData" required disabled>
+                            <label class="mb-2 label-style">Customer State:</label>
+                            <input type="text" id="customerState" placeholder="Customer State"
+                                class="all-input-style mb-3 customerDisablefield" required readonly>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-sm-6">
-                        <!-- <div class="material-textfield mb-4">
-                        <input id="customerCity" placeholder=" " type="text" class="input-sty disabledData" disabled>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- <div class="material-textfield mb-4">
+                        <input id="customerCity" placeholder=" " type="text" class="input-sty customerDisablefield" disabled>
                         <label class="label-sty">Customer City</label>
                     </div> -->
-                        <label class="mb-2 label-style">Customer City:</label>
-                        <input type="text" id="customerCity" placeholder="Customer City"
-                            class="all-input-style mb-3 disabledData" required disabled>
-                    </div>
+                            <label class="mb-2 label-style">Customer City:</label>
+                            <input type="text" id="customerCity" placeholder="Customer City"
+                                class="all-input-style mb-3 customerDisablefield" required readonly>
+                        </div>
 
-                    <div class="col-sm-6">
-                        <!-- <div class="material-textfield mb-4">
-                        <input id="customerZip" placeholder=" " type="text" class="input-sty disabledData" disabled>
+                        <div class="col-sm-6">
+                            <!-- <div class="material-textfield mb-4">
+                        <input id="customerZip" placeholder=" " type="text" class="input-sty customerDisablefield" disabled>
                         <label class="label-sty">Customer Zip</label>
                     </div> -->
-                        <label class="mb-2 label-style">Customer Zip Code:</label>
-                        <input type="text" id="customerZip" placeholder="Customer Zip"
-                            class="all-input-style mb-3 disabledData" required disabled>
+                            <label class="mb-2 label-style">Customer Zip Code:</label>
+                            <input type="text" id="customerZip" placeholder="Customer Zip"
+                                class="all-input-style mb-3 customerDisablefield" required readonly>
+                        </div>
+                    </div>
+
+                    <!-- <div class="d-flex justify-content-center">
+                            <input type="submit" class="btn-green float-end" id="submiting" value="Edit">
+                        </div> -->
+
+                    <div class="d-flex justify-content-center mt-5">
+                        <input type="submit" class="btn-green"
+                            onclick="initializeFormSubmission('customerEditBtn',event)" id="customerEditBtn"
+                            value="Edit">
+                        <!-- <button class="btn-green" id="submiting" value="Edit">Edit</button> -->
                     </div>
                 </div>
 
-                <!-- <div class="d-flex justify-content-center">
-                            <input type="submit" class="btn-green float-end" id="submiting" value="Edit">
-                        </div> -->
+                <!-- ADMIN  -->
+
+                <div class="container box-sty mt-3" id="adminDetails">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- <div class="material-textfield mb-4">
+                        <input id="firstName" placeholder=" " type="text" class="input-sty disabledData" disabled>
+                        <label class="label-sty">First Name</label>
+                    </div> -->
+                            <label class="mb-2 label-style">First Name:</label>
+                            <input type="text" id="adminFirstName" placeholder="First Name"
+                                class="all-input-style mb-3 adminDisablefield" required readonly>
+                        </div>
+                        <div class="col-sm-6">
+                            <!-- <div class="material-textfield mb-4">
+                        <input id="lastName" placeholder=" " type="text" class="input-sty adminDisablefield" disabled>
+                        <label class="label-sty">Last Name</label>
+                        <span class="text-danger" id="errorLName"></span>
+                    </div> -->
+                            <label class="mb-2 label-style">Last Name:</label>
+                            <input type="text" id="adminLastName" placeholder="Last Name"
+                                class="all-input-style mb-3 adminDisablefield" required readonly>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- <div class="material-textfield">
+                        <input id="email" placeholder=" " type="email" class="input-sty adminDisablefield" disabled>
+                        <label class="label-sty">Email</label>
+                    </div> -->
+                            <label class="mb-2 label-style">Email:</label>
+                            <input type="email" id="adminEmail" placeholder="Email"
+                                class="all-input-style mb-3 adminDisablefield" required readonly>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <!-- <div class="material-textfield">
+                        <input type="tel" id="phone" name="phoneNumber" placeholder=" " class="input-sty adminDisablefield"
+                            disabled>
+                        <label class="label-sty">Phone Number</label>
+                    </div> -->
+                            <label class="mb-2 label-style">Phone Number:</label>
+                            <input type="tel" id="adminPhone" placeholder="Phone Number" oninput="formatPhoneNumber()"
+                                class="all-input-style mb-3 adminDisablefield" required readonly>
+                            <div id="showMsg3" class="text-danger"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- <div class="material-textfield mb-4">
+                        <input id="customerStreet" placeholder=" " type="text" class="input-sty adminDisablefield" disabled>
+                        <label class="label-sty">Customer Street</label>
+                    </div> -->
+                            <label class="mb-2 label-style">Pin:</label>
+                            <input type="text" id="adminPin" placeholder="Customer Street"
+                                class="all-input-style mb-3 adminDisablefield" required readonly>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-5">
+                    <input type="submit" class="btn-green" onclick="initializeFormSubmission('adminEditBtn',event)"
+                        id="adminEditBtn" value="Edit">
+                    <!-- <button class="btn-green" id="submiting" value="Edit">Edit</button> -->
+                </div>
+                </div>
+                
             </div>
+
         </div>
-        <div class="d-flex justify-content-center mt-5">
-            <input type="submit" class="btn-green" id="submiting" value="Edit">
-            <!-- <button class="btn-green" id="submiting" value="Edit">Edit</button> -->
-        </div>
+
     </form>
 
     <!-- Success Modal -->
