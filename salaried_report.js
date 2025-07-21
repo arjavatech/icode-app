@@ -16,7 +16,8 @@ document.addEventListener('click', function (event) {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    const selectedValue = localStorage.getItem("reportSettingsType");
+  const selectedValue = localStorage.getItem("reportSettingsType");
+  console.log("Selected Report Type:", selectedValue);
   document.getElementById("reportName").textContent = `${selectedValue} Report`;
   document.getElementById("report-type-heading").textContent = `${selectedValue} Report`;
 
@@ -68,55 +69,88 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function viewDateRangewiseReport() {
+  document.querySelector(".overlay").style.display = "flex";
   const selectedValue = localStorage.getItem("reportSettingsType");
   const showReports = document.getElementById("showTheReports");
   showReports.innerHTML = "";
-  document.getElementById("tbody").innerHTML = "";
+  // document.getElementById("tbody").innerHTML = "";
 
   const getMonth = parseInt(document.getElementById("monthInput").value);
   const getYear = parseInt(document.getElementById("yearInput").value);
   const cid = localStorage.getItem("companyID");
 
-  let dateRanges = [];
+  const weekSelect = document.getElementById("weekInput");
+  weekSelect.innerHTML = "";
 
+  // 🟢 BEGIN Weekly Block
   if (selectedValue === "Weekly") {
-    const firstDay = new Date(getYear, getMonth - 1, 1);
+    const startOfMonth = new Date(getYear, getMonth - 1, 1);
     const lastDay = new Date(getYear, getMonth, 0);
-    let current = new Date(firstDay);
 
-    while (current <= lastDay) {
+    const weekRanges = [];
+    let weekCounter = 1;
+
+    let current = new Date(startOfMonth);
+    // find first Monday
+    while (current.getDay() !== 1 && current <= lastDay) {
+      current.setDate(current.getDate() + 1);
+    }
+
+    while (true) {
       const start = new Date(current);
       const end = new Date(current);
       end.setDate(end.getDate() + 6);
-      if (end > lastDay) end.setDate(lastDay.getDate());
 
-      dateRanges.push({ startRange: formatDate(start), endRange: formatDate(end) });
-      current.setDate(current.getDate() + 7);
+      // ⚠️ Break if end goes into next month
+      if (end.getMonth() !== start.getMonth()) break;
+
+      const startStr = formatDate(start);
+      const endStr = formatDate(end);
+
+      const label = `Week ${weekCounter}: ${formatDisplayDate(start)} - ${formatDisplayDate(end)} (Mon - Sun)`;
+
+      // populate dropdown
+      const option = document.createElement("option");
+      option.value = weekRanges.length;
+      option.textContent = label;
+      weekSelect.appendChild(option);
+
+      weekRanges.push({ startRange: startStr, endRange: endStr });
+      weekCounter++;
+
+      // move to next week
+      current = new Date(end);
+      current.setDate(current.getDate() + 1);
+      if (current > lastDay) break;
     }
 
-    // Create buttons for weekly
-    dateRanges.forEach((range, index) => {
-      const btn = document.createElement("button");
-      btn.textContent = `Report ${index + 1}: ${range.startRange} - ${range.endRange}`;
-      btn.className = "btn report-btn-style m-1 report-button";
+    document.getElementById("weekInputWrapper").style.display = "block";
 
-      btn.onclick = () => {
-        document.querySelectorAll('.report-button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        loadReportTable(range.startRange, range.endRange, cid);
-        document.getElementById("start-date-header").innerHTML = range.startRange;
-        document.getElementById("end-date-header").innerHTML = range.endRange;
-      };
+    // load first week
+    if (weekRanges.length > 0) {
+      weekSelect.value = 0;
+      const first = weekRanges[0];
+      document.getElementById("start-date-header").innerText = first.startRange;
+      document.getElementById("end-date-header").innerText = first.endRange;
+      loadReportTable(first.startRange, first.endRange, cid);
+    }
 
-      showReports.appendChild(btn);
-      if (index === 0) btn.click(); // Auto-load first week
-    });
+    // dropdown on change
+    weekSelect.onchange = () => {
+      const idx = parseInt(weekSelect.value);
+      const r = weekRanges[idx];
+      document.getElementById("start-date-header").innerText = r.startRange;
+      document.getElementById("end-date-header").innerText = r.endRange;
+      loadReportTable(r.startRange, r.endRange, cid);
+    }
 
-  } else if (selectedValue === "Bimonthly") {
+    // ❌ END Weekly Block
+  } 
+  else if (selectedValue === "Bimonthly") {
+    document.getElementById("weekInputWrapper").style.display = "none";
     const halfValue = document.getElementById("halfInput").value;
     const daysInMonth = new Date(getYear, getMonth, 0).getDate();
     const mid = Math.ceil(daysInMonth / 2);
-
     const firstHalf = {
       startRange: `${getYear}-${pad(getMonth)}-01`,
       endRange: `${getYear}-${pad(getMonth)}-${pad(mid)}`
@@ -125,85 +159,90 @@ function viewDateRangewiseReport() {
       startRange: `${getYear}-${pad(getMonth)}-${pad(mid + 1)}`,
       endRange: `${getYear}-${pad(getMonth)}-${pad(daysInMonth)}`
     };
+    const sel = halfValue === "first" ? firstHalf : secondHalf;
+    document.getElementById("start-date-header").innerText = sel.startRange;
+    document.getElementById("end-date-header").innerText = sel.endRange;
+    loadReportTable(sel.startRange, sel.endRange, cid);
 
-    const halfButtons = [firstHalf, secondHalf];
-
-    halfButtons.forEach((range, index) => {
-      const btn = document.createElement("button");
-      btn.textContent = `Report ${index + 1}: ${range.startRange} - ${range.endRange}`;
-      btn.className = "btn report-btn-style m-1 report-button";
-
-      // Auto-highlight button that matches dropdown
-      if ((index === 0 && halfValue === "first") || (index === 1 && halfValue === "second")) {
-        btn.classList.add("active");
-        loadReportTable(range.startRange, range.endRange, cid);
-        document.getElementById("start-date-header").innerHTML = range.startRange;
-        document.getElementById("end-date-header").innerHTML = range.endRange;
-      }
-
-      btn.onclick = () => {
-        document.querySelectorAll(".report-button").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        loadReportTable(range.startRange, range.endRange, cid);
-        document.getElementById("start-date-header").innerHTML = range.startRange;
-        document.getElementById("end-date-header").innerHTML = range.endRange;
-
-        // Update dropdown
-        document.getElementById("halfInput").value = index === 0 ? "first" : "second";
-      };
-
-      showReports.appendChild(btn);
-    });
-
-  } else if (selectedValue === "Monthly") {
+  } 
+  else if (selectedValue === "Monthly") {
+    document.getElementById("weekInputWrapper").style.display = "none";
     const daysInMonth = new Date(getYear, getMonth, 0).getDate();
     const start = `${getYear}-${pad(getMonth)}-01`;
     const end = `${getYear}-${pad(getMonth)}-${pad(daysInMonth)}`;
+    document.getElementById("start-date-header").innerText = start;
+    document.getElementById("end-date-header").innerText = end;
     loadReportTable(start, end, cid);
-    document.getElementById("start-date-header").innerHTML = start;
-    document.getElementById("end-date-header").innerHTML = end;
 
   } else if (selectedValue === "Biweekly") {
+    document.getElementById("weekInputWrapper").style.display = "none";
+    document.getElementById("add-entry-year-month").style.display = "none";
     const today = new Date();
     const end = new Date(today);
     const start = new Date(today);
     start.setDate(end.getDate() - 13);
+    const s = formatDate(start);
+    const e = formatDate(end);
+    document.getElementById("start-date-header").innerText = s;
+    document.getElementById("end-date-header").innerText = e;
+    loadReportTable(s, e, cid);
 
-    const startStr = formatDate(start);
-    const endStr = formatDate(end);
-    loadReportTable(startStr, endStr, cid);
-    document.getElementById("start-date-header").innerHTML = startStr;
-    document.getElementById("end-date-header").innerHTML = endStr;
   } else {
-    showReports.innerHTML = "";
+    document.getElementById("weekInputWrapper").style.display = "none";
   }
+  document.getElementById("overlay").style.display = "none";
 }
 
+
 document.getElementById('halfInput').addEventListener('change', viewDateRangewiseReport);
+document.getElementById('weekInput').addEventListener('change', viewDateRangewiseReport);
+
 
 
 function loadReportTable(startVal, endVal, cid) {
+  console.log(`Loading report table for CID: ${cid}, Start: ${startVal}, End: ${endVal}`);
   document.querySelector(".overlay").style.display = "flex";
-  const tableBody = document.getElementById("tbody");
-  document.getElementById("start-date-header").innerText = startVal;
-  document.getElementById("end-date-header").innerText = endVal;
-
-  tableBody.innerHTML = '';
-  if ($.fn.DataTable.isDataTable('#employeeTable')) {
-    $('#employeeTable').DataTable().clear().destroy();
-  }
-
   const localStorageKey = `report_${cid}_${startVal}_${endVal}`;
   const cachedDataRaw = localStorage.getItem(localStorageKey);
+
+function render(data) {
+  const tbody = document.getElementById('tbody');
+  if (!tbody) {
+    console.error("Table body element '#tbody' not found.");
+    return;
+  }
+
+  tbody.innerHTML = ''; // Clear old rows
+
+  if (!data || data.length === 0) {
+    const noDataRow = document.createElement('tr');
+    noDataRow.innerHTML = `<td colspan="3" class="text-center">No data available</td>`;
+    tbody.appendChild(noDataRow);
+    document.getElementById('download-buttons').style.display = 'none';
+    return;
+  }
+
+  data.forEach(emp => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${emp?.Name || emp?.name || '-'}</td>
+      <td>${emp?.Pin || emp?.pin || '-'}</td>
+      <td>${emp?.TotalWorkedHours || emp?.totalHours || '-'}</td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  document.getElementById('download-buttons').style.display = 'flex';
+}
+
 
   if (cachedDataRaw) {
     try {
       const cachedData = JSON.parse(cachedDataRaw);
-      renderReportTable(cachedData, tableBody);
-      document.querySelector(".overlay").style.display = "none";
+      render(cachedData);
       return;
     } catch (e) {
-      // if corrupted, continue with API call
+      // fallback to API
     }
   }
 
@@ -211,22 +250,15 @@ function loadReportTable(startVal, endVal, cid) {
   fetch(apiUrl)
     .then(res => res.json())
     .then(data => {
-      if (Array.isArray(data)) {
-        localStorage.setItem(localStorageKey, JSON.stringify(data));
-        renderReportTable(data, tableBody);
-      } else {
-        localStorage.setItem(localStorageKey, JSON.stringify([])); // store empty
-        tableBody.innerHTML = `<tr><td colspan="3" class="text-center">No Records Found</td></tr>`;
-        document.getElementById("download-buttons").style.display = "none";
-      }
-      document.querySelector(".overlay").style.display = "none";
+      localStorage.setItem(localStorageKey, JSON.stringify(data || []));
+      render(data || []);
     })
     .catch(() => {
-      localStorage.setItem(localStorageKey, JSON.stringify([])); // store empty fallback
-      tableBody.innerHTML = `<tr><td colspan="3" class="text-center">No Records Found</td></tr>`;
-      document.querySelector(".overlay").style.display = "none";
+      localStorage.setItem(localStorageKey, JSON.stringify([]));
+      render([]);
     });
 }
+
 
 function renderReportTable(data, tableBody) {
   const totalTimeWorked = calculateTotalTimeWorked(data);
@@ -259,6 +291,13 @@ function pad(n) {
 function formatDate(date) {
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 }
+
+function formatDisplayDate(date) {
+  return `${pad(date.getDate())} ${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
+}
+
+
+
 
 
 
@@ -378,12 +417,6 @@ function getMonthlyReport(year, month) {
   };
 }
 
-function formatDate(date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
 
 // Functions to convert time and calculate totals
 function timeToMinutes(timeStr) {

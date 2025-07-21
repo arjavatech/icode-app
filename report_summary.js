@@ -156,7 +156,7 @@ function getUTCRangeForDate(timezone) {
 function viewCurrentDateReport() {
   document.getElementById('overlay').style.display = 'flex';
 
-  selectedValue = localStorage.getItem('reportType');
+  selectedValue = localStorage.getItem('reportSettingsType');
   document.getElementById("reportName").textContent = selectedValue + " Report";
 
   const tableBody3 = document.getElementById("current-checkin-tbody");

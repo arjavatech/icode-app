@@ -53,7 +53,7 @@ function addreportdetails() {
         let BiMonthlyReportActive = false;
         const company_id = localStorage.getItem('companyID');
 
-
+        console.log("Selected Values:", selectedValues);
         selectedValues.forEach(element => {
             if (element == 'Daily') {
                 DailyReportActive = true;
@@ -237,7 +237,7 @@ function viewReportdetails() {
 }
 
 function viewSecondReportdetails() {
-    var reportType = localStorage.getItem('reportType');
+    var reportType = localStorage.getItem('reportSettingsType');
     const tableBody = document.getElementById("tBody2");
     const company_id = localStorage.getItem('companyID');
     const apiUrl = `${apiUrlBase}/getAllReportEmail/${company_id}`;
@@ -472,7 +472,7 @@ function updateReportdetails() {
         const reportSelect = document.getElementById("frequencySelect2");
         const selectedValues = Array.from(reportSelect.selectedOptions).map(option => option.value);
         const company_id = localStorage.getItem('companyID');
-        localStorage.setItem("reportSettingsType", selectedValues[0]);
+        localStorage.setItem("reportSettingsType", selectedValues);
 
         const apiUrl = `https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/admin-report-type/update/${company_id}`;
 

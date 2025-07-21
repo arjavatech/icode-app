@@ -23,6 +23,7 @@
     <script defer src="day_wise_report.js"></script>
     <link rel="icon" href="Image/app_logo.png">
     <link rel="stylesheet" href="nav.css">
+    <script defer src="nav.js"></script>
 
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
@@ -389,7 +390,7 @@
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
                 <div class="navbar-nav">
-                    <a class="nav-link" href="device.html" style="color: #02066F; padding: 5px 10px;">Device</a>
+                    <a class="nav-link" href="device.html" id="deviceNavBar" style="color: #02066F; padding: 5px 10px;">Device</a>
                     <a class="nav-link" href="employee_list.html" style="color: #02066F; padding: 5px 10px;">Employee
                         Management</a>
                     <li class="nav-item dropdown">
@@ -422,7 +423,7 @@
              <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="device.html" style="color: white;">Device</a>
+                        <a class="nav-link" href="device.html" id="deviceNavBar" style="color: white;">Device</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link rounded-pill-active px-3" href="employee_list.html">Employee Management</a>
@@ -451,7 +452,7 @@
     </nav>  -->
 
     <!-- Sidebar -->
-    <div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;">
+    <div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;z-index: 3000;">
         <img src="Image/Group 91.png" alt="Tap Time Logo" class="app_logo">
         <a href="device.html"> Device</a>
         <a href="employee_list.html"> Employee Management</a>
@@ -547,7 +548,7 @@
         </div>
     </section>
 
-    <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
+    <div style="z-index: 4000;" class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" id="modal-content">
                 <div class="modal-header">

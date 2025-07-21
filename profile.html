@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="nav.css">
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="inputs.css">
+<script defer src="nav.js"></script>
+
     <script defer src="profile.js"></script>
     <link rel="icon" href="Image/app_logo.png">
 
@@ -430,7 +432,7 @@
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
                 <div class="navbar-nav">
-                    <a class="nav-link" href="device.html" style="color: #02066F; padding: 5px 10px;">Device</a>
+                    <a class="nav-link" href="device.html" id="deviceNavBar" style="color: #02066F; padding: 5px 10px;">Device</a>
                     <a class="nav-link" href="employee_list.html" style="color: #02066F; padding: 5px 10px;">Employee
                         Management</a>
                     <li class="nav-item dropdown">
@@ -455,7 +457,7 @@
 
 
     <!-- Sidebar -->
-    <div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;">
+    <div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;z-index: 3000;">
         <img src="Image/Group 91.png" alt="Tap Time Logo" class="app_logo">
         <a href="device.html"> Device</a>
         <a href="employee_list.html"> Employee Management</a>
@@ -528,7 +530,7 @@
                     <img src="" alt="Company Logo" id="logo-img" class="logo-img">
                     <input type="file" class="input-sty disabledData" accept="image/*" onchange="loadFile(event)"
                         id="fileInput" style="display: none;" disabled>
-                    <i class="fa fa-pencil-alt pencil-icon" onclick="triggerFileUpload()"></i>
+                    <!-- <i class="fa fa-pencil-alt pencil-icon" onclick="triggerFileUpload()"></i> -->
                 </div>
 
                 <!-- Fields  -->
@@ -591,14 +593,14 @@
                             <input id="username" placeholder=" " type="text" class="input-sty" disabled>
                             <label class="label-sty">Username</label>
                         </div> -->
-                            <label class="mb-2 label-style">Username:</label>
+                            <!-- <label class="mb-2 label-style">Username:</label>
                             <input type="text" id="username" placeholder="Username"
-                                class="all-input-style mb-3 disabledData" required readonly>
+                                class="all-input-style mb-3 disabledData" required readonly> -->
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-6">
+                        <!-- <div class="col-sm-6">
                             <label class="mb-2 label-style">Password:</label>
                             <input type="password" id="password" placeholder="Password" class="all-input-style mb-3"
                                 required readonly>
@@ -606,7 +608,7 @@
                         <div class="col-sm-6">
                             <button type="button" class="activate mt-3" id="changePass"
                                 onclick="changeThePassword()">Change Password</button>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="d-flex justify-content-center mt-5">

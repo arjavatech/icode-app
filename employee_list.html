@@ -28,6 +28,9 @@
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="nav.css">
     <link rel="stylesheet" href="inputs.css">
+<script defer src="nav.js"></script>
+
+    
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -467,7 +470,7 @@
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
                 <div class="navbar-nav">
-                    <a class="nav-link" href="device.html" style="color: #02066F; padding: 5px 10px;">Device</a>
+                    <a class="nav-link" href="device.html" id="deviceNavBar" style="color: #02066F; padding: 5px 10px;">Device</a>
                     <a class="nav-link active" href="#" style="color: #02066F; padding: 5px 10px;">Employee
                         Management</a>
                     <li class="nav-item dropdown">
@@ -491,7 +494,7 @@
     </nav>
 
     <!-- Sidebar -->
-    <div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;">
+    <div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;z-index: 3000;">
         <img src="Image/Group 91.png" alt="Tap Time Logo" class="app_logo">
         <a href="device.html"> Device</a>
         <a href="employee_list.html"> Employee Management</a>
@@ -773,7 +776,7 @@
 
 
     <!-- Log out  -->
-    <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
+    <div style="z-index: 4000;" style="z-index: 4000;" class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" id="modal-content">
                 <div class="modal-header">

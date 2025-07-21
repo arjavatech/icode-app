@@ -30,6 +30,8 @@
     <link rel="stylesheet" href="contact.css">
     <!-- Input styles  -->
     <link rel="stylesheet" href="inputs.css">
+<script defer src="nav.js"></script>
+
     <!-- Sidebar mobile view menu css  -->
      <link rel="stylesheet" href="sidebarmenu.css">
 </head>
@@ -48,7 +50,7 @@
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
                 <div class="navbar-nav">
-                    <a class="nav-link" href="device.html" style="color: #02066F; padding: 5px 10px;">Device</a>
+                    <a class="nav-link" href="device.html" id="deviceNavBar" style="color: #02066F; padding: 5px 10px;">Device</a>
                     <a class="nav-link" href="employee_list.html" style="color: #02066F; padding: 5px 10px;">Employee
                         Management</a>
                     <li class="nav-item dropdown">
@@ -96,7 +98,7 @@
 
 
     <!-- Sidebar -->
-    <div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;">
+    <div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;z-index: 3000;">
         <img src="Image/Group 91.png" alt="Tap Time Logo" class="app_logo">
         <a href="device.html"> Device</a>
         <a href="employee_list.html"> Employee Management</a>
@@ -120,11 +122,11 @@
                 <!-- Email  -->
                 <input type="email" id="cemail" placeholder="Email" class="all-input-style mb-3" required>
                 <!-- Messege  -->
-                <textarea name="question" id="question" class="all-input-style mb-3" placeholder=" Message/Queries"
+                <textarea name="question" id="question" class="all-input-style mb-3" placeholder=" Message"
                     required onblur="validCQueries()"></textarea>
                 <span id="error-textarea" class="text-danger"></span>
                 <!-- Phone number  -->
-                <input type="tel" id="phoneNumber" placeholder="phoneNumber" oninput="formatPhoneNumber()"
+                <input type="tel" id="phoneNumber" placeholder="Phone Number" oninput="formatPhoneNumber()"
                     onblur="validatePhoneNumber()" class="all-input-style mb-3" required>
                 <span class="text-danger" id="error-phone"></span>
                 <!-- Email Id  -->
@@ -140,7 +142,7 @@
 
             <!-- When the form submiting successFul then run this modal part  -->
             <!-- Show the Response modal -->
-            <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel"
+            <div style="z-index: 4000;" class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content" id="modal-content">

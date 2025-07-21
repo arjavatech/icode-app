@@ -1,41 +1,4 @@
-
-// document.getElementById('settingsForm').addEventListener('submit', function (event) {
-//     // Check if the form is valid before running custom code
-//     if (this.checkValidity()) {
-//         event.preventDefault(); // Prevent form from submitting immediately
-//         initializeFormSubmission(); // Call your custom function
-//     } else {
-//         // Allow HTML5 validation messages to appear
-//         event.preventDefault(); // Prevent form from submitting if invalid
-//         this.reportValidity(); // Show the default browser validation messages
-//     }
-// });
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     let getAdminType = localStorage.getItem('adminType');
-//     if (getAdminType === 'admin' || getAdminType === 'SuperAdmin') {
-//         document.getElementById('adminDetails').style.display = 'block';
-//         document.getElementById('customer').style.display = 'none';
-//         document.getElementById('customerBtn').textContent = getAdminType === 'admin' ? 'Admin Details' : 'Super Admin Details';
-//         let getAuthenticationEmail = localStorage.getItem('authenticationEmail');
-//         let adminOrSuperAdminEmail = localStorage.getItem('adminMail');
-//         let AdminDetails = JSON.parse(localStorage.getItem("allAdminDetails"));
-//         AdminDetails.forEach(element => {
-//             if (element.Email === adminOrSuperAdminEmail || element.Email === getAuthenticationEmail) {
-//                 document.getElementById("adminPin").value = element.Pin;
-//                 document.getElementById("adminFirstName").value = element.FName;
-//                 document.getElementById("adminLastName").value = element.LName;
-//                 document.getElementById("adminPhone").value = element.PhoneNumber;
-//                 document.getElementById("adminEmail").value = element.Email;
-//             }
-//         })
-//     }
-//     else{
-//          document.getElementById('adminDetails').style.display = 'none';
-//          document.getElementById('customer').style.display = 'block';
-//     }
-// });
-
+const getAdminType = localStorage.getItem("adminType");
 
 function changeThePassword() {
     // document.getElementById('password').disabled = false;
@@ -51,7 +14,7 @@ function generateRandomBytes(length) {
 }
 
 async function encryptPasswordInput() {
-    const password = document.getElementById("password").value;
+    // const password = document.getElementById("password").value;
     let getTheDecryptedPassword = localStorage.getItem('passwordDecryptedValue');
     // const secretKey = "mySecretKey123"; // You can store securely on server
 
@@ -117,7 +80,7 @@ function showSection(sectionId) {
             document.getElementById('customer').style.display = 'block';
             document.getElementById('adminDetails').style.display = 'none';
         }
-        else{
+        else {
             document.getElementById('adminDetails').style.display = 'block';
             document.getElementById('customer').style.display = 'none';
         }
@@ -259,8 +222,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         // ✅ Use already stored data
         populateProfileData(JSON.parse(companyData));
         customerDatasPopulate(JSON.parse(customerData));
-        if( adminData){
-        showAdminDetails(JSON.parse(adminData));
+        if (adminData) {
+            showAdminDetails(JSON.parse(adminData));
         }
         document.getElementById('overlay').style.display = 'none';
     } else {
@@ -327,12 +290,12 @@ async function loadProfileDataFromAPI() {
 }
 
 function showAdminDetails(element) {
-    const getAdminType = localStorage.getItem("adminType");
+    
 
     document.getElementById('adminDetails').style.display = 'block';
     document.getElementById('customer').style.display = 'none';
     document.getElementById('customerBtn').textContent =
-        getAdminType === 'admin' ? 'Admin Details' : 'Super Admin Details';
+        getAdminType === 'Admin' ? 'Admin Details' : 'Super Admin Details';
 
     document.getElementById("adminPin").value = element.Pin || '';
     document.getElementById("adminFirstName").value = element.FName || '';
@@ -351,8 +314,8 @@ function populateProfileData(data) {
     }
 
     document.getElementById('companyName').value = data.CName || '';
-    document.getElementById('username').value = data.UserName || '';
-    document.getElementById('password').value = localStorage.getItem('passwordDecryptedValue') || '';
+    // document.getElementById('username').value = data.UserName || '';
+    // document.getElementById('password').value = localStorage.getItem('passwordDecryptedValue') || '';
 
     const address = (data.CAddress || "").split("--");
     document.getElementById('companyStreet').value = address[0] || '';
@@ -379,7 +342,7 @@ function customerDatasPopulate(data) {
 
 function saveFormDataToLocalStorage() {
     const fields = [
-        'companyName', 'username', 'firstName', 'lastName', 'phone', 'email'
+        'companyName', 'firstName', 'lastName', 'phone', 'email'
     ];
 
     fields.forEach(field => {
@@ -397,8 +360,7 @@ async function initializeFormSubmission(getId, event) {
     event.preventDefault(); // Prevent default form submission behavior
     let button;
     let fieldClass;
-
-    if (getId == 'companyEditBtn') {
+    if (getAdminType !="Admin" && getAdminType !="Super Admin" && getId == 'companyEditBtn') {
         button = document.getElementById("companyEditBtn");
         fieldClass = "disabledData";
     } else if (getId == 'customerEditBtn') {
@@ -565,7 +527,7 @@ function dataURLToBlob(dataURL) {
 
 function saveFormDataToLocalStorage() {
     const fields = [
-        'companyName', 'companyAddress', 'username',
+        'companyName', 'companyAddress',
         'firstName', 'lastName', 'address', 'phone', 'email'
     ];
 
@@ -628,11 +590,12 @@ async function callCompanyAPI() {
     if (!cid) return;
 
     const companyApiUrl = `${companyAPIUrlBase}/update/${cid}`;
-    const getTheEncryptedPassword = await encryptPasswordInput();
-
+    let getTheUNameLocalstorage = localStorage.getItem('username');
+    let getTheEncryptedPassword = localStorage.getItem('password');
+    // const getTheEncryptedPassword = await encryptPasswordInput();
     const companyData = {
         CID: cid,
-        UserName: document.getElementById('username').value,
+        UserName: getTheUNameLocalstorage,
         CName: document.getElementById('companyName').value,
         CAddress: `${document.getElementById('companyStreet').value}--${document.getElementById('companyCity').value}--${document.getElementById('companyState').value}--${document.getElementById('companyZip').value}--`,
         CLogo: localStorage.getItem("imageFile"),
@@ -683,3 +646,4 @@ function homePage() {
 document.getElementById('homePageYes').addEventListener('click', function () {
     window.open('index.html', 'noopener, noreferrer');
 })
+

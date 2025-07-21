@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="report_summary.css">
     <link rel="stylesheet" href="employee_list.css">
     <link rel="stylesheet" href="inputs.css">
+<script defer src="nav.js"></script>
+
     <script defer src="report_summary.js"></script>
 
     <!-- <script defer src="logout.js"></script> -->
@@ -383,7 +385,7 @@
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: end;">
                 <div class="navbar-nav">
-                    <a class="nav-link" href="device.html" style="color: #02066F; padding: 5px 10px;">Device</a>
+                    <a class="nav-link" href="device.html" id="deviceNavBar" style="color: #02066F; padding: 5px 10px;">Device</a>
                     <a class="nav-link" href="employee_list.html" style="color: #02066F; padding: 5px 10px;">Employee
                         Management</a>
                     <li class="nav-item dropdown">
@@ -407,7 +409,7 @@
     </nav>
 
     <!-- Sidebar -->
-    <div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;">
+    <div id="sidebar" class="sidebar" style="width: 250px;  padding: 10px;z-index: 3000;">
         <img src="Image/Group 91.png" alt="Tap Time Logo" class="app_logo">
         <a href="device.html"> Device</a>
         <a href="employee_list.html"> Employee Management</a>
@@ -510,7 +512,7 @@
         </div>
 
         <!-- Add Entry Modal -->
-        <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel"
+        <div style="z-index: 4000;" class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content" style="width: 350px;">
