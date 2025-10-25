@@ -42,6 +42,9 @@ function addreportdetails() {
     const isValidEmail = validREmail();
 
     if (isValidRdays && isValidEmail) {
+        // Show loading overlay
+        document.getElementById('overlay').style.display = 'flex';
+
         const reportUpdateid = document.getElementById("savebtn").value;
         const reportEmail = document.getElementById("remail").value;
         const reportSelect = document.getElementById("frequencySelect");
@@ -97,22 +100,34 @@ function addreportdetails() {
                 })
                 .then(data => {
                     if (data.error) {
+                        document.getElementById('overlay').style.display = 'none';
                         $(".error-msg").show();
-                        // setTimeout(function () {
-                        //     $(".error-msg").hide();
-                        //     window.location.href = "report_setting.html";
-                        // }, 1000);
+                        setTimeout(function () {
+                            $(".error-msg").hide();
+                        }, 2000);
                     } else {
+                        // Close the modal
+                        const modalElement = document.getElementById('myModal');
+                        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                        if (modalInstance) {
+                            modalInstance.hide();
+                        }
+
+                        // Clear and refresh the table
+                        const tableBody = document.getElementById("tBody");
+                        tableBody.innerHTML = '';
+                        viewReportdetails();
+
                         $(".success-msg").show();
-                        // setTimeout(function () {
-                        //     $(".success-msg").hide();
-                        //     window.location.href = "report_setting.html";
-                        // }, 1000);
+                        setTimeout(function () {
+                            $(".success-msg").hide();
+                        }, 2000);
                     }
 
                 })
                 .catch(error => {
                     console.error('Error:', error);
+                    document.getElementById('overlay').style.display = 'none';
                 });
         } else {
             const apiUrl = `${apiUrlBase}/update/${reportUpdateid}/${company_id}`;
@@ -143,22 +158,34 @@ function addreportdetails() {
                 })
                 .then(data => {
                     if (data.error) {
+                        document.getElementById('overlay').style.display = 'none';
                         $(".error-msg").show();
                         setTimeout(function () {
                             $(".error-msg").hide();
-                            window.location.href = "report_setting.html";
-                        }, 1000);
+                        }, 2000);
                     } else {
+                        // Close the modal
+                        const modalElement = document.getElementById('myModal');
+                        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                        if (modalInstance) {
+                            modalInstance.hide();
+                        }
+
+                        // Clear and refresh the table
+                        const tableBody = document.getElementById("tBody");
+                        tableBody.innerHTML = '';
+                        viewReportdetails();
+
                         $(".success-msg").show();
                         setTimeout(function () {
                             $(".success-msg").hide();
-                            window.location.href = "report_setting.html";
-                        }, 1000);
+                        }, 2000);
                     }
 
                 })
                 .catch(error => {
-
+                    console.error('Error:', error);
+                    document.getElementById('overlay').style.display = 'none';
                 });
         }
 
@@ -204,30 +231,14 @@ function viewReportdetails() {
     document.getElementById('overlay').style.display = 'flex';
     const tableBody = document.getElementById("tBody");
     const company_id = localStorage.getItem('companyID');
-    const storageKey = `reportDetails_${company_id}`;
-    const cachedData = localStorage.getItem(storageKey);
-
-    // ✅ If cached data exists, use it
-    if (cachedData) {
-        try {
-            const parsedData = JSON.parse(cachedData);
-            renderReportDetails(parsedData, tableBody);
-            document.getElementById('overlay').style.display = 'none';
-            return;
-        } catch (e) {
-            // If parsing fails, continue to fetch from API
-        }
-    }
-
-    // ❌ No cache, fetch from API
     const apiUrl = `${apiUrlBase}/getAllReportEmail/${company_id}`;
+
     fetch(apiUrl)
         .then(response => {
             if (!response.ok) throw new Error(`Error: ${response.status}`);
             return response.json();
         })
         .then(data => {
-            localStorage.setItem(storageKey, JSON.stringify(data));
             renderReportDetails(data, tableBody);
             document.getElementById('overlay').style.display = 'none';
         })
@@ -237,10 +248,8 @@ function viewReportdetails() {
 }
 
 function viewSecondReportdetails() {
-    var reportType = localStorage.getItem('reportSettingsType');
+    var reportType = localStorage.getItem('reportType');
     const tableBody = document.getElementById("tBody2");
-    const company_id = localStorage.getItem('companyID');
-    const apiUrl = `${apiUrlBase}/getAllReportEmail/${company_id}`;
 
     const newRow = document.createElement('tr');
 
@@ -309,6 +318,16 @@ function deleteEmpdetails(companyEmail) {
     const company_id = localStorage.getItem('companyID');
     const apiUrl = `${apiUrlBase}/delete/${companyEmail}/${company_id}/Admin`;
 
+    // Show loading overlay
+    document.getElementById('overlay').style.display = 'flex';
+
+    // Get and dismiss the modal
+    const modalElement = document.getElementById('addEntryModal2');
+    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    if (modalInstance) {
+        modalInstance.hide();
+    }
+
     fetch(apiUrl, {
         method: 'PUT'
     })
@@ -320,23 +339,29 @@ function deleteEmpdetails(companyEmail) {
         })
         .then(data => {
             if (data.error) {
+                document.getElementById('overlay').style.display = 'none';
                 $(".error-msg").show();
                 setTimeout(function () {
                     $(".error-msg").hide();
-                    window.location.href = "report_setting.html";
-                }, 1000);
+                }, 2000);
             } else {
+                // Clear the table before refreshing
+                const tableBody = document.getElementById("tBody");
+                tableBody.innerHTML = '';
+
+                // Re-fetch and render updated data
+                viewReportdetails();
+
                 document.querySelector(".s-msg").textContent = data.message;
                 $(".success-msg").show();
                 setTimeout(function () {
                     $(".success-msg").hide();
-                    window.location.href = "report_setting.html";
-                }, 1000);
+                }, 2000);
             }
         })
         .catch(error => {
-
-            ;
+            console.error('Delete error:', error);
+            document.getElementById('overlay').style.display = 'none';
         });
 }
 
@@ -472,7 +497,6 @@ function updateReportdetails() {
         const reportSelect = document.getElementById("frequencySelect2");
         const selectedValues = Array.from(reportSelect.selectedOptions).map(option => option.value);
         const company_id = localStorage.getItem('companyID');
-        localStorage.setItem("reportSettingsType", selectedValues);
 
         const apiUrl = `https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/admin-report-type/update/${company_id}`;
 
@@ -497,32 +521,56 @@ function updateReportdetails() {
             })
             .then(data => {
                 if (data.error) {
+                    document.getElementById('overlay').style.display = 'none';
                     $(".error-msg").show();
                     setTimeout(function () {
                         $(".error-msg").hide();
-                        window.location.href = "report_setting.html";
-                    }, 1000);
+                    }, 2000);
                 } else {
+                    // Update localStorage with the new value
                     localStorage.setItem("reportType", selectedValues[0]);
 
+                    // Close the modal
+                    const modalElement = document.getElementById('myModal2');
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    if (modalInstance) {
+                        modalInstance.hide();
+                    }
+
+                    // Clear and refresh the second table
+                    const tableBody = document.getElementById("tBody2");
+                    tableBody.innerHTML = '';
+                    viewSecondReportdetails();
+
+                    document.getElementById('overlay').style.display = 'none';
                     $(".success-msg").show();
                     setTimeout(function () {
                         $(".success-msg").hide();
-                        window.location.href = "report_setting.html";
-                    }, 1000);
+                    }, 2000);
                 }
-                document.getElementById('overlay').style.display = 'none';
             })
             .catch(error => {
+                console.error('Error:', error);
                 document.getElementById('overlay').style.display = 'none';
             });
     } else {
+        document.getElementById('overlay').style.display = 'none';
         document.getElementById('selectError2').textContent = '';
     }
 }
 
 // Function to show logout confirmation modal
 function showLogoutModal(empId) {
+    // Remove existing modal if it exists
+    const existingModal = document.getElementById('addEntryModal2');
+    if (existingModal) {
+        const existingInstance = bootstrap.Modal.getInstance(existingModal);
+        if (existingInstance) {
+            existingInstance.dispose();
+        }
+        existingModal.remove();
+    }
+
     const modalHTML = `
         <div class="modal fade" id="addEntryModal2" tabindex="-1" aria-labelledby="addEntryModalLabel2" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -543,13 +591,19 @@ function showLogoutModal(empId) {
         </div>
     `;
 
-    // Append the modal to the body
-    document.body.innerHTML += modalHTML;
+    // Insert the modal into the body
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
 
     // Show the modal using Bootstrap's modal plugin
     const modalElement = document.getElementById('addEntryModal2');
     const modalInstance = new bootstrap.Modal(modalElement);
     modalInstance.show();
+
+    // Clean up modal after it's hidden
+    modalElement.addEventListener('hidden.bs.modal', function () {
+        modalInstance.dispose();
+        modalElement.remove();
+    }, { once: true });
 }
 
 // Attach the reset function to the 'Add Entry' button click event
