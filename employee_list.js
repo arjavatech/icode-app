@@ -1,5 +1,5 @@
 
-const apiUrlBase = 'https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/employee';
+const apiUrlBase = 'https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/employee';
 var adminCount = 0;
 let employeesData = JSON.parse(localStorage.getItem("allAdminDetails"));
 
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     console.log("check emplyee data",employeesData)
-    if (employeesData.length === 0) {
+    if (!employeesData || employeesData.length === 0) {
         fetchEmployeeData();
     }
     else {

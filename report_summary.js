@@ -25,7 +25,7 @@ document.addEventListener('click', function (event) {
   }
 });
 
-const apiUrlBase = 'https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/dailyreport/getdatebasedata';
+const apiUrlBase = 'https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/dailyreport/getdatebasedata';
 
 
 const cid = localStorage.getItem('companyID');
@@ -164,7 +164,7 @@ function viewCurrentDateReport() {
   tableBody3.innerHTML = '';
 
   const today = getCurrentLocalTime().substring(0, 10);
-  const employeeApiURL = `https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/employee/getall/${cid}`;
+  const employeeApiURL = `https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/employee/getall/${cid}`;
   const reportApiURL = `${apiUrlBase}/${cid}/${today}`;
 
   heading.innerHTML = today;
@@ -334,7 +334,7 @@ async function updateDailyReportAPiData(emp_id, cid, date, type, checkin_snap, c
     LastModifiedBy: 'Admin'
   }
 
-  var apiBaseUrl = `https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/dailyreport/update/${emp_id}/${cid}/${checkin_time}`;
+  var apiBaseUrl = `https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/dailyreport/update/${emp_id}/${cid}/${checkin_time}`;
 
   try {
     const response = await fetch(apiBaseUrl, {
@@ -672,7 +672,7 @@ AddEmployee.addEventListener('click', (event) => {
     };
 
     // Send Post request
-    fetch('https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/dailyreport/create', {
+    fetch('https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/dailyreport/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

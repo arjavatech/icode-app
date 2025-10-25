@@ -1,5 +1,5 @@
 
-const apiUrlBase = 'https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/company-report-type';
+const apiUrlBase = 'https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/company-report-type';
 
 function dataRemove(e) {
     document.getElementById("remail").value = "";
@@ -98,16 +98,16 @@ function addreportdetails() {
                 .then(data => {
                     if (data.error) {
                         $(".error-msg").show();
-                        setTimeout(function () {
-                            $(".error-msg").hide();
-                            window.location.href = "report_setting.html";
-                        }, 1000);
+                        // setTimeout(function () {
+                        //     $(".error-msg").hide();
+                        //     window.location.href = "report_setting.html";
+                        // }, 1000);
                     } else {
                         $(".success-msg").show();
-                        setTimeout(function () {
-                            $(".success-msg").hide();
-                            window.location.href = "report_setting.html";
-                        }, 1000);
+                        // setTimeout(function () {
+                        //     $(".success-msg").hide();
+                        //     window.location.href = "report_setting.html";
+                        // }, 1000);
                     }
 
                 })
@@ -293,7 +293,7 @@ function editEmpdetails(companyEmail) {
 
 function editReportdetails(reportType) {
     const company_id = localStorage.getItem('companyID');
-    const apiUrl = `https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/admin-report-type/update/${company_id}`;
+    const apiUrl = `https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/admin-report-type/update/${company_id}`;
     const freqselect = document.getElementById('frequencySelect2');
     const freqselectedValues = [];
 
@@ -474,7 +474,7 @@ function updateReportdetails() {
         const company_id = localStorage.getItem('companyID');
         localStorage.setItem("reportSettingsType", selectedValues);
 
-        const apiUrl = `https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/admin-report-type/update/${company_id}`;
+        const apiUrl = `https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/admin-report-type/update/${company_id}`;
 
         const reportObject = {
             CID: company_id,

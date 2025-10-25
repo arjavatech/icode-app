@@ -127,7 +127,7 @@ let customerId = localStorage.getItem('customerId');
 
 // // Function to load profile data from the API
 // async function loadProfileDataFromAPI() {
-//     const url = `https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/company/get/${cid}`;
+//     const url = `https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/company/get/${cid}`;
 
 //     try {
 //         const response = await fetch(url);
@@ -264,7 +264,7 @@ async function loadProfileDataFromAPI() {
 
     try {
         // ✅ 3. Admin/SuperAdmin (from employee list)
-        const userResponse = await fetch(`https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/employee/getall/${company_id}`);
+        const userResponse = await fetch(`https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/employee/getall/${company_id}`);
         if (!userResponse.ok) throw new Error(`Employee fetch failed`);
 
         const allUsers = await userResponse.json();
@@ -545,8 +545,8 @@ function saveFormDataToLocalStorage() {
     });
 }
 
-const customerAPIUrlBase = `https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/customer`;
-const companyAPIUrlBase = `https://vnnex1njb9.execute-api.ap-south-1.amazonaws.com/test/company`;
+const customerAPIUrlBase = `https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/customer`;
+const companyAPIUrlBase = `https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/company`;
 
 function callCustomerAPI() {
     if (!cid || !customerId) return;
