@@ -1,7 +1,7 @@
 
 const apiUrlBase = 'https://9dq56iwo77.execute-api.ap-south-1.amazonaws.com/prod/employee';
 var adminCount = 0;
-let employeesData = JSON.parse(localStorage.getItem("allAdminDetails"));
+let employeesData = null;
 
 
 // When I click close modal with have any error in this form we need to clear all error msg 
@@ -13,7 +13,7 @@ $('#myModal').on('hidden.bs.modal', function () {
 
 });
 
-// Fetch employee,admin,super admin data 
+// Fetch employee,admin,super admin data
 async function fetchEmployeeData() {
     console.log("Fetching employee data...");
     const company_id = localStorage.getItem('companyID');
@@ -23,9 +23,7 @@ async function fetchEmployeeData() {
         const response = await fetch(apiUrl);
         if (!response.ok) throw new Error(`Error: ${response.status}`);
         const data = await response.json();
-        console.log("Login data:", data);
-        localStorage.setItem("allAdminDetails", JSON.stringify(data));
-        viewEmpdetails();
+        console.log("Employee data:", data);
         return data;
     } catch (error) {
         console.error("Fetch error:", error);
@@ -92,7 +90,7 @@ document.addEventListener('click', function (event) {
     }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const currentLocation = location.href;
     const menuItems = document.querySelectorAll('.sidebar a');
 
@@ -101,14 +99,14 @@ document.addEventListener('DOMContentLoaded', () => {
             item.classList.add('active');
         }
     });
-    console.log("check emplyee data",employeesData)
-    if (!employeesData || employeesData.length === 0) {
-        fetchEmployeeData();
-    }
-    else {
-        // Get employee,admin,super admin details 
+
+    // Always fetch fresh data from API
+    document.getElementById('overlay').style.display = 'flex';
+    employeesData = await fetchEmployeeData();
+    if (employeesData) {
         viewEmpdetails();
     }
+    document.getElementById('overlay').style.display = 'none';
 });
 
 // Create Data
@@ -248,7 +246,7 @@ const rowsPerPage = 10;
 let currentPage = 1;
 
 
-async function viewEmpdetails() {
+function viewEmpdetails() {
     const adminType = localStorage.getItem('adminType');
     const employeeSection = document.getElementById('employee-section');
     const adminSection = document.getElementById('admin-section');
@@ -272,16 +270,8 @@ async function viewEmpdetails() {
     tableBody2.innerHTML = '';
     tableBody3.innerHTML = '';
 
-    
-    if (!employeesData) {
-        // Data not in localStorage, fetch it
-        document.getElementById('overlay').style.display = 'block';
-        employeesData = await fetchEmployeeData();
-    }
-
-    if (!employeesData) {
-        document.getElementById('overlay').style.display = 'none';
-        return; // Stop if still no data
+    if (!employeesData || employeesData.length === 0) {
+        return; // Stop if no data
     }
 
     let index = 1;
@@ -329,6 +319,12 @@ async function viewEmpdetails() {
         index++;
     });
 
+    // Destroy existing DataTable if it exists
+    if ($.fn.DataTable.isDataTable('#employeeTable')) {
+        $('#employeeTable').DataTable().destroy();
+    }
+
+    // Initialize DataTable
     $('#employeeTable').DataTable({
         paging: true,
         searching: true,
@@ -431,38 +427,54 @@ function editSuperAdmindetails(emId) {
 
 // Delete Data
 
-function deleteEmpdetails(emId) {
+async function deleteEmpdetails(emId) {
+    // Show loading overlay
+    document.getElementById('overlay').style.display = 'flex';
+
+    // Close the confirmation modal
+    const modalElement = document.getElementById('addEntryModal2');
+    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    if (modalInstance) {
+        modalInstance.hide();
+    }
+
     const apiUrl = `${apiUrlBase}/delete/${emId}/Admin`;
-    fetch(apiUrl, {
-        method: 'PUT'
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.error) {
-                document.querySelector(".e-msg").textContent = data.error;
-                // $(".error-msg").show();
-                setTimeout(function () {
-                    // $(".error-msg").hide();
-                    window.location.href = "employee_list.html";
-                }, 1000);
-            } else {
-                document.querySelector(".s-msg").textContent = data.message;
-                // $(".success-msg").show();
-                setTimeout(function () {
-                    // $(".success-msg").hide();
-                    window.location.href = "employee_list.html";
-                }, 1000);
-            }
-        })
-        .catch(error => {
-
-
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'PUT'
         });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.error) {
+            document.getElementById('overlay').style.display = 'none';
+            document.querySelector(".e-msg").textContent = data.error;
+            $(".error-msg").show();
+            setTimeout(function () {
+                $(".error-msg").hide();
+            }, 2000);
+        } else {
+            // Refresh data from API
+            employeesData = await fetchEmployeeData();
+            if (employeesData) {
+                viewEmpdetails();
+            }
+
+            document.getElementById('overlay').style.display = 'none';
+            document.querySelector(".s-msg").textContent = data.message;
+            $(".success-msg").show();
+            setTimeout(function () {
+                $(".success-msg").hide();
+            }, 2000);
+        }
+    } catch (error) {
+        console.error('Delete error:', error);
+        document.getElementById('overlay').style.display = 'none';
+    }
 }
 
 
@@ -550,6 +562,16 @@ function formatPhoneNumber() {
 }
 
 function showLogoutModal(empId) {
+    // Remove existing modal if it exists
+    const existingModal = document.getElementById('addEntryModal2');
+    if (existingModal) {
+        const existingInstance = bootstrap.Modal.getInstance(existingModal);
+        if (existingInstance) {
+            existingInstance.dispose();
+        }
+        existingModal.remove();
+    }
+
     const modalHTML = `
         <div class="modal fade" id="addEntryModal2" tabindex="-1" aria-labelledby="addEntryModalLabel2" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -570,13 +592,19 @@ function showLogoutModal(empId) {
         </div>
         `;
 
-    // Append the modal to the body
-    document.body.innerHTML += modalHTML;
+    // Insert the modal into the body
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
 
     // Show the modal using Bootstrap's modal plugin
     const modalElement = document.getElementById('addEntryModal2');
     const modalInstance = new bootstrap.Modal(modalElement);
     modalInstance.show();
+
+    // Clean up modal after it's hidden
+    modalElement.addEventListener('hidden.bs.modal', function () {
+        modalInstance.dispose();
+        modalElement.remove();
+    }, { once: true });
 }
 
 // When I click Logo go to home page
