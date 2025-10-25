@@ -156,7 +156,7 @@ function getUTCRangeForDate(timezone) {
 function viewCurrentDateReport() {
   document.getElementById('overlay').style.display = 'flex';
 
-  selectedValue = localStorage.getItem('reportSettingsType');
+  selectedValue = localStorage.getItem('reportType');
   document.getElementById("reportName").textContent = selectedValue + " Report";
 
   const tableBody3 = document.getElementById("current-checkin-tbody");
@@ -171,7 +171,11 @@ function viewCurrentDateReport() {
 
   // 🔁 1. Load employee dropdown from localStorage or API
   const cachedEmployees = localStorage.getItem("employeeDropdownList");
-  if (cachedEmployees) {
+  const cachedEmployeeDetails = localStorage.getItem("employeeDetailsCache");
+
+  if (cachedEmployees && cachedEmployeeDetails) {
+    // Restore both dropdown list and employee details from cache
+    employeeDetails = JSON.parse(cachedEmployeeDetails);
     populateDropdown(JSON.parse(cachedEmployees));
   } else {
     fetch(employeeApiURL)
@@ -186,7 +190,9 @@ function viewCurrentDateReport() {
           employeeDetails[temp] = element;
           optionsList.push(temp);
         });
+        // Cache both the dropdown list and full employee details
         localStorage.setItem("employeeDropdownList", JSON.stringify(optionsList));
+        localStorage.setItem("employeeDetailsCache", JSON.stringify(employeeDetails));
         populateDropdown(optionsList);
       })
       .catch(error => {
@@ -679,17 +685,27 @@ AddEmployee.addEventListener('click', (event) => {
       },
       body: JSON.stringify(data)
     })
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
         // Close the modal
         var modal = bootstrap.Modal.getInstance(document.getElementById('addEntryModal'));
+        if (modal) {
+          modal.hide();
+        }
+
+        // Hide overlay and refresh the table
+        document.getElementById('overlay').style.display = 'none';
         AddEmployee.disabled = true;
-        modal.hide();
         viewCurrentDateReport();
-        // Optionally, you can refresh data or provide a success message
       })
       .catch((error) => {
-
+        console.error('Error adding entry:', error);
+        document.getElementById('overlay').style.display = 'none';
       });
   }
 });

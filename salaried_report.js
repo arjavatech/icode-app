@@ -16,7 +16,7 @@ document.addEventListener('click', function (event) {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  const selectedValue = localStorage.getItem("reportSettingsType");
+  const selectedValue = localStorage.getItem("reportType");
   console.log("Selected Report Type:", selectedValue);
   document.getElementById("reportName").textContent = `${selectedValue} Report`;
   document.getElementById("report-type-heading").textContent = `${selectedValue} Report`;
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function viewDateRangewiseReport() {
   document.querySelector(".overlay").style.display = "flex";
-  const selectedValue = localStorage.getItem("reportSettingsType");
+  const selectedValue = localStorage.getItem("reportType");
   const showReports = document.getElementById("showTheReports");
   showReports.innerHTML = "";
   // document.getElementById("tbody").innerHTML = "";
@@ -195,67 +195,74 @@ function viewDateRangewiseReport() {
 
 
 document.getElementById('halfInput').addEventListener('change', viewDateRangewiseReport);
-document.getElementById('weekInput').addEventListener('change', viewDateRangewiseReport);
+// Removed weekInput global listener - it conflicts with the inline onchange handler set in viewDateRangewiseReport()
 
 
 
 function loadReportTable(startVal, endVal, cid) {
   console.log(`Loading report table for CID: ${cid}, Start: ${startVal}, End: ${endVal}`);
   document.querySelector(".overlay").style.display = "flex";
-  const localStorageKey = `report_${cid}_${startVal}_${endVal}`;
-  const cachedDataRaw = localStorage.getItem(localStorageKey);
 
-function render(data) {
-  const tbody = document.getElementById('tbody');
-  if (!tbody) {
-    console.error("Table body element '#tbody' not found.");
-    return;
-  }
-
-  tbody.innerHTML = ''; // Clear old rows
-
-  if (!data || data.length === 0) {
-    const noDataRow = document.createElement('tr');
-    noDataRow.innerHTML = `<td colspan="3" class="text-center">No data available</td>`;
-    tbody.appendChild(noDataRow);
-    document.getElementById('download-buttons').style.display = 'none';
-    return;
-  }
-
-  data.forEach(emp => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${emp?.Name || emp?.name || '-'}</td>
-      <td>${emp?.Pin || emp?.pin || '-'}</td>
-      <td>${emp?.TotalWorkedHours || emp?.totalHours || '-'}</td>
-    `;
-    tbody.appendChild(row);
-  });
-
-  document.getElementById('download-buttons').style.display = 'flex';
-}
-
-
-  if (cachedDataRaw) {
-    try {
-      const cachedData = JSON.parse(cachedDataRaw);
-      render(cachedData);
+  function render(data) {
+    const tbody = document.getElementById('tbody');
+    if (!tbody) {
+      console.error("Table body element '#tbody' not found.");
       return;
-    } catch (e) {
-      // fallback to API
     }
+
+    tbody.innerHTML = ''; // Clear old rows
+
+    if (!data || data.length === 0) {
+      const noDataRow = document.createElement('tr');
+      noDataRow.innerHTML = `<td colspan="3" class="text-center">No data available</td>`;
+      tbody.appendChild(noDataRow);
+      document.getElementById('download-buttons').style.display = 'none';
+      window.reportData = [];
+      return;
+    }
+
+    // Consolidate employees and calculate total hours
+    const totalTimeWorked = calculateTotalTimeWorked(data);
+
+    // Prepare data for download (PDF/CSV)
+    window.reportData = Object.entries(totalTimeWorked).map(([pin, emp]) => ({
+      Name: emp.name,
+      Pin: pin,
+      TotalHours: emp.totalHoursWorked
+    }));
+
+    // Render consolidated data
+    Object.entries(totalTimeWorked).forEach(([pin, emp]) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${emp.name}</td>
+        <td>${pin}</td>
+        <td>${emp.totalHoursWorked}</td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    document.getElementById('download-buttons').style.display = 'flex';
   }
 
+  // Always fetch fresh data from API
   const apiUrl = `${apiUrlBase}/${cid}/${startVal}/${endVal}`;
   fetch(apiUrl)
     .then(res => res.json())
     .then(data => {
-      localStorage.setItem(localStorageKey, JSON.stringify(data || []));
-      render(data || []);
+      // Check if API returned an error object
+      if (data && data.error) {
+        console.error('API Error:', data.error);
+        render([]);
+      } else {
+        render(data || []);
+      }
+      document.querySelector(".overlay").style.display = "none";
     })
-    .catch(() => {
-      localStorage.setItem(localStorageKey, JSON.stringify([]));
+    .catch((error) => {
+      console.error('Fetch Error:', error);
       render([]);
+      document.querySelector(".overlay").style.display = "none";
     });
 }
 
@@ -302,7 +309,7 @@ function formatDisplayDate(date) {
 
 
 function toggleHalfVisibility() {
-  const type = localStorage.getItem("reportSettingsType");
+  const type = localStorage.getItem("reportType");
   const weekWrapper = document.getElementById("weekInputWrapper");
   const halfWrapper = document.getElementById("halfInputWrapper");
 

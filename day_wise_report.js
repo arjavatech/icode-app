@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
     
-  selectedValue = localStorage.getItem('reportSettingsType');
+  selectedValue = localStorage.getItem('reportType');
   document.getElementById("reportName").textContent = selectedValue + " Report";
 });
 
